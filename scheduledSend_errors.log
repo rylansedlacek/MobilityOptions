@@ -1,0 +1,195 @@
+[10-Dec-2025 04:35:08 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:35:08 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:41:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:41:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:42:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:42:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:43:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:43:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:44:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:44:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:45:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:45:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:46:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:46:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:47:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:47:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:47:16 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:47:16 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:48:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:48:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:48:13 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:48:13 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:48:30 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:48:30 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:49:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:49:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(36): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:49:18 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:49:18 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(42): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:50:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:50:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(42): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:51:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:51:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(42): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:52:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:52:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(42): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:53:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:53:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'whiskeydb'@'localhost' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('localhost', 'whiskeydb', Object(SensitiveParameterValue), 'whiskeydb')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(42): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:53:41 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:53:41 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'dbkxnmd1xwle9j'@'35.212.93.90' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('jenniferp217.sg...', 'dbkxnmd1xwle9j', Object(SensitiveParameterValue), 'uh0wwdf58fygg')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(42): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:54:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:54:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'dbkxnmd1xwle9j'@'35.212.93.90' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('jenniferp217.sg...', 'dbkxnmd1xwle9j', Object(SensitiveParameterValue), 'uh0wwdf58fygg')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(42): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:54:25 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:54:25 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'uh0wwdf58fygg'@'35.212.93.90' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('jenniferp217.sg...', 'uh0wwdf58fygg', Object(SensitiveParameterValue), 'dbkxnmd1xwle9j')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(42): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:55:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:55:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'uh0wwdf58fygg'@'35.212.93.90' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('jenniferp217.sg...', 'uh0wwdf58fygg', Object(SensitiveParameterValue), 'dbkxnmd1xwle9j')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(42): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:56:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:56:01 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'uh0wwdf58fygg'@'35.212.93.90' (using password: YES) in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php:37
+Stack trace:
+#0 /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php(37): mysqli_connect('jenniferp217.sg...', 'uh0wwdf58fygg', Object(SensitiveParameterValue), 'dbkxnmd1xwle9j')
+#1 /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php(42): connect()
+#2 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 37
+[10-Dec-2025 04:56:21 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:56:21 America/New_York] PHP Warning:  require_once(/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php): Failed to open stream: No such file or directory in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 04:56:21 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php' (include_path='.:/usr/local/php82/pear') in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php:78
+Stack trace:
+#0 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 04:57:01 America/New_York] PHP Warning:  Undefined array key "SERVER_NAME" in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 31
+[10-Dec-2025 04:57:01 America/New_York] PHP Warning:  require_once(/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php): Failed to open stream: No such file or directory in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 04:57:01 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php' (include_path='.:/usr/local/php82/pear') in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php:78
+Stack trace:
+#0 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 09:57:56 UTC] PHP Parse error:  Unmatched '}' in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 43
+[10-Dec-2025 09:58:01 UTC] PHP Parse error:  Unmatched '}' in /home/customer/www/jenniferp217.sg-host.com/public_html/database/dbinfo.php on line 43
+[10-Dec-2025 04:58:07 America/New_York] PHP Warning:  require_once(/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php): Failed to open stream: No such file or directory in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 04:58:07 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php' (include_path='.:/usr/local/php82/pear') in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php:78
+Stack trace:
+#0 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 04:59:01 America/New_York] PHP Warning:  require_once(/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php): Failed to open stream: No such file or directory in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 04:59:01 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php' (include_path='.:/usr/local/php82/pear') in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php:78
+Stack trace:
+#0 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 05:00:01 America/New_York] PHP Warning:  require_once(/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php): Failed to open stream: No such file or directory in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 05:00:01 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php' (include_path='.:/usr/local/php82/pear') in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php:78
+Stack trace:
+#0 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 05:01:01 America/New_York] PHP Warning:  require_once(/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php): Failed to open stream: No such file or directory in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78
+[10-Dec-2025 05:01:01 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/jenniferp217.sg-host.com/public_html/email/PHPMailer/src/PHPMailer.php' (include_path='.:/usr/local/php82/pear') in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php:78
+Stack trace:
+#0 {main}
+  thrown in /home/customer/www/jenniferp217.sg-host.com/public_html/scheduledSend.php on line 78

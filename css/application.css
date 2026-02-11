@@ -1,5 +1,5 @@
 .application-view-container {
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(144,238,144,1.0);
     border-radius: 15px;
     display: flex;
     flex-wrap: wrap;
@@ -77,7 +77,7 @@
 }
 
 .application-nav-button {
-    background-color: rgb(0, 194, 0);
+    background-color: rgba(0,0,0,0.15);
     border-radius: 15px;
     padding: 10px;
     cursor: pointer;

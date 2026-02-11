@@ -55,13 +55,13 @@ table, td, tr, th, form, fieldset, em, button, a {
     --inactive-background-color: rgb(31,31,33);
     --standout-background: #fafafa;
 
-    --happy-toast-background-color: #5D7E61;
-    --happy-toast-font-color: rgb(255, 255, 255);
+    --happy-toast-background-color: #58269a;
+    --happy-toast-font-color: rgb(177, 51, 51);
 
-    --info-toast-background-color: #2f2f2f;
-    --info-toast-font-color: white;
+    --info-toast-background-color: #ff0202;
+    --info-toast-font-color: rgb(248, 244, 244);
 
-    --error-toast-background-color: #A66654;
+    --error-toast-background-color: #0d6c97;
     --error-toast-font-color: rgb(255, 255, 255);
 
 
@@ -69,9 +69,9 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --main-color: #2A435A; 
 
-    --accent-color: rgb(201, 171, 129);
+    --accent-color: rgb(135, 25, 114);
  
-    --secondary-accent-color: rgb(175, 141, 92);
+    --secondary-accent-color: rgba(220, 144, 220, 0.775);
 
     /* Accessibility / WV theme variables */
     --wv-accent-color: #C9AB81; /* gold */

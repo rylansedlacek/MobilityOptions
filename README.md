@@ -1,9 +1,12 @@
 # Student Names
-Michael Glanzmann  
-Blue Shojinaga
-Jake Lipinski
-Kassandra Williams
-Alia Carmicheal 
+Rylan Sedlacek
+Hong Johnson 
+Charlie Infinger 
+Colin Lewis 
+Katherine Jurado Ramirez 
+Gabriel Courtney
+Eric McCoy
+
 
 # Fredericksburg SPCA Volunteer Management Web Application 
 

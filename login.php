@@ -107,8 +107,8 @@
 
   <!-- Left: Image Section (Hidden on small screens) -->
   <div class="hidden md:block md:w-1/2 bg-center rounded-r-[50px] bg-[#1F1F21]">
-      <img src="images/whiskeyBarrels.png"
-            alt="Barrels"
+      <img src="images/healthyGenerations.png"
+            alt="Healthy Generations"
             style="height: 100%;">
   </div>
 
@@ -121,7 +121,7 @@
 
       <!-- Logo Placeholder (Now the same width as inputs and centered) -->
       <div class="w-full flex justify-center mb-6">
-        <img src="images/whiskeyLogo.png"
+        <img src="images/1000.png"
              alt="Logo"
              class="w-full max-w-xs">
       </div>

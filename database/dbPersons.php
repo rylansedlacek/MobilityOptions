@@ -852,24 +852,49 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
             $person->get_photo_release_notes() . '");'
 */
     // updates the required fields of a person's account
+    
+    // UPDATED: still does the same thing, just safer and now gives back something other
+    // than true or false
     function update_person_required(
         $id, $first_name, $last_name, $city, $state,
         $email, $phone1, $email_prefs, $affiliation,
         $branch
     ) {
-        $query = "update dbpersons set 
-            first_name='$first_name', last_name='$last_name', 
-            city='$city', state='$state',
-            email='$email', phone1='$phone1',
-            affiliation='$affiliation', branch='$branch',
-            email_prefs='$email_prefs'
-        
-            where id='$id'";
-        $connection = connect();
-        $result = mysqli_query($connection, $query);
-        mysqli_commit($connection);
-        mysqli_close($connection);
-        return $result;
+
+        $con = connect();
+        $query = 
+        "UPDATE dbpersons SET
+            first_name = ?,
+            last_name = ?,
+            city = ?,
+            state = ?,
+            email = ?,
+            phone1 = ?,
+            affiliation = ?,
+            branch = ?,
+            email_prefs = ?
+            WHERE id = ?";
+
+        $stmt = $con->prepare($query);
+        $stmt->bind_param(
+            "sssssssssi",
+            $first_name, $last_name,
+            $city, $state,
+            $email, $phone1,
+            $affiliation, $branch,
+            $email_prefs,
+            $id
+        );
+
+        if ($stmt->execute()) {
+            $response = ["success" => true, "message" => "Profile updated successfully"];
+        } else {
+            $response = ["success" => false, "message" => $stmt->error];
+        }
+
+        $stmt->close();
+        mysqli_close($con);
+        return $response;
     }
 
     /**
@@ -1475,6 +1500,141 @@ function get_total_vol_hours($dateFrom, $dateTo) {
         mysqli_close($con);
         return [];
     }
+
+    // eligibility info insertion
+    function add_user_verified_ids($user_id, $id_type, 
+        $expiration_date = null, $notes = null) {
+        
+        $con = connect();
+        if (!$con) {return ["success" => false, "message" => "database connection failed"];}
+
+        // the default for incoming riders
+        $status = "pending";
+        $query = 
+        "INSERT into user_verified_ids
+        (user_id, id_type, status, expiration_date, notes)
+        VALUES (?, ?, ?, ?, ?)";
+
+        $stmt = $con->prepare($query);
+
+        if (!$stmt) {return ["success" => false, "message" => $con->error];}
+
+        $stmt->bind_param(
+            "sssss",
+            $user_id,
+            $id_type,
+            $status,
+            $expiration_date,
+            $notes
+        );
+
+        if ($stmt->execute()) {
+            $new_id = $stmt->insert_id;
+            $stmt->close();
+            mysqli_close($con);
+
+            return [
+                "success" => true,
+                "message" => "Eligibility record created successfully",
+                "record_id" => $new_id
+            ];
+        } else {
+            $error = $stmt->error;
+            $stmt->close();
+            mysqli_close($con);
+            return [ "success" => false, "message" => $error];
+        }
+    }
+
+    // allows staff and admins to accept or reject eligiblity status
+    // or leave them as pending too.
+    function update_user_verified_ids($record_id, $status, 
+        $approved_by = null) {
+
+        $con = connect();
+        if (!$con) {return ["success" => false, "message" => "database connection failed"];}
+
+        $allowed_statuses = ["pending", "approved", "rejected"];
+
+        if (!in_array($status, $allowed_statuses)) {
+            return [
+                "success" => false,
+                "message" => "invalid status selected"
+            ];
+        }
+
+        if ($status === "approved" && empty($approved_by)) {
+            return [
+                "success" => false,
+                "message" => "approved_by is required when approving"
+            ];
+        }
+
+        // set query based on status type
+        if ($status === "approved") {
+            $approved_at = date("Y-m-d H:i:s");
+
+            $query = 
+            "UPDATE user_verified_ids
+             SET status = ?,
+             approved_by = ?,
+             approved_at = ?
+             WHERE record_id = ?";
+
+            $stmt = $con->prepare($query);
+            if (!$stmt) {return ["success" => false, "message" => $con->error];}
+
+            $stmt->bind_param(
+                "sssi",
+                $status,
+                $approved_by,
+                $approved_at,
+                $record_id
+            );
+        } else {
+            $query = 
+            "UPDATE user_verified_ids
+             SET status = ?,
+             approved_by = NULL,
+             approved_at = NULL
+             WHERE record_id = ?";
+
+            $stmt = $con->prepare($query);
+            if (!$stmt) {return ["success" => false, "message" => $con->error];}
+
+            $stmt->bind_param(
+            "si",
+            $status,
+            $record_id
+            );
+        }
+
+        if ($stmt->execute()) {
+
+            if ($stmt->affected_rows > 0) {
+                $response = [ "success" => true,
+                    "message" => "Eligibility status updated successfully"
+                ];
+            } else {
+                $response = ["success" => false,
+                    "message" => "No record found or no change made"
+                ];
+            }
+
+            $stmt->close();
+            mysqli_close($con);
+            return $response;
+
+        } else {
+            $error = $stmt->error;
+            $stmt->close();
+            mysqli_close($con);
+
+            return [ "success" => false, "message" => $error];
+        }
+    }
+
+
 
     /*
     function get_tot_vol_hours($type,$stats,$dateFrom,$dateTo,$lastFrom,$lastTo){

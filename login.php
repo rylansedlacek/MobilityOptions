@@ -121,7 +121,7 @@
 
       <!-- Logo Placeholder (Now the same width as inputs and centered) -->
       <div class="w-full flex justify-center mb-6">
-        <img src="images/whiskeyLogo.png"
+        <img src="images/1000.png"
              alt="Logo"
              class="w-full max-w-xs">
       </div>

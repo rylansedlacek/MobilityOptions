@@ -27,7 +27,7 @@ function connect() {
     //     $user = 'generated';
     //     $database = 'generated';
     //     $pass = 'generated';
-    // } 
+    // }
  
     
     $con = mysqli_connect($host,$user,$pass,$database);

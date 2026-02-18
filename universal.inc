@@ -12,4 +12,4 @@
         <script src="css/header.js"></script>
         
 
-        <link rel="icon" type="image/x-icon" href="images/WV logo.WEBP">
+        <link rel="icon" type="image/png" href="images/healthyGenPageLogo.png">

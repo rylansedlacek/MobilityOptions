@@ -43,7 +43,7 @@
 
         body {
             font-family: Quicksand, sans-serif;
-            background-color: #1F1F21;
+            background-color: #ffffff;
         }
 
         h2 {
@@ -280,20 +280,21 @@
     .circle-arrow-button:hover .circle {
         transform: translateX(5px); /* Moves the circle slightly on hover */
     }
-.colored-box {
+
+    .colored-box {
     display: inline-block; /* Ensures it wraps tightly around the text */
-    background-color: #C9AB81; /* Change to any color */
+    background-color: #439084; /* Change to any color */
     color: white; /* Text color */
     padding: 1px 5px; /* Adds space inside the box */
     border-radius: 5px; /* Optional: Rounds the corners */
-    font-weight: bold; /* Optional: Makes text bold */
-}
+    font-weight: bold; /* Optional: Makes text bold */  
+    }
 
 
         /* Footer */
         .footer {
             width: 100%;
-            background: #C9AB81;
+            background: #439084;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;

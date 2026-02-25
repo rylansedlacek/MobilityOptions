@@ -860,41 +860,19 @@ function get_logged_hours($from, $to, $name_from, $name_to, $venue) {
         $email, $phone1, $email_prefs, $affiliation,
         $branch
     ) {
-
-        $con = connect();
-        $query = 
-        "UPDATE dbpersons SET
-            first_name = ?,
-            last_name = ?,
-            city = ?,
-            state = ?,
-            email = ?,
-            phone1 = ?,
-            affiliation = ?,
-            branch = ?,
-            email_prefs = ?
-            WHERE id = ?";
-
-        $stmt = $con->prepare($query);
-        $stmt->bind_param(
-            "sssssssssi",
-            $first_name, $last_name,
-            $city, $state,
-            $email, $phone1,
-            $affiliation, $branch,
-            $email_prefs,
-            $id
-        );
-
-        if ($stmt->execute()) {
-            $response = ["success" => true, "message" => "Profile updated successfully"];
-        } else {
-            $response = ["success" => false, "message" => $stmt->error];
-        }
-
-        $stmt->close();
-        mysqli_close($con);
-        return $response;
+      $query = "update dbpersons set 
+            first_name='$first_name', last_name='$last_name', 
+            city='$city', state='$state',
+            email='$email', phone1='$phone1',
+            affiliation='$affiliation', branch='$branch',
+            email_prefs='$email_prefs'
+        
+            where id='$id'";
+        $connection = connect();
+        $result = mysqli_query($connection, $query);
+        mysqli_commit($connection);
+        mysqli_close($connection);
+        return $result;
     }
 
     /**

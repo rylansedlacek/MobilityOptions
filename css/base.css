@@ -296,7 +296,7 @@ input[type=tel], select, textarea, .pseudo-input, .pseudo-input-disabled {
     margin-bottom: 0.5rem;
     scroll-margin: 7.5rem;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-    color: white;
+    color: #666;
 
 }
 
@@ -314,7 +314,7 @@ input[type=text]:focus, input[type=password]:active, input[type=email]:focus, in
 input[type=submit], button, .button, a.button-signup {
     color: var(--button-font-color);
     background-color:#2ea3f2;
-    padding: var(--button-padding);
+    padding: var(--button-padding);git
     border: 3px solid rgba(255, 255, 255, 0.295);
     border-radius: var(--button-border-radius);
     font-weight: 500;

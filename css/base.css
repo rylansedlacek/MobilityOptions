@@ -50,8 +50,8 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: rgb(31, 31, 33);
-    --page-font-color: white;
+    --page-background-color: rgba(0,0,0,0);
+    --page-font-color: #666;
     --inactive-font-color: #d0d0d0;
     --inactive-background-color: rgb(31,31,33);
     --standout-background: #fafafa;
@@ -70,9 +70,9 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --main-color: #2A435A; 
 
-    --accent-color: rgb(135, 25, 114);
+    --accent-color: #0e7162;
  
-    --secondary-accent-color: rgba(220, 144, 220, 0.775);
+    --secondary-accent-color: rgba(36, 245, 43, 0.775);
 
     /* Accessibility / WV theme variables */
     --wv-accent-color: #C9AB81; /* gold */
@@ -313,7 +313,7 @@ input[type=text]:focus, input[type=password]:active, input[type=email]:focus, in
 
 input[type=submit], button, .button, a.button-signup {
     color: var(--button-font-color);
-    background-color: var(--main-color);
+    background-color:#2ea3f2;
     padding: var(--button-padding);
     border: 3px solid rgba(255, 255, 255, 0.295);
     border-radius: var(--button-border-radius);
@@ -843,9 +843,7 @@ form.signup-form .section-box {
     background-color: var(--page-background-color);
 }
 
-.section-box.emergency-section-box {
-  border: 2px solid red !important;
-}
+
 
 form.signup-form > fieldset {
     padding: 1.5rem;

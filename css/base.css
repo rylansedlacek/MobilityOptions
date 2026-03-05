@@ -736,7 +736,7 @@ img.filter-button {
 
 button.cancel, a.cancel {
     background-color: var(--cancel-button-background-color);
-    color: white;
+    color: white !important;
 }
 
 button.cancel:hover, a.cancel:hover {

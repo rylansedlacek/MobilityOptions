@@ -62,7 +62,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --main-color: #00aeef;
     --accent-color: #39B54A;
-    --secondary-accent-color: #f6a4b5;
+    --secondary-accent-color: blue;
 
     --calendar-event-color: #808080;
     --calendar-event-color-hover: var(--main-color);
@@ -829,14 +829,6 @@ table.general th, table.general td {
     main.general, form.general {
         margin: 0rem 8rem 4rem 8rem;
     }
-}
-
-form.fieldset.emergency-section-box {
-    border: 1px solid red !important;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: var(--page-background-color);
 }
 
 .section-box {

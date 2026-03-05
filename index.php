@@ -403,7 +403,7 @@
     
         .content-box-test {
             position: relative;
-            background-color: #C9AB81;   /* tan background */
+            background-color: #b8d432;   /* light green background */
             border-radius: 12px;
             padding: 20px;
             color: black;                 /* default text color */

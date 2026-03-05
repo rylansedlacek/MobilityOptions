@@ -62,7 +62,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --main-color: #00aeef;
     --accent-color: #39B54A;
-    --secondary-accent-color: #f6a4b5;
+    --secondary-accent-color: blue;
 
     --calendar-event-color: #808080;
     --calendar-event-color-hover: var(--main-color);

@@ -134,8 +134,8 @@ require_once('header.php');
             echo "<p>Invalid phone type.</p>";
             $errors = true;
         }*/
-
-        /*$emergency_contact_first_name = $args['emergency_contact_first_name'];
+//emergency contact?
+       /* $emergency_contact_first_name = $args['emergency_contact_first_name'];
         $emergency_contact_last_name = $args['emergency_contact_last_name'];
         $emergency_contact_relation = $args['emergency_contact_relation'];
 
@@ -143,14 +143,14 @@ require_once('header.php');
         if (!$emergency_contact_phone) {
             echo "<p>Invalid emergency contact phone.</p>";
             $errors = true;
-        } */
+        } 
 
-        /*$emergency_contact_phone_type = $args['emergency_contact_phone_type'];
+        $emergency_contact_phone_type = $args['emergency_contact_phone_type'];
         if (!valueConstrainedTo($emergency_contact_phone_type, array('cellphone', 'home', 'work'))) {
             echo "<p>Invalid emergency phone type.</p>";
             $errors = true;
-        }*/
-
+        }
+*/
         /*$skills = isset($args['skills']) ? $args['skills'] : '';
         $interests = isset($args['interests']) ? $args['interests'] : '';
 

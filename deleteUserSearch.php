@@ -79,7 +79,7 @@ require_once('header.php');
 
 <header class="hero-header">
     <div class="center-header">
-        <h1>Delete User Account From Organization</h1>
+        <h1>Delete Rider Account From Organization</h1>
     </div>
 </header>
 
@@ -94,11 +94,14 @@ require_once('header.php');
         <form id="person-search" class="space-y-6" method="get">
 
         <?php
-            if (isset($_GET['name']) || isset($_GET['id']) || isset($_GET['phone']) || isset($_GET['zip']) || isset($_GET['role']) || isset($_GET['status']) || isset($_GET['photo_release'])) {
+    //        if (isset($_GET['name']) || isset($_GET['id']) || isset($_GET['phone']) || isset($_GET['zip']) || isset($_GET['role']) || isset($_GET['status']) || isset($_GET['photo_release'])) {
+            if (isset($_GET['name']) || isset($_GET['id']) || isset($_GET['phone']) || isset($_GET['zip']) || isset($_GET['role']) || isset($_GET['status'])) {
+
                 require_once('include/input-validation.php');
                 require_once('database/dbPersons.php');
                 $args = sanitize($_GET);
-                $required = ['name', 'id', 'phone', 'zip', 'role', 'status', 'photo_release'];
+            //   $required = ['name', 'id', 'phone', 'zip', 'role', 'status', 'photo_release'];
+                $required = ['name', 'id', 'phone', 'zip', 'role', 'status'];
 
                 if (!wereRequiredFieldsSubmitted($args, $required, true)) {
                     echo '<div class="error-block">Missing expected form elements.</div>';
@@ -110,19 +113,22 @@ require_once('header.php');
                 $zip = $args['zip'];
                 $role = $args['role'];
                 $status = $args['status'];
-                $photo_release = $args['photo_release'];
+               // $photo_release = $args['photo_release'];
 
-                if (!($name || $id || $phone || $zip || $role || $status || $photo_release)) {
+                //if (!($name || $id || $phone || $zip || $role || $status || $photo_release)) {
+                if (!($name || $id || $phone || $zip || $role || $status)) {
                     echo '<div class="error-block">At least one search criterion is required.</div>';
                 } else if (!valueConstrainedTo($role, ['admin', 'participant', 'superadmin', 'volunteer', ''])) {
                     echo '<div class="error-block">The system did not understand your request.</div>';
                 } else if (!valueConstrainedTo($status, ['Active', 'Inactive', ''])) {
                     echo '<div class="error-block">The system did not understand your request.</div>';
-                } else if (!valueConstrainedTo($photo_release, ['Restricted', 'Not Restricted', ''])) {
-                    echo '<div class="error-block">The system did not understand your request.</div>';
+                //} else if (!valueConstrainedTo($photo_release, ['Restricted', 'Not Restricted', ''])) {
+                    //echo '<div class="error-block">The system did not understand your request.</div>';
                 } else {
                     echo "<h3>Search Results</h3>";
-                    $persons = find_users($name, $id, $phone, $zip, $role, $status, $photo_release);
+                    //$persons = find_users($name, $id, $phone, $zip, $role, $status, $photo_release);
+                    $persons = find_users($name, $id, $phone, $zip, $role, $status);
+
                     require_once('include/output.php');
 
                     if (count($persons) > 0) {
@@ -220,7 +226,7 @@ require_once('header.php');
                     <option value="Inactive" <?php if (isset($status) && $status == 'Inactive') echo 'selected'; ?>>Archived</option>
                 </select>
             </div>
-
+            <!-- 
             <div>
                 <label for="photo_release">Photo Release</label>
                 <select id="photo_release" name="photo_release" class="w-full">
@@ -229,6 +235,7 @@ require_once('header.php');
                     <option value="Restricted" <?php if (isset($photo_release) && $photo_release == 'Restricted') echo 'selected'; ?>>Restricted</option>
                 </select>
             </div>
+            -->
 
             <div class="text-center pt-4">
                 <input type="submit" value="Search" class="blue-button">

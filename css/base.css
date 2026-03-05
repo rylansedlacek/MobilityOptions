@@ -9,6 +9,7 @@ but no code was taken from there. All of the code below is original code.
 **/
 
 
+
 /* Create variable fonts for standard and italics versions of the fontface used by the org (Montserrat by Google) */
 @font-face {
     font-family: 'Montserrat';
@@ -49,8 +50,8 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: rgb(31, 31, 33);
-    --page-font-color: white;
+    --page-background-color: rgba(0,0,0,0);
+    --page-font-color: #666;
     --inactive-font-color: #d0d0d0;
     --inactive-background-color: rgb(31,31,33);
     --standout-background: #fafafa;
@@ -69,9 +70,9 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --main-color: #2A435A; 
 
-    --accent-color: rgb(135, 25, 114);
+    --accent-color: #0e7162;
  
-    --secondary-accent-color: rgba(220, 144, 220, 0.775);
+    --secondary-accent-color: rgba(36, 245, 43, 0.775);
 
     /* Accessibility / WV theme variables */
     --wv-accent-color: #C9AB81; /* gold */
@@ -295,7 +296,7 @@ input[type=tel], select, textarea, .pseudo-input, .pseudo-input-disabled {
     margin-bottom: 0.5rem;
     scroll-margin: 7.5rem;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
-    color: white;
+    color: #666;
 
 }
 
@@ -312,8 +313,8 @@ input[type=text]:focus, input[type=password]:active, input[type=email]:focus, in
 
 input[type=submit], button, .button, a.button-signup {
     color: var(--button-font-color);
-    background-color: var(--main-color);
-    padding: var(--button-padding);
+    background-color:#2ea3f2;
+    padding: var(--button-padding);git
     border: 3px solid rgba(255, 255, 255, 0.295);
     border-radius: var(--button-border-radius);
     font-weight: 500;
@@ -813,6 +814,10 @@ main.dashboard > p {
     }
 }
 
+/*Emergency Contact sign up form */
+
+
+
 /* Sign up form */
 
 @media only screen and (min-width: 1024px) {
@@ -827,6 +832,8 @@ form.signup-form {
     flex-direction: column;
 }
 
+
+
 /* thomas added this */
 form.signup-form .section-box {
     border: 1px solid var(--accent-color);
@@ -835,6 +842,8 @@ form.signup-form .section-box {
     margin-bottom: 20px;
     background-color: var(--page-background-color);
 }
+
+
 
 form.signup-form > fieldset {
     padding: 1.5rem;
@@ -1517,3 +1526,4 @@ div .dd {
     padding: 1rem;
     background-color: rgba(0,0,0,0.15);
 }
+

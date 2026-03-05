@@ -169,12 +169,12 @@
             <!--<label for="zip_code"><em>* </em>Zip Code</label>
             <input type="text" id="zip_code" name="zip_code" value="<?php //echo hsc($person->get_zip_code()); ?>" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">-->
             <div class="median-div"></div>
-            <label for="affiliation"><em>* </em>Military Affiliation</label>
-            <?php echo hsc($person->get_affiliation()); ?>
+            <!--<label for="affiliation"><em>* </em>Military Affiliation</label>-->
+            <!--<?php echo hsc($person->get_affiliation()); ?>-->
             </select>
 
-            <label for="branch"><em>* </em>Branch of Service</label>
-            <?php echo hsc($person->get_branch()); ?>
+            <!--<label for="branch"><em>* </em>Branch of Service</label>
+            <?php echo hsc($person->get_branch()); ?>-->
         </fieldset>
 
         <fieldset class="section-box">
@@ -244,7 +244,7 @@
             <div class="blue-div"></div>
 
             <label>Email Preferences</label>
-            <p>Would you like to recieve emails from the Whiskey Valor Foundation?</p>
+            <p>Would you like to recieve emails from Healthy Generations?</p>
             <div class="radio-group">
                 <div class="radio-element">
                     <input type="checkbox" id="reminders" name="email_prefs" value="reminders" <?php
@@ -266,7 +266,7 @@
         <input type="hidden" name="id" value="<?php echo $id; ?>">
         <input type="submit" name="profile-edit-form" value="Update Profile">
         <?php if ($editingSelf): ?>
-            <a class="button cancel" href="viewProfile.php" style="margin-top: -.5rem">Cancel</a>
+            <a class="button cancel" href="viewProfile.php" style="margin-top: .5rem">Cancel</a>
         <?php else: ?>
             <a class="button cancel" href="viewProfile.php?id=<?php echo htmlspecialchars($_GET['id']) ?>" style="margin-top: -.5rem">Cancel</a>
         <?php endif ?>

@@ -47,15 +47,15 @@ require_once('header.php');
         }   
 
     body {
-        background-color: #1F1F21 !important;
+        background-color: #fafafa !important;
     }
 
     .info-text {
-        color: #C9AB81 !important;
+        color: #0e7162 !important;
     }
 
     .blue-div {
-        background-color: #C9AB81 !important;
+        background-color: #fafafa !important;
     }
 
     .text-blue-700,

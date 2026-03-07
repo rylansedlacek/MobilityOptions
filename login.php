@@ -152,7 +152,7 @@
         </div>
         <div class="flex justify-between items-center mb-4">
           <a href="#" class="text-[#5283c7] text-sm hover:underline">Forgot password?</a>
-          <a href="https://healthygenerations.org/" class="text-[#5283c7] text-sm hover:underline">Healthy Generations Website</a>
+          <a href="https://healthygenerations.org/" target="_blank" class="text-[#5283c7] text-sm hover:underline">Healthy Generations Website</a>
         </div>
         <button class="cursor-pointer w-full bg-[#45892e] hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-300">Login</button>
       </form>

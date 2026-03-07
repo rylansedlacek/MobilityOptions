@@ -905,6 +905,7 @@
   }
   p {
     font-size: var(--text-lg);
+    color: #666;
     line-height: var(--tw-leading, var(--text-lg--line-height));
     --tw-leading: var(--leading-relaxed);
     line-height: var(--leading-relaxed);
@@ -934,14 +935,14 @@
     border-radius: var(--radius-2xl);
     border-style: var(--tw-border-style);
     border-width: 2px;
-    border-color: var(--color-gray-300);
+    border-color: #45892e !important;
     background-color: var(--color-white);
     padding: calc(var(--spacing) * 6);
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
-    color: var(--color-gray-700);
+    color: #45892e !important;
     --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     transition-property: all;
@@ -1027,7 +1028,7 @@
     width: 100%;
     flex-direction: column;
     justify-content: center;
-    color: var(--color-gray-700);
+    color:  #0e7162;
     @media (width >= 64rem) {
       width: calc(1/2 * 100%);
     }
@@ -1035,11 +1036,11 @@
   .div-blue {
     height: 1px;
     width: 100%;
-    background-color: var(--color-blue-900);
+    background-color: #45892e;
   }
   .return-button {
     border-radius: var(--radius-lg);
-    background-color: var(--color-gray-500);
+    background-color:  #45892e !important;
     padding-inline: calc(var(--spacing) * 6);
     padding-block: calc(var(--spacing) * 2);
     color: var(--color-white);

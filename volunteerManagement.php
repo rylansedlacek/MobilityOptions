@@ -50,28 +50,35 @@ require_once('header.php');
 	}
 
   .top-bar {
-      background-color: #C9AB81;   /* gold color */
+      background-color: #fafafa;  /* white header color */
       height: 200px;             /* height of the bar */
       width: 100%;              /* full width */
       position: fixed;
   }
 
   body {
-    background-color: #1F1F21; 
+    background-color: transparent; 
   }
 
   .button-left-gray {
-    background-color: #C9AB81 !important;
+    font-weight: 500;
+    padding: .3em 1em;
+    background-color: #b8d432 !important;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    /*border: 2px solid;*/
+    border-radius: 3px; 
   }
 
 
  .button-section button {
-    background-color: #C9AB81 !important;
+    background-color: transparent !important;
     color: black !important;
   }
 
 .div-blue {
-    background-color: #C9AB81;
+    background-color: #45892e;
   }
 
 .button-icon {
@@ -79,11 +86,11 @@ require_once('header.php');
   } 
 
 .text-section h1 {
-    color: #C9AB81 !important;
+    color: #0e7162 !important;
   }
 
 .text-section p {
-    color: #C9AB81 !important;
+    color: #666 !important;
   }
 
 .button-section button > div {

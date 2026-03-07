@@ -123,7 +123,7 @@
       <div class="w-full flex justify-center mb-6">
         <img src="images/healthyGenerations.png"
              alt="Logo"
-             class="w-full max-w-xs" style="height: 450px; padding-top: 5px;">
+             class="w-full max-w-xs" style="height: 475px; padding-top: 8px; margin-top: 10px">
       </div>
 
       <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">

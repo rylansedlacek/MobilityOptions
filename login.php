@@ -109,7 +109,7 @@
   <div class="hidden md:block md:w-1/2 bg-center rounded-r-[50px] bg-[#1F1F21]">
       <img src="images/login-side-image.jpg"
             alt="Healthy Generations"
-            style="height:100vh; width:auto; object-fit:cover;">
+            style="height:100vh; width:auto;">
   </div>
 
   <!-- Right: Form Section -->

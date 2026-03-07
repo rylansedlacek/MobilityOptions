@@ -51,22 +51,22 @@ require_once('header.php');
 	    }
         
         body{
-        background-color: #1F1F21;
+        background-color: #fafafa;
         }
         .button-section button{
-        background-color: #C9AB81;
+        background-color: #fafafa;
         color: black !important;
         }
 
         .button-left-gray{
-        background-color: #C9AB81;
+        background-color: #fafafa;
         }
 
         .button-section .button-icon{
         filter: none
         }
     .top-bar {
-      background-color: #C9AB81;   /* gold color */
+      background-color: #fafafa;   /* gold color */
       height: calc(var(--spacing) * 40);
       width: 100%;              /* full width */
       position: relative;

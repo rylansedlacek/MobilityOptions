@@ -98,13 +98,13 @@
 
       const tabs = document.querySelectorAll('.tab-button');
       tabs.forEach(tab => {
-        tab.classList.remove('border-b-4', 'border-[#C9AB81]');
-        tab.classList.add('hover:border-b-2', 'hover:border-[#C9AB81]');
+        tab.classList.remove('border-b-4', 'border-[#45892e]');
+        tab.classList.add('hover:border-b-2', 'hover:border-[#45892e]');
       });
 
       const activeTab = document.querySelector(`[data-tab="${sectionId}"]`);
-      activeTab.classList.add('border-b-4', 'border-[#C9AB81]');
-      activeTab.classList.remove('hover:border-b-2', 'hover:border-[#C9AB81]');
+      activeTab.classList.add('border-b-4', 'border-[#45892e]');
+      activeTab.classList.remove('hover:border-b-2', 'hover:border-[#45892e]');
     }
 
     window.onload = () => showSection('personal');
@@ -159,26 +159,26 @@
           <h2 class="text-xl font-semibold mb-4">My Profile</h2>
 
 	<?php else: ?>
-	  <h2 class="text-xl font-semibold mb-4">Viewing <?php echo $user->get_first_name() . ' ' . $user->get_last_name() ?></h2>
+	  <h2 class="text-xl font-semibold mb-4">Viewing: <?php echo $user->get_first_name() . ' ' . $user->get_last_name() ?></h2>
 	<?php endif ?>
 	</div>
         <div class="space-y-2 divide-y divide-gray-300">
           <div class="flex justify-between py-2">
             <span class="font-medium">Joined</span><span>Jan 2022</span>
           </div>
-          <div class="flex justify-between py-2">
+          <!-- <div class="flex justify-between py-2">
             <span class="font-medium">Branch</span><span><?php echo ucfirst($user->get_branch()) ?></span>
-          </div>
+          </div> -->
           <div class="flex justify-between py-2">
-            <span class="font-medium">Affiliation</span><span><?php echo ucfirst($user->get_affiliation()) ?></span>
+            <span class="font-medium">Affiliation</span><span></span> <!--<?php echo ucfirst($user->get_current_user) ?></span>-->
           </div>
         </div>
       </div>
       <div class="mt-6 space-y-2">
-        <button type="button" class="text-lg font-medium w-full px-4 py-2 bg-[#C9AB81] text-[#1F1F21] rounded-md hover:bg-[#1F1F21] hover:text-[#C9AB81] cursor-pointer" onclick="openModal('verifiedIdsModal')">
+        <button type="button" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 bg-[#fafafa] text-[#1F1F21] rounded-md hover:border-[#1F1F21] cursor-pointer" onclick="openModal('verifiedIdsModal')">
           View Verified IDs
         </button>
-        <button onclick="window.location.href='editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>';" class="text-lg font-medium w-full px-4 py-2 bg-[#C9AB81] text-[#1F1F21] rounded-md hover:bg-[#1F1F21] hover:text-[#C9AB81] cursor-pointer">Edit Profile</button>
+        <button onclick="window.location.href='editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>';" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 bg-[#fafafa] text-[#1F1F21] rounded-md hover:border-[#1F1F21] cursor-pointer">Edit Profile</button>
         <button onclick="window.location.href='index.php';" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 text-black rounded-md hover:border-[#1F1F21] cursor-pointer">Return to Dashboard</button>
       </div>
     </div>

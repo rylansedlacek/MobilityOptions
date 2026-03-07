@@ -109,7 +109,7 @@
   <div class="hidden md:block md:w-1/2 bg-center rounded-r-[50px] bg-[#1F1F21]">
       <img src="images/login-side-image.jpg"
             alt="Healthy Generations"
-            style="height:100vh; width:auto; object-fit:cover;">
+            style="height:100vh; width:auto;">
   </div>
 
   <!-- Right: Form Section -->
@@ -123,7 +123,7 @@
       <div class="w-full flex justify-center mb-6">
         <img src="images/healthyGenerations.png"
              alt="Logo"
-             class="w-full max-w-xs" style="height: 450px; padding-top: 5px;">
+             class="w-full max-w-xs" style="height: 475px; padding-top: 8px; margin-top: 10px">
       </div>
 
       <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">
@@ -152,7 +152,7 @@
         </div>
         <div class="flex justify-between items-center mb-4">
           <a href="#" class="text-[#5283c7] text-sm hover:underline">Forgot password?</a>
-          <a href="https://healthygenerations.org/" class="text-[#5283c7] text-sm hover:underline">Healthy Generations Website</a>
+          <a href="https://healthygenerations.org/" target="_blank" class="text-[#5283c7] text-sm hover:underline">Healthy Generations Website</a>
         </div>
         <button class="cursor-pointer w-full bg-[#45892e] hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-300">Login</button>
       </form>
@@ -167,7 +167,7 @@
       <!-- Sign Up Section -->
       <p class="text-center text-gray-700">
         Don’t have an account?
-        <a href="VolunteerRegister.php" class="text-[#5283c7] font-semibold hover:underline">Sign Up Now</a>
+        <a href="VolunteerRegister.php" target="_blank" class="text-[#5283c7] font-semibold hover:underline">Sign Up Now</a>
       </p>
 
     </div>

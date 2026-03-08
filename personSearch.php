@@ -47,31 +47,31 @@ require_once('header.php');
         }   
 
         body, main {
-        background-color: #1F1F21;
+        background-color: #fafafa;
         }
 
         .text-blue-700,
         .text-blue-700:visited {
-        color: black !important;
+        color: #666 !important;
         }   
 
         .info-section .info-text {
-         color: #C9AB81 !important;
+         color: #666 !important;
         }
 
         .blue-div {
-        background-color: #C9AB81 !important;
+        background-color: #0e7162 !important;
         }
 
         .main-content-box label {
-        color: #000000 !important;
+        color: #0e7162 !important;
         }
         
         .text-blue-700 {
-        color: #000000 !important;
+        color: #666 !important;
         }
         .sub-text {
-        color: black !important;
+        color: #666 !important;
         }
 
         .main-content-box table,
@@ -106,7 +106,7 @@ require_once('header.php');
 
 <header class="hero-header">
     <div class="center-header">
-        <h1>Volunteer/Participant Search</h1>
+        <h1>Rider Search</h1>
     </div>
 </header>
 
@@ -114,7 +114,7 @@ require_once('header.php');
     <div class="main-content-box w-[80%] p-8">
 
         <div class="text-center mb-8">
-            <h2>Find a Volunteer or Participant</h2>
+            <h2>Find a Rider</h2>
             <p class="sub-text">Use filters below to search and create mailing lists.</p>
         </div>
 

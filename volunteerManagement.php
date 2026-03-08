@@ -50,28 +50,35 @@ require_once('header.php');
 	}
 
   .top-bar {
-      background-color: #C9AB81;   /* gold color */
+      background-color: #fafafa;  /* white header color */
       height: 200px;             /* height of the bar */
       width: 100%;              /* full width */
       position: fixed;
   }
 
   body {
-    background-color: #1F1F21; 
+    background-color: transparent; 
   }
 
   .button-left-gray {
-    background-color: #C9AB81 !important;
+    font-weight: 500;
+    padding: .3em 1em;
+    background-color: #b8d432 !important;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    /*border: 2px solid;*/
+    border-radius: 3px; 
   }
 
 
  .button-section button {
-    background-color: #C9AB81 !important;
+    background-color: transparent !important;
     color: black !important;
   }
 
 .div-blue {
-    background-color: #C9AB81;
+    background-color: #45892e;
   }
 
 .button-icon {
@@ -79,11 +86,11 @@ require_once('header.php');
   } 
 
 .text-section h1 {
-    color: #C9AB81 !important;
+    color: #0e7162 !important;
   }
 
 .text-section p {
-    color: #C9AB81 !important;
+    color: #666 !important;
   }
 
 .button-section button > div {
@@ -109,13 +116,13 @@ require_once('header.php');
       <div class="button-section">
         <button onclick="window.location.href='VolunteerRegister.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Register New User</div>
+	  <div>Register New Rider</div>
 	  <img class="button-icon" src="images/add-person.svg" alt="Person Icon">
         </button>
 
         <button onclick="window.location.href='personSearch.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Search Registered Users</div>
+	  <div>Search Registered Riders</div>
 	  <img class="button-icon" src="images/person-search.svg" alt="Person Icon">
         </button>
 
@@ -128,7 +135,7 @@ require_once('header.php');
 
     <button onclick="window.location.href='deleteUserSearch.php';">
         <div class="button-left-gray"></div>
-        <div>Delete User</div>
+        <div>Delete Rider</div>
         <img class="button-icon h-10 w-10 left-5" src="images/trash.svg" alt="Person Icon">
     </button>
 
@@ -152,10 +159,10 @@ require_once('header.php');
 
       <!-- Text Section -->
       <div class="text-section">
-        <h1>User Account Management</h1>
+        <h1>Rider Account Management</h1>
         <div class="div-blue"></div>
         <p>
-          Welcome to the user management hub. From this menu, you will have access to operations such as creating, deleting, and searching accounts. More features soon to be implemented.
+          Welcome to the rider management hub. From this menu, you will have access to operations such as creating, deleting, and searching riders. More features soon to be implemented.
         </p>
       </div>
 

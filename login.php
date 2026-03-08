@@ -100,16 +100,16 @@
 }
 * { font-family: Quicksand, sans-serif; }
 	</style>
-        <title>Whiskey Valor Foundation | Log In</title>
+        <title>Mobility Options | Log In</title>
     </head>
     <body>
 <div class="h-screen flex">
 
   <!-- Left: Image Section (Hidden on small screens) -->
   <div class="hidden md:block md:w-1/2 bg-center rounded-r-[50px] bg-[#1F1F21]">
-      <img src="images/healthyGenerations.png"
+      <img src="images/login-side-image.jpg"
             alt="Healthy Generations"
-            style="height: 100%;">
+            style="height:100vh; width:auto;">
   </div>
 
   <!-- Right: Form Section -->
@@ -121,22 +121,22 @@
 
       <!-- Logo Placeholder (Now the same width as inputs and centered) -->
       <div class="w-full flex justify-center mb-6">
-        <img src="images/1000.png"
+        <img src="images/healthyGenerations.png"
              alt="Logo"
-             class="w-full max-w-xs">
+             class="w-full max-w-xs" style="height: 475px; padding-top: 8px; margin-top: 10px">
       </div>
 
       <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">
-	<span class="wave">👋</span> Nice to see you again.
+	Welcome back! <span class="wave">👋</span>
       </h2>
 
       <form class="w-full" method="post">
                 <?php
                     if ($badLogin) {
-                        echo '<span class="text-white bg-red-700 text-center block p-2 rounded-lg mb-2">No login with that username and password combination currently exists.</span>';
+                        echo '<span class="text-white bg-red-700 text-center block p-2 rounded-lg mb-2">No login with that username and/or password combination found.</span>';
                     }
                     if ($archivedAccount) {
-                        echo '<span class="text-white bg-red-700 block p-2 rounded-lg mb-2">This account has either been archived or not yet approved by managment. For help, notify <a href="mailto:volunteer@fredspca.org">volunteer@fredspca.org</a>.</span>';
+                        echo '<span class="text-white bg-red-700 block p-2 rounded-lg mb-2">This account has either been archived or not yet approved by managment. For help, notify <a href="mailto:volunteer@MBOPTIONSEMAILHERES.org">volunteer@MBOPTIONSEMAILHERES.org</a>.</span>';
                     }
 		    if (isset($_GET['registerSuccess'])) {
                         echo '<span class="text-white text-center bg-green-700 block p-2 rounded-lg mb-2">Registration Successful! Please login below.</span>';
@@ -151,10 +151,10 @@
           <input class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400" type="password" name="password" placeholder="Enter your password" required>
         </div>
         <div class="flex justify-between items-center mb-4">
-          <a href="#" class="text-[#22654D] text-sm hover:underline">Forgot password?</a>
-          <a href="https://whiskeyvalor.org" class="text-[#22654D] text-sm hover:underline">Whiskey Valor Website</a>
+          <a href="#" class="text-[#5283c7] text-sm hover:underline">Forgot password?</a>
+          <a href="https://healthygenerations.org/" target="_blank" class="text-[#5283c7] text-sm hover:underline">Healthy Generations Website</a>
         </div>
-        <button class="cursor-pointer w-full bg-[#C9AB81] hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-300">Login</button>
+        <button class="cursor-pointer w-full bg-[#45892e] hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition duration-300">Login</button>
       </form>
 
       <!-- Divider -->
@@ -167,7 +167,7 @@
       <!-- Sign Up Section -->
       <p class="text-center text-gray-700">
         Don’t have an account?
-        <a href="VolunteerRegister.php" class="text-[#22654D] font-semibold hover:underline">Sign Up Now</a>
+        <a href="VolunteerRegister.php" target="_blank" class="text-[#5283c7] font-semibold hover:underline">Sign Up Now</a>
       </p>
 
     </div>

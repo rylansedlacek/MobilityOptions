@@ -31,14 +31,73 @@
             <label for="last_name"><em>* </em>Last Name</label>
             <input type="text" id="last_name" name="last_name" required placeholder="Enter last name">
 
-            
-            <!--<div class="median-div"></div>-->
+    <label><em>* </em>Do you have any disabilities?</label>
+    <div class="radio-group">
+        <div class="radio-element">
+            <input type="radio" id="disYes" name="has_disability" value="yes" required>
+        <label for="disYes">Yes</label>
+        </div>
+        <div class="radio-element">
+            <input type="radio" id="disNo" name="has_disability" value="no">
+            <label for="disNo">No</label>
+        </div>
+    </div>
+
+
+<div id="disabilityDetails" style="display:none; margin-top: 10px;">
+  <label for="disabilityType"><em>* </em>Disability type</label>
+  <select id="disabilityType" name="disability_type">
+    <option value="">Select one...</option>
+    <option value="mobility">Mobility</option>
+    <option value="vision">Vision</option>
+    <option value="hearing">Hearing</option>
+    <option value="cognitive">Cognitive</option>
+    <option value="other">Other</option>
+  </select>
+
+  <label for="mobilityNeeds" style="display:block; margin-top:10px;">
+    Mobility needs / accommodations
+  </label>
+  <input
+    type="text"
+    id="mobilityNeeds"
+    name="mobility_needs"
+    placeholder="e.g., wheelchair accessible vehicle, extra time, assistance…"
+  />
+</div>
+
+<script>
+  const yes = document.getElementById("disYes");
+  const no = document.getElementById("disNo");
+  const details = document.getElementById("disabilityDetails");
+  const disabilityType = document.getElementById("disabilityType");
+  const mobilityNeeds = document.getElementById("mobilityNeeds");
+
+  function toggleDetails() {
+    if (yes.checked) {
+      details.style.display = "block";
+      disabilityType.required = true;
+    } else {
+      details.style.display = "none";
+      disabilityType.required = false;
+      //in backend we should have an if statement that checks if has_disability is yes before looking at the disability type and mobility needs
+      disabilityType.value = "";
+      mobilityNeeds.value = "";
+    }
+  }
+
+  yes.addEventListener("change", toggleDetails);
+  no.addEventListener("change", toggleDetails);
+</script>
 
             <label for="birthdate"><em>* </em>Date of Birth</label>
             <input type="date" id="birthdate" name="birthdate" required placeholder="Enter rider birthday" max="<?php echo date('Y-m-d'); ?>">
             
             <label for="street_address"><em>* </em>Street Address</label>
             <input type="text" id="street_address" name="street_address" required placeholder="Enter street address">
+
+            <label for="address"><em>* </em>Address</label>
+            <input type="text" id="address" name="address" required placeholder="Enter your home address">
 
             <label for="city"><em>* </em>City</label>
             <input type="text" id="city" name="city" required placeholder="Enter city">
@@ -98,14 +157,38 @@
                 <option value="WI">Wisconsin</option>
                 <option value="WY">Wyoming</option>
             </select>
-
-            <label for="zip"><em>* </em>Zip Code</label>
-            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter 5-digit zip code">
-            
         
+            <label for="zipcode"><em>* </em>Zip Code</label>
+            <input type="text" id="zipcode"name="zipcode" pattern="^\d{5}(-\d{4})?$" required placeholder="Ex: 12345 or 12345-6789">
 
+            <!--<label for="zip"><em>* </em>Zip Code</label>
+            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
+-->
+            <!-- MILITARY INFO - prob dont need, maybe can utilize later 
+            <div class="median-div"></div>
+            <label for="affiliation"><em>* </em>Military Affiliation</label>
+            <select id="affiliation" name="affiliation" required>
+                <option value="" disabled selected></option>
+                <option value="Active duty">Active duty</option>
+                <option value="Family">Family member (spouse, child, or parent)</option>
+                <option value="Reserve">Reservist</option>
+                <option value="Veteran">Veteran</option>
+                <option value="Civilian">Civilian</option>
+            </select>
 
+            <label for="branch"><em>* </em>Branch of Service</label>
+            <select id="branch" name="branch" required>
+                <option value="" disabled selected></option>
+                <option value="Air Force">Air Force</option>
+                <option value="Army">Army</option>
+                <option value="Coast Guard">Coast Guard</option>
+                <option value="Marine Corp">Marine Corp</option>
+                <option value="Navy">Navy</option>
+                <option value="Space Force">Space Force</option>
+            </select>
+        /*
         </fieldset>
+        -->
 
         <fieldset class="section-box mb-4">
             <h3>Contact Information</h3>
@@ -124,6 +207,34 @@
             <label for="phone1">Phone Number</label>
             <input type="tel" id="phone1" name="phone1" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
 
+            <div class="median-div"></div>
+
+            <!--emergency contact info stuff -->
+        <fieldset class="section-box mb-4">
+            <h3>Emergency Contact Information</h3>
+            <p class="mb-2">Please provide information for an emergency contact.</p>
+	    <div class="blue-div"></div>
+        <label for="emergency_first_name"><em>* </em>First Name</label>
+            <input type="text" id="emergency_first_name" name="emergency_first_name" required placeholder="Enter their first name">
+
+            <label for="emergency_last_name"><em>* </em>Last Name</label>
+            <input type="text" id="emergency_last_name" name="emergency_last_name" required placeholder="Enter their last name">
+            <label for="emergency_email"><em>* </em>E-mail</label>
+            <input type="email" id="emergency_email" name="emergency_email" required placeholder="Enter their email address">
+
+
+            <label for="emergency_phone"> <em>* </em> Phone Number</label>
+            <input type="tel" id="emergency_phone" name="emergency_phone" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" required placeholder="Ex. (555) 555-5555">
+
+            <label for="affiliation"><em>* </em>Personal Affiliation</label>
+            <select id="affiliation" name="affiliation" required>
+                <option value="" disabled selected></option>
+                <option value="Spouse">Spouse</option>
+                <option value="Family">Family member</option>
+                <option value="Friend">Friend</option>
+                <option value="Legal Guardian">Legal Guardian</option>
+            </select>
+
             <!--<label><em>* </em>Phone Type</label>
             <div class="radio-group">
 	      <div class="radio-element">
@@ -138,8 +249,8 @@
             </div>-->
 
         </fieldset>
-
-        <fieldset class="section-box mb-4">
+        </fieldset>
+        <!--<fieldset class="section-box mb-4">
             <h3>Emergency Contact</h3>
             <p class="mb-2">Please provide emergency contact information to contact on the riders' behalf in case of an emergency.</p>
 	    <div class="blue-div"></div>
@@ -229,6 +340,16 @@
             numericOnly: true,
         });
         var cleavePhone = new Cleave('#emergency_contact_phone', {
+            phone: true,
+            phoneRegionCode: 'US',
+            delimiter: '-',
+            numericOnly: true,
+        });
+        </script>
+
+        <script>
+        // Initialize Cleave.js for primary phone number
+        new Cleave('#emergency_phone', {
             phone: true,
             phoneRegionCode: 'US',
             delimiter: '-',

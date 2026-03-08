@@ -230,12 +230,9 @@
         });
         var cleavePhone = new Cleave('#emergency_contact_phone', {
             phone: true,
-            phoneRegionCode: 'US'
-        });
-
-        document.querySelector("form").addEventListener("submit", function(){
-            document.querySelector("#emergency_contact_phone").value =
-                cleavePhone.getRawValue();
+            phoneRegionCode: 'US',
+            delimiter: '-',
+            numericOnly: true,
         });
         </script>
 

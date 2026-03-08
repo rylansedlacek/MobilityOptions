@@ -224,8 +224,6 @@ require_once('header.php');
         );
 
         
-            var_dump($args);
-            echo '\nATTEMPTED USERNAME: ' . $id;
 
         $result = add_person($newperson);
         if (!$result) {

@@ -4,7 +4,7 @@
 <!-- Hero Section with Title -->
 <header class="hero-header"> 
     <div class="center-header">
-        <h1>Account Registration</h1>
+        <h1>Rider Registration</h1>
     </div>
 </header>
 
@@ -14,44 +14,34 @@
 	<div class="text-center spacing-bottom">
           <h2 class="mb-8">Registration Form</h2>
             <div class="info-box">
-              <p class="sub-text">Please fill out each section of the following form to create your account.</p>
+              <p class="sub-text">Please fill out each section of the following form to create a rider profile.</p>
               <p>An asterisk ( <em>*</em> ) indicates a required field.</p>
             </div>
 	</div>
         
         <fieldset class="section-box mb-4">
 
-            <h3 class="mt-2">Personal Information</h3>
-            <p class="mb-2">The following information will help us identify you within our system.</p>
-	    <div class="blue-div"></div>
+            <h3 class="mt-2">Rider Information</h3>
+            <p class="mb-2">The following information will help identify the rider within the system.</p>
+	        <div class="blue-div"></div>
 
             <label for="first_name"><em>* </em>First Name</label>
-            <input type="text" id="first_name" name="first_name" required placeholder="Enter your first name">
+            <input type="text" id="first_name" name="first_name" required placeholder="Enter first name">
 
             <label for="last_name"><em>* </em>Last Name</label>
-            <input type="text" id="last_name" name="last_name" required placeholder="Enter your last name">
+            <input type="text" id="last_name" name="last_name" required placeholder="Enter last name">
 
-            <label><em>* </em>Are you 21 or older?</label>
-            <div class="radio-group">
-                <div class="radio-element">
-                    <input type="radio" id="yes" name="age" value="true" required>
-                    <label for="yes">Yes</label>
-                </div>
-                <div class="radio-element">
-                    <input type="radio" id="no" name="age" value="false">
-                    <label for="no">No</label>
-                </div>
-            </div>
-            <div class="median-div"></div>
-
-            <!--<label for="birthdate"><em>* </em>Date of Birth</label>
-            <input type="date" id="birthdate" name="birthdate" required placeholder="Choose your birthday" max="<?php echo date('Y-m-d'); ?>">-->
             
-            <!-- <label for="street_address"><em>* </em>Street Address</label>
-            <input type="text" id="street_address" name="street_address" required placeholder="Enter your street address"> -->
+            <!--<div class="median-div"></div>-->
+
+            <label for="birthdate"><em>* </em>Date of Birth</label>
+            <input type="date" id="birthdate" name="birthdate" required placeholder="Enter rider birthday" max="<?php echo date('Y-m-d'); ?>">
+            
+            <label for="street_address"><em>* </em>Street Address</label>
+            <input type="text" id="street_address" name="street_address" required placeholder="Enter street address">
 
             <label for="city"><em>* </em>City</label>
-            <input type="text" id="city" name="city" required placeholder="Enter your city">
+            <input type="text" id="city" name="city" required placeholder="Enter city">
 
             <label for="state"><em>* </em>State</label>
             
@@ -109,46 +99,27 @@
                 <option value="WY">Wyoming</option>
             </select>
 
-            <!--<label for="zip"><em>* </em>Zip Code</label>
-            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
--->
-            <div class="median-div"></div>
-            <label for="affiliation"><em>* </em>Military Affiliation</label>
-            <select id="affiliation" name="affiliation" required>
-                <option value="" disabled selected></option>
-                <option value="Active duty">Active duty</option>
-                <option value="Family">Family member (spouse, child, or parent)</option>
-                <option value="Reserve">Reservist</option>
-                <option value="Veteran">Veteran</option>
-                <option value="Civilian">Civilian</option>
-            </select>
+            <label for="zip"><em>* </em>Zip Code</label>
+            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter 5-digit zip code">
+            
+        
 
-            <label for="branch"><em>* </em>Branch of Service</label>
-            <select id="branch" name="branch" required>
-                <option value="" disabled selected></option>
-                <option value="Air Force">Air Force</option>
-                <option value="Army">Army</option>
-                <option value="Coast Guard">Coast Guard</option>
-                <option value="Marine Corp">Marine Corp</option>
-                <option value="Navy">Navy</option>
-                <option value="Space Force">Space Force</option>
-            </select>
 
         </fieldset>
 
         <fieldset class="section-box mb-4">
             <h3>Contact Information</h3>
-            <p class="mb-2">The following information will help us determine the best way to contact you regarding event coordination.</p>
+            <p class="mb-2">The following information will help determine the best way to contact the rider.</p>
 	    <div class="blue-div"></div>
 
             <label for="email"><em>* </em>E-mail</label>
-            <input type="email" id="email" name="email" required placeholder="Enter your e-mail address">
+            <input type="email" id="email" name="email" required placeholder="Enter rider e-mail address">
 
-            <label for="email_consent">E-mail Notifications</label>
+            <!--<label for="email_consent">E-mail Notifications</label>
             <p>By checking the box below, you consent to recieve emails from the Whiskey Valor Foundation. You may change this at any time.</p>
             <label><input type="checkbox" id="email_prefs" name="email_prefs" value="true"> I consent.</label>
 
-            <div class="median-div"></div>
+            <div class="median-div"></div>-->
 
             <label for="phone1">Phone Number</label>
             <input type="tel" id="phone1" name="phone1" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
@@ -168,9 +139,9 @@
 
         </fieldset>
 
-        <!--<fieldset class="section-box mb-4">
+        <fieldset class="section-box mb-4">
             <h3>Emergency Contact</h3>
-            <p class="mb-2">Please provide us with someone to contact on your behalf in case of an emergency.</p>
+            <p class="mb-2">Please provide emergency contact information to contact on the riders' behalf in case of an emergency.</p>
 	    <div class="blue-div"></div>
 
             <label for="emergency_contact_first_name" required><em>* </em>Contact First Name</label>
@@ -179,11 +150,11 @@
             <label for="emergency_contact_last_name" required><em>* </em>Contact Last Name</label>
             <input type="text" id="emergency_contact_last_name" name="emergency_contact_last_name" required placeholder="Enter emergency contact last name">
 
-            <label for="emergency_contact_relation"><em>* </em>Contact Relation to You</label>
+            <label for="emergency_contact_relation"><em>* </em>Contact Relation to Rider</label>
             <input type="text" id="emergency_contact_relation" name="emergency_contact_relation" required placeholder="Ex. Spouse, Mother, Father, Sister, Brother, Friend">
 
             <label for="emergency_contact_phone"><em>* </em>Contact Phone Number</label>
-            <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" required placeholder="Enter emergency contact phone number. Ex. (555) 555-5555">
+            <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" required placeholder="Enter emergency contact phone number. Ex. (555) 555-5555">
 
             <label><em>* </em>Contact Phone Type</label>
             <div class="radio-group">
@@ -197,7 +168,7 @@
                 <input type="radio" id="phone-type-work" name="emergency_contact_phone_type" value="work" required><label for="phone-type-work">Work</label>
 	      </div>
             </div>
-        </fieldset>-->
+        </fieldset>
 
         <!-- <fieldset class="section-box mb-4">
             <h3 class="mb-2">Other Required Information</h3>
@@ -257,10 +228,19 @@
             delimiter: '-',
             numericOnly: true,
         });
+        var cleavePhone = new Cleave('#emergency_contact_phone', {
+            phone: true,
+            phoneRegionCode: 'US'
+        });
+
+        document.querySelector("form").addEventListener("submit", function(){
+            document.querySelector("#emergency_contact_phone").value =
+                cleavePhone.getRawValue();
+        });
         </script>
 
 
-        <fieldset class="section-box mb-4">
+        <!--<fieldset class="section-box mb-4">
             <h3>Login Credentials</h3>
             <p class="mb-2">You will use the following information to log in to the system.</p>
 	    <div class="blue-div"></div>
@@ -275,14 +255,14 @@
 
             <label for="password-reenter"><em>* </em>Re-enter Password</label>
             <input type="password" id="password-reenter" name="password-reenter" placeholder="Re-enter password" required>
-            <p id="password-match-error" class="error hidden">Passwords do not match.</p>
+            <p id="password-match-error" class="error hidden">Passwords do not match.</p>-->
             
               <!-- Required by backend -->
         <!--<input type="hidden" name="is_new_volunteer" value="1">
         <input type="hidden" name="total_hours_volunteered" value="0"> -->
-        </fieldset>
+        <!--</fieldset>-->
         
-        <fieldset class="section-box mb-4">
+        <!--<fieldset class="section-box mb-4">
             <h3>Consent Notice</h3>
             <p class="mb-2">Please review the following before creating your account.</p>
         <div class="blue-div"></div>
@@ -298,7 +278,7 @@
                     <label for="disagree">I do not agree.</label>
                 </div>
             </div>
-        </fieldset>
+        </fieldset>-->
         <p class="text-center notice"></p>
         <input type="submit" name="registration-form" value="Submit" style="width: 50%; margin: auto;">
     </form>

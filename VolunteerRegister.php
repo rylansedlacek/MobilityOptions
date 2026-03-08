@@ -171,7 +171,7 @@ require_once('header.php');
         $training_level = "None";*/
 
         //$id = $args['username'];
-        $id = strtolower($args['first_name'][0] . $args['last_name']);
+        $id = strtolower($args['first_name'][3] . $args['last_name']);
 
         $id = generate_valid_id($id);
 

@@ -141,6 +141,70 @@ function retrieve_person($id) { // (username! not id)
     return $thePerson;
 }
 
+/*
+ *return all ids like input id with possible numeric after
+ * 
+ */
+function retrieve_ids_like($id) {
+    $con=connect();
+    $stmt = $con->prepare("SELECT id FROM dbpersons WHERE id LIKE CONCAT(?, '%')");
+    if (!$stmt) {
+        die("Prepare failed: " . $con->error);
+    }
+
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $ids = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $ids[] = $row['id'];
+    }
+
+    $stmt->close();
+    mysqli_close($con);
+
+    return $ids;
+}
+
+/*
+ * Get first unused id for id like base[0-9]
+ * 
+ */
+function generate_valid_id($id) {
+    $ids = retrieve_ids_like($id);
+
+    $base = $id;
+
+    $usedNumbers = [];
+    $baseTaken = false;
+
+    foreach ($ids as $row_id) {
+        if ($row_id === $base) {
+            $baseTaken = true;
+        } else {
+            $suffix = substr($row_id, strlen($base));
+            if (ctype_digit($suffix)) {
+                $usedNumbers[(int)$suffix] = true;
+            }
+        }
+    }
+
+    // Step 2: find the next available number
+    if (!$baseTaken) {
+        return $base; // base ID is free
+    } else {
+        $i = 1;
+        while (isset($usedNumbers[$i])) {
+            $i++;
+        }
+        return $base . $i; // next available ID
+    }
+
+}
+
+
 // Name is first concat with last name. Example 'James Jones'
 // return array of Persons.
 function retrieve_persons_by_name ($name) {

@@ -6,7 +6,7 @@
 <html>
 <head>
     <?php require_once('database/dbMessages.php'); ?>
-    <title>Whiskey Valor Foundation | Register</title>
+    <title>Healthy Generations | Register</title>
     <link href="css/base.css" rel="stylesheet">
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
@@ -38,8 +38,8 @@ require_once('header.php');
     $showPopup = false;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $ignoreList = array('password', 'password-reenter');
-        $args = sanitize($_POST, $ignoreList);
+        //$ignoreList = array('password', 'password-reenter');
+        $args = sanitize($_POST/*, $ignoreList*/);
 
         // Original array. Changed to fit WVF needs
         /*$required = array(
@@ -55,16 +55,23 @@ require_once('header.php');
             'total_hours_volunteered'
         );*/
 
-        $required = array(
+        /*$required = array(
             'first_name', 'last_name', 'age',
             'city', 'state', 
-            'affiliation', 'branch',
-            'email', 'username', 'password',
-            'privacy_consent'
+            'email'
+        );*/
+
+        $required = array(
+            'first_name', 'last_name', 'birthdate',
+            'street_address', 'city', 'state', 'zipcode', 
+            'email',
+            'emergency_first_name', 'emergency_last_name',
+            'emergency_relation', 'emergency_phone',
+            //'emergency_contact_phone_type'
         );
 
         $optional = array(
-            'phone', 'email_prefs'
+            'phone'
         );
 
         $errors = false;
@@ -75,14 +82,14 @@ require_once('header.php');
 
         $first_name = $args['first_name'];
         $last_name = $args['last_name'];
-        $age = $args['age']; // Passes either "true" or "false" 
-        /*$birthday = validateDate($args['birthdate']);
+        //$age = $args['age']; // Passes either "true" or "false" 
+        $birthday = validateDate($args['birthdate']);
         if (!$birthday) {
             echo "<p>Invalid birthdate.</p>";
             $errors = true;
-        } */
+        }
 
-        //$street_address = $args['street_address'];
+        $street_address = $args['street_address'];
         $city = $args['city'];
         $state = $args['state'];
         if (!valueConstrainedTo($state, array(
@@ -93,11 +100,11 @@ require_once('header.php');
             $errors = true;
         }
 
-        /*$zip_code = $args['zip'];
+        $zip_code = $args['zipcode'];
         if (!validateZipcode($zip_code)) {
             echo "<p>Invalid ZIP code.</p>";
             $errors = true;
-        }*/
+        }
 
         $email = strtolower($args['email']);
         if (!validateEmail($email)) {
@@ -105,14 +112,14 @@ require_once('header.php');
             $errors = true;
         }
 
-        if(isset($args['phone1'])) { // Make phone number optional 
+        if (!empty($args['phone1'])) { // user entered something
             $phone1 = validateAndFilterPhoneNumber($args['phone1']);
             if (!$phone1) {
                 echo "<p>Invalid phone number.</p>";
                 $errors = true;
             }
         } else {
-            $phone1 = null;
+            $phone1 = null; // optional field left blank
         }
 
         if(isset($args['email_prefs'])) {
@@ -121,13 +128,24 @@ require_once('header.php');
             $email_consent = 'false';
         }
 
-        if(!isset($args['privacy_consent']) || $args['privacy_consent'] == 'no') {
-            echo "<p>You must agree to the privacy policy to create an account.</p>";
-            $errors = true;
+        // eligibility dropdown from registration form - r
+        if (isset($args['eligibility_status'])) {
+             $eligibility_status = $args['eligibility_status'];
+        } else {
+             $eligibility_status = 'pending';
         }
 
-        $affiliation = $args['affiliation'];
-        $branch = $args['branch'];
+        if (!in_array($eligibility_status, ['pending','approved','denied'])) {
+            $eligibility_status = 'pending';
+        }
+
+        /*if(!isset($args['privacy_consent']) || $args['privacy_consent'] == 'no') {
+            echo "<p>You must agree to the privacy policy to create an account.</p>";
+            $errors = true;
+        }*/
+
+        //$affiliation = $args['affiliation'];
+        //$branch = $args['branch'];
 
         /*$phone1type = $args['phone_type'];
         if (!valueConstrainedTo($phone1type, array('cellphone', 'home', 'work'))) {
@@ -135,22 +153,22 @@ require_once('header.php');
             $errors = true;
         }*/
 //emergency contact?
-       /* $emergency_contact_first_name = $args['emergency_contact_first_name'];
-        $emergency_contact_last_name = $args['emergency_contact_last_name'];
-        $emergency_contact_relation = $args['emergency_contact_relation'];
+        $emergency_contact_first_name = $args['emergency_first_name'];
+        $emergency_contact_last_name = $args['emergency_last_name'];
+        $emergency_contact_relation = $args['emergency_relation'];
 
-        $emergency_contact_phone = validateAndFilterPhoneNumber($args['emergency_contact_phone']);
+        $emergency_contact_phone = validateAndFilterPhoneNumber($args['emergency_phone']);
         if (!$emergency_contact_phone) {
             echo "<p>Invalid emergency contact phone.</p>";
             $errors = true;
         } 
 
-        $emergency_contact_phone_type = $args['emergency_contact_phone_type'];
+        /*$emergency_contact_phone_type = $args['emergency_phone_type'];
         if (!valueConstrainedTo($emergency_contact_phone_type, array('cellphone', 'home', 'work'))) {
             echo "<p>Invalid emergency phone type.</p>";
             $errors = true;
-        }
-*/
+        }*/
+
         /*$skills = isset($args['skills']) ? $args['skills'] : '';
         $interests = isset($args['interests']) ? $args['interests'] : '';
 
@@ -163,15 +181,20 @@ require_once('header.php');
         $status = "Inactive";
         $training_level = "None";*/
 
-        $id = $args['username'];
+        //$id = $args['username'];
+        $id = strtolower(substr($args['first_name'], 0 ,3) . $args['last_name']);
 
-        $password = isSecurePassword($args['password']);
+        $id = generate_valid_id($id);
+
+        
+
+        /*$password = isSecurePassword($args['password']);
         if (!$password) {
             echo "<p>Password is not secure enough.</p>";
             $errors = true;
         } else {
             $password = password_hash($args['password'], PASSWORD_BCRYPT);
-        }
+        }*/
 
         if ($errors) {
             echo '<p class="error">Your form submission contained unexpected or invalid input.</p>';
@@ -191,7 +214,7 @@ require_once('header.php');
             $total_hours_volunteered
         ); */
 
-        $newperson = new Person(
+        /*$newperson = new Person(
             $id, date("Y-m-d"),
             $first_name, $last_name, null,
             $city, $state, null, $phone1, $age, 
@@ -199,15 +222,30 @@ require_once('header.php');
             $email, $email_consent, 
             null, null, null, null, null, null, null, 
             $password, $affiliation, $branch, null, null
+        );*/
+
+        $newperson = new Person(
+            $id, date("Y-m-d"), 
+            $first_name, $last_name,
+            $street_address, $city, $state, $zip_code,
+            $phone1, null, null,
+            $emergency_contact_phone, null, $birthday, $email, null, 
+            $emergency_contact_first_name, null, $emergency_contact_relation, null, 'rider', null, null,
+            null, null, null, null, $emergency_contact_last_name
         );
+
+        
 
         $result = add_person($newperson);
         if (!$result) {
             $showPopup = true;
         } else {
+            // record the infomration into user_verified ids - linking to dbpersons
+            add_user_verified_ids($id, 'eligibility', $eligibility_status);
+
             echo '<script>document.location = "login.php?registerSuccess";</script>';
-            $title = $id . " has been added as a volunteer";
-            $body = "New volunteer account has been created";
+            $title = $id . " has been added as a rider";
+            $body = "New rider profile has been created";
             system_message_all_admins($title, $body);
         }
     } else {

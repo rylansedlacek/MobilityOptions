@@ -136,11 +136,11 @@
             <label for="last_name"><em>* </em>Last Name</label>
             <input type="text" id="last_name" name="last_name" value="<?php echo hsc($person->get_last_name()); ?>" required placeholder="Enter your last name">
 
-            <!--<label for="birthday"><em>* </em>Date of Birth</label>
-            <input type="date" id="birthday" name="birthday" value="<?php //echo hsc($person->get_birthday()); ?>" required placeholder="Choose your birthday" max="<?php echo date('Y-m-d'); ?>">
+            <label for="birthday"><em>* </em>Date of Birth</label>
+            <input type="date" id="birthday" name="birthday" value="<?php echo hsc($person->get_birthday()); ?>" required placeholder="Choose your birthday" max="<?php echo date('Y-m-d'); ?>">
 
             <label for="street_address"><em>* </em>Street Address</label>
-            <input type="text" id="street_address" name="street_address" value="<?php //echo hsc($person->get_street_address()); ?>" required placeholder="Enter your street address"> -->
+            <input type="text" id="street_address" name="street_address" value="<?php echo hsc($person->get_street_address()); ?>" required placeholder="Enter your street address">
 
             <label for="city"><em>* </em>City</label>
             <input type="text" id="city" name="city" value="<?php echo hsc($person->get_city()); ?>" required placeholder="Enter your city">
@@ -165,10 +165,10 @@
                     }
                 ?>
             </select>
-
-            <!--<label for="zip_code"><em>* </em>Zip Code</label>
-            <input type="text" id="zip_code" name="zip_code" value="<?php //echo hsc($person->get_zip_code()); ?>" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">-->
-            <div class="median-div"></div>
+    
+            <label for="zip_code"><em>* </em>Zip Code</label>
+            <input type="text" id="zip_code" name="zip_code" value="<?php echo hsc($person->get_zip_code()); ?>" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
+            <!-- <div class="median-div"></div> -->
             <!--<label for="affiliation"><em>* </em>Military Affiliation</label>-->
             <!--<?php echo hsc($person->get_affiliation()); ?>-->
             </select>
@@ -186,6 +186,17 @@
             <label for="phone1">Phone Number</label>
             <input type="tel" id="phone1" class="phone" name="phone1" value="<?php echo formatPhoneNumber($person->get_phone1()); ?>" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
 
+            <h3 class="mt-2" id="contact-info">Emergency Contact Information</h3>
+            <div class="blue-div"></div>
+            <label for="emergency_contact_first_name" required>First Name</label>
+            <input type="text" id="emergency_contact_first_name" name="emergency_contact_first_name" value="<?php echo hsc($person->get_emergency_contact_first_name()); ?>" placeholder="Enter emergency contact name">
+
+            <label for="emergency_contact_last_name" required>Last Name</label>
+            <input type="text" id="emergency_contact_last_name" name="emergency_contact_last_name" value="<?php echo hsc($person->get_emergency_contact_last_name()); ?>" placeholder="Enter emergency contact name">
+
+            <label for="emergency_contact_phone">Phone Number</label>
+            <input type="tel" id="emergency_contact_phone" class="phone" name="emergency_contact_phone" value="<?php //echo formatPhoneNumber($person->get_emergency_contact_phone()); ?>" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
+           
             <!--<label><em>* </em>Phone Type</label>
             <div class="radio-group">
                 <?php //$type = $person->get_phone1type(); ?>
@@ -239,6 +250,25 @@
 </fieldset>-->
 
         <!-- may be entirely useless? change to notifications? -->
+        <?php
+            $elig = get_eligibility_record($id);
+            $elig_status = $elig ? $elig['status'] : 'pending';
+            $elig_recid = $elig ? $elig['record_id'] : '';
+        ?>
+        <fieldset class="section-box">
+            <h3 class="mt-2" id="eligibility">Eligibility Status</h3>
+            <div class="blue-div"></div>
+                <label for="eligibility_status"><em>*</em>Eligibility</label>
+                <select id="eligibility_status" name="eligibility_status">
+                    <option value="pending"<?php if ($elig_status=='pending') echo ' selected'; ?>>Pending</option>
+                    <option value="approved"<?php if ($elig_status=='approved') echo ' selected'; ?>>Approved</option>
+                    <option value="denied"<?php if ($elig_status=='denied') echo ' selected'; ?>>Denied</option>
+                </select>
+                <?php if ($elig_recid): ?>
+                    <input type="hidden" name="eligibility_record_id" value="<?php echo hsc($elig_recid); ?>">
+                <?php endif; ?>
+        </fieldset>
+
         <fieldset class="section-box">
             <h3 class="mt-2" id="notifs">Notification Preferences</h3>
             <div class="blue-div"></div>

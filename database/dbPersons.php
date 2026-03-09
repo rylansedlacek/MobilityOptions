@@ -36,10 +36,21 @@ function add_person($person) {
     // If the result is empty, it means the person doesn't exist, so we can add the person
     if (mysqli_num_rows($result) == 0) {
         // Prepare the insert query
+
+        // ensure over21 and email_prefs are bools - r
+        $over21Val = 'true';
+        $emailPrefsVal = $person->get_email_prefs();
+
+        if ($emailPrefsVal === null || $emailPrefsVal === '') {
+            $emailPrefsVal = 'false';
+        } else {
+            $emailPrefsVal = 'true';
+        }
+
         $insert_query = 'INSERT INTO dbpersons (
-            id, start_date, first_name, last_name, city, state,  
+            id, start_date, first_name, last_name, street_address, city, state, zip_code, 
             phone1, 
-            over21, phone1type, 
+              over21, phone1type, 
             emergency_contact_phone, emergency_contact_phone_type, birthday, 
             email, email_prefs, emergency_contact_first_name, contact_num,
             emergency_contact_relation, contact_method, type, status, notes, 
@@ -49,18 +60,18 @@ function add_person($person) {
             $person->get_start_date() . '","' .
             $person->get_first_name() . '","' .
             $person->get_last_name() . '","' .
-            //$person->get_street_address() . '","' .
+            $person->get_street_address() . '","' .
             $person->get_city() . '","' .
             $person->get_state() . '","' .
-            //$person->get_zip_code() . '","' .
+            $person->get_zip_code() . '","' .
             $person->get_phone1() . '","' .
-            $person->get_over_21() . '","' .
+            $over21Val . '","' .
             $person->get_phone1type() . '","' .
             $person->get_emergency_contact_phone() . '","' .
             $person->get_emergency_contact_phone_type() . '","' .
             $person->get_birthday() . '","' .
             $person->get_email() . '","' .
-            $person->get_email_prefs() . '","' .
+            $emailPrefsVal . '","' .
             $person->get_emergency_contact_first_name() . '","' .
             $person->get_contact_num() . '","' .
             $person->get_emergency_contact_relation() . '","' .
@@ -108,6 +119,10 @@ function add_hours_to_person($person_id, $hours) {
 
 
 function remove_person($id) {
+    /*
+    
+    Commented out in case it needs to be used again
+
     $con=connect();
     $query = 'SELECT * FROM dbpersons WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
@@ -119,6 +134,25 @@ function remove_person($id) {
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return true;
+    */
+
+    //Statement should avoid SQL injection
+
+    $con=connect();
+    $stmt = $con->prepare('DELETE FROM dbpersons WHERE id = ?');
+    if (!$stmt) {
+        $con->close();
+        return false;
+    }
+
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $deleted = $stmt->affected_rows > 0;
+    
+    $stmt->close();
+    $con->close();
+
+    return $deleted; 
 }
 
 /*
@@ -140,6 +174,70 @@ function retrieve_person($id) { // (username! not id)
 //    mysqli_close($con);
     return $thePerson;
 }
+
+/*
+ *return all ids like input id with possible numeric after
+ * 
+ */
+function retrieve_ids_like($id) {
+    $con=connect();
+    $stmt = $con->prepare("SELECT id FROM dbpersons WHERE id LIKE CONCAT(?, '%')");
+    if (!$stmt) {
+        die("Prepare failed: " . $con->error);
+    }
+
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $ids = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $ids[] = $row['id'];
+    }
+
+    $stmt->close();
+    mysqli_close($con);
+
+    return $ids;
+}
+
+/*
+ * Get first unused id for id like base[0-9]
+ * 
+ */
+function generate_valid_id($id) {
+    $ids = retrieve_ids_like($id);
+
+    $base = $id;
+
+    $usedNumbers = [];
+    $baseTaken = false;
+
+    foreach ($ids as $row_id) {
+        if ($row_id === $base) {
+            $baseTaken = true;
+        } else {
+            $suffix = substr($row_id, strlen($base));
+            if (ctype_digit($suffix)) {
+                $usedNumbers[(int)$suffix] = true;
+            }
+        }
+    }
+
+    // Step 2: find the next available number
+    if (!$baseTaken) {
+        return $base; // base ID is free
+    } else {
+        $i = 1;
+        while (isset($usedNumbers[$i])) {
+            $i++;
+        }
+        return $base . $i; // next available ID
+    }
+
+}
+
 
 // Name is first concat with last name. Example 'James Jones'
 // return array of Persons.
@@ -1448,16 +1546,22 @@ function get_total_vol_hours($dateFrom, $dateTo) {
         return array_unique($emails);
     }
 
-     /**
-     * Retrieves a list of verified IDs for a specific user.
-     * @param string $user_id The user's ID (username)
-     * @return array List of associative arrays ['id_type', 'approved_at']
+
+    /**
+     * Return all verification records for a user.
+     * Each row includes the record_id, id_type, status, approved_at, and other metadata.
+     * @return array of associative rows, or empty array if none.
      */
+
+    // edited to match stored Rider Eligibility Information - r
     function get_verified_ids($user_id) {
         $con = connect();
         if (!$con) return [];
 
-        $query = "SELECT id_type, approved_at FROM user_verified_ids WHERE user_id = ? ORDER BY approved_at DESC";
+        $query = "SELECT record_id, id_type, status, approved_at, approved_by, expiration_date, notes
+                  FROM user_verified_ids
+                  WHERE user_id = ?
+                  ORDER BY approved_at DESC";
         $stmt = $con->prepare($query);
 
         if ($stmt) {
@@ -1479,29 +1583,44 @@ function get_total_vol_hours($dateFrom, $dateTo) {
         return [];
     }
 
-    // eligibility info insertion
-    function add_user_verified_ids($user_id, $id_type, 
-        $expiration_date = null, $notes = null) {
-        
+    function get_eligibility_record($user_id) {
+        $records = get_verified_ids($user_id);
+        foreach ($records as $r) {
+            if ($r['id_type'] === 'eligibility') {
+                return $r;
+            }
+        }
+        return null;
+    }
+
+    
+    // eligibility info insertion - r
+    function add_user_verified_ids( $user_id, $id_type, $status = 'pending', 
+    $approved_by = null, $expiration_date = null, $notes = null) {
+
         $con = connect();
         if (!$con) {return ["success" => false, "message" => "database connection failed"];}
 
-        // the default for incoming riders
-        $status = "pending";
+        // ensure status is valid
+        if (!in_array($status, ['pending','approved','denied'])) {
+            $status = 'pending';
+        }
+
         $query = 
         "INSERT into user_verified_ids
-        (user_id, id_type, status, expiration_date, notes)
-        VALUES (?, ?, ?, ?, ?)";
-
+        (user_id, id_type, status, approved_by, expiration_date, notes)
+        VALUES (?, ?, ?, ?, ?, ?)";
+        
         $stmt = $con->prepare($query);
 
         if (!$stmt) {return ["success" => false, "message" => $con->error];}
 
         $stmt->bind_param(
-            "sssss",
+            "ssssss",
             $user_id,
             $id_type,
             $status,
+            $approved_by,
             $expiration_date,
             $notes
         );
@@ -1524,15 +1643,15 @@ function get_total_vol_hours($dateFrom, $dateTo) {
         }
     }
 
-    // allows staff and admins to accept or reject eligiblity status
+    // allows staff and admins to accept or reject eligiblity status - r
     // or leave them as pending too.
     function update_user_verified_ids($record_id, $status, 
         $approved_by = null) {
 
         $con = connect();
         if (!$con) {return ["success" => false, "message" => "database connection failed"];}
-
-        $allowed_statuses = ["pending", "approved", "rejected"];
+        
+        $allowed_statuses = ["pending", "approved", "denied"];
 
         if (!in_array($status, $allowed_statuses)) {
             return [

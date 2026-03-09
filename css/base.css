@@ -736,7 +736,7 @@ img.filter-button {
 }
 
 button.cancel, a.cancel {
-    background-color: var(--cancel-button-background-color);
+    background-color: #ee3323;
     color: white !important;
 }
 

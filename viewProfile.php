@@ -39,6 +39,14 @@
    $user = retrieve_person($id);
   $verified_ids = get_verified_ids($user->get_id());
 
+  // grab eligibility record separately for display
+  $elig = get_eligibility_record($user->get_id());
+  if ($elig) {
+    $elig_status = $elig['status'];
+  } else {
+     $elig_status ='pending';
+  }
+
    if ($isAdmin && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_hours'])) {
     require_once('database/dbPersons.php'); // already required, so you can just remove the duplicate
     $con = connect();
@@ -98,13 +106,13 @@
 
       const tabs = document.querySelectorAll('.tab-button');
       tabs.forEach(tab => {
-        tab.classList.remove('border-b-4', 'border-[#C9AB81]');
-        tab.classList.add('hover:border-b-2', 'hover:border-[#C9AB81]');
+        tab.classList.remove('border-b-4', 'border-[#45892e]');
+        tab.classList.add('hover:border-b-2', 'hover:border-[#45892e]');
       });
 
       const activeTab = document.querySelector(`[data-tab="${sectionId}"]`);
-      activeTab.classList.add('border-b-4', 'border-[#C9AB81]');
-      activeTab.classList.remove('hover:border-b-2', 'hover:border-[#C9AB81]');
+      activeTab.classList.add('border-b-4', 'border-[#45892e]');
+      activeTab.classList.remove('hover:border-b-2', 'hover:border-[#45892e]');
     }
 
     window.onload = () => showSection('personal');
@@ -159,26 +167,29 @@
           <h2 class="text-xl font-semibold mb-4">My Profile</h2>
 
 	<?php else: ?>
-	  <h2 class="text-xl font-semibold mb-4">Viewing <?php echo $user->get_first_name() . ' ' . $user->get_last_name() ?></h2>
+	  <h2 class="text-xl font-semibold mb-4">Viewing: <?php echo $user->get_first_name() . ' ' . $user->get_last_name() ?></h2>
 	<?php endif ?>
 	</div>
         <div class="space-y-2 divide-y divide-gray-300">
           <div class="flex justify-between py-2">
             <span class="font-medium">Joined</span><span>Jan 2022</span>
           </div>
-          <div class="flex justify-between py-2">
+          <!-- <div class="flex justify-between py-2">
             <span class="font-medium">Branch</span><span><?php echo ucfirst($user->get_branch()) ?></span>
+          </div> -->
+          <div class="flex justify-between py-2">
+            <span class="font-medium">Affiliation</span><span></span> <!--<?php echo ucfirst($user->get_current_user) ?></span>-->
           </div>
           <div class="flex justify-between py-2">
-            <span class="font-medium">Affiliation</span><span><?php echo ucfirst($user->get_affiliation()) ?></span>
+            <span class="font-medium">Eligibility</span><span><?php echo ucfirst($elig_status); ?></span>
           </div>
         </div>
       </div>
       <div class="mt-6 space-y-2">
-        <button type="button" class="text-lg font-medium w-full px-4 py-2 bg-[#C9AB81] text-[#1F1F21] rounded-md hover:bg-[#1F1F21] hover:text-[#C9AB81] cursor-pointer" onclick="openModal('verifiedIdsModal')">
-          View Verified IDs
+        <button type="button" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 bg-[#fafafa] text-[#1F1F21] rounded-md hover:border-[#1F1F21] cursor-pointer" onclick="openModal('verifiedIdsModal')">
+          Eligibility Status
         </button>
-        <button onclick="window.location.href='editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>';" class="text-lg font-medium w-full px-4 py-2 bg-[#C9AB81] text-[#1F1F21] rounded-md hover:bg-[#1F1F21] hover:text-[#C9AB81] cursor-pointer">Edit Profile</button>
+        <button onclick="window.location.href='editProfile.php<?php if ($id != $userID) echo '?id=' . $id ?>';" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 bg-[#fafafa] text-[#1F1F21] rounded-md hover:border-[#1F1F21] cursor-pointer">Edit Profile</button>
         <button onclick="window.location.href='index.php';" class="text-lg font-medium w-full px-4 py-2 border-2 border-gray-300 text-black rounded-md hover:border-[#1F1F21] cursor-pointer">Return to Dashboard</button>
       </div>
     </div>
@@ -225,7 +236,7 @@
         <div>
           <span class="block text-sm font-medium text-[#1F1F21]">Emergency Contact Name</span>
           <?php if ($user->get_emergency_contact_first_name()):?>
-            <p class="text-gray-900 font-medium text-xl"><?php $user->get_emergency_contact_first_name . $user->get_emergency_contact_last_name?></p>
+            <p class="text-gray-900 font-medium text-xl"><?php echo hsc($user->get_emergency_contact_first_name()) . ' ' . hsc($user->get_emergency_contact_last_name()); ?></p>
           <?php else: ?>
             <p class="text-gray-900 font-medium text-xl">N/A</p>
           <?php endif ?>
@@ -274,7 +285,7 @@
     <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
         
         <div class="flex justify-between items-center pb-3 border-b">
-            <h3 class="text-xl font-medium text-gray-900">Verified IDs for <?php echo htmlspecialchars($user->get_first_name()); ?></h3>
+            <h3 class="text-xl font-medium text-gray-900">Eligibility Status for <?php echo htmlspecialchars($user->get_first_name()); ?></h3>
             <button class="text-black close-modal cursor-pointer font-bold text-2xl" onclick="closeModal('verifiedIdsModal')">&times;</button>
         </div>
 
@@ -286,18 +297,22 @@
                     <table class="min-w-full text-left text-sm font-light">
                         <thead class="border-b font-medium">
                             <tr>
-                                <th scope="col" class="px-6 py-4">ID Type</th>
-                                <th scope="col" class="px-6 py-4">Date Verified</th>
+                                <th scope="col" class="px-6 py-4">Type</th>
+                                <th scope="col" class="px-6 py-4">Date Entered</th>
+                                <th scope="col" class="px-6 py-4">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($verified_ids as $vid): ?>
                                 <tr class="border-b hover:bg-gray-100">
-                                    <td class="whitespace-nowrap px-6 py-4 font-medium text-green-700">
-                                        ✓ <?php echo htmlspecialchars($vid['id_type']); ?>
+                                    <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-700">
+                                        <?php echo htmlspecialchars($vid['id_type']); ?>
                                     </td>
                                     <td class="whitespace-nowrap px-6 py-4 text-gray-700">
                                         <?php echo date("M j, Y", strtotime($vid['approved_at'])); ?>
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4 text-gray-700">
+                                        <?php echo ucfirst($vid['status'] ?? ''); ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

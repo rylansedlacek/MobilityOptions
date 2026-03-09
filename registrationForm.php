@@ -30,6 +30,7 @@
 
             <label for="last_name"><em>* </em>Last Name</label>
             <input type="text" id="last_name" name="last_name" required placeholder="Enter last name">
+<<<<<<< HEAD
 
             
             <!--<div class="median-div"></div>-->
@@ -37,11 +38,84 @@
             <label for="birthdate"><em>* </em>Date of Birth</label>
             <input type="date" id="birthdate" name="birthdate" required placeholder="Enter rider birthday" max="<?php echo date('Y-m-d'); ?>">
             
+=======
+
+            <!-- eligibility status sterf - r -->
+            <label for="eligibility_status">Eligibility status</label>
+            <select id="eligibility_status" name="eligibility_status">
+                <option value="pending" selected>Pending</option>
+                <option value="approved">Approved</option>
+                <option value="denied">Denied</option>
+            </select>
+
+    <label><em>* </em>Do you have any disabilities?</label>
+    <div class="radio-group">
+        <div class="radio-element">
+            <input type="radio" id="disYes" name="has_disability" value="yes" required>
+        <label for="disYes">Yes</label>
+        </div>
+        <div class="radio-element">
+            <input type="radio" id="disNo" name="has_disability" value="no">
+            <label for="disNo">No</label>
+        </div>
+    </div>
+
+
+<div id="disabilityDetails" style="display:none; margin-top: 10px;">
+  <label for="disabilityType"><em>* </em>Disability type</label>
+  <select id="disabilityType" name="disability_type">
+    <option value="">Select one...</option>
+    <option value="mobility">Mobility</option>
+    <option value="vision">Vision</option>
+    <option value="hearing">Hearing</option>
+    <option value="cognitive">Cognitive</option>
+    <option value="other">Other</option>
+  </select>
+
+  <label for="mobilityNeeds" style="display:block; margin-top:10px;">
+    Mobility needs / accommodations
+  </label>
+  <input
+    type="text"
+    id="mobilityNeeds"
+    name="mobility_needs"
+    placeholder="e.g., wheelchair accessible vehicle, extra time, assistance…"
+  />
+</div>
+
+<script>
+  const yes = document.getElementById("disYes");
+  const no = document.getElementById("disNo");
+  const details = document.getElementById("disabilityDetails");
+  const disabilityType = document.getElementById("disabilityType");
+  const mobilityNeeds = document.getElementById("mobilityNeeds");
+
+  function toggleDetails() {
+    if (yes.checked) {
+      details.style.display = "block";
+      disabilityType.required = true;
+    } else {
+      details.style.display = "none";
+      disabilityType.required = false;
+      //in backend we should have an if statement that checks if has_disability is yes before looking at the disability type and mobility needs
+      disabilityType.value = "";
+      mobilityNeeds.value = "";
+    }
+  }
+
+  yes.addEventListener("change", toggleDetails);
+  no.addEventListener("change", toggleDetails);
+</script>
+
+            <label for="birthdate"><em>* </em>Date of Birth</label>
+            <input type="date" id="birthdate" name="birthdate" required placeholder="Enter rider birthday" max="<?php echo date('Y-m-d'); ?>">
+            
+>>>>>>> origin/dev
             <label for="street_address"><em>* </em>Street Address</label>
             <input type="text" id="street_address" name="street_address" required placeholder="Enter street address">
 
-            <label for="address"><em>* </em>Address</label>
-            <input type="text" id="address" name="address" required placeholder="Enter your home address">
+            <!--<label for="address"><em>* </em>Address</label>
+            <input type="text" id="address" name="address" required placeholder="Enter your home address">-->
 
             <label for="city"><em>* </em>City</label>
             <input type="text" id="city" name="city" required placeholder="Enter city">
@@ -150,8 +224,8 @@
             <label for="emergency_phone"> <em>* </em> Phone Number</label>
             <input type="tel" id="emergency_phone" name="emergency_phone" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" required placeholder="Ex. (555) 555-5555">
 
-            <label for="affiliation"><em>* </em>Personal Affiliation</label>
-            <select id="affiliation" name="affiliation" required>
+            <label for="emergency_relation"><em>* </em>Personal Affiliation</label>
+            <select id="emergency_relation" name="emergency_relation" required>
                 <option value="" disabled selected></option>
                 <option value="Spouse">Spouse</option>
                 <option value="Family">Family member</option>

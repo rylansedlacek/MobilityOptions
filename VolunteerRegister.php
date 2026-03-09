@@ -63,11 +63,19 @@ require_once('header.php');
 
         $required = array(
             'first_name', 'last_name', 'birthdate',
+<<<<<<< HEAD
             'street_address', 'city', 'state', 'zip', 
             'email',
             'emergency_contact_first_name', 'emergency_contact_last_name',
             'emergency_contact_relation', 'emergency_contact_phone',
             'emergency_contact_phone_type'
+=======
+            'street_address', 'city', 'state', 'zipcode', 
+            'email',
+            'emergency_first_name', 'emergency_last_name',
+            'emergency_relation', 'emergency_phone',
+            //'emergency_contact_phone_type'
+>>>>>>> origin/dev
         );
 
         $optional = array(
@@ -100,7 +108,11 @@ require_once('header.php');
             $errors = true;
         }
 
+<<<<<<< HEAD
         $zip_code = $args['zip'];
+=======
+        $zip_code = $args['zipcode'];
+>>>>>>> origin/dev
         if (!validateZipcode($zip_code)) {
             echo "<p>Invalid ZIP code.</p>";
             $errors = true;
@@ -128,11 +140,30 @@ require_once('header.php');
             $email_consent = 'false';
         }
 
+<<<<<<< HEAD
         /*if(!isset($args['privacy_consent']) || $args['privacy_consent'] == 'no') {
             echo "<p>You must agree to the privacy policy to create an account.</p>";
             $errors = true;
         }*/
 
+=======
+        // eligibility dropdown from registration form - r
+        if (isset($args['eligibility_status'])) {
+             $eligibility_status = $args['eligibility_status'];
+        } else {
+             $eligibility_status = 'pending';
+        }
+
+        if (!in_array($eligibility_status, ['pending','approved','denied'])) {
+            $eligibility_status = 'pending';
+        }
+
+        /*if(!isset($args['privacy_consent']) || $args['privacy_consent'] == 'no') {
+            echo "<p>You must agree to the privacy policy to create an account.</p>";
+            $errors = true;
+        }*/
+
+>>>>>>> origin/dev
         //$affiliation = $args['affiliation'];
         //$branch = $args['branch'];
 
@@ -141,6 +172,7 @@ require_once('header.php');
             echo "<p>Invalid phone type.</p>";
             $errors = true;
         }*/
+<<<<<<< HEAD
     // /*emergency contact?*/
        /* $emergency_contact_first_name = $args['emergency_contact_first_name'];
 
@@ -151,17 +183,24 @@ require_once('header.php');
 >>>>>>> 223fdcc (cleaned up edit user profiles and error message on delete user)
         $emergency_contact_last_name = $args['emergency_contact_last_name'];
         $emergency_contact_relation = $args['emergency_contact_relation'];
+=======
+//emergency contact?
+        $emergency_contact_first_name = $args['emergency_first_name'];
+        $emergency_contact_last_name = $args['emergency_last_name'];
+        $emergency_contact_relation = $args['emergency_relation'];
+>>>>>>> origin/dev
 
-        $emergency_contact_phone = validateAndFilterPhoneNumber($args['emergency_contact_phone']);
+        $emergency_contact_phone = validateAndFilterPhoneNumber($args['emergency_phone']);
         if (!$emergency_contact_phone) {
             echo "<p>Invalid emergency contact phone.</p>";
             $errors = true;
         } 
 
-        $emergency_contact_phone_type = $args['emergency_contact_phone_type'];
+        /*$emergency_contact_phone_type = $args['emergency_phone_type'];
         if (!valueConstrainedTo($emergency_contact_phone_type, array('cellphone', 'home', 'work'))) {
             echo "<p>Invalid emergency phone type.</p>";
             $errors = true;
+<<<<<<< HEAD
         }
 
 */
@@ -169,6 +208,10 @@ require_once('header.php');
 =======
         */
 >>>>>>> 223fdcc (cleaned up edit user profiles and error message on delete user)
+=======
+        }*/
+
+>>>>>>> origin/dev
         /*$skills = isset($args['skills']) ? $args['skills'] : '';
         $interests = isset($args['interests']) ? $args['interests'] : '';
 
@@ -182,7 +225,11 @@ require_once('header.php');
         $training_level = "None";*/
 
         //$id = $args['username'];
+<<<<<<< HEAD
         $id = strtolower($args['first_name'][3] . $args['last_name']);
+=======
+        $id = strtolower(substr($args['first_name'], 0 ,3) . $args['last_name']);
+>>>>>>> origin/dev
 
         $id = generate_valid_id($id);
 
@@ -229,7 +276,11 @@ require_once('header.php');
             $first_name, $last_name,
             $street_address, $city, $state, $zip_code,
             $phone1, null, null,
+<<<<<<< HEAD
             $emergency_contact_phone, $emergency_contact_phone_type, $birthday, $email, null, 
+=======
+            $emergency_contact_phone, null, $birthday, $email, null, 
+>>>>>>> origin/dev
             $emergency_contact_first_name, null, $emergency_contact_relation, null, 'rider', null, null,
             null, null, null, null, $emergency_contact_last_name
         );
@@ -240,6 +291,9 @@ require_once('header.php');
         if (!$result) {
             $showPopup = true;
         } else {
+            // record the infomration into user_verified ids - linking to dbpersons
+            add_user_verified_ids($id, 'eligibility', $eligibility_status);
+
             echo '<script>document.location = "login.php?registerSuccess";</script>';
             $title = $id . " has been added as a rider";
             $body = "New rider profile has been created";

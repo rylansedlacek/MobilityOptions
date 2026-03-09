@@ -77,7 +77,6 @@ require_once('header.php');
         $errors = false;
 
         if (!wereRequiredFieldsSubmitted($args, $required)) {
-            echo "NOT ALL FIELDS ENTERED";
             $errors = true;
         }
 

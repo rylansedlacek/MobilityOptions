@@ -128,6 +128,17 @@ require_once('header.php');
             $email_consent = 'false';
         }
 
+        // eligibility dropdown from registration form - r
+        if (isset($args['eligibility_status'])) {
+             $eligibility_status = $args['eligibility_status'];
+        } else {
+             $eligibility_status = 'pending';
+        }
+
+        if (!in_array($eligibility_status, ['pending','approved','denied'])) {
+            $eligibility_status = 'pending';
+        }
+
         /*if(!isset($args['privacy_consent']) || $args['privacy_consent'] == 'no') {
             echo "<p>You must agree to the privacy policy to create an account.</p>";
             $errors = true;
@@ -229,6 +240,9 @@ require_once('header.php');
         if (!$result) {
             $showPopup = true;
         } else {
+            // record the infomration into user_verified ids - linking to dbpersons
+            add_user_verified_ids($id, 'eligibility', $eligibility_status);
+
             echo '<script>document.location = "login.php?registerSuccess";</script>';
             $title = $id . " has been added as a rider";
             $body = "New rider profile has been created";

@@ -167,7 +167,7 @@
             </select>
     
             <label for="zip_code"><em>* </em>Zip Code</label>
-            <input type="text" id="zip_code" name="zip_code" value="<?php //echo hsc($person->get_zip_code()); ?>" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
+            <input type="text" id="zip_code" name="zip_code" value="<?php echo hsc($person->get_zip_code()); ?>" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
             <!-- <div class="median-div"></div> -->
             <!--<label for="affiliation"><em>* </em>Military Affiliation</label>-->
             <!--<?php echo hsc($person->get_affiliation()); ?>-->
@@ -250,6 +250,25 @@
 </fieldset>-->
 
         <!-- may be entirely useless? change to notifications? -->
+        <?php
+            $elig = get_eligibility_record($id);
+            $elig_status = $elig ? $elig['status'] : 'pending';
+            $elig_recid = $elig ? $elig['record_id'] : '';
+        ?>
+        <fieldset class="section-box">
+            <h3 class="mt-2" id="eligibility">Eligibility Status</h3>
+            <div class="blue-div"></div>
+                <label for="eligibility_status"><em>*</em>Eligibility</label>
+                <select id="eligibility_status" name="eligibility_status">
+                    <option value="pending"<?php if ($elig_status=='pending') echo ' selected'; ?>>Pending</option>
+                    <option value="approved"<?php if ($elig_status=='approved') echo ' selected'; ?>>Approved</option>
+                    <option value="denied"<?php if ($elig_status=='denied') echo ' selected'; ?>>Denied</option>
+                </select>
+                <?php if ($elig_recid): ?>
+                    <input type="hidden" name="eligibility_record_id" value="<?php echo hsc($elig_recid); ?>">
+                <?php endif; ?>
+        </fieldset>
+
         <fieldset class="section-box">
             <h3 class="mt-2" id="notifs">Notification Preferences</h3>
             <div class="blue-div"></div>

@@ -96,8 +96,8 @@
             <label for="street_address"><em>* </em>Street Address</label>
             <input type="text" id="street_address" name="street_address" required placeholder="Enter street address">
 
-            <label for="address"><em>* </em>Address</label>
-            <input type="text" id="address" name="address" required placeholder="Enter your home address">
+            <!--<label for="address"><em>* </em>Address</label>
+            <input type="text" id="address" name="address" required placeholder="Enter your home address">-->
 
             <label for="city"><em>* </em>City</label>
             <input type="text" id="city" name="city" required placeholder="Enter city">
@@ -226,8 +226,8 @@
             <label for="emergency_phone"> <em>* </em> Phone Number</label>
             <input type="tel" id="emergency_phone" name="emergency_phone" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" required placeholder="Ex. (555) 555-5555">
 
-            <label for="affiliation"><em>* </em>Personal Affiliation</label>
-            <select id="affiliation" name="affiliation" required>
+            <label for="emergency_relation"><em>* </em>Personal Affiliation</label>
+            <select id="emergency_relation" name="emergency_relation" required>
                 <option value="" disabled selected></option>
                 <option value="Spouse">Spouse</option>
                 <option value="Family">Family member</option>

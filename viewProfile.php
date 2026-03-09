@@ -37,7 +37,7 @@
     //}
 
    $user = retrieve_person($id);
-  $verified_ids = get_verified_ids($user->get_id());
+   $verified_ids = get_verified_ids($user->get_id());
 
    if ($isAdmin && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_hours'])) {
     require_once('database/dbPersons.php'); // already required, so you can just remove the duplicate

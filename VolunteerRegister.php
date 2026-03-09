@@ -141,13 +141,14 @@ require_once('header.php');
             echo "<p>Invalid phone type.</p>";
             $errors = true;
         }*/
-<<<<<<< HEAD
-//emergency contact?
+    // /*emergency contact?*/
        /* $emergency_contact_first_name = $args['emergency_contact_first_name'];
-=======
 
         $emergency_contact_first_name = $args['emergency_contact_first_name'];
->>>>>>> 91a7001 (Implement add rider functionality, with auto increment for username/ids)
+=======
+        //emergency contact?
+        /* $emergency_contact_first_name = $args['emergency_contact_first_name'];
+>>>>>>> 223fdcc (cleaned up edit user profiles and error message on delete user)
         $emergency_contact_last_name = $args['emergency_contact_last_name'];
         $emergency_contact_relation = $args['emergency_contact_relation'];
 
@@ -162,11 +163,12 @@ require_once('header.php');
             echo "<p>Invalid emergency phone type.</p>";
             $errors = true;
         }
-<<<<<<< HEAD
-*/
-=======
 
->>>>>>> 91a7001 (Implement add rider functionality, with auto increment for username/ids)
+*/
+
+=======
+        */
+>>>>>>> 223fdcc (cleaned up edit user profiles and error message on delete user)
         /*$skills = isset($args['skills']) ? $args['skills'] : '';
         $interests = isset($args['interests']) ? $args['interests'] : '';
 

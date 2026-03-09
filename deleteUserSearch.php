@@ -95,7 +95,7 @@ require_once('header.php');
 
         <?php
     //        if (isset($_GET['name']) || isset($_GET['id']) || isset($_GET['phone']) || isset($_GET['zip']) || isset($_GET['role']) || isset($_GET['status']) || isset($_GET['photo_release'])) {
-            if (isset($_GET['name']) || isset($_GET['id']) || isset($_GET['phone']) || isset($_GET['zip']) || isset($_GET['role']) || isset($_GET['status'])) {
+            if (isset($_GET['name']) || isset($_GET['id']) || isset($_GET['phone']) || isset($_GET['zip'])) {
 
                 require_once('include/input-validation.php');
                 require_once('database/dbPersons.php');

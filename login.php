@@ -107,9 +107,9 @@
 
   <!-- Left: Image Section (Hidden on small screens) -->
   <div class="hidden md:block md:w-1/2 bg-center rounded-r-[50px] bg-[#1F1F21]">
-      <img src="images/login-side-image.jpg"
+      <img src="images/l.jpeg"
             alt="Healthy Generations"
-            style="height:100vh; width:auto;">
+            class="object-cover w-full h-full rounded-r-[50px]">
   </div>
 
   <!-- Right: Form Section -->
@@ -123,7 +123,8 @@
       <div class="w-full flex justify-center mb-6">
         <img src="images/healthyGenerations.png"
              alt="Logo"
-             class="w-full max-w-xs" style="height: 475px; padding-top: 8px; margin-top: 10px">
+             class="w-full max-w-xs object-contain"
+             style="height: auto; margin-top: 20%;">
       </div>
 
       <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">

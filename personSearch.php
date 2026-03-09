@@ -55,34 +55,38 @@ require_once('header.php');
         color: #666 !important;
         }   
 
-        .info-section .info-text {
+        /* .info-section .info-text {
          color: #666 !important;
-        }
+        } */
 
         .blue-div {
-        background-color: #0e7162 !important;
+        background-color: #fafafa !important;
         }
 
         .main-content-box label {
-        color: #0e7162 !important;
+        color: #000000 !important;
         }
         
-        .text-blue-700 {
-        color: #666 !important;
+
+        .text-blue-700,
+        .text-blue-700:visited,
+        .text-blue-700:hover {
+            color: black !important;
         }
+        
         .sub-text {
         color: #666 !important;
         }
-
-        .main-content-box table,
+ 
+        /* .main-content-box table,
         .main-content-box table thead,
         .main-content-box table tbody,
         .main-content-box table tr,
-        .main-content-box table th,
-        .main-content-box table td {
-            background-color: #1F1F21 !important;
+        .main-content-box table th, */
+        /* .main-content-box table td {
+            background-color: #fafafa !important;
             color: #C9AB81 !important;
-            border: 1px solid #C9AB81 !important;
+            border: 1px solid #45892e !important;
         }
 
         .main-content-box table a.text-blue-700,
@@ -97,7 +101,7 @@ require_once('header.php');
         .main-content-box table a.text-blue-700,
         .main-content-box table a.text-blue-700:visited {
             color: #C9AB81 !important;
-        }
+        } */
     
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
@@ -127,9 +131,9 @@ require_once('header.php');
                 $args = sanitize($_GET);
                 $required = ['name', 'id', 'phone', 'zip', 'role', 'status', 'photo_release'];
 
-                if (!wereRequiredFieldsSubmitted($args, $required, true)) {
-                    echo '<div class="error-block">Missing expected form elements.</div>';
-                }
+                // if (!wereRequiredFieldsSubmitted($args, $required, true)) {
+                //     echo '<div class="error-block">Missing expected form elements.</div>';
+                // }
 
                 $name = $args['name'];
                 $id = $args['id'];
@@ -152,7 +156,60 @@ require_once('header.php');
                     $persons = find_users($name, $id, $phone, $zip, $role, $status, $photo_release);
                     require_once('include/output.php');
 
-                    if (count($persons) > 0) {
+                    // if (count($persons) > 0) {
+                    //     echo '
+                    //     <div class="overflow-x-auto">
+                    //         <table>
+                    //             <thead class="bg-blue-400">
+                    //                 <tr>
+                    //                     <th>First</th>
+                    //                     <th>Last</th>
+                    //                     <th>Username</th>
+                    //                     <th>Phone</th>
+                    //                     <th>Zip Code</th>
+                    //                     <th>Role</th>
+                    //                     <th>Archive Status</th>
+                    //                     <th>Profile</th>
+                    //                     <th>Actions</th>
+                    //                 </tr>
+                    //             </thead>
+                    //             <tbody>';
+                    //     $mailingList = '';
+                    //     $notFirst = false;
+                    //     foreach ($persons as $person) {
+                    //         if ($notFirst) {
+                    //             $mailingList .= ', ';
+                    //         } else {
+                    //             $notFirst = true;
+                    //         }
+                    //         $mailingList .= $person->get_email();
+                    //         echo '
+                    //                 <tr>
+                    //                     <td>' . $person->get_first_name() . '</td>
+                    //                     <td>' . $person->get_last_name() . '</td>
+                    //                     <td><a href="mailto:' . $person->get_id() . '" class="text-blue-700 underline">' . $person->get_id() . '</a></td>
+                    //                     <td><a href="tel:' . $person->get_phone1() . '" class="text-blue-700 underline">' . formatPhoneNumber($person->get_phone1()) . '</a></td>
+                    //                     <td>' . $person->get_zip_code() . '</td>
+                    //                     <td>' . ucfirst($person->get_type()) . '</td>
+                    //                     <td>' . ucfirst($person->get_status()) . '</td>
+                    //                     <td><a href="viewProfile.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Profile</a></td>
+                    //                     <td><a href="modifyUserRole.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Update Status</a></td>
+                    //                 </tr>';
+                    //     }
+                    //     echo '
+                    //             </tbody>
+                    //         </table>
+                    //     </div>';
+
+                    //     echo '
+                    //     <div class="mt-4">
+                    //         <label>Result Mailing List:</label>
+                    //         <p class="text-gray-700 break-words">' . $mailingList . '</p>
+                    //     </div>';
+                    // } else {
+                    //     echo '<div class="error-block">Your search returned no results.</div>';
+                    // }
+                      if (count($persons) > 0) {
                         echo '
                         <div class="overflow-x-auto">
                             <table>
@@ -163,8 +220,6 @@ require_once('header.php');
                                         <th>Username</th>
                                         <th>Phone</th>
                                         <th>Zip Code</th>
-                                        <th>Role</th>
-                                        <th>Archive Status</th>
                                         <th>Profile</th>
                                         <th>Actions</th>
                                     </tr>
@@ -186,8 +241,6 @@ require_once('header.php');
                                         <td><a href="mailto:' . $person->get_id() . '" class="text-blue-700 underline">' . $person->get_id() . '</a></td>
                                         <td><a href="tel:' . $person->get_phone1() . '" class="text-blue-700 underline">' . formatPhoneNumber($person->get_phone1()) . '</a></td>
                                         <td>' . $person->get_zip_code() . '</td>
-                                        <td>' . ucfirst($person->get_type()) . '</td>
-                                        <td>' . ucfirst($person->get_status()) . '</td>
                                         <td><a href="viewProfile.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Profile</a></td>
                                         <td><a href="modifyUserRole.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Update Status</a></td>
                                     </tr>';

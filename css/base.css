@@ -52,14 +52,14 @@ table, td, tr, th, form, fieldset, em, button, a {
     /* CSS variables that will be used across the page */
     --page-background-color: rgba(0,0,0,0);
     --page-font-color: #666;
-    --inactive-font-color: #d0d0d0;
+    --inactive-font-color: #fafafa;
     --inactive-background-color: rgb(255, 255, 255);
     --standout-background: #fafafa;
 
     --happy-toast-background-color: #45892e;
     --happy-toast-font-color: #b8d432;
 
-    --info-toast-background-color: #8a55a1;
+    --info-toast-background-color: #45892e;
     --info-toast-font-color: rgb(0, 0, 0);
 
     --error-toast-background-color: #5283c7;
@@ -977,7 +977,7 @@ form.signup-form a:hover {
 }
 
 .sidebar-item a {
-    color: #26c699;
+    color: #fafafa;
 }
 
 .sidebar-item:hover {
@@ -1257,7 +1257,7 @@ img.profile-pic {
 }
 
 .form-row > label {
-    width: auto;
+    width: auto; 
 }
 
 .checkbox-label {

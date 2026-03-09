@@ -108,6 +108,10 @@ function add_hours_to_person($person_id, $hours) {
 
 
 function remove_person($id) {
+    /*
+    
+    Commented out in case it needs to be used again
+
     $con=connect();
     $query = 'SELECT * FROM dbpersons WHERE id = "' . $id . '"';
     $result = mysqli_query($con,$query);
@@ -119,6 +123,25 @@ function remove_person($id) {
     $result = mysqli_query($con,$query);
     mysqli_close($con);
     return true;
+    */
+
+    //Statement should avoid SQL injection
+
+    $con=connect();
+    $stmt = $con->prepare('DELETE FROM dbpersons WHERE id = ?');
+    if (!$stmt) {
+        $con->close();
+        return false;
+    }
+
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $deleted = $stmt->affected_rows > 0;
+    
+    $stmt->close();
+    $con->close();
+
+    return $deleted; 
 }
 
 /*

@@ -30,15 +30,6 @@
 
             <label for="last_name"><em>* </em>Last Name</label>
             <input type="text" id="last_name" name="last_name" required placeholder="Enter last name">
-<<<<<<< HEAD
-
-            
-            <!--<div class="median-div"></div>-->
-
-            <label for="birthdate"><em>* </em>Date of Birth</label>
-            <input type="date" id="birthdate" name="birthdate" required placeholder="Enter rider birthday" max="<?php echo date('Y-m-d'); ?>">
-            
-=======
 
             <!-- eligibility status sterf - r -->
             <label for="eligibility_status">Eligibility status</label>
@@ -110,7 +101,6 @@
             <label for="birthdate"><em>* </em>Date of Birth</label>
             <input type="date" id="birthdate" name="birthdate" required placeholder="Enter rider birthday" max="<?php echo date('Y-m-d'); ?>">
             
->>>>>>> origin/dev
             <label for="street_address"><em>* </em>Street Address</label>
             <input type="text" id="street_address" name="street_address" required placeholder="Enter street address">
 
@@ -179,14 +169,34 @@
             <label for="zipcode"><em>* </em>Zip Code</label>
             <input type="text" id="zipcode"name="zipcode" pattern="^\d{5}(-\d{4})?$" required placeholder="Ex: 12345 or 12345-6789">
 
-            <label for="zip"><em>* </em>Zip Code</label>
-            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter 5-digit zip code">
-            
-        
+            <!--<label for="zip"><em>* </em>Zip Code</label>
+            <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
+-->
+            <!-- MILITARY INFO - prob dont need, maybe can utilize later 
+            <div class="median-div"></div>
+            <label for="affiliation"><em>* </em>Military Affiliation</label>
+            <select id="affiliation" name="affiliation" required>
+                <option value="" disabled selected></option>
+                <option value="Active duty">Active duty</option>
+                <option value="Family">Family member (spouse, child, or parent)</option>
+                <option value="Reserve">Reservist</option>
+                <option value="Veteran">Veteran</option>
+                <option value="Civilian">Civilian</option>
+            </select>
 
-
+            <label for="branch"><em>* </em>Branch of Service</label>
+            <select id="branch" name="branch" required>
+                <option value="" disabled selected></option>
+                <option value="Air Force">Air Force</option>
+                <option value="Army">Army</option>
+                <option value="Coast Guard">Coast Guard</option>
+                <option value="Marine Corp">Marine Corp</option>
+                <option value="Navy">Navy</option>
+                <option value="Space Force">Space Force</option>
+            </select>
+        /*
         </fieldset>
-        
+        -->
 
         <fieldset class="section-box mb-4">
             <h3>Contact Information</h3>
@@ -247,8 +257,8 @@
             </div>-->
 
         </fieldset>
-
-        <fieldset class="section-box mb-4">
+        </fieldset>
+        <!--<fieldset class="section-box mb-4">
             <h3>Emergency Contact</h3>
             <p class="mb-2">Please provide emergency contact information to contact on the riders' behalf in case of an emergency.</p>
 	    <div class="blue-div"></div>

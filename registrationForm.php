@@ -96,8 +96,8 @@
             <label for="street_address"><em>* </em>Street Address</label>
             <input type="text" id="street_address" name="street_address" required placeholder="Enter street address">
 
-            <label for="address"><em>* </em>Address</label>
-            <input type="text" id="address" name="address" required placeholder="Enter your home address">
+            <!--<label for="address"><em>* </em>Address</label>
+            <input type="text" id="address" name="address" required placeholder="Enter your home address">-->
 
             <label for="city"><em>* </em>City</label>
             <input type="text" id="city" name="city" required placeholder="Enter city">

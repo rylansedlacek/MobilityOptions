@@ -157,7 +157,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background: #C9AB81;
+            background: #45892e;
             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;

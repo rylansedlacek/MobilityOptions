@@ -33,7 +33,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="./css/base.css" rel="stylesheet">
-    <title>Whiskey Valor Volunteer Management | Dashboard</title>
+    <title>Mobility Options Dashboard</title>
     <style>
         * {
             box-sizing: border-box;
@@ -43,7 +43,7 @@
 
         body {
             font-family: Quicksand, sans-serif;
-            background-color: #1F1F21;
+            background-color: #ffffff;
         }
 
         h2 {
@@ -157,7 +157,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background: #C9AB81;
+            background: #45892e;
             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
@@ -280,20 +280,21 @@
     .circle-arrow-button:hover .circle {
         transform: translateX(5px); /* Moves the circle slightly on hover */
     }
-.colored-box {
+
+    .colored-box {
     display: inline-block; /* Ensures it wraps tightly around the text */
-    background-color: #C9AB81; /* Change to any color */
+    background-color: #439084; /* Change to any color */
     color: white; /* Text color */
     padding: 1px 5px; /* Adds space inside the box */
     border-radius: 5px; /* Optional: Rounds the corners */
-    font-weight: bold; /* Optional: Makes text bold */
-}
+    font-weight: bold; /* Optional: Makes text bold */  
+    }
 
 
         /* Footer */
         .footer {
             width: 100%;
-            background: #C9AB81;
+            background: #439084;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -402,7 +403,7 @@
     
         .content-box-test {
             position: relative;
-            background-color: #C9AB81;   /* tan background */
+            background-color: #b8d432;   /* light green background */
             border-radius: 12px;
             padding: 20px;
             color: black;                 /* default text color */
@@ -475,7 +476,7 @@
     <div class="full-width-bar">
     <div class="content-box">
         <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
-        <div class="small-text" style="color: #3A3A3A;">Make a difference.</div>
+        <div class="small-text" style="color: #3A3A3A;">Manage drivers and riders here.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
     <span class="button-text">Go</span>
@@ -497,8 +498,8 @@
 
     <div class="content-box">
         <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
-        <div class="small-text" style="color: #3A3A3A;">Let’s have some fun!</div>
-        <div class="large-text">Event Management</div>
+        <div class="small-text" style="color: #3A3A3A;">See current and future rides.</div>
+        <div class="large-text">Ride Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
     <span class="button-text"><?php 
                         require_once('database/dbEvents.php');
@@ -508,17 +509,17 @@
                         if (sizeof($pendingsignups) > 0) {
                             echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
                         }   
-                    ?> Sign-Ups </span>
+                    ?> Go </span>
     <div class="circle">&gt;</div>
 </button>
     </div>
 
     <div class="content-box">
         <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
-        <div class="small-text" style="color: #3A3A3A;">Get away from it all.</div>
-        <div class="large-text">Retreat Applications</div>
+        <div class="small-text" style="color: #3A3A3A;">Dispatch today's trips.</div>
+        <div class="large-text">Dispatch Trip</div>
 <button class="circle-arrow-button" onclick="window.location.href='viewAllApplications.php'">
-    <span class="button-text">Go</span>
+    <span class="button-text">Dispatch</span>
     <div class="circle">&gt;</div>
 </button>
     </div>
@@ -552,7 +553,7 @@
         </div>
         
         <div class="large-text-sub" style="color:#black;">Calendar</div>
-        <div class="graph-text" style="color:#3A3A3A;">See upcoming events/trainings.</div>
+        <div class="graph-text" style="color:#3A3A3A;">See all upcoming trips.</div>
         <button class="arrow-button">→</button>
     </div>
 
@@ -562,7 +563,7 @@
             <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
         </div>
        
-        <div class="large-text-sub" style="color:black;">View Pending IDs </div>
+        <div class="large-text-sub" style="color:black;">View Pending IDs</div>
         <div class="graph-text" style="color:#3A3A3A;">View pending and arbitrate user submitted IDs.</div>
         <button class="arrow-button">→</button>
     </div>
@@ -602,7 +603,7 @@
         </div>
         
         <div class="large-text-sub" style="color:black;">Create Email</div>
-        <div class="graph-text" style="color:#3A3A3A;">Send new messages to volunteers.</div>
+        <div class="graph-text" style="color:#3A3A3A;">Send new messages to riders.</div>
         <button class="arrow-button">→</button>
     </div>
 
@@ -624,7 +625,7 @@
         </div>
          
         <div class="large-text-sub" style="color:black;">Generate Email List</div>
-        <div class="graph-text" style="color:#3A3A3A;">Volunteer Emails</div>
+        <div class="graph-text" style="color:#3A3A3A;">Rider Emails</div>
         <button class="arrow-button">→</button>
     </div>
 

@@ -63,11 +63,11 @@ require_once('header.php');
 
         $required = array(
             'first_name', 'last_name', 'birthdate',
-            'street_address', 'city', 'state', 'zip', 
+            'street_address', 'city', 'state', 'zipcode', 
             'email',
-            'emergency_contact_first_name', 'emergency_contact_last_name',
-            'emergency_contact_relation', 'emergency_contact_phone',
-            'emergency_contact_phone_type'
+            'emergency_first_name', 'emergency_last_name',
+            'emergency_relation', 'emergency_phone',
+            //'emergency_contact_phone_type'
         );
 
         $optional = array(
@@ -77,6 +77,7 @@ require_once('header.php');
         $errors = false;
 
         if (!wereRequiredFieldsSubmitted($args, $required)) {
+            echo "NOT ALL FIELDS ENTERED";
             $errors = true;
         }
 
@@ -100,7 +101,7 @@ require_once('header.php');
             $errors = true;
         }
 
-        $zip_code = $args['zip'];
+        $zip_code = $args['zipcode'];
         if (!validateZipcode($zip_code)) {
             echo "<p>Invalid ZIP code.</p>";
             $errors = true;
@@ -142,22 +143,22 @@ require_once('header.php');
             $errors = true;
         }*/
 //emergency contact?
-       /* $emergency_contact_first_name = $args['emergency_contact_first_name'];
-        $emergency_contact_last_name = $args['emergency_contact_last_name'];
-        $emergency_contact_relation = $args['emergency_contact_relation'];
+        $emergency_contact_first_name = $args['emergency_first_name'];
+        $emergency_contact_last_name = $args['emergency_last_name'];
+        $emergency_contact_relation = $args['emergency_relation'];
 
-        $emergency_contact_phone = validateAndFilterPhoneNumber($args['emergency_contact_phone']);
+        $emergency_contact_phone = validateAndFilterPhoneNumber($args['emergency_phone']);
         if (!$emergency_contact_phone) {
             echo "<p>Invalid emergency contact phone.</p>";
             $errors = true;
         } 
 
-        $emergency_contact_phone_type = $args['emergency_contact_phone_type'];
+        /*$emergency_contact_phone_type = $args['emergency_phone_type'];
         if (!valueConstrainedTo($emergency_contact_phone_type, array('cellphone', 'home', 'work'))) {
             echo "<p>Invalid emergency phone type.</p>";
             $errors = true;
-        }
-*/
+        }*/
+
         /*$skills = isset($args['skills']) ? $args['skills'] : '';
         $interests = isset($args['interests']) ? $args['interests'] : '';
 
@@ -171,7 +172,7 @@ require_once('header.php');
         $training_level = "None";*/
 
         //$id = $args['username'];
-        $id = strtolower($args['first_name'][3] . $args['last_name']);
+        $id = strtolower(substr($args['first_name'], 0 ,3) . $args['last_name']);
 
         $id = generate_valid_id($id);
 
@@ -218,7 +219,7 @@ require_once('header.php');
             $first_name, $last_name,
             $street_address, $city, $state, $zip_code,
             $phone1, null, null,
-            $emergency_contact_phone, $emergency_contact_phone_type, $birthday, $email, null, 
+            $emergency_contact_phone, null, $birthday, $email, null, 
             $emergency_contact_first_name, null, $emergency_contact_relation, null, 'rider', null, null,
             null, null, null, null, $emergency_contact_last_name
         );

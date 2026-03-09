@@ -226,8 +226,8 @@
             <label for="emergency_phone"> <em>* </em> Phone Number</label>
             <input type="tel" id="emergency_phone" name="emergency_phone" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" required placeholder="Ex. (555) 555-5555">
 
-            <label for="affiliation"><em>* </em>Personal Affiliation</label>
-            <select id="affiliation" name="affiliation" required>
+            <label for="emergency_relation"><em>* </em>Personal Affiliation</label>
+            <select id="emergency_relation" name="emergency_relation" required>
                 <option value="" disabled selected></option>
                 <option value="Spouse">Spouse</option>
                 <option value="Family">Family member</option>

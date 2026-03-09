@@ -156,10 +156,21 @@
             $affiliation = $person->get_affiliation();
         }
         
+        // eligibility status from form
+        $eligibility_status = null;
+        $eligibility_record_id = null;
        
-        // For the new fields, default to 0 if not set
+            if (isset($args['eligibility_status'])) {
+                $eligibility_status = $args['eligibility_status'];
+                if (!in_array($eligibility_status, ['pending','approved','denied'])) {
+                    $eligibility_status = 'pending';
+                }
+            }
+
+            if (isset($args['eligibility_record_id'])) {
+                $eligibility_record_id = $args['eligibility_record_id'];
+            }
         
-       
         if ($errors) {
             $updateSuccess = false;
         }
@@ -169,6 +180,15 @@
             $email, $phone1, $email_consent, $affiliation, $branch
         );
         if ($result) {
+            // if someone changed eligibility, update record
+            if ($eligibility_status !== null) {
+                if ($eligibility_record_id) {
+                    update_user_verified_ids($eligibility_record_id, $eligibility_status, $_SESSION['_id']);
+                } else {
+                    add_user_verified_ids($id, 'eligibility', $eligibility_status, $_SESSION['_id']);
+                }
+            }
+
             if ($editingSelf) {
                 header('Location: viewProfile.php?editSuccess');
             } else {

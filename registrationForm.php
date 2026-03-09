@@ -31,6 +31,14 @@
             <label for="last_name"><em>* </em>Last Name</label>
             <input type="text" id="last_name" name="last_name" required placeholder="Enter last name">
 
+            <!-- eligibility status sterf - r -->
+            <label for="eligibility_status">Eligibility status</label>
+            <select id="eligibility_status" name="eligibility_status">
+                <option value="pending" selected>Pending</option>
+                <option value="approved">Approved</option>
+                <option value="denied">Denied</option>
+            </select>
+
     <label><em>* </em>Do you have any disabilities?</label>
     <div class="radio-group">
         <div class="radio-element">

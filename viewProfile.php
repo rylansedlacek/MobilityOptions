@@ -37,7 +37,7 @@
     //}
 
    $user = retrieve_person($id);
-  $verified_ids = get_verified_ids($user->get_id());
+   $verified_ids = get_verified_ids($user->get_id());
 
   // grab eligibility record separately for display
   $elig = get_eligibility_record($user->get_id());

@@ -261,7 +261,7 @@
         width: 30px;
         height: 30px;
         /*background-color:; /* Blue color */
-        background-color: #C9AB81;
+        background-color: #385a2c;
         color: white;
         border-radius: 50%;
         display: flex;
@@ -452,7 +452,7 @@
 
     <!-- Dummy content to enable scrolling -->
     <div style="margin-top: 0px; padding: 30px 20px;">
-        <h2><b>Welcome <?php echo $person->get_first_name() ?>!</b> Let's get started.</h2>
+        <h2><b>Mobility Options Dashboard</b></h2>
     </div>
 
             <?php if (isset($_GET['pcSuccess'])): ?>
@@ -473,7 +473,7 @@
 
     <div class="full-width-bar">
     <div class="content-box">
-        <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
+        <img src="" style="filter:brightness(3) contrast(25%) blur(4px);">
         <div class="small-text" style="color: #3A3A3A;">Manage drivers and riders here.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
@@ -495,7 +495,7 @@
     </div>
 
     <div class="content-box">
-        <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
+        <img src="" style="filter:brightness(3) contrast(25%) blur(4px);">
         <div class="small-text" style="color: #3A3A3A;">See current and future rides.</div>
         <div class="large-text">Ride Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
@@ -513,7 +513,7 @@
     </div>
 
     <div class="content-box">
-        <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
+        <img src="" style="filter:brightness(3) contrast(25%) blur(4px);">
         <div class="small-text" style="color: #3A3A3A;">Dispatch today's trips.</div>
         <div class="large-text">Dispatch Trip</div>
 <button class="circle-arrow-button" onclick="window.location.href='viewAllApplications.php'">

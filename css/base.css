@@ -141,7 +141,7 @@ header {
 }
 
 body {
-    background-color: var(--page-background-color);
+    background-color: #fff;
     color: var(--page-font-color);
     font-family: Montserrat;
 }

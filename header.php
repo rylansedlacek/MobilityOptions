@@ -198,7 +198,6 @@ if (date("H:i:s") > "18:19:59") {
             background: #fff;
             padding: 10px 20px;
             border-radius: 10px;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
         }
 
         .logo-container img {

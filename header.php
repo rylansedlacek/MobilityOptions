@@ -194,14 +194,15 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Logo */
         .logo-container {
-            background: #fff;
+            background: none;
             padding: 10px 20px;
             border-radius: 10px;
         }
 
         .logo-container img {
             width: 100%;
-            height: 4rem;
+            height: 5rem;
+            margin-top: .25rem;
             display: block;
         }
 
@@ -858,32 +859,6 @@ if (date("H:i:s") > "18:19:59") {
 
                     </div>
                 </div>
-                <div class="nav-item">
-                    <div class="dropdown">
-
-<a href="createGroup.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/creategroup.svg">
-    <span>Create Group</span>
-  </div>
-</a>
-
-<a href="showGroups.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/group.svg">
-    <span>View Groups</span>
-  </div>
-</a>
-
-<a href="noShows.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/group.svg">
-    <span>No Shows</span>
-  </div>
-</a>
-
-                    </div>
-               </div>
             </div>
         </div>
 

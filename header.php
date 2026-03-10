@@ -364,7 +364,7 @@ if (date("H:i:s") > "18:19:59") {
         /* Footer */
         .footer {
             width: 100%;
-            background: #C9AB81;
+            background: #385a2c;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;

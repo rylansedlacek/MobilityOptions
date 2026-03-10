@@ -195,8 +195,9 @@
                 <option value="Space Force">Space Force</option>
             </select>
         /*
+-->
         </fieldset>
-        -->
+        
 
         <fieldset class="section-box mb-4">
             <h3>Contact Information</h3>
@@ -218,7 +219,7 @@
             <div class="median-div"></div>
 
             <!--emergency contact info stuff -->
-        <fieldset class="section-box mb-4">
+        <!--<fieldset class="section-box mb-4"> -->
             <h3>Emergency Contact Information</h3>
             <p class="mb-2">Please provide information for an emergency contact.</p>
 	    <div class="blue-div"></div>
@@ -242,6 +243,8 @@
                 <option value="Friend">Friend</option>
                 <option value="Legal Guardian">Legal Guardian</option>
             </select>
+            </fieldset>
+
 
             <!--<label><em>* </em>Phone Type</label>
             <div class="radio-group">
@@ -256,8 +259,8 @@
 	      </div>
             </div>-->
 
-        </fieldset>
-        </fieldset>
+        <!-- </fieldset>
+        </fieldset> -->
         <!--<fieldset class="section-box mb-4">
             <h3>Emergency Contact</h3>
             <p class="mb-2">Please provide emergency contact information to contact on the riders' behalf in case of an emergency.</p>

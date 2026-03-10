@@ -50,8 +50,8 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: rgba(0,0,0,0);
-    --page-font-color: #666;
+    --page-background-color: rgb(0,0,0);
+    --page-font-color: rgb(0,0,0);
     --inactive-font-color: #fafafa;
     --inactive-background-color: rgb(255, 255, 255);
     --standout-background: #fafafa;
@@ -72,7 +72,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --accent-color: #0e7162;
  
-    --secondary-accent-color: rgba(36, 245, 43, 0.775);
+    --secondary-accent-color: rgba(39, 131, 42, 0.775);
 
     /* Accessibility / WV theme variables */
     --wv-accent-color: #C9AB81; /* gold */

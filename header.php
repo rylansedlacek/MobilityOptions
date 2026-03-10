@@ -71,7 +71,7 @@ if (date("H:i:s") > "18:19:59") {
 
         .full-width-bar {
             width: 100%;
-            background: rgb(31,31,33);
+            background: #fff;
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
@@ -97,6 +97,7 @@ if (date("H:i:s") > "18:19:59") {
             align-items: center;
             text-align: center;
             position: relative;
+            background-color: #385a2c;
         }
 
         .content-box-sub {
@@ -134,7 +135,6 @@ if (date("H:i:s") > "18:19:59") {
             left: 30px;
             font-size: 14px;
             font-weight: 700;
-            color: #297760ff;
         }
 
         .large-text {
@@ -177,7 +177,7 @@ if (date("H:i:s") > "18:19:59") {
             position: fixed;
             top: 0;
             left: 0;
-            background: rgb(31,31,33);
+            background: #385a2c;
             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
@@ -194,15 +194,15 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Logo */
         .logo-container {
-            background: rgb(31,31,33);
+            background: none;
             padding: 10px 20px;
-            border-radius: 50px;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
+            border-radius: 10px;
         }
 
         .logo-container img {
-            width: 52px;
-            height: 60px;
+            width: 100%;
+            height: 5rem;
+            margin-top: .25rem;
             display: block;
         }
 
@@ -365,7 +365,7 @@ if (date("H:i:s") > "18:19:59") {
         /* Footer */
         .footer {
             width: 100%;
-            background: #C9AB81;
+            background: #385a2c;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -631,6 +631,8 @@ if (date("H:i:s") > "18:19:59") {
 <header>
 
     <?php
+    //KAT NOTE: Since this will only be accessed by logged in employees, should we cut entirely?
+    
     //Log-in security
     //If they aren't logged in, display our log-in form.
     $showing_login = false;
@@ -639,8 +641,7 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
-                <a href="index.php"><img src="https://whiskeyvalor.org/cdn/shop/files/Whiskey_Valor_Logo_Transparent_Gold_1.png?v=1742592394&width=600" alt="Logo"></a>
-            </div>
+                <a href="index.php"><img src="images/healthyGenPageLogo.png"></a>
             <div class="nav-links">
                 <div class="nav-item">
                     <a href="index.php" class="nav-link">Home</a>
@@ -821,25 +822,25 @@ if (date("H:i:s") > "18:19:59") {
             </div>
                 <!--<a href="viewCheckInOut.php" style="color: white; text-decoration: none;"><div class="date-box">Check In/Out</div></a>-->
             <div class="nav-links">
-                <div class="nav-item">Events
+                <div class="nav-item">Rides
                     <div class="dropdown">
 
 <a href="addEvent.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/plus-solid.svg">
-    <span>Create Event</span>
+    <span>Schedule a Ride</span>
   </div>
 </a>
 <a href="calendar.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/list-solid.svg">
-    <span>View Events</span>
+    <span>View Scheduled Rides</span>
   </div>
 </a>
 <a href="editHours.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/clock-regular.svg">
-    <span>Change Event Hours</span>
+    <span>Change Scheduled Ride Time</span>
   </div>
 </a>
 <a href="viewPendingApps.php" style="text-decoration: none;">
@@ -851,39 +852,13 @@ if (date("H:i:s") > "18:19:59") {
 <a href="adminViewingEvents.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/list-solid.svg">
-    <span>Edit Event</span>
+    <span>Edit Ride Details</span>
   </div>
 </a>
 
 
                     </div>
                 </div>
-                <div class="nav-item">
-                    <div class="dropdown">
-
-<a href="createGroup.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/creategroup.svg">
-    <span>Create Group</span>
-  </div>
-</a>
-
-<a href="showGroups.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/group.svg">
-    <span>View Groups</span>
-  </div>
-</a>
-
-<a href="noShows.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/group.svg">
-    <span>No Shows</span>
-  </div>
-</a>
-
-                    </div>
-               </div>
             </div>
         </div>
 

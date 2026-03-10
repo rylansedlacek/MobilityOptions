@@ -71,7 +71,7 @@ if (date("H:i:s") > "18:19:59") {
 
         .full-width-bar {
             width: 100%;
-            background: rgb(31,31,33);
+            background: #45892e;
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
@@ -194,15 +194,15 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Logo */
         .logo-container {
-            background: rgb(31,31,33);
+            background: #45892e;
             padding: 10px 20px;
             border-radius: 50px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
         }
 
         .logo-container img {
-            width: 52px;
-            height: 60px;
+            width: 100%;
+            height: 4rem;
             display: block;
         }
 
@@ -631,6 +631,8 @@ if (date("H:i:s") > "18:19:59") {
 <header>
 
     <?php
+    //KAT NOTE: Since this will only be accessed by logged in employees, should we cut entirely?
+    
     //Log-in security
     //If they aren't logged in, display our log-in form.
     $showing_login = false;
@@ -639,8 +641,7 @@ if (date("H:i:s") > "18:19:59") {
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
-                <a href="index.php"><img src="https://whiskeyvalor.org/cdn/shop/files/Whiskey_Valor_Logo_Transparent_Gold_1.png?v=1742592394&width=600" alt="Logo"></a>
-            </div>
+                <a href="index.php"><img src="images/healthyGenPageLogo.png"></a>
             <div class="nav-links">
                 <div class="nav-item">
                     <a href="index.php" class="nav-link">Home</a>

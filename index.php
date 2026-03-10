@@ -551,7 +551,7 @@
             <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
         </div>
         
-        <div class="large-text-sub" style="color:#black;">Calendar</div>
+        <div class="large-text-sub">Calendar</div>
         <div class="graph-text">See all upcoming trips.</div>
         <button class="arrow-button">→</button>
     </div>
@@ -562,7 +562,7 @@
             <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
         </div>
        
-        <div class="large-text-sub" style="color:black;">View Pending IDs</div>
+        <div class="large-text-sub">View Pending IDs</div>
         <div class="graph-text">View pending and arbitrate user submitted IDs.</div>
         <button class="arrow-button">→</button>
     </div>
@@ -590,7 +590,7 @@
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
         
-        <div class="large-text-sub"style="color:black;">Generate Report</div>
+        <div class="large-text-sub">Generate Report</div>
         <div class="graph-text">From this quarter or annual.</div>
         <button class="arrow-button">→</button>
     </div>
@@ -601,7 +601,7 @@
             <img style="border-radius: 5px;" src="images/inbox.svg" alt="Email Icon">
         </div>
         
-        <div class="large-text-sub" style="color:black;">Create Email</div>
+        <div class="large-text-sub">Create Email</div>
         <div class="graph-text">Send new messages to riders.</div>
         <button class="arrow-button">→</button>
     </div>
@@ -612,7 +612,7 @@
             <img style="border-radius: 5px;" src="images/search.svg" alt="Drafts Icon">
         </div>
         
-        <div class="large-text-sub" style="color:black;">View Drafts</div>
+        <div class="large-text-sub">View Drafts</div>
         <div class="graph-text">Check saved email drafts.</div>
         <button class="arrow-button">→</button>
     </div>
@@ -623,7 +623,7 @@
             <img style="border-radius: 5px;" src="images/send.png" alt="Email List Icon">
         </div>
          
-        <div class="large-text-sub" style="color:black;">Generate Email List</div>
+        <div class="large-text-sub">Generate Email List</div>
         <div class="graph-text">Rider Emails</div>
         <button class="arrow-button">→</button>
     </div>
@@ -634,7 +634,7 @@
             <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Discussions Icon">
         </div>
         
-        <div class="large-text-sub" style="color:black;">User Suggestions</div>
+        <div class="large-text-sub">User Suggestions</div>
         <div class="graph-text">View user submitted suggestions.</div>
         <button class="arrow-button">→</button>
     </div>

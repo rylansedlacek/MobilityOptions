@@ -50,9 +50,9 @@ require_once('header.php');
 	}
 
   .top-bar {
-      background-color: #fafafa;  /* white header color */
-      height: 200px;             /* height of the bar */
-      width: 100%;              /* full width */
+      background-color: transparent; 
+      height: 200px;              
+      width: 100%;             
       position: fixed;
   }
 

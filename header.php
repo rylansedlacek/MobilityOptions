@@ -71,7 +71,7 @@ if (date("H:i:s") > "18:19:59") {
 
         .full-width-bar {
             width: 100%;
-            background: #45892e;
+            background: #fff;
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
@@ -97,6 +97,7 @@ if (date("H:i:s") > "18:19:59") {
             align-items: center;
             text-align: center;
             position: relative;
+            background-color: #45892e;
         }
 
         .content-box-sub {
@@ -177,7 +178,7 @@ if (date("H:i:s") > "18:19:59") {
             position: fixed;
             top: 0;
             left: 0;
-            background: rgb(31,31,33);
+            background: #45892e;
             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;
@@ -194,9 +195,9 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Logo */
         .logo-container {
-            background: #45892e;
+            background: #fff;
             padding: 10px 20px;
-            border-radius: 50px;
+            border-radius: 10px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) inset;
         }
 
@@ -822,25 +823,25 @@ if (date("H:i:s") > "18:19:59") {
             </div>
                 <!--<a href="viewCheckInOut.php" style="color: white; text-decoration: none;"><div class="date-box">Check In/Out</div></a>-->
             <div class="nav-links">
-                <div class="nav-item">Events
+                <div class="nav-item">Rides
                     <div class="dropdown">
 
 <a href="addEvent.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/plus-solid.svg">
-    <span>Create Event</span>
+    <span>Schedule a Ride</span>
   </div>
 </a>
 <a href="calendar.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/list-solid.svg">
-    <span>View Events</span>
+    <span>View Scheduled Rides</span>
   </div>
 </a>
 <a href="editHours.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/clock-regular.svg">
-    <span>Change Event Hours</span>
+    <span>Change Scheduled Ride Time</span>
   </div>
 </a>
 <a href="viewPendingApps.php" style="text-decoration: none;">
@@ -852,7 +853,7 @@ if (date("H:i:s") > "18:19:59") {
 <a href="adminViewingEvents.php" style="text-decoration: none;">
   <div class="in-nav">
     <img src="images/list-solid.svg">
-    <span>Edit Event</span>
+    <span>Edit Ride Details</span>
   </div>
 </a>
 

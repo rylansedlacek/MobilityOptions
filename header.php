@@ -97,7 +97,7 @@ if (date("H:i:s") > "18:19:59") {
             align-items: center;
             text-align: center;
             position: relative;
-            background-color: #45892e;
+            background-color: #385a2c;
         }
 
         .content-box-sub {

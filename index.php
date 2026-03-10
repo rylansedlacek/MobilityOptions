@@ -79,7 +79,7 @@
             align-items: center;
             text-align: center;
             position: relative;
-            background-color: #45892e;
+            background-color: #385a2c;
         }
 
         .content-box-sub {
@@ -414,7 +414,7 @@
 
         .content-box-test .large-text-sub,
         .content-box-test .graph-text {
-            color: black;
+            color: white;
             }
 
 

@@ -62,7 +62,7 @@
         }
         .full-width-bar-sub {
             width: 100%;
-            background: #1F1F21;
+            background: #fff;
             padding: 17px 5%;
             display: flex;
             flex-wrap: wrap;
@@ -377,7 +377,7 @@
             top: 40px; /* Adjust as needed */
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8); /* Optional background for better visibility */
+            background: #385a2c; /* Optional background for better visibility */
             padding: 10px;
             border-radius: 50%;
             display: flex;
@@ -402,7 +402,7 @@
     
         .content-box-test {
             position: relative;
-            background-color: #b8d432;   /* light green background */
+            background-color: #385a2c;   /* light green background */
             border-radius: 12px;
             padding: 20px;
             color: black;                 /* default text color */
@@ -424,7 +424,7 @@
 
         
         .full-width-bar-sub{
-            background-color: #1F1F21 !important;
+            background-color: #fff !important;
             }
 
 
@@ -546,29 +546,29 @@
     ?>
 
     <!-- Calendar -->
-    <div class="content-box-test" onclick="window.location.href='calendar.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
+    <div class="content-box-test" onclick="window.location.href='calendar.php'" style="border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
         </div>
         
         <div class="large-text-sub" style="color:#black;">Calendar</div>
-        <div class="graph-text" style="color:#3A3A3A;">See all upcoming trips.</div>
+        <div class="graph-text">See all upcoming trips.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- Manage Documents -->
-    <div class="content-box-test" onclick="window.location.href='view_encrypted_gallery.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black; position: relative;">
+    <div class="content-box-test" onclick="window.location.href='view_encrypted_gallery.php'" style="border-radius: 12px; padding: 20px; color: black; position: relative;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
         </div>
        
         <div class="large-text-sub" style="color:black;">View Pending IDs</div>
-        <div class="graph-text" style="color:#3A3A3A;">View pending and arbitrate user submitted IDs.</div>
+        <div class="graph-text">View pending and arbitrate user submitted IDs.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- System Notifications -->
-    <div class="content-box-test" onclick="window.location.href='inbox.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
+    <div class="content-box-test" onclick="window.location.href='inbox.php'" style="border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
         </div>
@@ -580,62 +580,62 @@
                 }
             ?>
         </div>
-        <div class="graph-text" style="color:#3A3A3A;">Stay up to date.</div>
+        <div class="graph-text">Stay up to date.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- Generate Report -->
-    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
+    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
         
         <div class="large-text-sub"style="color:black;">Generate Report</div>
-        <div class="graph-text"style="color:#3A3A3A;">From this quarter or annual.</div>
+        <div class="graph-text">From this quarter or annual.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- Create Email -->
-    <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
+    <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/inbox.svg" alt="Email Icon">
         </div>
         
         <div class="large-text-sub" style="color:black;">Create Email</div>
-        <div class="graph-text" style="color:#3A3A3A;">Send new messages to riders.</div>
+        <div class="graph-text">Send new messages to riders.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- View Drafts -->
-    <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
+    <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/search.svg" alt="Drafts Icon">
         </div>
         
         <div class="large-text-sub" style="color:black;">View Drafts</div>
-        <div class="graph-text" style="color:#3A3A3A;">Check saved email drafts.</div>
+        <div class="graph-text">Check saved email drafts.</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- Generate Email List -->
-    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
+    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/send.png" alt="Email List Icon">
         </div>
          
         <div class="large-text-sub" style="color:black;">Generate Email List</div>
-        <div class="graph-text" style="color:#3A3A3A;">Rider Emails</div>
+        <div class="graph-text">Rider Emails</div>
         <button class="arrow-button">→</button>
     </div>
 
     <!-- Discussions -->
-    <div class="content-box-test" onclick="window.location.href='viewSuggestions.php'" style="background-color: #C9AB81; border-radius: 12px; padding: 20px; color: black;">
+    <div class="content-box-test" onclick="window.location.href='viewSuggestions.php'" style="border-radius: 12px; padding: 20px; color: black;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Discussions Icon">
         </div>
         
         <div class="large-text-sub" style="color:black;">User Suggestions</div>
-        <div class="graph-text" style="color:#3A3A3A;">View user submitted suggestions.</div>
+        <div class="graph-text">View user submitted suggestions.</div>
         <button class="arrow-button">→</button>
     </div>
 

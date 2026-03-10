@@ -292,7 +292,7 @@
         /* Footer */
         .footer {
             width: 100%;
-            background: #439084;
+            background: #385a2c;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -452,7 +452,7 @@
 
     <!-- Dummy content to enable scrolling -->
     <div style="margin-top: 0px; padding: 30px 20px;">
-        <h2><b>Mobility Options Dashboard</b></h2>
+        <h2><b>Ride Dashboard</b></h2>
     </div>
 
             <?php if (isset($_GET['pcSuccess'])): ?>
@@ -524,7 +524,7 @@
 
 </div>
 
-<div style="margin-top: 50px; padding: 0px 80px;">
+<div style="margin-top: 50px; padding: 30px 20px;">
     <h2><b>Admin Dashboard</b></h2>
 </div>
 
@@ -656,7 +656,7 @@
     <footer class="footer" style="margin-top: 100px;">
         <!-- Left Side: Logo & Socials -->
         <div class="footer-left">
-            <img src="images/whiskeyLogoBlack.png" alt="Logo" class="footer-logo">
+            <img src="images/healthyGenPageLogo.png" alt="Logo" class="footer-logo">
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>

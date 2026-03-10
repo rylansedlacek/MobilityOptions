@@ -174,14 +174,8 @@
 
         /* Logo */
         .logo-container {
-            background: #fff;
+            background: none;
             padding: 10px 20px;
-        }
-
-        .logo-container img {
-            width: 128px;
-            height: 52px;
-            display: block;
         }
 
         /* Navigation Links */

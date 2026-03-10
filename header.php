@@ -177,7 +177,7 @@ if (date("H:i:s") > "18:19:59") {
             position: fixed;
             top: 0;
             left: 0;
-            background: #45892e;
+            background: #385a2c;
             box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: center;

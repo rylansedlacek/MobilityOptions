@@ -656,7 +656,7 @@
     <footer class="footer" style="margin-top: 100px;">
         <!-- Left Side: Logo & Socials -->
         <div class="footer-left">
-            <img src="images/healthyGenPageLogo.png" alt="Logo" class="footer-logo">
+            <img src="images/mobility-options.jpg" alt="Logo" class="footer-logo">
             <div class="social-icons">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>

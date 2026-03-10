@@ -473,7 +473,7 @@
 
     <div class="full-width-bar">
     <div class="content-box">
-        <!-- <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);"> -->
+        <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
         <div class="small-text" style="color: #3A3A3A;">Manage drivers and riders here.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
@@ -495,7 +495,7 @@
     </div>
 
     <div class="content-box">
-        <!-- <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);"> -->
+        <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
         <div class="small-text" style="color: #3A3A3A;">See current and future rides.</div>
         <div class="large-text">Ride Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
@@ -513,7 +513,7 @@
     </div>
 
     <div class="content-box">
-       <!-- <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);"> -->
+        <img src="images/whiskeyBarrels.png" style="filter:brightness(3) contrast(25%) blur(4px);">
         <div class="small-text" style="color: #3A3A3A;">Dispatch today's trips.</div>
         <div class="large-text">Dispatch Trip</div>
 <button class="circle-arrow-button" onclick="window.location.href='viewAllApplications.php'">

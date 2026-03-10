@@ -79,7 +79,6 @@
             align-items: center;
             text-align: center;
             position: relative;
-            background-color: #385a2c;
         }
 
         .content-box-sub {

@@ -50,7 +50,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: rgb(255, 255, 255);
+    --page-background-color: #fff;
     --page-font-color: rgb(0,0,0);
     --inactive-font-color: #fafafa;
     --inactive-background-color: rgb(255, 255, 255);

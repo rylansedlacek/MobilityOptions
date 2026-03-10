@@ -2,177 +2,176 @@
 <script src="https://nosir.github.io/cleave.js/dist/cleave.min.js"></script>
 <script src="https://nosir.github.io/cleave.js/dist/cleave-phone.i18n.js"></script>
 <!-- Hero Section with Title -->
-<header class="hero-header"> 
+<header class="hero-header">
     <div class="center-header">
         <h1>Rider Registration</h1>
     </div>
 </header>
 
 <main>
-  <div class="main-content-box">
-    <form class="signup-form" method="post">
-	<div class="text-center spacing-bottom">
-          <h2 class="mb-8">Registration Form</h2>
-            <div class="info-box">
-              <p class="sub-text">Please fill out each section of the following form to create a rider profile.</p>
-              <p>An asterisk ( <em>*</em> ) indicates a required field.</p>
+    <div class="main-content-box">
+        <form class="signup-form" method="post">
+            <div class="text-center spacing-bottom">
+                <h2 class="mb-8">Registration Form</h2>
+                <div class="info-box">
+                    <p class="sub-text">Please fill out each section of the following form to create a rider profile.</p>
+                    <p>An asterisk ( <em>*</em> ) indicates a required field.</p>
+                </div>
             </div>
-	</div>
-        
-        <fieldset class="section-box mb-4">
 
-            <h3 class="mt-2">Rider Information</h3>
-            <p class="mb-2">The following information will help identify the rider within the system.</p>
-	        <div class="blue-div"></div>
+            <fieldset class="section-box mb-4">
 
-            <label for="first_name"><em>* </em>First Name</label>
-            <input type="text" id="first_name" name="first_name" required placeholder="Enter first name">
+                <h3 class="mt-2">Rider Information</h3>
+                <p class="mb-2">The following information will help identify the rider within the system.</p>
+                <div class="blue-div"></div>
 
-            <label for="last_name"><em>* </em>Last Name</label>
-            <input type="text" id="last_name" name="last_name" required placeholder="Enter last name">
+                <label for="first_name"><em>* </em>First Name</label>
+                <input type="text" id="first_name" name="first_name" required placeholder="Enter first name">
 
-            <!-- eligibility status sterf - r -->
-            <label for="eligibility_status">Eligibility status</label>
-            <select id="eligibility_status" name="eligibility_status">
-                <option value="pending" selected>Pending</option>
-                <option value="approved">Approved</option>
-                <option value="denied">Denied</option>
-            </select>
+                <label for="last_name"><em>* </em>Last Name</label>
+                <input type="text" id="last_name" name="last_name" required placeholder="Enter last name">
 
-    <label><em>* </em>Do you have any disabilities?</label>
-    <div class="radio-group">
-        <div class="radio-element">
-            <input type="radio" id="disYes" name="has_disability" value="yes" required>
-        <label for="disYes">Yes</label>
-        </div>
-        <div class="radio-element">
-            <input type="radio" id="disNo" name="has_disability" value="no">
-            <label for="disNo">No</label>
-        </div>
-    </div>
+                <!-- eligibility status sterf - r -->
+                <label for="eligibility_status">Eligibility status</label>
+                <select id="eligibility_status" name="eligibility_status">
+                    <option value="pending" selected>Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="denied">Denied</option>
+                </select>
+
+                <label><em>* </em>Do you have any disabilities?</label>
+                <div class="radio-group">
+                    <div class="radio-element">
+                        <input type="radio" id="disYes" name="has_disability" value="yes" required>
+                        <label for="disYes">Yes</label>
+                    </div>
+                    <div class="radio-element">
+                        <input type="radio" id="disNo" name="has_disability" value="no">
+                        <label for="disNo">No</label>
+                    </div>
+                </div>
 
 
-<div id="disabilityDetails" style="display:none; margin-top: 10px;">
-  <label for="disabilityType"><em>* </em>Disability type</label>
-  <select id="disabilityType" name="disability_type">
-    <option value="">Select one...</option>
-    <option value="mobility">Mobility</option>
-    <option value="vision">Vision</option>
-    <option value="hearing">Hearing</option>
-    <option value="cognitive">Cognitive</option>
-    <option value="other">Other</option>
-  </select>
+                <div id="disabilityDetails" style="display:none; margin-top: 10px;">
+                    <label for="disabilityType"><em>* </em>Disability type</label>
+                    <select id="disabilityType" name="disability_type">
+                        <option value="">Select one...</option>
+                        <option value="mobility">Mobility</option>
+                        <option value="vision">Vision</option>
+                        <option value="hearing">Hearing</option>
+                        <option value="cognitive">Cognitive</option>
+                        <option value="other">Other</option>
+                    </select>
 
-  <label for="mobilityNeeds" style="display:block; margin-top:10px;">
-    Mobility needs / accommodations
-  </label>
-  <input
-    type="text"
-    id="mobilityNeeds"
-    name="mobility_needs"
-    placeholder="e.g., wheelchair accessible vehicle, extra time, assistance…"
-  />
-</div>
+                    <label for="mobilityNeeds" style="display:block; margin-top:10px;">
+                        Mobility needs / accommodations
+                    </label>
+                    <input
+                        type="text"
+                        id="mobilityNeeds"
+                        name="mobility_needs"
+                        placeholder="e.g., wheelchair accessible vehicle, extra time, assistance…" />
+                </div>
 
-<script>
-  const yes = document.getElementById("disYes");
-  const no = document.getElementById("disNo");
-  const details = document.getElementById("disabilityDetails");
-  const disabilityType = document.getElementById("disabilityType");
-  const mobilityNeeds = document.getElementById("mobilityNeeds");
+                <script>
+                    const yes = document.getElementById("disYes");
+                    const no = document.getElementById("disNo");
+                    const details = document.getElementById("disabilityDetails");
+                    const disabilityType = document.getElementById("disabilityType");
+                    const mobilityNeeds = document.getElementById("mobilityNeeds");
 
-  function toggleDetails() {
-    if (yes.checked) {
-      details.style.display = "block";
-      disabilityType.required = true;
-    } else {
-      details.style.display = "none";
-      disabilityType.required = false;
-      //in backend we should have an if statement that checks if has_disability is yes before looking at the disability type and mobility needs
-      disabilityType.value = "";
-      mobilityNeeds.value = "";
-    }
-  }
+                    function toggleDetails() {
+                        if (yes.checked) {
+                            details.style.display = "block";
+                            disabilityType.required = true;
+                        } else {
+                            details.style.display = "none";
+                            disabilityType.required = false;
+                            //in backend we should have an if statement that checks if has_disability is yes before looking at the disability type and mobility needs
+                            disabilityType.value = "";
+                            mobilityNeeds.value = "";
+                        }
+                    }
 
-  yes.addEventListener("change", toggleDetails);
-  no.addEventListener("change", toggleDetails);
-</script>
+                    yes.addEventListener("change", toggleDetails);
+                    no.addEventListener("change", toggleDetails);
+                </script>
 
-            <label for="birthdate"><em>* </em>Date of Birth</label>
-            <input type="date" id="birthdate" name="birthdate" required placeholder="Enter rider birthday" max="<?php echo date('Y-m-d'); ?>">
-            
-            <label for="street_address"><em>* </em>Street Address</label>
-            <input type="text" id="street_address" name="street_address" required placeholder="Enter street address">
+                <label for="birthdate"><em>* </em>Date of Birth</label>
+                <input type="date" id="birthdate" name="birthdate" required placeholder="Enter rider birthday" max="<?php echo date('Y-m-d'); ?>">
 
-            <!--<label for="address"><em>* </em>Address</label>
+                <label for="street_address"><em>* </em>Street Address</label>
+                <input type="text" id="street_address" name="street_address" required placeholder="Enter street address">
+
+                <!--<label for="address"><em>* </em>Address</label>
             <input type="text" id="address" name="address" required placeholder="Enter your home address">-->
 
-            <label for="city"><em>* </em>City</label>
-            <input type="text" id="city" name="city" required placeholder="Enter city">
+                <label for="city"><em>* </em>City</label>
+                <input type="text" id="city" name="city" required placeholder="Enter city">
 
-            <label for="state"><em>* </em>State</label>
-            
-            <select id="state" name="state" required>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District Of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
-                <option value="VA" selected>Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
-            </select>
-        
-            <label for="zipcode"><em>* </em>Zip Code</label>
-            <input type="text" id="zipcode"name="zipcode" pattern="^\d{5}(-\d{4})?$" required placeholder="Ex: 12345 or 12345-6789">
+                <label for="state"><em>* </em>State</label>
 
-            <!--<label for="zip"><em>* </em>Zip Code</label>
+                <select id="state" name="state" required>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA" selected>Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+
+                <label for="zipcode"><em>* </em>Zip Code</label>
+                <input type="text" id="zipcode" name="zipcode" pattern="^\d{5}(-\d{4})?$" required placeholder="Ex: 12345 or 12345-6789">
+
+                <!--<label for="zip"><em>* </em>Zip Code</label>
             <input type="text" id="zip" name="zip" pattern="[0-9]{5}" title="5-digit zip code" required placeholder="Enter your 5-digit zip code">
 -->
-            <!-- MILITARY INFO - prob dont need, maybe can utilize later 
+                <!-- MILITARY INFO - prob dont need, maybe can utilize later 
             <div class="median-div"></div>
             <label for="affiliation"><em>* </em>Military Affiliation</label>
             <select id="affiliation" name="affiliation" required>
@@ -196,53 +195,52 @@
             </select>
         /*
 -->
-        </fieldset>
-        
+            </fieldset>
 
-        <fieldset class="section-box mb-4">
-            <h3>Contact Information</h3>
-            <p class="mb-2">The following information will help determine the best way to contact the rider.</p>
-	    <div class="blue-div"></div>
 
-            <label for="email"><em>* </em>E-mail</label>
-            <input type="email" id="email" name="email" required placeholder="Enter rider e-mail address">
+            <fieldset class="section-box mb-4">
+                <h3>Contact Information</h3>
+                <p class="mb-2">The following information will help determine the best way to contact the rider.</p>
+                <div class="blue-div"></div>
 
-            <!--<label for="email_consent">E-mail Notifications</label>
+                <label for="email"><em>* </em>E-mail</label>
+                <input type="email" id="email" name="email" required placeholder="Enter rider e-mail address">
+
+                <!--<label for="email_consent">E-mail Notifications</label>
             <p>By checking the box below, you consent to recieve emails from the Whiskey Valor Foundation. You may change this at any time.</p>
             <label><input type="checkbox" id="email_prefs" name="email_prefs" value="true"> I consent.</label>
 
             <div class="median-div"></div>-->
 
-            <label for="phone1">Phone Number</label>
-            <input type="tel" id="phone1" name="phone1" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
+                <label for="phone1">Phone Number</label>
+                <input type="tel" id="phone1" name="phone1" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
 
-            <div class="median-div"></div>
+                <div class="median-div"></div>
 
-            <!--emergency contact info stuff -->
-        <!--<fieldset class="section-box mb-4"> -->
-            <h3>Emergency Contact Information</h3>
-            <p class="mb-2">Please provide information for an emergency contact.</p>
-	    <div class="blue-div"></div>
-        <label for="emergency_first_name"><em>* </em>First Name</label>
-            <input type="text" id="emergency_first_name" name="emergency_first_name" required placeholder="Enter their first name">
+                <!--emergency contact info stuff -->
+                <!--<fieldset class="section-box mb-4"> -->
+                <h3>Emergency Contact Information</h3>
+                <p class="mb-2">Please provide information for an emergency contact.</p>
+                <div class="blue-div"></div>
+                <label for="emergency_first_name"><em>* </em>First Name</label>
+                <input type="text" id="emergency_first_name" name="emergency_first_name" required placeholder="Enter their first name">
 
-            <label for="emergency_last_name"><em>* </em>Last Name</label>
-            <input type="text" id="emergency_last_name" name="emergency_last_name" required placeholder="Enter their last name">
-            <label for="emergency_email"><em>* </em>E-mail</label>
-            <input type="email" id="emergency_email" name="emergency_email" required placeholder="Enter their email address">
+                <label for="emergency_last_name"><em>* </em>Last Name</label>
+                <input type="text" id="emergency_last_name" name="emergency_last_name" required placeholder="Enter their last name">
+                <label for="emergency_email"><em>* </em>E-mail</label>
+                <input type="email" id="emergency_email" name="emergency_email" required placeholder="Enter their email address">
 
+                <label for="emergency_phone"> <em>* </em> Phone Number</label>
+                <input type="tel" id="emergency_phone" name="emergency_phone" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" required placeholder="Ex. (555) 555-5555">
 
-            <label for="emergency_phone"> <em>* </em> Phone Number</label>
-            <input type="tel" id="emergency_phone" name="emergency_phone" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" required placeholder="Ex. (555) 555-5555">
-
-            <label for="emergency_relation"><em>* </em>Personal Affiliation</label>
-            <select id="emergency_relation" name="emergency_relation" required>
-                <option value="" disabled selected></option>
-                <option value="Spouse">Spouse</option>
-                <option value="Family">Family member</option>
-                <option value="Friend">Friend</option>
-                <option value="Legal Guardian">Legal Guardian</option>
-            </select>
+                <label for="emergency_relation"><em>* </em>Personal Affiliation</label>
+                <select id="emergency_relation" name="emergency_relation" required>
+                    <option value="" disabled selected></option>
+                    <option value="Spouse">Spouse</option>
+                    <option value="Family">Family member</option>
+                    <option value="Friend">Friend</option>
+                    <option value="Legal Guardian">Legal Guardian</option>
+                </select>
             </fieldset>
 
 
@@ -259,9 +257,9 @@
 	      </div>
             </div>-->
 
-        <!-- </fieldset>
+            <!-- </fieldset>
         </fieldset> -->
-        <!--<fieldset class="section-box mb-4">
+            <!--<fieldset class="section-box mb-4">
             <h3>Emergency Contact</h3>
             <p class="mb-2">Please provide emergency contact information to contact on the riders' behalf in case of an emergency.</p>
 	    <div class="blue-div"></div>
@@ -292,7 +290,7 @@
             </div>
         </fieldset>
 
-        <!-- <fieldset class="section-box mb-4">
+        <!-- <fieldset class="section-box mb-4"> 
             <h3 class="mb-2">Other Required Information</h3>
 	    <div class="blue-div"></div>
 
@@ -318,58 +316,49 @@
 
         </fieldset> -->
 
-        
-               
-
-                
-        <script>
-            
-
-            
-           
-
-            
-            
-
-             // Event listeners for changes in volunteer/participant selection and the complete statuses
-            //document.querySelectorAll('input[name="is_community_service_volunteer"]').forEach(radio => {
-              //  radio.addEventListener('change', toggleTrainingSection);
-            //});
 
 
 
-            
-            // Initial check on page load
-            
-        </script>
-        <script>
-        // Initialize Cleave.js for primary phone number
-        new Cleave('#phone1', {
-            phone: true,
-            phoneRegionCode: 'US',
-            delimiter: '-',
-            numericOnly: true,
-        });
-        var cleavePhone = new Cleave('#emergency_contact_phone', {
-            phone: true,
-            phoneRegionCode: 'US',
-            delimiter: '-',
-            numericOnly: true,
-        });
-        </script>
 
-        <script>
-        // Initialize Cleave.js for primary phone number
-        new Cleave('#emergency_phone', {
-            phone: true,
-            phoneRegionCode: 'US',
-            delimiter: '-',
-            numericOnly: true,
-        });
-        </script>
+            <script>
+                // Event listeners for changes in volunteer/participant selection and the complete statuses
+                //document.querySelectorAll('input[name="is_community_service_volunteer"]').forEach(radio => {
+                //  radio.addEventListener('change', toggleTrainingSection);
+                //});
 
 
-        <!--<fieldset class="section-box mb-4">
+
+
+                // Initial check on page load
+            </script>
+            <script>
+                // Initialize Cleave.js for primary phone number
+                new Cleave('#phone1', {
+                    phone: true,
+                    phoneRegionCode: 'US',
+                    delimiter: '-',
+                    numericOnly: true,
+                });
+                var cleavePhone = new Cleave('#emergency_contact_phone', {
+                    phone: true,
+                    phoneRegionCode: 'US',
+                    delimiter: '-',
+                    numericOnly: true,
+                });
+            </script>
+
+            <script>
+                // Initialize Cleave.js for primary phone number
+                new Cleave('#emergency_phone', {
+                    phone: true,
+                    phoneRegionCode: 'US',
+                    delimiter: '-',
+                    numericOnly: true,
+                });
+            </script>
+
+
+            <!--<fieldset class="section-box mb-4">
             <h3>Login Credentials</h3>
             <p class="mb-2">You will use the following information to log in to the system.</p>
 	    <div class="blue-div"></div>
@@ -385,13 +374,13 @@
             <label for="password-reenter"><em>* </em>Re-enter Password</label>
             <input type="password" id="password-reenter" name="password-reenter" placeholder="Re-enter password" required>
             <p id="password-match-error" class="error hidden">Passwords do not match.</p>-->
-            
-              <!-- Required by backend -->
-        <!--<input type="hidden" name="is_new_volunteer" value="1">
+
+            <!-- Required by backend -->
+            <!--<input type="hidden" name="is_new_volunteer" value="1">
         <input type="hidden" name="total_hours_volunteered" value="0"> -->
-        <!--</fieldset>-->
-        
-        <!--<fieldset class="section-box mb-4">
+            <!--</fieldset>-->
+
+            <!--<fieldset class="section-box mb-4">
             <h3>Consent Notice</h3>
             <p class="mb-2">Please review the following before creating your account.</p>
         <div class="blue-div"></div>
@@ -408,8 +397,8 @@
                 </div>
             </div>
         </fieldset>-->
-        <p class="text-center notice"></p>
-        <input type="submit" name="registration-form" value="Submit" style="width: 50%; margin: auto;">
-    </form>
-   </div> 
+            <p class="text-center notice"></p>
+            <input type="submit" name="registration-form" value="Submit" style="width: 50%; margin: auto;">
+        </form>
+    </div>
 </main>

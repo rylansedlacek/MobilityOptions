@@ -380,7 +380,7 @@ h1 {
     margin-bottom: 2rem;
 
     background-color: var(#C9AB81);
-    color: var(--page-background-color);
+    color: var(--page-font-color);
     width: 100%;
     text-align: center;
     padding: 1rem;

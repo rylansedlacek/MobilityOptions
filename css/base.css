@@ -72,7 +72,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --accent-color: #0e7162;
  
-    --secondary-accent-color: rgba(36, 245, 43, 0.775);
+    --secondary-accent-color: rgba(39, 131, 42, 0.775);
 
     /* Accessibility / WV theme variables */
     --wv-accent-color: #C9AB81; /* gold */
@@ -142,7 +142,7 @@ header {
 
 body {
     background-color: var(--page-background-color); 
-    color: var(--page-font-color);
+    /* color: var(--page-font-color); */
     font-family: Montserrat;
 }
 

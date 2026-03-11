@@ -139,9 +139,9 @@ require_once('header.php');
                 $id = $args['id'];
                 $phone = preg_replace("/[^0-9]/", "", $args['phone']);
                 $zip = $args['zip'];
-                $role = $args['role'];
-                $status = $args['status'];
-                $photo_release = $args['photo_release'];
+                $role = null;//$args['role'];
+                $status = null;//$args['status'];
+                $photo_release = null;//$args['photo_release'];
 
                 if (!($name || $id || $phone || $zip || $role || $status || $photo_release)) {
                     echo '<div class="error-block">At least one search criterion is required.</div>';

@@ -98,6 +98,7 @@
             }
 
             $args['series_id'] = bin2hex(random_bytes(16)); // new new
+            $args['completed'] = 'N';
 
             $id = create_event($args);
             if (!$id) {
@@ -132,7 +133,9 @@
                         $current->add($step);
                         $ymd = $current->format('Y-m-d');
 
-                        $dup = $args;                 
+                        $dup = $args;
+             
+                        $dup['completed'] = 'N';
                         $dup['startDate'] = $ymd;
                         $dup['endDate']   = $ymd;
                         $dup['date']      = $ymd;    
@@ -160,6 +163,11 @@
 
     include_once('database/dbinfo.php'); 
     $con=connect();  
+
+
+    // GABE:
+    // -> Please pass a completed value to the backend function and always make it
+    // 'N' This is used in the viewAllEvents functions. Thanks - Rylan
 
 ?><!DOCTYPE html>
 <html>

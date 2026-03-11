@@ -394,12 +394,12 @@ function get_all_events() {
     return $theEvents;
  }
  
- function get_all_events_sorted_by_date_not_archived() {
-    $con=connect();
-    $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'N'" . // ?
-            " ORDER BY startDate ASC";
-    $result = mysqli_query($con,$query);
+// Get all trips that are pending in the system - RS
+// By default marked as not COMPLETED - N.
+function get_pending_trips() {
+    $con = connect();
+    $query = "SELECT * FROM dbevents WHERE completed = 'N' ORDER BY startDate ASC";
+    $result = mysqli_query($con, $query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
         $theEvent = make_an_event($result_row);
@@ -407,7 +407,12 @@ function get_all_events() {
     }
     mysqli_close($con);
     return $theEvents;
- }
+}
+
+// same as get_pending_trips() - for backward compat
+function get_all_events_sorted_by_date_not_archived() {
+    return get_pending_trips();
+}
 
  function get_all_events_sorted_by_date_and_archived() {
     $con=connect();

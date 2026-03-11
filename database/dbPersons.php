@@ -145,7 +145,7 @@ function remove_person($id) {
         return false;
     }
 
-    $stmt->bind_param('i', $id);
+    $stmt->bind_param('s', $id);
     $stmt->execute();
     $deleted = $stmt->affected_rows > 0;
     
@@ -1193,6 +1193,8 @@ function find_user_names($name) {
 // FIX
     function fetch_user_no_shows($personID) {
         $connection = connect();
+        $con=connect();
+
         $query = 
             "SELECT dbeventpersons.userID, COUNT(*) AS NoShowCount
             FROM dbeventpersons, dbevents
@@ -1223,6 +1225,8 @@ function find_user_names($name) {
 
     function fetch_no_shows() {
         $connection = connect();
+        $con=connect();
+
         $query = 
             "SELECT dbeventpersons.userID, COUNT(*) AS NoShowCount
             FROM dbeventpersons, dbevents
@@ -1464,13 +1468,13 @@ function get_total_vol_hours($dateFrom, $dateTo) {
     return $row['total_hours'] ?? 0; // Return 0 if no shifts found
 }
 
-   // function remove_profile_picture($id) {
-     //   $con=connect();
-       // $query = 'UPDATE dbPersons SET profile_pic="" WHERE id="'.$id.'"';
-        //$result = mysqli_query($con,$query);
-        //mysqli_close($con);
-        //return True;
-    //}
+   function remove_profile_picture($id) {
+       $con=connect();
+       $query = 'UPDATE dbPersons SET profile_pic="" WHERE id="'.$id.'"';
+        $result = mysqli_query($con,$query);
+        mysqli_close($con);
+        return True;
+    }
 
     function get_name_from_id($id) {
         if ($id == 'vmsroot') {

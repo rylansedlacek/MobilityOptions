@@ -38,8 +38,8 @@
                 //$messages = get_user_messages($userID);
                 //require_once('database/dbevents.php');
                 //require_once('domain/Event.php');
-                //$events = get_all_events();
-                $events = get_all_events_sorted_by_date_not_archived();
+        
+                $events = get_pending_trips();
                 $archivedevents = get_all_events_sorted_by_date_and_archived();
                 $today = new DateTime(); // Current date
                 

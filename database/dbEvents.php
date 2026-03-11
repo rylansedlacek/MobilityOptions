@@ -29,6 +29,7 @@ include_once(dirname(__FILE__).'/../email.php');
  * add an event to dbEvents table: if already there, return false
  */
 
+// NOT USED - RS
 function add_event($event) {
     // if (!$event instanceof Event)
     //     die("Error: add_event type mismatch");
@@ -366,8 +367,15 @@ function make_an_event($result_row) {
                     affiliation: $result_row['affiliation'],
                     branch: $result_row['branch'],
                     access: $result_row['access'],
-                    completed: $result_row['completed']
-                    
+                    completed: $result_row['completed'],
+                    rider_id: $result_row['rider_id'], 
+                    driver_id: $result_row['driver_id'],
+                    vehicle_id: $result_row['vehicle_id'],
+                    pickup_location: $result_row['pickup_location'],
+                    dropoff_location: $result_row['dropoff_location'],
+                    trip_status: $result_row['trip_status'],
+                    mileage_start: $result_row['mileage_start'],
+                    mileage_end: $result_row['mileage_end'],
                 ); 
     return $theEvent;
 }
@@ -386,12 +394,12 @@ function get_all_events() {
     return $theEvents;
  }
  
- function get_all_events_sorted_by_date_not_archived() {
-    $con=connect();
-    $query = "SELECT * FROM dbevents" .
-            " WHERE completed = 'N'" . // ?
-            " ORDER BY startDate ASC";
-    $result = mysqli_query($con,$query);
+// Get all trips that are pending in the system - RS
+// By default marked as not COMPLETED - N.
+function get_pending_trips() {
+    $con = connect();
+    $query = "SELECT * FROM dbevents WHERE completed = 'N' ORDER BY startDate ASC";
+    $result = mysqli_query($con, $query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
         $theEvent = make_an_event($result_row);
@@ -399,7 +407,12 @@ function get_all_events() {
     }
     mysqli_close($con);
     return $theEvents;
- }
+}
+
+// same as get_pending_trips() - for backward compat
+function get_all_events_sorted_by_date_not_archived() {
+    return get_pending_trips();
+}
 
  function get_all_events_sorted_by_date_and_archived() {
     $con=connect();
@@ -539,7 +552,7 @@ function fetch_num_attendees($id) {
 
 function create_event($event) {
     $connection = connect();
-    $name = $event["name"];
+    $name = mysqli_real_escape_string($connection, $event["name"]);
     //$abbrevName = $event["abbrev-name"];
     // $date = $event["date"];
     $date    = $event["startDate"] ?? $event["date"];
@@ -558,15 +571,6 @@ function create_event($event) {
     } else {
         $location = "";
     }
-    //$completed = $event["completed"];
-    /*
-    $restricted_signup = $event["role"];
-    if ($restricted_signup == "r") {
-        $restricted = 1;
-    } else {
-        $restricted = 0;
-    }
-        */
     $access = 'Public';
     $description = $event["description"];
     //$branch = $event["branch"];
@@ -576,13 +580,40 @@ function create_event($event) {
     //$animal = $event["animal"];
     $completed = 'N';
 
-    $series_id = isset($event['series_id'])
-        ? mysqli_real_escape_string($connection, $event['series_id'])
-        : null;
+    $series_id = isset($event['series_id']) ? $event['series_id'] : null;
 
+    // new dbevents fields to use
+    $rider_id        = $event['rider_id'] ?? null;
+    $driver_id       = $event['driver_id'] ?? null;
+    $vehicle_id      = $event['vehicle_id'] ?? null;
+    $pickup_location = $event['pickup_location'] ?? null;
+    $dropoff_location= $event['dropoff_location'] ?? null;
+    $trip_status     = $event['trip_status'] ?? null;
+    $mileage_start   = $event['mileage_start'] ?? null;
+    $mileage_end     = $event['mileage_end'] ?? null;
+
+
+    // formatting follows series Id - RS
     $query = "
-        insert into dbevents (name, startDate, startTime, endTime, endDate, access, description, capacity, completed, location, type, series_id)
-        values ('$name', '$date', '$startTime', '$endTime', '$endDate', '$access', '$description', $capacity, '$completed', '$location', '$type', " .($series_id ? "'$series_id'" : "NULL") . ")
+        insert into dbevents (
+            name, startDate, startTime, endTime, endDate, access,
+            description, capacity, completed, location, type, series_id,
+            rider_id, driver_id, vehicle_id, pickup_location, dropoff_location,
+            trip_status, mileage_start, mileage_end
+        )
+        values (
+            '$name', '$date', '$startTime', '$endTime', '$endDate', '$access',
+            '$description', $capacity, '$completed', '$location', '$type', 
+            " .($series_id ? "'$series_id'" : "NULL") . ",
+            " .($rider_id ? "'$rider_id'" : "NULL") . ",
+            " .($driver_id !== null ? $driver_id : "NULL") . ",
+            " .($vehicle_id !== null ? $vehicle_id : "NULL") . ",
+            " .($pickup_location ? "'$pickup_location'" : "NULL") . ",
+            " .($dropoff_location ? "'$dropoff_location'" : "NULL") . ",
+            " .($trip_status ? "'$trip_status'" : "NULL") . ",
+            " .($mileage_start !== null ? $mileage_start : "NULL") . ",
+            " .($mileage_end !== null ? $mileage_end : "NULL") . "
+        )
     ";
     $result = mysqli_query($connection, $query);
     if (!$result) {
@@ -634,8 +665,28 @@ function update_event($eventID, $eventDetails) {
     #    update dbevents set id='$id', name='$name', date='$date', startTime='$startTime', endTime='$endTime', description='$description', capacity='$capacity', completed='$completed', event_type='$event_type', restricted_signup='$restricted_signup'
     #    where id='$eventID'
     #";
+
+    // new dbevents fields to use
+    $rider_id        = $event['rider_id'] ?? null;
+    $driver_id       = $event['driver_id'] ?? null;
+    $vehicle_id      = $event['vehicle_id'] ?? null;
+    $pickup_location = $event['pickup_location'] ?? null;
+    $dropoff_location= $event['dropoff_location'] ?? null;
+    $trip_status     = $event['trip_status'] ?? null;
+    $mileage_start   = $event['mileage_start'] ?? null;
+    $mileage_end     = $event['mileage_end'] ?? null;
+
+    // follow same syntax as above - RS
     $query = "
-        update dbevents set id='$id', name='$name', startDate='$date', endDate='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity
+        update dbevents set id='$id', name='$name', startDate='$date', endDate='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity"
+        . ($rider_id ? ", rider_id='$rider_id'" : "")
+        . ($driver_id !== null ? ", driver_id=$driver_id" : "")
+        . ($vehicle_id !== null ? ", vehicle_id=$vehicle_id" : "")
+        . ($pickup_location ? ", pickup_location='$pickup_location'" : "")
+        . ($dropoff_location ? ", dropoff_location='$dropoff_location'" : "")
+        . ($trip_status ? ", trip_status='$trip_status'" : "")
+        . ($mileage_start !== null ? ", mileage_start=$mileage_start" : "")
+        . ($mileage_end !== null ? ", mileage_end=$mileage_end" : ""). "
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);

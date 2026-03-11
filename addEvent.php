@@ -32,7 +32,19 @@
             echo 'bad form data';
             die();
         } else {
-            // Accept either HTML5 24h time (HH:MM) or 12h times with am/pm
+           
+            $args['driver_id'] = null; // set driver_id to null - sprint 3
+            $args['vehicle_id'] = null; // set vehicle_id to null - sprint 3
+            
+            // match up the appropriate rider_id.
+            if (!empty($args['rider_id'])) {
+                require_once('database/dbPersons.php');
+                if (!retrieve_person($args['rider_id'])) {
+                    echo 'invalid rider id';
+                    die();
+                }
+            }
+            
             if (validate24hTimeRange($args['start-time'], $args['end-time'])) {
                 $startTime = $args['start-time'];
                 $endTime = $args['end-time'];

@@ -15,11 +15,23 @@ class Event {
     private $location;
     private $affiliation;
     private $branch;
-    private $completed;
     private $access;
+    private $completed;
 
+    // new dbevents fields
+    private $rider_id;
+    private $driver_id;
+    private $vehicle_id;
+    private $pickup_location;
+    private $dropoff_location;
+    private $trip_status;
+    private $mileage_start;
+    private $mileage_end;
 
-    function __construct($id, $name, $type, $startDate, $startTime, $endTime, $endDate, $description, $capacity, $location, $affiliation, $branch, $access, $completed) {
+    function __construct($id, $name, $type, $startDate, $startTime, $endTime, $endDate, $description, $capacity, $location, $affiliation, $branch, $access, $completed,
+                         $rider_id = null, $driver_id = null, $vehicle_id = null,
+                         $pickup_location = null, $dropoff_location = null,
+                         $trip_status = null, $mileage_start = null, $mileage_end = null) {
         $this->id = $id;
         $this->name = $name;
         $this->type = $type;
@@ -35,6 +47,15 @@ class Event {
         $this->access = $access;
         $this->completed = $completed;
         
+        // new dbevents fields
+        $this->rider_id = $rider_id;
+        $this->driver_id = $driver_id;
+        $this->vehicle_id = $vehicle_id;
+        $this->pickup_location = $pickup_location;
+        $this->dropoff_location = $dropoff_location;
+        $this->trip_status = $trip_status;
+        $this->mileage_start = $mileage_start;
+        $this->mileage_end = $mileage_end;
     }
 
     function getID() {
@@ -93,4 +114,36 @@ class Event {
         return $this->access;
     }
 
+    // add new fields for dbevents
+    function getRiderId(){
+        return $this->rider_id;
+    }
+
+    function getDriverId(){
+        return $this->driver_id;
+    }
+
+    function getVehicleId(){
+        return $this->vehicle_id;
+    }
+
+    function getPickupLocation(){
+        return $this->pickup_location;
+    }
+
+    function getDropoffLocation(){
+        return $this->dropoff_location;
+    }
+
+    function getTripStatus(){
+        return $this->trip_status;
+    }
+
+    function getMileageStart(){
+        return $this->mileage_start;
+    }
+
+    function getMileageEnd(){
+        return $this->mileage_end;
+    }
 }

@@ -592,6 +592,8 @@ function create_event($event) {
     $mileage_start   = $event['mileage_start'] ?? null;
     $mileage_end     = $event['mileage_end'] ?? null;
 
+
+    // formatting follows series Id - RS
     $query = "
         insert into dbevents (
             name, startDate, startTime, endTime, endDate, access,
@@ -601,7 +603,8 @@ function create_event($event) {
         )
         values (
             '$name', '$date', '$startTime', '$endTime', '$endDate', '$access',
-            '$description', $capacity, '$completed', '$location', '$type', " .($series_id ? "'$series_id'" : "NULL") . ",
+            '$description', $capacity, '$completed', '$location', '$type', 
+            " .($series_id ? "'$series_id'" : "NULL") . ",
             " .($rider_id ? "'$rider_id'" : "NULL") . ",
             " .($driver_id !== null ? $driver_id : "NULL") . ",
             " .($vehicle_id !== null ? $vehicle_id : "NULL") . ",
@@ -673,6 +676,7 @@ function update_event($eventID, $eventDetails) {
     $mileage_start   = $event['mileage_start'] ?? null;
     $mileage_end     = $event['mileage_end'] ?? null;
 
+    // follow same syntax as above - RS
     $query = "
         update dbevents set id='$id', name='$name', startDate='$date', endDate='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity"
         . ($rider_id ? ", rider_id='$rider_id'" : "")
@@ -682,8 +686,7 @@ function update_event($eventID, $eventDetails) {
         . ($dropoff_location ? ", dropoff_location='$dropoff_location'" : "")
         . ($trip_status ? ", trip_status='$trip_status'" : "")
         . ($mileage_start !== null ? ", mileage_start=$mileage_start" : "")
-        . ($mileage_end !== null ? ", mileage_end=$mileage_end" : "")
-        . "
+        . ($mileage_end !== null ? ", mileage_end=$mileage_end" : ""). "
         where id='$eventID'
     ";
     $result = mysqli_query($connection, $query);

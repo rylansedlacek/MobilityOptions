@@ -131,7 +131,7 @@ require_once('header.php');
 
         <button onclick="window.location.href='adminViewingEvents.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Edit Event</div>
+	  <div>Edit Ride Request</div>
 	  <img class="button-icon h-10 w-10 left-5" src="images/users-solid.svg" alt="Calendar Icon">
         </button>
 

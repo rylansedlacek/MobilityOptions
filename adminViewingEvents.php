@@ -24,12 +24,12 @@
         <?php require_once('universal.inc') ?>
         <link rel="stylesheet" href="css/messages.css"></link>
         <script src="js/messages.js"></script>
-        <title>Whiskey Valor | Events</title>
+        <title>Healthy Generations | Ride Request</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
         <?php require_once('database/dbEvents.php');?>
-        <h1>Events</h1>
+        <h1>Ride Request</h1>
         <main class="general">
             <?php 
                 //require_once('database/dbMessages.php');
@@ -83,7 +83,7 @@
                     </table>
                 </div>
                 <?php else: ?>
-                <p class="no-events standout">There are currently no events available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
+                <p class="no-events standout">There are currently no ride request available to view.<a class="button add" href="addEvent.php">Create a new ride request</a> </p>
             <?php endif ?>
             <a class="button cancel" href="index.php">Return to Dashboard</a>
         </main>

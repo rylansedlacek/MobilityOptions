@@ -26,7 +26,8 @@
         require_once('database/dbEvents.php');
         $args = sanitize($_POST, null);
         $required = array(
-            "name", "date", "start-time", "end-time", "description", "type"
+            //type needed? I deleted it, it was on the end behind "description". The form part for it is commented out as well - GC
+            "name", "date", "start-time", "end-time", "description"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             echo 'bad form data';
@@ -169,7 +170,13 @@
     // -> Please pass a completed value to the backend function and always make it
     // 'N' This is used in the viewAllEvents functions. Thanks - Rylan
 
+    
 ?><!DOCTYPE html>
+<header class="hero-header">
+    <div class="center-header">
+        <h1>Ride Scheduling</h1>
+    </div>
+</header>
 <html>
     <head>
         <?php require_once('universal.inc') ?>
@@ -177,50 +184,195 @@
     </head>
     <body>
         <?php require_once('header.php') ?>
-        <h1 style="color: white;">Create Event</h1>
+        
         <main class="date">
-            <h2>New Event Form</h2>
+            
             <form id="new-event-form" method="POST">
+                
+
                 <div class="event-sect">
-                <label for="name">* Event Name </label>
+                 <h2 class="mt-2">Rider Information</h2>   
+                <label for="name">* Rider Name </label>
                 <input type="text" id="name" name="name" required placeholder="Enter name"> 
                 </div>
 
                 <div class="event-sect">
+                <h2 class="mt-2">Pickup Information</h2>
                 <div class="event-datetime">
-                    <div class="event-time">
-                        <div class="event-date">
-                        <label for="name">* Start Date </label>
-                        <input type="date" id="date" name="date" <?php if ($date) echo 'value="' . $date . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
-                        </div>
-                        <div class="event-date">
-                        <label for="name">* Start Time </label>
-                        <input type="time" id="start-time" name="start-time" required>
-                        </div>
-                    </div>
-                    <div class="event-time">
-                        <div class="event-date">
-                        <label for="name">* End Date</label>
-                        <input type="date" id="end-date" name="end-date" <?php if ($date) echo 'value="' . $date . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
-                        </div>
-                        <div class="event-date">
-                        <label for="name">* End Time </label>
-                        <input type="time" id="end-time" name="end-time" required>
-                        </div>
-                    </div>
+                <div class="event-date">
+                    <label for="date">* Pickup Date </label>
+                    <input type="date" id="date" name="date" <?php if ($date) echo 'value="' . $date . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
                 </div>
-                </div>
-                <div class="event-sect">
-                <label for="name">* Description </label>
-                <input type="text" id="description" name="description" required placeholder="Enter description">
 
-                <label for="name">* Event Type </label>
+                <div class="event-date">
+                    <label for="start-time">* Start Time </label>
+                    <input type="time" id="start-time" name="start-time" required>
+                </div>
+
+                
+            </div>
+                
+
+                <label for="pickup-street_address"><em>* </em>Street Address</label>
+                <input type="text" id="pickup-street_address" name="pickup-street_address" required placeholder="Enter street address">
+
+                <label for="pickup-city"><em>* </em>City</label>
+                <input type="text" id="pickup-city" name="pickup-city" required placeholder="Enter city">
+
+                <label for="pickup-state"><em>* </em>State</label>
+
+                <select id="pickup-state" name="pickup-state" required>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA" selected>Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+
+                <label for="pickup-zipcode"><em>* </em>Zip Code</label>
+                <input type="text" id="pickup-zipcode" name="pickup-zipcode" pattern="^\d{5}(-\d{4})?$" required placeholder="Ex: 12345 or 12345-6789">
+
+                </div> 
+
+                <div class="event-sect">
+                <h2 class="mt-2">Drop-Off Information</h2>
+                <div class="event-datetime">
+               
+                <div class="event-date">
+                    <label for="end-time">* End Time </label>
+                    <input type="time" id="end-time" name="end-time" required>
+                </div>
+            </div>
+                
+
+                <label for="dropoff-street_address"><em>* </em>Street Address</label>
+                <input type="text" id="dropoff-street_address" name="dropoff-street_address" required placeholder="Enter street address">
+
+                <label for="dropoff-city"><em>* </em>City</label>
+                <input type="text" id="dropoff-city" name="dropoff-city" required placeholder="Enter city">
+
+                <label for="dropoff-state"><em>* </em>State</label>
+
+                <select id="dropoff-state" name="dropoff-state" required>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA" selected>Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+
+                <label for="dropoff-zipcode"><em>* </em>Zip Code</label>
+                <input type="text" id="dropoff-zipcode" name="dropoff-zipcode" pattern="^\d{5}(-\d{4})?$" required placeholder="Ex: 12345 or 12345-6789">
+
+
+
+                </div> 
+                
+                 <div class="event-sect">
+                <label for="name">* Description </label>
+                <input type="text" id="description" name="description" required placeholder="Enter description (e.g. 'Ride to VA hospital')">
+
+                <!-- is this somthing we want to keep? idk what "type" would be
+                <label for="name">* Ride Type </label>
                 <select id="type" name="type">
                     <option value="Normal">Normal</option>
                     <option value="Retreat">Retreat</option>
                 </select>
                 </div>
-
+-->
+                <!--
                 <div class="event-sect">
                 <label for="name">* Event Visibility</label>
                 <p class="sub-text" style="margin-bottom: 1rem;">Visibility controls who can see the event listing on the calendar.</p>
@@ -267,14 +419,15 @@
                     </div>
                 </div>
                 </div>
-
+-->
+                <!--
                 <div class="event-sect">
                 <label for="name">Location </label>
                 <input type="text" id="location" name="location" placeholder="Enter location">
 
                 <label for="name">* Capacity </label>
                 <input type="number" id="capacity" name="capacity" required placeholder="Enter capacity (e.g. 1-99)">
-                </div>
+                </div> -->
 
                 <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
                     <legend>Make this a recurring event</legend>
@@ -330,11 +483,12 @@
                         }, false);
                     })();
                 </script>
+                <!--
                 <?php if ($date): ?>
                     <a class="button cancel" href="calendar.php?month=<?php echo substr($date, 0, 7) ?>" style="margin-top: -.5rem">Return to Calendar</a>
                 <?php else: ?>
                     <a class="button cancel" href="index.php" style="margin-top: -.5rem">Return to Dashboard</a>
-                <?php endif ?>
+                <?php endif ?> -->
 
                 <script type="text/javascript">
                     $(document).ready(function(){

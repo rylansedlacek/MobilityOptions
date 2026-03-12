@@ -38,13 +38,45 @@
             $args['driver_id'] = null; // set driver_id to null - sprint 3
             $args['vehicle_id'] = null; // set vehicle_id to null - sprint 3
             
-            // match up the appropriate rider_id.
+            // rider name population - rs
             if (!empty($args['rider_id'])) {
+                // search with rider_id
                 require_once('database/dbPersons.php');
-                if (!retrieve_person($args['rider_id'])) {
-                    echo 'invalid rider id';
+                $rider = retrieve_person($args['rider_id']);
+
+                if (!$rider) {
+                    ?>
+                    <script>
+                        alert('Rider Profile does not exist. Please search again.');
+                        history.back();
+                    </script>
+                    <?php
                     die();
                 }
+
+            } elseif (!empty($args['name'])) {
+                // search with name value
+                require_once('database/dbPersons.php');
+                $riders = retrieve_persons_by_name($args['name']);
+                
+                if (empty($riders)) {
+                    ?>
+                    <script>
+                         alert('Rider Profile not found. Please try again.');
+                        history.back();
+                    </script>
+                    <?php
+                    die();
+                }
+                $args['rider_id'] = $riders[0]->get_id(); // set rider_id for use in dbevents.
+
+            } else {
+                ?>
+                    <script>
+                         alert('No rider selected. Please search and select a rider.');
+                        history.back();
+                    </script>
+                <?php
             }
             
             if (validate24hTimeRange($args['start-time'], $args['end-time'])) {
@@ -98,6 +130,17 @@
                 echo 'bad args';
                 die();
             }
+
+            // combine address fields into single pickup and dropoff locations
+            $args['pickup_location'] = $args['pickup-street_address'] . ', ' . 
+                                       $args['pickup-city'] . ', ' . 
+                                       $args['pickup-state'] . ' ' . 
+                                       $args['pickup-zipcode'];
+            
+            $args['dropoff_location'] = $args['dropoff-street_address'] . ', ' . 
+                                        $args['dropoff-city'] . ', ' . 
+                                        $args['dropoff-state'] . ' ' . 
+                                        $args['dropoff-zipcode'];
 
             $args['series_id'] = bin2hex(random_bytes(16)); // new new
             $args['completed'] = 'N';
@@ -166,11 +209,21 @@
     include_once('database/dbinfo.php'); 
     $con=connect();  
 
+    
+    /*
+        Searching Logic - rs
+        - search results are stored for display
+        - find_users is a dbpersons function which returns values for display.
+        - the block is used below right at the top of the HTMl
+    */
+    $search_results = [];    
 
-    // GABE:
-    // -> Please pass a completed value to the backend function and always make it
-    // 'N' This is used in the viewAllEvents functions. Thanks - Rylan
-
+    if (isset($_GET['search_name'])) {
+        require_once('include/input-validation.php');
+        require_once('database/dbPersons.php');
+        $namePass = trim($_GET['search_name']);
+        $search_results = find_users($namePass, '', '', '', null, null); // dbpersons name search
+    }
     
 ?><!DOCTYPE html>
 <header class="hero-header">
@@ -181,7 +234,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Whiskey Valor | Create Event</title>
+        <title>Healthy Generations | Ride Request</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -192,10 +245,38 @@
                 
 
                 <div class="event-sect">
-                 <h2 class="mt-2">Rider Information</h2>   
-                <label for="name">* Rider Name </label>
-                <input type="text" id="name" name="name" required placeholder="Enter name"> 
+                    <h2 class="mt-2">Rider Search</h2>
+                    <div id="rider-lookup" style="margin-bottom:12px;">
+                        <input type="text" id="search_name" placeholder="Type name and click Search" value="<?php echo isset($_GET['search_name']) ? htmlspecialchars($_GET['search_name']) : ''; ?>" style="width:100%; padding:6px;">
+                        <button type="button" id="search_button" style="background:#45892e;color:#fff;border:none;cursor:pointer;">Search</button>
+                    </div>
+                    <script>
+                        // passes the entered name value to the searching logic above. - rs
+                        document.getElementById('search_button').addEventListener('click', function() {
+                            const searchValue = document.getElementById('search_name').value.trim();
+                            if(searchValue.length > 0){
+                                window.location = 'addEvent.php?search_name=' + encodeURIComponent(searchValue);
+                            }
+                        });
+                    </script>
+                    <?php if (!empty($search_results)): ?>
+                        <h3 class="mt-2">Search Results</h3>
+                        <ul style="list-style:none; padding:0; margin-bottom:12px; max-height:150px; overflow:auto; border:2px solid #45892e; border-radius:4px;">
+                            <?php foreach ($search_results as $rider): ?>
+                                <li style="padding:6px; border-bottom:1px solid #eee; cursor:pointer;" onclick="selectRider('<?php echo $rider->get_first_name().' '.$rider->get_last_name(); ?>','<?php echo $rider->get_id(); ?>')">
+                                    <?php echo $rider->get_first_name().' '.$rider->get_last_name(); ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
                 </div>
+
+                 <div class="event-sect">
+                    <h2 class="mt-2">Rider Information</h2>
+                    <label for="name">* Rider Name </label>
+                    <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>">
+                    <input type="hidden" id="rider_id" name="rider_id" value="<?php echo isset($_POST['rider_id']) ? htmlspecialchars($_POST['rider_id']) : ''; ?>">
+                 </div>
 
                 <div class="event-sect">
                 <h2 class="mt-2">Pickup Information</h2>
@@ -492,6 +573,14 @@
                 <?php endif ?> -->
 
                 <script type="text/javascript">
+                    // populate the rider name and id when a search result is clicked
+                    function selectRider(name, id) {
+                        document.getElementById('name').value = name;
+                        document.getElementById('rider_id').value = id;
+                        history.replaceState(null, '', 'addEvent.php');
+                        
+                    }
+
                     $(document).ready(function(){
                         var checkboxes = $('.checkboxes');
                         checkboxes.change(function(){

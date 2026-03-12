@@ -32,7 +32,19 @@
             echo 'bad form data';
             die();
         } else {
-            // Accept either HTML5 24h time (HH:MM) or 12h times with am/pm
+           
+            $args['driver_id'] = null; // set driver_id to null - sprint 3
+            $args['vehicle_id'] = null; // set vehicle_id to null - sprint 3
+            
+            // match up the appropriate rider_id.
+            if (!empty($args['rider_id'])) {
+                require_once('database/dbPersons.php');
+                if (!retrieve_person($args['rider_id'])) {
+                    echo 'invalid rider id';
+                    die();
+                }
+            }
+            
             if (validate24hTimeRange($args['start-time'], $args['end-time'])) {
                 $startTime = $args['start-time'];
                 $endTime = $args['end-time'];
@@ -86,6 +98,7 @@
             }
 
             $args['series_id'] = bin2hex(random_bytes(16)); // new new
+            $args['completed'] = 'N';
 
             $id = create_event($args);
             if (!$id) {
@@ -120,7 +133,9 @@
                         $current->add($step);
                         $ymd = $current->format('Y-m-d');
 
-                        $dup = $args;                 
+                        $dup = $args;
+             
+                        $dup['completed'] = 'N';
                         $dup['startDate'] = $ymd;
                         $dup['endDate']   = $ymd;
                         $dup['date']      = $ymd;    
@@ -148,6 +163,11 @@
 
     include_once('database/dbinfo.php'); 
     $con=connect();  
+
+
+    // GABE:
+    // -> Please pass a completed value to the backend function and always make it
+    // 'N' This is used in the viewAllEvents functions. Thanks - Rylan
 
 ?><!DOCTYPE html>
 <html>

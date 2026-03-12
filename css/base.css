@@ -50,8 +50,8 @@ table, td, tr, th, form, fieldset, em, button, a {
 
 :root {
     /* CSS variables that will be used across the page */
-    --page-background-color: rgb(255,255,255);
     --page-font-color: rgb(0,0,0);
+    --page-background-color: rgb(255,255,255);
     --inactive-font-color: #fafafa;
     --inactive-background-color: rgb(255, 255, 255);
     --standout-background: #fafafa;
@@ -141,8 +141,7 @@ header {
 }
 
 body {
-    /* background-color: var(--page-background-color);  */
-    color: #fff; 
+    background-color: #fff;
     color: var(--page-font-color);
     font-family: Montserrat;
 }

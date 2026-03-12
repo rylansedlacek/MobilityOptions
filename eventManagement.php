@@ -26,7 +26,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volunteer Management Page</title>
+  <title>Ride Request Management Page</title>
   <link href="css/management_tw.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->

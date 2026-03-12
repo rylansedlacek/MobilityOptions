@@ -560,7 +560,7 @@ function create_event($event) {
     $startTime = $event["start-time"];    
     $endTime = $event["end-time"];
     $description = $event["description"];
-    $type = $event['type'];
+    //$type = $event['type'];
     if (isset($event["capacity"])) {
         $capacity = $event["capacity"];
     } else {

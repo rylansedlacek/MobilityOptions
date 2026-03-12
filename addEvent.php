@@ -25,9 +25,10 @@
         require_once('include/input-validation.php');
         require_once('database/dbEvents.php');
         $args = sanitize($_POST, null);
+        $args['type'] = 'Normal'; // default to "Normal" type for now since we removed the form option 
         $required = array(
             //type needed? I deleted it, it was on the end behind "description". The form part for it is commented out as well - GC
-            "name", "date", "start-time", "end-time", "description"
+            "name", "date", "start-time", "end-time", "description", "type"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             echo 'bad form data';

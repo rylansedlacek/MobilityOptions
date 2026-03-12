@@ -97,13 +97,13 @@ require_once('header.php');
 
         <button onclick="window.location.href='addEvent.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Create Event</div>
+	  <div>Create Ride Request</div>
 	  <img class="button-icon h-12 w-12 left-4" src="images/plus-solid.svg" alt="Calendar Icon">
         </button>
 
         <button onclick="window.location.href='viewAllEvents.php';">
 	  <div class="button-left-gray"></div>
-	  <div>View Events</div>
+	  <div>View Ride Request</div>
 	  <img class="button-icon left-4" src="images/new-event.svg" alt="Calendar Icon">
         </button>
 

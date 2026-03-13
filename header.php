@@ -177,8 +177,8 @@ if (date("H:i:s") > "18:19:59") {
             position: fixed;
             top: 0;
             left: 0;
-            background: #385a2c;
-            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+            background: #fff;
+            box-shadow: 0px 2px 8px #385a2c;
             display: flex;
             align-items: center;
             padding: 0 20px;
@@ -215,8 +215,9 @@ if (date("H:i:s") > "18:19:59") {
         .nav-links div {
             font-size: 24px;
             font-weight: 700;
-            color: white;
+            color: #4f7dbe;
             cursor: pointer;
+            font-family: Georgia;
         }
 
         /* Right Section: Date & Icon */

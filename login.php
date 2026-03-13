@@ -161,7 +161,6 @@
       <!-- Divider -->
       <div class="flex items-center my-6 w-full">
         <div class="flex-grow border-t border-gray-300"></div>
-        <span class="mx-4 text-gray-500">or</span>
         <div class="flex-grow border-t border-gray-300"></div>
       </div>
 

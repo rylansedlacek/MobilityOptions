@@ -9,7 +9,7 @@ session_write_close();
 ?>
 <html>
     <head>
-        <meta HTTP-EQUIV="REFRESH" content="2; url=index.php">
+        <!-- <meta HTTP-EQUIV="REFRESH" content="2; url=index.php"> -->
         <?php require('universal.inc') ?>
         <title>Logging Out</title>
     </head>

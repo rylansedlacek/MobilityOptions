@@ -132,8 +132,12 @@ if (date("H:i:s") > "18:19:59") {
             top: 20px;
             left: 30px;
             font-size: 14px;
-            font-weight: 700;
-            color: white;
+            font-weight: lighter;
+            color: black;
+            background-color: white;
+            border-radius: 8px;
+            width: 100%;
+            height: 20%;
         }
 
         .large-text {
@@ -141,9 +145,10 @@ if (date("H:i:s") > "18:19:59") {
             top: 40px;
             left: 30px;
             font-size: 22px;
-            font-weight: 700;
-            color: white;
+            font-weight: bold;
+            color: black;
             max-width: 90%;
+            background-color: green;
         }
 
         .large-text-sub {

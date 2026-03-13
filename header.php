@@ -130,25 +130,24 @@ if (date("H:i:s") > "18:19:59") {
         .small-text {
             position: absolute;
             top: 20px;
-            left: 30px;
+            left: 5px;
             font-size: 14px;
             font-weight: lighter;
-            color: black;
-            background-color: green;
+            color: #fff;
+            background-color: #45892e;
             border-radius: 8px;
-            width: 90%;
+            width: 98%;
             height: 20%;
         }
 
         .large-text {
             position: absolute;
             top: 40px;
-            left: 30px;
+            left: 5px;
             font-size: 22px;
             font-weight: bold;
-            color: black;
+            color: #fff;
             max-width: 90%;
-            background-color: green;
         }
 
         .large-text-sub {

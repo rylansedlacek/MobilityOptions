@@ -57,7 +57,7 @@ table, td, tr, th, form, fieldset, em, button, a {
     --standout-background: #fafafa;
 
     --happy-toast-background-color: #45892e;
-    --happy-toast-font-color: #b8d432;
+    --happy-toast-font-color: #fff;
 
     --info-toast-background-color: #45892e;
     --info-toast-font-color: rgb(0, 0, 0);
@@ -229,8 +229,9 @@ a:hover {
 
 #vms-logo {
     color: var(--main-color);
-    font-weight: 300;
+    font-weight: bolder;
     font-size: 1.5rem;
+    padding-left: 1rem;
 }
 
 /* Header mobile rules */

@@ -79,6 +79,7 @@
             align-items: center;
             text-align: center;
             position: relative;
+            background-color: #45892e;
         }
 
         .content-box-sub {
@@ -251,11 +252,14 @@
         transition: transform 0.3s ease;
     }
 
+    .button-text {
+        color: white;
+    }
+
     .circle {
         width: 30px;
         height: 30px;
-        /*background-color:; /* Blue color */
-        background-color: #385a2c;
+        background-color: #45892e;
         color: white;
         border-radius: 50%;
         display: flex;
@@ -395,7 +399,7 @@
     
         .content-box-test {
             position: relative;
-            background-color: #385a2c;   /* light green background */
+            background-color: #45892e;   /* light green background */
             border-radius: 12px;
             padding: 20px;
             color: black;                 /* default text color */
@@ -467,7 +471,7 @@
 
     <div class="full-width-bar">
     <div class="content-box">
-        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(4px);">
+        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">Manage drivers and riders here.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
@@ -489,7 +493,7 @@
     </div>
 
     <div class="content-box">
-        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(4px);">
+        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">See current and future rides.</div>
         <div class="large-text">Ride Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
@@ -507,7 +511,7 @@
     </div>
 
     <div class="content-box">
-        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(4px);">
+        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">Dispatch today's trips.</div>
         <div class="large-text">Dispatch Trip</div>
 <button class="circle-arrow-button" onclick="window.location.href='viewAllApplications.php'">

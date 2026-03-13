@@ -303,7 +303,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <td class="label">Pickup Location</td>
                     <td>
-                        <?php echo wordwrap($pickup_location, 50, "<br />\n"); ?>
+                        <?php echo $pickup_location; ?>
                     </td>
                 </tr>
                 <tr>

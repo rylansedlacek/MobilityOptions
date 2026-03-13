@@ -560,12 +560,12 @@ function create_event($event) {
     $startTime = $event["start-time"];    
     $endTime = $event["end-time"];
     $description = $event["description"];
-    //$type = $event['type'];
-    if (isset($event["capacity"])) {
-        $capacity = $event["capacity"];
-    } else {
-        $capacity = 999;
-    }
+    $type = $event['type'];
+    // if (isset($event["capacity"])) {
+    //     $capacity = $event["capacity"];
+    // } else {
+    $capacity = 999;
+    // }
     if (isset($event["location"])) {
         $location = $event["location"];
     } else {
@@ -594,16 +594,37 @@ function create_event($event) {
 
 
     // formatting follows series Id - RS
+    // $query = "
+    //     insert into dbevents (
+    //         name, startDate, startTime, endTime, endDate, access,
+    //         description, completed, location, type, series_id,
+    //         rider_id, driver_id, vehicle_id, pickup_location, dropoff_location,
+    //         trip_status, mileage_start, mileage_end
+    //     )
+    //     values (
+    //         '$name', '$date', '$startTime', '$endTime', '$endDate', '$access',
+    //         '$description', '$completed', '$location', '$type', 
+    //         " .($series_id ? "'$series_id'" : "NULL") . ",
+    //         " .($rider_id ? "'$rider_id'" : "NULL") . ",
+    //         " .($driver_id !== null ? $driver_id : "NULL") . ",
+    //         " .($vehicle_id !== null ? $vehicle_id : "NULL") . ",
+    //         " .($pickup_location ? "'$pickup_location'" : "NULL") . ",
+    //         " .($dropoff_location ? "'$dropoff_location'" : "NULL") . ",
+    //         " .($trip_status ? "'$trip_status'" : "NULL") . ",
+    //         " .($mileage_start !== null ? $mileage_start : "NULL") . ",
+    //         " .($mileage_end !== null ? $mileage_end : "NULL") . "
+    //     )
+    // ";
     $query = "
         insert into dbevents (
             name, startDate, startTime, endTime, endDate, access,
-            description, completed, location, type, series_id,
+            description, capacity, completed, location, type, series_id,
             rider_id, driver_id, vehicle_id, pickup_location, dropoff_location,
             trip_status, mileage_start, mileage_end
         )
         values (
             '$name', '$date', '$startTime', '$endTime', '$endDate', '$access',
-            '$description', '$completed', '$location', '$type', 
+            '$description', $capacity, '$completed', '$location', '$type', 
             " .($series_id ? "'$series_id'" : "NULL") . ",
             " .($rider_id ? "'$rider_id'" : "NULL") . ",
             " .($driver_id !== null ? $driver_id : "NULL") . ",

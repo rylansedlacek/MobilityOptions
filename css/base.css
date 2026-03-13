@@ -231,6 +231,7 @@ a:hover {
     color: var(--main-color);
     font-weight: 300;
     font-size: 1.5rem;
+    gap: 20px;
 }
 
 /* Header mobile rules */

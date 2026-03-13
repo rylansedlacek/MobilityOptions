@@ -648,7 +648,8 @@ if (date("H:i:s") > "18:19:59") {
         <div class="left-section">
             <div class="logo-container">
                 <a href="index.php"><img src="images/healthyGenPageLogo.png"></a>
-            <div class="nav-links">
+            </div>
+                <div class="nav-links">
                 <div class="nav-item">
                     <a href="index.php" class="nav-link">Home</a>
                 </div>

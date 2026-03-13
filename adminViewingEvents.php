@@ -39,6 +39,7 @@
                 $events = get_all_events();
                 if (sizeof(get_all_events())): ?>
                 <div class="table-wrapper">
+                    <label> Select riders name below to edit ride request record</label>
                     <table class="general">
                         <thead>
                             <tr>
@@ -60,7 +61,7 @@
                                     $startTime = $event->getStartTime();
                                     $endTime = $event->getEndTime();
                                     $description = $event->getDescription();
-                                    $capacity = $event->getCapacity();
+                                    // $capacity = $event->getCapacity();
                                     $completed = $event->getCompleted();
 
                                     if($accessLevel < 3) {
@@ -73,9 +74,9 @@
                                     } else {
                                         echo "
                                         <tr data-event-id='$eventID'>
-                                            <td><a href='event.php?id=$eventID'>$title</a></td> <!-- Link updated here -->
+                                            <td><a href='event.php?id=$eventID' style='color: black; text-decoration: underline;'>$title</a></td> <!-- Link updated here -->
                                             <td>$startDate</td>
-                                            <td></td>
+                                            <td>$completed</td>
                                         </tr>";
                                     }
                                 }

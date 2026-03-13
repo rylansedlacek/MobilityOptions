@@ -597,13 +597,13 @@ function create_event($event) {
     $query = "
         insert into dbevents (
             name, startDate, startTime, endTime, endDate, access,
-            description, capacity, completed, location, type, series_id,
+            description, completed, location, type, series_id,
             rider_id, driver_id, vehicle_id, pickup_location, dropoff_location,
             trip_status, mileage_start, mileage_end
         )
         values (
             '$name', '$date', '$startTime', '$endTime', '$endDate', '$access',
-            '$description', $capacity, '$completed', '$location', '$type', 
+            '$description', '$completed', '$location', '$type', 
             " .($series_id ? "'$series_id'" : "NULL") . ",
             " .($rider_id ? "'$rider_id'" : "NULL") . ",
             " .($driver_id !== null ? $driver_id : "NULL") . ",

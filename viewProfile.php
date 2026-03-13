@@ -174,12 +174,12 @@
           <div class="flex justify-between py-2">
             <span class="font-medium">Joined</span><span>Jan 2022</span>
           </div>
-          <!-- <div class="flex justify-between py-2">
+          <!--<div class="flex justify-between py-2">
             <span class="font-medium">Branch</span><span><?php echo ucfirst($user->get_branch()) ?></span>
           </div> -->
-          <div class="flex justify-between py-2">
-            <span class="font-medium">Affiliation</span><span></span> <!--<?php echo ucfirst($user->get_current_user) ?></span>-->
-          </div>
+         <!-- <div class="flex justify-between py-2">
+            <span class="font-medium">Affiliation</span><span></span> <?php echo ucfirst($user->get_current_user) ?></span>
+          </div>   -->
           <div class="flex justify-between py-2">
             <span class="font-medium">Eligibility</span><span><?php echo ucfirst($elig_status); ?></span>
           </div>
@@ -205,10 +205,10 @@
 
       <!-- Personal Section -->
       <div id="personal" class="profile-section space-y-4">
-        <div>
+        <!-- <div>
           <span class="block text-sm font-medium text-[#1F1F21]">Username</span>
           <p class="text-gray-900 font-medium text-xl"><?php echo $user->get_id() ?></p>
-        </div>
+        </div> -->
         <div>
           <span class="block text-sm font-medium text-[#1F1F21]">Name</span>
           <p class="text-gray-900 font-medium text-xl"><?php echo $user->get_first_name() ?> <?php echo $user->get_last_name() ?></p>

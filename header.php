@@ -826,9 +826,7 @@ if (date("H:i:s") > "18:19:59") {
                 <!--<a href="viewCheckInOut.php" style="color: white; text-decoration: none;"><div class="date-box">Check In/Out</div></a>-->
             <div class="nav-links">
                 <div class="nav-item">
-                    <div class="logo-container">
-                        <a href="index.php"><img src="images/menu-bar.png"></a>
-                    </div>
+                    Quick Access
                     <div class="dropdown">
 
 <a href="addEvent.php" style="text-decoration: none;">

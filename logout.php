@@ -17,8 +17,8 @@ session_write_close();
         <nav>
             <span id="nav-top">
                 <span class="logo">
-                    <img src="images/whiskeyLogo.png">
-                        <span id="vms-logo"> Whiskey Valor Foundation </span>
+                    <img src="images/healthyGenPageLogo.png" alt="Logo">
+                        <span id="vms-logo"> Mobility Options </span>
                         </span>
                     <img id="menu-toggle" src="images/menu.png">
                 </span>

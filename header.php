@@ -65,7 +65,7 @@ if (date("H:i:s") > "18:19:59") {
             border-bottom-right-radius: 50px;
         }
          .content-box-test:hover {
-            border: 4px solid #fdd05eff;
+            border: 4px solid #31c300;
         }
 /*END STYLE TEST*/
 

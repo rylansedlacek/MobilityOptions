@@ -79,6 +79,7 @@
             align-items: center;
             text-align: center;
             position: relative;
+            background-color: #45892e;
         }
 
         .content-box-sub {
@@ -395,7 +396,7 @@
     
         .content-box-test {
             position: relative;
-            background-color: #385a2c;   /* light green background */
+            background-color: #45892e;   /* light green background */
             border-radius: 12px;
             padding: 20px;
             color: black;                 /* default text color */

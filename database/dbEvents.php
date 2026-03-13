@@ -699,7 +699,7 @@ function update_event($eventID, $eventDetails) {
 
     // follow same syntax as above - RS
     $query = "
-        update dbevents set id='$id', name='$name', startDate='$date', endDate='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity"
+        update dbevents set id='$id', name='$name', startDate='$date', endDate='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location'"
         . ($rider_id ? ", rider_id='$rider_id'" : "")
         . ($driver_id !== null ? ", driver_id=$driver_id" : "")
         . ($vehicle_id !== null ? ", vehicle_id=$vehicle_id" : "")

@@ -54,9 +54,9 @@ include 'database/dbEvents.php';
                     </thead>
                     <tbody class="standout">
                         <?php
-                        #require_once('database/dbPersons.php');
-                        #require_once('include/output.php');
-                        #$id_to_name_hash = [];
+                        // require_once('database/dbPersons.php');
+                        // require_once('include/output.php');
+                        // $id_to_name_hash = [];
                         foreach ($events as $event) {
                             $eventID = $event->getID();
                             $title = $event->getName();

@@ -217,7 +217,6 @@ require_once('header.php');
                                     <tr>
                                         <th>First</th>
                                         <th>Last</th>
-                                        <th>Username</th>
                                         <th>Phone</th>
                                         <th>Zip Code</th>
                                         <th>Profile</th>
@@ -238,7 +237,6 @@ require_once('header.php');
                                     <tr>
                                         <td>' . $person->get_first_name() . '</td>
                                         <td>' . $person->get_last_name() . '</td>
-                                        <td><a href="mailto:' . $person->get_id() . '" class="text-blue-700 underline">' . $person->get_id() . '</a></td>
                                         <td><a href="tel:' . $person->get_phone1() . '" class="text-blue-700 underline">' . formatPhoneNumber($person->get_phone1()) . '</a></td>
                                         <td>' . $person->get_zip_code() . '</td>
                                         <td><a href="viewProfile.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Profile</a></td>
@@ -268,10 +266,10 @@ require_once('header.php');
                 <input type="text" id="name" name="name" class="w-full" value="<?php if (isset($name)) echo htmlspecialchars($_GET['name']); ?>" placeholder="Enter the user's first and/or last name">
             </div>
 
-            <div>
+            <!-- <div>
                 <label for="id">Username</label>
                 <input type="text" id="id" name="id" class="w-full" value="<?php if (isset($id)) echo htmlspecialchars($_GET['id']); ?>" placeholder="Enter the user's username (login ID)">
-            </div>
+            </div> -->
 
             <div>
                 <label for="phone">Phone Number</label>

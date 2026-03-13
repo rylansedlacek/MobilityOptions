@@ -225,7 +225,13 @@ if (date("H:i:s") > "18:19:59") {
             display: flex;
             align-items: center;
             gap: 20px;
-	}
+	    }
+
+        .center-section {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
         /* Dropdown Control */
         .nav-item {

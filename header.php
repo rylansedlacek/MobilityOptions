@@ -136,7 +136,7 @@ if (date("H:i:s") > "18:19:59") {
             color: black;
             background-color: green;
             border-radius: 8px;
-            width: 100%;
+            width: 90%;
             height: 20%;
         }
 

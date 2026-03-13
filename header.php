@@ -134,7 +134,7 @@ if (date("H:i:s") > "18:19:59") {
             font-size: 14px;
             font-weight: lighter;
             color: black;
-            background-color: white;
+            background-color: green;
             border-radius: 8px;
             width: 100%;
             height: 20%;

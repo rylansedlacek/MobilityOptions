@@ -166,11 +166,6 @@
       </div>
 
       <!-- Sign Up Section -->
-      <p class="text-center text-gray-700">
-        Don’t have an account?
-        <a href="VolunteerRegister.php" target="_blank" class="text-[#5283c7] font-semibold hover:underline">Sign Up Now</a>
-      </p>
-
     </div>
   </div>
 

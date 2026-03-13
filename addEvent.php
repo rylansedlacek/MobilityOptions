@@ -30,7 +30,7 @@
             //type needed? I deleted it, it was on the end behind "description". The form part for it is commented out as well - GC
             "name", "date", "start-time", "end-time", "description", "type"
         );
-        if (!wereRequiredFieldsSubmitted($args, $required)) {
+        if (!wereRequiredFieldsSubmitted($args, $required)) { 
             echo 'bad form data';
             die();
         } else {

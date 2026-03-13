@@ -125,8 +125,6 @@ if (date("H:i:s") > "18:19:59") {
             height: auto;
             background: white;
             border-radius: 5px;
-            border-bottom-right-radius: 50px;
-            border: 1px solid #828282;
         }
 
         .small-text {
@@ -135,6 +133,7 @@ if (date("H:i:s") > "18:19:59") {
             left: 30px;
             font-size: 14px;
             font-weight: 700;
+            color: white;
         }
 
         .large-text {
@@ -143,7 +142,7 @@ if (date("H:i:s") > "18:19:59") {
             left: 30px;
             font-size: 22px;
             font-weight: 700;
-            color: black;
+            color: white;
             max-width: 90%;
         }
 

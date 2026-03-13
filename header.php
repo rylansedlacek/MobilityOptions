@@ -130,7 +130,7 @@ if (date("H:i:s") > "18:19:59") {
         .small-text {
             position: absolute;
             top: 20px;
-            left: 5px;
+            left: 3px;
             font-size: 14px;
             font-weight: lighter;
             color: #fff;

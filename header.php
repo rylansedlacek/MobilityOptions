@@ -200,7 +200,6 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .logo-container img {
-            width: 100%;
             height: 5rem;
             margin-top: .25rem;
             display: block;

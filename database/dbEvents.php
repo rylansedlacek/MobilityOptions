@@ -561,11 +561,12 @@ function create_event($event) {
     $endTime = $event["end-time"];
     $description = $event["description"];
     //$type = $event['type'];
-    if (isset($event["capacity"])) {
+    /*if (isset($event["capacity"])) {
         $capacity = $event["capacity"];
     } else {
         $capacity = 999;
-    }
+    }*/
+    $capactity = 999;
     if (isset($event["location"])) {
         $location = $event["location"];
     } else {
@@ -650,7 +651,7 @@ function update_event($eventID, $eventDetails) {
     #$restricted = $eventDetails["restricted"];
     $endTime = $eventDetails["end-time"];
     $description = $eventDetails["description"];
-    $capacity = $eventDetails["capacity"];
+    //$capacity = $eventDetails["capacity"];
     #$completed = $eventDetails["completed"];
     #$restricted_signup = $eventDetails["restricted_signup"];
     $location = $eventDetails["location"];
@@ -667,18 +668,18 @@ function update_event($eventID, $eventDetails) {
     #";
 
     // new dbevents fields to use
-    $rider_id        = $event['rider_id'] ?? null;
-    $driver_id       = $event['driver_id'] ?? null;
-    $vehicle_id      = $event['vehicle_id'] ?? null;
-    $pickup_location = $event['pickup_location'] ?? null;
-    $dropoff_location= $event['dropoff_location'] ?? null;
-    $trip_status     = $event['trip_status'] ?? null;
-    $mileage_start   = $event['mileage_start'] ?? null;
-    $mileage_end     = $event['mileage_end'] ?? null;
+    $rider_id        = $eventDetails['rider_id'] ?? null;
+    $driver_id       = $eventDetails['driver_id'] ?? null;
+    $vehicle_id      = $eventDetails['vehicle_id'] ?? null;
+    $pickup_location = $eventDetails['pickup_location'] ?? null;
+    $dropoff_location= $eventDetails['dropoff_location'] ?? null;
+    $trip_status     = $eventDetails['trip_status'] ?? null;
+    $mileage_start   = $eventDetails['mileage_start'] ?? null;
+    $mileage_end     = $eventDetails['mileage_end'] ?? null;
 
     // follow same syntax as above - RS
     $query = "
-        update dbevents set id='$id', name='$name', startDate='$date', endDate='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location', capacity=$capacity"
+        update dbevents set id='$id', name='$name', startDate='$date', endDate='$date', startTime='$startTime', endTime='$endTime', description='$description', location='$location'"
         . ($rider_id ? ", rider_id='$rider_id'" : "")
         . ($driver_id !== null ? ", driver_id=$driver_id" : "")
         . ($vehicle_id !== null ? ", vehicle_id=$vehicle_id" : "")

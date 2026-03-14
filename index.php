@@ -253,7 +253,7 @@
     }
 
     .button-text {
-        color: white;
+        color: #bbd8b1;
     }
 
     .circle {
@@ -554,7 +554,7 @@
     </div>
 
     <!-- Manage Documents -->
-    <!-- <div class="content-box-test" onclick="window.location.href='view_encrypted_gallery.php'" style="border-radius: 12px; padding: 20px; position: relative;">
+    <div class="content-box-test" onclick="window.location.href='view_encrypted_gallery.php'" style="border-radius: 12px; padding: 20px; position: relative;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
         </div>
@@ -562,7 +562,7 @@
         <div class="large-text-sub">View Pending IDs</div>
         <div class="graph-text">View pending and arbitrate user submitted IDs.</div>
         <button class="arrow-button">→</button>
-    </div> -->
+    </div>
 
     <!-- System Notifications -->
     <div class="content-box-test" onclick="window.location.href='inbox.php'" style="border-radius: 12px; padding: 20px;">
@@ -593,7 +593,7 @@
     </div>
 
     <!-- Create Email -->
-    <!-- <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="border-radius: 12px; padding: 20px;">
+    <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/inbox.svg" alt="Email Icon">
         </div>
@@ -601,10 +601,10 @@
         <div class="large-text-sub">Create Email</div>
         <div class="graph-text">Send new messages to riders.</div>
         <button class="arrow-button">→</button>
-    </div> -->
+    </div>
 
     <!-- View Drafts -->
-    <!-- <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="border-radius: 12px; padding: 20px;">
+    <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/search.svg" alt="Drafts Icon">
         </div>
@@ -612,10 +612,10 @@
         <div class="large-text-sub">View Drafts</div>
         <div class="graph-text">Check saved email drafts.</div>
         <button class="arrow-button">→</button>
-    </div> -->
+    </div>
 
     <!-- Generate Email List -->
-    <!-- <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="border-radius: 12px; padding: 20px;">
+    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/send.png" alt="Email List Icon">
         </div>
@@ -623,10 +623,10 @@
         <div class="large-text-sub">Generate Email List</div>
         <div class="graph-text">Rider Emails</div>
         <button class="arrow-button">→</button>
-    </div> -->
+    </div>
 
     <!-- Discussions -->
-    <!-- <div class="content-box-test" onclick="window.location.href='viewSuggestions.php'" style="border-radius: 12px; padding: 20px;">
+    <div class="content-box-test" onclick="window.location.href='viewSuggestions.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Discussions Icon">
         </div>
@@ -634,7 +634,7 @@
         <div class="large-text-sub">User Suggestions</div>
         <div class="graph-text">View user submitted suggestions.</div>
         <button class="arrow-button">→</button>
-    </div> -->
+    </div>
 
 </div>
 
@@ -667,15 +667,15 @@
         <div class="footer-right">
             <div class="footer-section">
                 <div class="footer-topic">Connect</div>
-                <!-- <a href="https://www.facebook.com/profile.php?id=61566628001672&mibextid=LQQJ4d">Facebook</a>
-                <a href="https://www.instagram.com/whiskeyvalor/#">Instagram</a> -->
-                <a href="https://healthygenerations.org/">Main Website</a>
+                <a href="https://www.facebook.com/profile.php?id=61566628001672&mibextid=LQQJ4d">Facebook</a>
+                <a href="https://www.instagram.com/whiskeyvalor/#">Instagram</a>
+                <a href="https://whiskeyvalor.org">Main Website</a>
             </div>
-            <!-- <div class="footer-section">
+            <div class="footer-section">
                 <div class="footer-topic">Contact Us</div>
                 <a href="https://whiskeyvalor.org/pages/contact">Send Us An Email</a>
-                <a href="tel:5408981500">540-898-1500 (ext 117)</a>
-            </div> -->
+                <!-- <a href="tel:5408981500">540-898-1500 (ext 117)</a> -->
+            </div>
         </div>
     </footer>
 

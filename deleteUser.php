@@ -57,11 +57,19 @@ $loggedIn = false;
             </span>
         </nav>
         <main>
+        <?php
 
-                <p class="happy-toast centered">The rider <?php echo $user->get_first_name() . ' ' . $user->get_last_name() ?> has been deleted.</p>
-                <?php
-                remove_person($user->get_id());
-                ?>
+        $deleted = remove_person($user->get_id());
+
+        if ($deleted) {
+            echo '<p class="happy-toast centered">This ' . 
+                $user->get_first_name() . ' ' .
+                $user->get_last_name() . ' has been deleted.</p>';
+ 
+        } else {
+            echo '<p class="error-toast centered"> Cannot delete this rider because they have outstanding ride requests.</p>';
+        }
+        ?>
         </main>
     </body>
 </html>

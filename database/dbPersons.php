@@ -1745,6 +1745,21 @@ function get_total_vol_hours($dateFrom, $dateTo) {
     }
 
 
+ // get all dbpersons with type = 'driver'
+function get_drivers() {
+    $connection = connect();
+    $query = "SELECT id, first_name, last_name FROM dbpersons WHERE type = 'driver' AND (archived IS NULL OR archived = 0) ORDER BY last_name, first_name";
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+    $drivers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_close($connection);
+    return $drivers;
+}
+
+
 
     /*
     function get_tot_vol_hours($type,$stats,$dateFrom,$dateTo,$lastFrom,$lastTo){

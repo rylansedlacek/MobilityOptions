@@ -68,7 +68,7 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
 <html lang="en">
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>Schedule Trip</title>
+    <title>Mobility Options | Schedule Trip</title>
 </head>
 <body>
     <?php require_once('header.php'); ?>

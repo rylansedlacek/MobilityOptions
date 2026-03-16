@@ -552,7 +552,7 @@ function getall_dbPersons($name_from, $name_to, $venue) {
 */
 function getall_persons() {
     $con=connect();
-    $query = 'SELECT * FROM dbpersons WHERE id != "vmsroot"';
+    $query = "SELECT * FROM dbpersons WHERE type = 'rider' ";
     $result = mysqli_query($con,$query);
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_close($con);

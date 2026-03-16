@@ -262,7 +262,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Healthy Generations | Ride Request</title>
+        <title>Mobility Options | Request Ride</title>
     </head>
     <body>
         <?php require_once('header.php') ?>

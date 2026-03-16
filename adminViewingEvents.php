@@ -48,7 +48,7 @@ include 'database/dbEvents.php';
                         <tr>
                             <th>Rider Name</th>
                             <th>Date Of Ride</th>
-                            <th>Ride Status</th>
+                            
                             <th style="width:1px"></th>
                         </tr>
                     </thead>
@@ -79,7 +79,7 @@ include 'database/dbEvents.php';
                                         <tr data-event-id='$eventID'>
                                             <td><a href='event.php?id=$eventID' style='color: black; text-decoration: underline;'>$title</a></td> <!-- Link updated here -->
                                             <td>$startDate</td>
-                                            <td>$completed</td>
+                                            
                                         </tr>";
                             }
                         }

@@ -65,7 +65,7 @@ if (date("H:i:s") > "18:19:59") {
             border-bottom-right-radius: 50px;
         }
          .content-box-test:hover {
-            border: 4px solid #fdd05eff;
+            border: 4px solid #31c300;
         }
 /*END STYLE TEST*/
 
@@ -97,7 +97,7 @@ if (date("H:i:s") > "18:19:59") {
             align-items: center;
             text-align: center;
             position: relative;
-            background-color: #385a2c;
+            background-color: #45892e;
         }
 
         .content-box-sub {
@@ -125,25 +125,28 @@ if (date("H:i:s") > "18:19:59") {
             height: auto;
             background: white;
             border-radius: 5px;
-            border-bottom-right-radius: 50px;
-            border: 1px solid #828282;
         }
 
         .small-text {
             position: absolute;
             top: 20px;
-            left: 30px;
+            left: 3px;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: lighter;
+            color: #fff;
+            background-color: #45892e;
+            border-radius: 8px;
+            width: 98%;
+            height: 20%;
         }
 
         .large-text {
             position: absolute;
             top: 40px;
-            left: 30px;
+            left: 5px;
             font-size: 22px;
-            font-weight: 700;
-            color: black;
+            font-weight: bold;
+            color: #fff;
             max-width: 90%;
         }
 
@@ -177,8 +180,8 @@ if (date("H:i:s") > "18:19:59") {
             position: fixed;
             top: 0;
             left: 0;
-            background: #385a2c;
-            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+            background: #fff;
+            box-shadow: 0px 2px 8px #385a2c;
             display: flex;
             align-items: center;
             padding: 0 20px;
@@ -200,7 +203,6 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .logo-container img {
-            width: 100%;
             height: 5rem;
             margin-top: .25rem;
             display: block;
@@ -217,6 +219,7 @@ if (date("H:i:s") > "18:19:59") {
             font-weight: 700;
             color: white;
             cursor: pointer;
+            font-family: Georgia;
         }
 
         /* Right Section: Date & Icon */
@@ -225,7 +228,13 @@ if (date("H:i:s") > "18:19:59") {
             display: flex;
             align-items: center;
             gap: 20px;
-	}
+	    }
+
+        .center-section {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
         /* Dropdown Control */
         .nav-item {
@@ -642,7 +651,8 @@ if (date("H:i:s") > "18:19:59") {
         <div class="left-section">
             <div class="logo-container">
                 <a href="index.php"><img src="images/healthyGenPageLogo.png"></a>
-            <div class="nav-links">
+            </div>
+                <div class="nav-links">
                 <div class="nav-item">
                     <a href="index.php" class="nav-link">Home</a>
                 </div>
@@ -717,6 +727,7 @@ if (date("H:i:s") > "18:19:59") {
         //pages only managers can view
         $permission_array['viewallevents.php'] = 0; //WVF - For admins to do view 
         $permission_array['personsearch.php'] = 2;
+        $permission_array['allriders.php'] = 2;
         $permission_array['personedit.php'] = 0; // changed to 0 so that applicants can apply
         $permission_array['viewschedule.php'] = 2;
         $permission_array['addweek.php'] = 2;
@@ -790,6 +801,7 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['upload_encrypted_image.php'] = 1;
         $permission_array['createsuggestion.php'] = 1;
         $permission_array['viewsuggestion.php'] = 2;
+         $permission_array['scheduletrip.php'] = 2;
         // LOWERCASE
 
 
@@ -817,12 +829,10 @@ if (date("H:i:s") > "18:19:59") {
 		echo('<div class="navbar">
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
-            <div class="logo-container">
-                <a href="index.php"><img src="images/healthyGenPageLogo.png"></a>
-            </div>
                 <!--<a href="viewCheckInOut.php" style="color: white; text-decoration: none;"><div class="date-box">Check In/Out</div></a>-->
             <div class="nav-links">
-                <div class="nav-item">Rides
+                <div class="nav-item">
+                    <p style="color: #4f7dbe;">Quick Access</p>
                     <div class="dropdown">
 
 <a href="addEvent.php" style="text-decoration: none;">
@@ -861,7 +871,12 @@ if (date("H:i:s") > "18:19:59") {
                 </div>
             </div>
         </div>
-
+        <!-- Center Section: Logo -->
+        <div class="center-section">>
+            <a href="index.php" class="logo-container">
+                <img src="images/healthyGenPageLogo.png" alt="Logo">
+            </a>
+        </div>
         <!-- Right Section: Date & Icon -->
         <div class="right-section">
 <!--<a href="calendar.php">

@@ -78,6 +78,12 @@
                     </script>
                 <?php
             }
+
+            // Ensure we have a Person object for the rider (used for sending notification emails)
+            if (empty($rider) && !empty($args['rider_id'])) {
+                require_once('database/dbPersons.php');
+                $rider = retrieve_person($args['rider_id']);
+            }
             
             if (validate24hTimeRange($args['start-time'], $args['end-time'])) {
                 $startTime = $args['start-time'];
@@ -149,7 +155,29 @@
             if (!$id) {
                 die();
             } else {
-    
+
+                // send rider confirmation email if we have a valid email address.
+                $riderEmail = '';
+                if (!empty($rider)) {
+                    $riderEmail = trim((string)$rider->get_email());
+                }
+
+                if ($riderEmail && filter_var($riderEmail, FILTER_VALIDATE_EMAIL)) {
+                    require_once('email.php'); 
+
+                    $subject = 'Ride Request Submitted';
+                    $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
+                        "Your ride request has been submitted with the following details:\n\n" .
+                        "Date: {$args['date']}\n" .
+                        "Time: {$args['start-time']} - {$args['end-time']}\n" .
+                        "Pickup: {$args['pickup_location']}\n" .
+                        "Dropoff: {$args['dropoff_location']}\n\n" .
+                        "Thank you,\n" .
+                        "Mobility Options";
+
+                    $sendResult = sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
+                }
+
                 $counts = [
                     'daily'   => 30,  // next 30 days
                     'weekly'  => 12,  // next 12 weeks
@@ -624,6 +652,11 @@
                         }
                     })();
                 </script>
+                <br/>
+                <br/>
+                <center><a class="button cancel" href="index.php">Return to Dashboard</a></center>
+                 
         </main>
+        
     </body>
 </html>

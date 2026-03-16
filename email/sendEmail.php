@@ -5,23 +5,15 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // -------------------------------------------------------
-// Load .env file (must be in parent directory)
+// Local SMTP configuration
 // -------------------------------------------------------
-$envPath = "/home/customer/www/jenniferp217.sg-host.com/public_html/email/.env";
-if (!file_exists($envPath)) {
-    echo json_encode(["success" => false, "error" => ".env file not found"]);
-    exit;
-}
-
-$env = parse_ini_file($envPath);
-
-$SMTP_SERVER = $env["SMTP_SERVER"] ?? null;
-$SMTP_PORT   = $env["SMTP_PORT"] ?? 587;
-$SMTP_USER   = $env["SMTP_USER"] ?? null;
-$SMTP_PASS   = $env["SMTP_PASS"] ?? null;
+$SMTP_SERVER = 'smtp.gmail.com';
+$SMTP_PORT   = 587;
+$SMTP_USER   = '';
+$SMTP_PASS   = '';
 
 if (!$SMTP_SERVER || !$SMTP_USER || !$SMTP_PASS) {
-    echo json_encode(["success" => false, "error" => "Missing SMTP settings in .env"]);
+    echo json_encode(["success" => false, "error" => "Missing SMTP settings in email/sendEmail.php"]);
     exit;
 }
 
@@ -91,7 +83,7 @@ foreach ($emails as $email) {
         $errorMsg = "[" . date('Y-m-d H:i:s') . "] Failed to send to {$email}: " . $e->getMessage() . PHP_EOL;
         
         // Write to email_errors.log file (ensure this path is writable)
-        file_put_contents(__DIR__ . '/email/email_errors.log', $errorMsg, FILE_APPEND);
+        file_put_contents(__DIR__ . '/email_errors.log', $errorMsg, FILE_APPEND);
 
         $failed[] = [
             "email" => $email,

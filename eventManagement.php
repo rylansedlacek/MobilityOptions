@@ -101,12 +101,19 @@ require_once('header.php');
 	  <img class="button-icon h-12 w-12 left-4" src="images/plus-solid.svg" alt="Calendar Icon">
         </button>
 
+        <button onclick="window.location.href='adminViewingEvents.php';">
+	  <div class="button-left-gray"></div>
+	  <div>Edit Ride Request</div>
+	  <img class="button-icon h-10 w-10 left-5" src="images/users-solid.svg" alt="Calendar Icon">
+        </button>
+
         <button onclick="window.location.href='viewAllEvents.php';">
 	  <div class="button-left-gray"></div>
-	  <div>View Ride Request</div>
+	  <div>Schedule Ride Requests</div>
 	  <img class="button-icon left-4" src="images/new-event.svg" alt="Calendar Icon">
         </button>
 
+        <!--
         <button onclick="window.location.href='editHours.php';">
 	  <div class="button-left-gray"></div>
 	  <div>Change Event Hours</div>
@@ -115,25 +122,25 @@ require_once('header.php');
 
         <button onclick="window.location.href='viewPendingApps.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Pending Applications <?php 
-                        require_once('database/dbEvents.php');
-                        require_once('database/dbPersons.php');
-                        require_once('database/dbApplications.php');
-                        $pendingapps = all_pending_names();
+	  <div>Pending Applications 
+      
+                    <?php 
+                        //require_once('database/dbEvents.php');
+                        //require_once('database/dbPersons.php');
+                       // require_once('database/dbApplications.php');
+                        //$pendingapps = all_pending_names();
                         
-                        if (sizeof($pendingapps) > 0) {
-                            echo '(' . sizeof($pendingapps) . ')';
-                        }   
+                       // if (sizeof($pendingapps) > 0) {
+                         //   echo '(' . sizeof($pendingapps) . ')';
+                      //  }   
                     ?></div>
 
 	  <img class="button-icon h-10 w-10 left-5" src="images/clock-regular.svg" alt="Calendar Icon">
         </button>
 
-        <button onclick="window.location.href='adminViewingEvents.php';">
-	  <div class="button-left-gray"></div>
-	  <div>Edit Ride Request</div>
-	  <img class="button-icon h-10 w-10 left-5" src="images/users-solid.svg" alt="Calendar Icon">
-        </button>
+-->
+
+     
 
 	<div class="text-center mt-6">
         	<a href="index.php" class="return-button">Return to Dashboard</a>
@@ -144,10 +151,10 @@ require_once('header.php');
 
       <!-- Text Section -->
       <div class="text-section">
-        <h1>Event Management</h1>
+        <h1>Ride Management</h1>
         <div class="div-blue"></div>
         <p>
-          Welcome to the event/training management hub. Use the controls on the left to manage events, ...content, access, and view important analytics and logs. Everything you need to control and configure your platform is just a click away.
+         Welcome to the Ride managment Hub. Here you can create, edit, delete, and schedule pending ride requests for Riders.
         </p>
       </div>
 

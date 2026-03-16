@@ -79,6 +79,7 @@
             align-items: center;
             text-align: center;
             position: relative;
+            background-color: #45892e;
         }
 
         .content-box-sub {
@@ -251,11 +252,14 @@
         transition: transform 0.3s ease;
     }
 
+    .button-text {
+        color: white;
+    }
+
     .circle {
         width: 30px;
         height: 30px;
-        /*background-color:; /* Blue color */
-        background-color: #385a2c;
+        background-color: #45892e;
         color: white;
         border-radius: 50%;
         display: flex;
@@ -395,7 +399,7 @@
     
         .content-box-test {
             position: relative;
-            background-color: #385a2c;   /* light green background */
+            background-color: #45892e;   /* light green background */
             border-radius: 12px;
             padding: 20px;
             color: black;                 /* default text color */
@@ -467,7 +471,7 @@
 
     <div class="full-width-bar">
     <div class="content-box">
-        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(4px);">
+        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">Manage drivers and riders here.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
@@ -489,7 +493,7 @@
     </div>
 
     <div class="content-box">
-        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(4px);">
+        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">See current and future rides.</div>
         <div class="large-text">Ride Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
@@ -507,7 +511,7 @@
     </div>
 
     <div class="content-box">
-        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(4px);">
+        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">Dispatch today's trips.</div>
         <div class="large-text">Dispatch Trip</div>
 <button class="circle-arrow-button" onclick="window.location.href='viewAllApplications.php'">
@@ -550,7 +554,7 @@
     </div>
 
     <!-- Manage Documents -->
-    <div class="content-box-test" onclick="window.location.href='view_encrypted_gallery.php'" style="border-radius: 12px; padding: 20px; position: relative;">
+    <!-- <div class="content-box-test" onclick="window.location.href='view_encrypted_gallery.php'" style="border-radius: 12px; padding: 20px; position: relative;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
         </div>
@@ -558,7 +562,7 @@
         <div class="large-text-sub">View Pending IDs</div>
         <div class="graph-text">View pending and arbitrate user submitted IDs.</div>
         <button class="arrow-button">→</button>
-    </div>
+    </div> -->
 
     <!-- System Notifications -->
     <div class="content-box-test" onclick="window.location.href='inbox.php'" style="border-radius: 12px; padding: 20px;">
@@ -589,7 +593,7 @@
     </div>
 
     <!-- Create Email -->
-    <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="border-radius: 12px; padding: 20px;">
+    <!-- <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/inbox.svg" alt="Email Icon">
         </div>
@@ -597,10 +601,10 @@
         <div class="large-text-sub">Create Email</div>
         <div class="graph-text">Send new messages to riders.</div>
         <button class="arrow-button">→</button>
-    </div>
+    </div> -->
 
     <!-- View Drafts -->
-    <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="border-radius: 12px; padding: 20px;">
+    <!-- <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/search.svg" alt="Drafts Icon">
         </div>
@@ -608,10 +612,10 @@
         <div class="large-text-sub">View Drafts</div>
         <div class="graph-text">Check saved email drafts.</div>
         <button class="arrow-button">→</button>
-    </div>
+    </div> -->
 
     <!-- Generate Email List -->
-    <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="border-radius: 12px; padding: 20px;">
+    <!-- <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/send.png" alt="Email List Icon">
         </div>
@@ -619,10 +623,10 @@
         <div class="large-text-sub">Generate Email List</div>
         <div class="graph-text">Rider Emails</div>
         <button class="arrow-button">→</button>
-    </div>
+    </div> -->
 
     <!-- Discussions -->
-    <div class="content-box-test" onclick="window.location.href='viewSuggestions.php'" style="border-radius: 12px; padding: 20px;">
+    <!-- <div class="content-box-test" onclick="window.location.href='viewSuggestions.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Discussions Icon">
         </div>
@@ -630,7 +634,7 @@
         <div class="large-text-sub">User Suggestions</div>
         <div class="graph-text">View user submitted suggestions.</div>
         <button class="arrow-button">→</button>
-    </div>
+    </div> -->
 
 </div>
 
@@ -663,15 +667,15 @@
         <div class="footer-right">
             <div class="footer-section">
                 <div class="footer-topic">Connect</div>
-                <a href="https://www.facebook.com/profile.php?id=61566628001672&mibextid=LQQJ4d">Facebook</a>
-                <a href="https://www.instagram.com/whiskeyvalor/#">Instagram</a>
-                <a href="https://whiskeyvalor.org">Main Website</a>
+                <!-- <a href="https://www.facebook.com/profile.php?id=61566628001672&mibextid=LQQJ4d">Facebook</a>
+                <a href="https://www.instagram.com/whiskeyvalor/#">Instagram</a> -->
+                <a href="https://healthygenerations.org/">Main Website</a>
             </div>
-            <div class="footer-section">
+            <!-- <div class="footer-section">
                 <div class="footer-topic">Contact Us</div>
                 <a href="https://whiskeyvalor.org/pages/contact">Send Us An Email</a>
-                <!-- <a href="tel:5408981500">540-898-1500 (ext 117)</a> -->
-            </div>
+                <a href="tel:5408981500">540-898-1500 (ext 117)</a>
+            </div> -->
         </div>
     </footer>
 

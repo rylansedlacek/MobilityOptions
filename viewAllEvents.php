@@ -1,23 +1,22 @@
 <?php
-    // Template for new VMS pages. Base your new page on this one
+// Template for new VMS pages. Base your new page on this one
 
-    // Make session information accessible, allowing us to associate
-    // data with the logged-in user.
-    session_cache_expire(30);
-    session_start();
+// Make session information accessible, allowing us to associate
+// data with the logged-in user.
+session_cache_expire(30);
+session_start();
 
-    $loggedIn = false;
-    $accessLevel = 0;
-    $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    }  
-    include 'database/dbEvents.php';
-    
-    //include 'domain/Event.php';
+$loggedIn = false;
+$accessLevel = 0;
+$userID = null;
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
+include 'database/dbEvents.php';
+//include 'domain/Event.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -108,11 +107,11 @@
                                         <td>$startDate</td>
                                         <td>$endDate</td>";
                                  
-                                    /*if($numSignups >= $capacity) {
+                                    if($numSignups >= $capacity) {
                                         echo "<td class='full-capacity'>Full</td>";
                                     } else {
                                         echo "<td>$numSignups / $capacity</td>";
-                                    }*/
+                                    }
                                     
                                     if(isset($_SESSION['_id']) && $_SESSION['_id'] != 'guest') {
                                     // Display Sign Up or Cancel button based on user sign-up status
@@ -197,7 +196,7 @@
                                 <th style="width:1px">Restricted</th>
                                 <th>Title</th>
                                 <th style="width:1px">Date</th>
-                                <!--<th style="width:1px">Capacity</th>-->
+                                <th style="width:1px">Capacity</th>
                                 <th style="width:1px"></th>
                             </tr>
                         </thead>
@@ -213,9 +212,9 @@
                                     $startTime = $event->getStartTime();
                                     $endTime = $event->getEndTime();
                                     $description = $event->getDescription();
-                                    //$capacity = $event->getCapacity();
+                                    $capacity = $event->getCapacity();
                                     $completed = $event->getCompleted();
-                                    //$restricted_signup = $event->getRestrictedSignup();
+                                    $restricted_signup = $event->getRestrictedSignup();
                                     if ($restricted_signup == 0) {
                                         $restricted_signup = "No";
                                     } else {
@@ -231,7 +230,7 @@
                                             <td>$restricted_signup</td>
                                             <td><a href='event.php?id=$eventID'>$title</a></td>
                                             <td>$date</td>
-                                            
+                                            <td>$numSignups / $capacity</td>
                                             <td><a class='button sign-up' href='eventSignUp.php?event_name=' . urlencode($title) . '&restricted=' . urlencode($restricted_signup) . '&id=' . urlencode($eventID) . '>Sign Up</a></td>
                                         </tr>";
                                     //} else {

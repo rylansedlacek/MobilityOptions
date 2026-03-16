@@ -1129,3 +1129,42 @@ function update_animal2($animal) {
     return $userIDs;
 }
 
+// get all vehicles from the vehicles table
+// TODO migrate to vehicles.php file once vehicle managment is added
+function get_vehicles() {
+    $connection = connect();
+    $query = "SELECT id, make_model, plate, capacity, wheelchair_accessible FROM vehicles ORDER BY make_model, plate";
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+    $vehicles = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_close($connection);
+    return $vehicles;
+}
+
+// assign a driver and vehicle to a dbEvnet and mark as Y - scheduled
+//true on success, false on failure.
+function assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id) {
+    $connection = connect();
+    $eventID = (int) $eventID;
+    $driver_id =(string) $driver_id;
+    $vehicle_id = (int) $vehicle_id;
+    $query = "UPDATE dbevents SET driver_id = ?, vehicle_id = ?, trip_status = 'scheduled', completed = 'Y' WHERE id = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    
+    mysqli_stmt_bind_param($stmt, 'sii', $driver_id, $vehicle_id, $eventID);
+    $result = mysqli_stmt_execute($stmt);
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+    
+    $affected = mysqli_stmt_affected_rows($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+    return $affected >= 0; // >= 0 so re-saving same values still counts as success, 
+                            //TODO change
+}
+

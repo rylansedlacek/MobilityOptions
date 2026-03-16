@@ -26,7 +26,7 @@ include 'database/dbEvents.php';
     <link rel="stylesheet" href="css/messages.css">
     </link>
     <script src="js/messages.js"></script>
-    <title>Whiskey Valor | Events</title>
+    <title>Mobility Options | Ride Requests</title>
 </head>
 
 <body>

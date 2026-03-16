@@ -27,7 +27,7 @@
         <?php require_once('universal.inc') ?>
         <link rel="stylesheet" href="css/event.css">
         <script src="js/messages.js"></script>
-        <title>View Pending Rides</title>
+        <title>View Pending Rides </title>
     </head>
     <body>
         <?php require_once('header.php') ?>

@@ -38,7 +38,7 @@ include 'database/dbEvents.php';
         //require_once('database/dbMessages.php');
         //$messages = get_user_messages($userID);
         //require_once('database/dbevents.php');
-        //require_once('domain/Event.php'); 
+        //require_once('domain/Event.php');
         $events = get_all_events();
         if (sizeof(get_all_events())): ?>
             <div class="table-wrapper">

@@ -90,7 +90,7 @@ include 'database/dbEvents.php';
         <?php else: ?>
             <p class="no-events standout">There are currently no events available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
         <?php endif ?>
-        <a class="button return" href="index.php">Return to Dashboard</a>
+        <a class="button return" href="eventManagement.php">Return to Dashboard</a>
     </main>
 </body>
 

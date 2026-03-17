@@ -79,14 +79,9 @@ require_once('header.php');
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 
-</head>
-
 <body>
-
-
   <!-- Larger Hero Section -->
   <header class="top-bar"></header>
-
 
   <!-- Main Content -->
   <main>
@@ -103,7 +98,7 @@ require_once('header.php');
 
         <button onclick="window.location.href='adminViewingEvents.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Edit Ride Request</div>
+	  <div>Edit Ride Requests</div>
 	  <img class="button-icon h-10 w-10 left-5" src="images/users-solid.svg" alt="Calendar Icon">
         </button>
 

@@ -514,7 +514,7 @@
         <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">Dispatch today's trips.</div>
         <div class="large-text">Dispatch Trip</div>
-<button class="circle-arrow-button" onclick="window.location.href='viewAllApplications.php'">
+<button class="circle-arrow-button" onclick="window.location.href='dispatchTrip.php'">
     <span class="button-text">Dispatch</span>
     <div class="circle">&gt;</div>
 </button>

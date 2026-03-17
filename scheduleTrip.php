@@ -1,0 +1,153 @@
+<?php
+// Template for new VMS pages. Base your new page on this one
+
+// Make session information accessible, allowing us to associate
+// data with the logged-in user.
+session_cache_expire(30);
+session_start();
+
+$loggedIn = false;
+$accessLevel = 0;
+$userID = null;
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
+
+
+require_once('database/dbEvents.php');
+require_once('database/dbPersons.php');
+require_once('include/input-validation.php');
+
+$eventID = $_GET['id'] ?? $_POST['id'] ?? null;
+$event = fetch_event_by_id($eventID);
+
+$errors = [];
+
+$selectedDriver = trim((string) ($_POST['driver_id'] ?? ($event['driver_id'] ?? '')));
+$selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign'])) {
+    $driver_id  = trim($_POST['driver_id']); // dbpersons id
+    $vehicle_id = (int) ($_POST['vehicle_id']); // vehicle id
+
+    if ($driver_id === '' ) { $errors[] = 'Please select a driver.'; }
+    if ($vehicle_id <= 0) { $errors[] = 'Please select a vehicle.'; }
+
+    if (empty($errors)) {
+        $ok = assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id); // update felds in dbevents
+        if ($ok) {
+            header('Location: viewAllEvents.php');
+            exit;
+        } else {
+            $errors[] = 'Could not schedule request!';
+        }
+    }
+}
+
+function val($key, $fallback = '') {
+    global $event;
+    return ($event[$key] ?? $fallback);
+}
+
+// stole this - formats time
+function format_time_12h($time) {
+    $dt = DateTime::createFromFormat('H:i', $time);
+    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    return $time;
+}
+
+$drivers  = get_drivers(); // get all drivers for drop donw
+$vehicles = get_vehicles(); // get all vehicles for drop down
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <?php require_once('universal.inc'); ?>
+    <title>Mobility Options | Schedule Trip</title>
+</head>
+<body>
+    <?php require_once('header.php'); ?>
+
+    <main class="general">
+        <h1>Schedule Trip</h1>
+
+        <?php if (!empty($errors)): ?>
+            <div class="error-box">
+                <?php foreach ($errors as $e): ?>
+                    <p class="error"><?php $e; ?></p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" class="general">
+            <input type="hidden" name="id" value="<?php echo htmlspecialchars($eventID); ?>">
+
+            <section>
+                <h2>Ride Request</h2>
+                <br/>
+                <p><strong>Rider:</strong> <?php echo val('name'); ?></p>
+                <p><strong>Date:</strong> <?php echo val('startDate'); ?></p>
+                <p><strong>Time:</strong> <?php echo format_time_12h(val('startTime')); ?> 
+                &ndash; <?php echo format_time_12h(val('endTime')); ?></p>
+                <p><strong>Pickup:</strong> <?php echo val('pickup_location'); ?></p>
+                <p><strong>Dropoff:</strong> <?php echo val('dropoff_location'); ?></p>
+                <p><strong>Notes:</strong> <?php echo val('description'); ?></p>
+            </section>
+
+            <section>
+                <br/>
+                <h2>Assign Driver & Vehicle</h2>
+                <br/>
+                <div>
+                    <label for="driver_id"><strong>Driver</strong></label><br>
+                    <select name="driver_id" id="driver_id" required>
+                        <option value="">Select a driver</option>
+                        <?php foreach ($drivers as $driver):
+                            $driverID   = trim((string) $driver['id']);
+                            $driverName = $driver['first_name'] . ' ' . $driver['last_name'];
+                            $selected   = (strcasecmp($driverID, $selectedDriver) === 0) ? 'selected' : '';
+                        ?>
+                            <option value="<?php echo $driverID; ?>" <?php echo $selected; ?>><?php echo $driverName; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php if (empty($drivers)): ?>
+                        <p >No drivers found in the system.</p>
+                    <?php endif; ?>
+                </div>
+
+                <div>
+                    <label for="vehicle_id"><strong>Vehicle</strong></label><br>
+                    <select name="vehicle_id" id="vehicle_id" required>
+                        <option value="">Select a vehicle</option>
+                        <?php foreach ($vehicles as $vehicle):
+                            $vID = (int) $vehicle['id'];
+                            $vLabel = $vehicle['make_model'] .
+                            ' [' . $vehicle['plate'] . ']' .
+                            ' — Capacity: ' . $vehicle['capacity'] .
+                            ' — Wheelchair Accessible: ' .
+                             ($vehicle['wheelchair_accessible'] ? ' Yes' : 'No');
+                            $selected  = ($vID === $selectedVehicle) ? 'selected' : '';
+                        ?>
+                            <option value="<?php echo $vID; ?>" <?php echo $selected; ?>><?php echo $vLabel; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php if (empty($vehicles)): ?>
+                        <p>No vehicles found in the system.</p>
+                    <?php endif; ?>
+                </div>
+            </section>
+
+            <div style="margin-top:1rem; display:flex; gap:0.75rem;">
+                <button type="submit" name="assign" class="button add">Schedule Trip</button>
+                <a class="button cancel" href="viewAllEvents.php">Back to list</a>
+            </div>
+        </form>
+
+    </main>
+</body>
+</html>

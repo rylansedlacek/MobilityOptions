@@ -6,7 +6,7 @@
 <html>
 <head>
     <?php require_once('database/dbMessages.php'); ?>
-    <title>Healthy Generations | Register</title>
+    <title>Mobility Options | Register</title>
     <link href="css/base.css" rel="stylesheet">
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php

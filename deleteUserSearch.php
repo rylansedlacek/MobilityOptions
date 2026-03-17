@@ -24,7 +24,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Whiskey Valor | Delete User</title>
+    <title>Mobility Options| Delete Rider</title>
     <link href="css/normal_tw.css" rel="stylesheet">
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
 <?php
@@ -101,11 +101,11 @@ require_once('header.php');
                 require_once('database/dbPersons.php');
                 $args = sanitize($_GET);
             //   $required = ['name', 'id', 'phone', 'zip', 'role', 'status', 'photo_release'];
-                $required = ['name', 'id', 'phone', 'zip', 'role', 'status'];
+                $required = ['name', 'phone', 'zip', 'status'];
 
-                if (!wereRequiredFieldsSubmitted($args, $required, true)) {
-                    echo '<div class="error-block">Missing expected form elements.</div>';
-                }
+                // if (!wereRequiredFieldsSubmitted($args, $required, true)) {
+                //     echo '<div class="error-block">Missing expected form elements.</div>';
+                // }
 
                 $name = $args['name'];
                 $id = $args['id'];
@@ -199,24 +199,24 @@ require_once('header.php');
                 <input type="text" id="id" name="id" class="w-full" value="<?php if (isset($id)) echo htmlspecialchars($_GET['id']); ?>" placeholder="Enter the user's username (login ID)">
             </div>
 
-            <div>
+            <!-- <div>
                 <label for="phone">Phone Number</label>
                 <input type="tel" id="phone" name="phone" class="w-full" value="<?php if (isset($phone)) echo htmlspecialchars($_GET['phone']); ?>" placeholder="Enter the user's phone number">
-            </div>
+            </div> -->
 
             <div>
                 <label for="zip">Zip Code</label>
                 <input type="text" id="zip" name="zip" class="w-full" value="<?php if (isset($zip)) echo htmlspecialchars($_GET['zip']); ?>" placeholder="Enter the user's zip code">
             </div>
 
-            <div>
+            <!-- <div>
                 <label for="role">Role</label>
                 <select id="role" name="role" class="w-full">
                     <option value="">Any</option>
                     <option value="volunteer" <?php if (isset($role) && $role == 'volunteer') echo 'selected'; ?>>Volunteer</option>
                     <option value="participant" <?php if (isset($role) && $role == 'participant') echo 'selected'; ?>>Participant</option>
                 </select>
-            </div>
+            </div> -->
 
             <div>
                 <label for="status">Archive Status</label>

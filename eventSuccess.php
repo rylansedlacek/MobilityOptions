@@ -8,10 +8,10 @@
     <html>
         <head>
             <?php require_once('universal.inc') ?>
-            <title>Whiskey Valor | Create Event</title>
+            <title>Mobility Options | Ride Request</title>
         </head>
         <body>
             <?php require_once('header.php') ?>
-            <h1>Event Created!</h1>
+            <h1>Ride Request Submitted!</h1>
         </body>
     </html>

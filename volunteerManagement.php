@@ -26,7 +26,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Account Management Page</title>
+  <title>Mobility Options | Rider Management</title>
   <link href="css/management_tw.css" rel="stylesheet">
 
 <!-- BANDAID FIX FOR HEADER BEING WEIRD -->
@@ -118,6 +118,12 @@ require_once('header.php');
 	  <div class="button-left-gray"></div>
 	  <div>Register New Rider</div>
 	  <img class="button-icon" src="images/add-person.svg" alt="Person Icon">
+        </button>
+
+        <button onclick="window.location.href='allRiders.php';">
+	  <div class="button-left-gray"></div>
+	  <div>View All Riders</div>
+	  <img class="button-icon h-10 w-10 left-5" src="images/clipboard-regular.svg" alt="Person Icon">
         </button>
 
         <button onclick="window.location.href='personSearch.php';">

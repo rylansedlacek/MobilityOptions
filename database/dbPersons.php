@@ -119,26 +119,35 @@ function add_hours_to_person($person_id, $hours) {
 
 
 function remove_person($id) {
-    /*
-    
-    Commented out in case it needs to be used again
+    $id = trim($id);
 
-    $con=connect();
-    $query = 'SELECT * FROM dbpersons WHERE id = "' . $id . '"';
-    $result = mysqli_query($con,$query);
-    if ($result == null || mysqli_num_rows($result) == 0) {
-        mysqli_close($con);
+    $con = connect();
+
+    $stmt = $con->prepare("SELECT COUNT(*) FROM dbevents WHERE rider_id = ?");
+    if(!$stmt) {
+        $con->close();
         return false;
     }
-    $query = 'DELETE FROM dbpersons WHERE id = "' . $id . '"';
-    $result = mysqli_query($con,$query);
-    mysqli_close($con);
-    return true;
-    */
 
-    //Statement should avoid SQL injection
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
 
-    $con=connect();
+    $result = $stmt->get_result();
+    if(!$result) {
+        $stmt->close();
+        $con->close();
+        return false;
+    }
+
+    $row = $result->fetch_row();
+    $rideCount = $row[0];
+    $stmt->close();
+    
+    if($rideCount > 0) {
+        $con->close();
+        return false;
+    }
+
     $stmt = $con->prepare('DELETE FROM dbpersons WHERE id = ?');
     if (!$stmt) {
         $con->close();
@@ -543,7 +552,7 @@ function getall_dbPersons($name_from, $name_to, $venue) {
 */
 function getall_persons() {
     $con=connect();
-    $query = 'SELECT * FROM dbpersons WHERE id != "vmsroot"';
+    $query = "SELECT * FROM dbpersons WHERE type = 'rider' ";
     $result = mysqli_query($con,$query);
     if ($result == null || mysqli_num_rows($result) == 0) {
         mysqli_close($con);
@@ -1734,6 +1743,21 @@ function get_total_vol_hours($dateFrom, $dateTo) {
             return [ "success" => false, "message" => $error];
         }
     }
+
+
+ // get all dbpersons with type = 'driver'
+function get_drivers() {
+    $connection = connect();
+    $query = "SELECT id, first_name, last_name FROM dbpersons WHERE type = 'driver' AND (archived IS NULL OR archived = 0) ORDER BY last_name, first_name";
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+    $drivers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_close($connection);
+    return $drivers;
+}
 
 
 

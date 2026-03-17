@@ -161,16 +161,10 @@
       <!-- Divider -->
       <div class="flex items-center my-6 w-full">
         <div class="flex-grow border-t border-gray-300"></div>
-        <span class="mx-4 text-gray-500">or</span>
         <div class="flex-grow border-t border-gray-300"></div>
       </div>
 
       <!-- Sign Up Section -->
-      <p class="text-center text-gray-700">
-        Don’t have an account?
-        <a href="VolunteerRegister.php" target="_blank" class="text-[#5283c7] font-semibold hover:underline">Sign Up Now</a>
-      </p>
-
     </div>
   </div>
 

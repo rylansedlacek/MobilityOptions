@@ -194,6 +194,9 @@
             <label for="emergency_contact_last_name" required>Last Name</label>
             <input type="text" id="emergency_contact_last_name" name="emergency_contact_last_name" value="<?php echo hsc($person->get_emergency_contact_last_name()); ?>" placeholder="Enter emergency contact name">
 
+            <label for="emergency_contact_relation">Contact Relation to You</label>
+            <input type="text" id="emergency_contact_relation" name="emergency_contact_relation" value="<?php //echo hsc($person->get_emergency_contact_relation()); ?>" placeholder="Ex. Spouse, Mother, Father, Sister, Brother, Friend">
+
             <label for="emergency_contact_phone">Phone Number</label>
             <input type="tel" id="emergency_contact_phone" class="phone" name="emergency_contact_phone" value="<?php //echo formatPhoneNumber($person->get_emergency_contact_phone()); ?>" pattern="(\D{0,1})\d{3}(\D{0,2})\d{3}(.{0,1})\d{4}" placeholder="Ex. (555) 555-5555">
            

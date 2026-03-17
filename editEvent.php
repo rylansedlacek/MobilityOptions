@@ -163,17 +163,17 @@ $con = connect();
 
 <head>
     <?php require_once('universal.inc') ?>
-    <title>Whiskey Valor | Edit Event</title>
+    <title>Healthy Generations | Edit Ride</title>
 </head>
 
 <body>
     <?php require_once('header.php') ?>
-    <h1>Edit Event</h1>
+    <h1>Edit Ride</h1>
     <main class="date">
         <?php if ($errors): ?>
             <div class="error-toast"><?php echo $errors ?></div>
         <?php endif ?>
-        <h2>Event Details</h2>
+        <h2>Ride Details</h2>
         <form id="new-event-form" method="post">
 
             <label for="name">Rider Name </label>

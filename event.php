@@ -391,19 +391,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="hidden" name="id" value="<?php echo $event_info['id']; ?>">
                         <!-- <button type="submit" class="button">Archive</button> -->
                     </form>
-
                 <?php endif ?>
 
                 <!-- end of Thomas's work -->
 
-                <a href="editEvent.php?id=<?= $id ?>" class="button cancel">Edit Ride Request</a>
+                <a href="editEvent.php?id=<?= $id ?>" class="button edit">Edit Ride Request</a>
 
-                <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button cancel">Ride Calendar</a>
+                <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button calendar">Ride Calendar</a>
 
                 <?php if (isset($_SESSION['access_level']) && $access_level >= 2): ?>
                     <!-- <a href="deleteEvent.php?id<?= $id ?>"title="Delete Event" class="button signup">Delete Ride Request</a>  -->
-                    <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="button signup"
-                        onclick="return confirm('<?= htmlspecialchars($confirmText, ENT_QUOTES) ?>');">
+                    <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="button cancel"
+                        onclick="return confirm('<?= htmlspecialchars($confirmText, ENT_QUOTES) ?>');">Delete Event<br>
                         <i class="fas fa-trash"></i>
                     </a>
                 <?php endif; ?>

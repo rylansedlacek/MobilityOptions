@@ -49,8 +49,8 @@ function add_event($event) {
                 $event->getDescription() . '","' .
                 $event->getCapacity() . "," .
                 $event->getLocation() . "," .
-                $event->getAffiliation() . "," .
-                $event->getBranch() . '","' . 
+                $event->getAttendance() . "," .
+                $event->getDropoffContact() . '","' . 
                 $event->Access() . '","' . 
                 $event->getCompleted() . "," .
                 #$event->getID() .            
@@ -364,8 +364,8 @@ function make_an_event($result_row) {
                     description: $result_row['description'],
                     capacity: $result_row['capacity'],
                     location: $result_row['location'],
-                    affiliation: $result_row['affiliation'],
-                    branch: $result_row['branch'],
+                    attended: $result_row['attended'],
+                    dropoff_contact: $result_row['dropoff_contact'],
                     access: $result_row['access'],
                     completed: $result_row['completed'],
                     rider_id: $result_row['rider_id'], 
@@ -588,6 +588,7 @@ function create_event($event) {
     $vehicle_id      = $event['vehicle_id'] ?? null;
     $pickup_location = $event['pickup_location'] ?? null;
     $dropoff_location= $event['dropoff_location'] ?? null;
+    $dropoff_contact = $event['dropoff_contact'] ?? null;
     $trip_status     = $event['trip_status'] ?? null;
     $mileage_start   = $event['mileage_start'] ?? null;
     $mileage_end     = $event['mileage_end'] ?? null;
@@ -619,7 +620,7 @@ function create_event($event) {
         insert into dbevents (
             name, startDate, startTime, endTime, endDate, access,
             description, capacity, completed, location, type, series_id,
-            rider_id, driver_id, vehicle_id, pickup_location, dropoff_location,
+            rider_id, driver_id, vehicle_id, pickup_location, dropoff_location, dropoff_contact,
             trip_status, mileage_start, mileage_end
         )
         values (
@@ -631,6 +632,7 @@ function create_event($event) {
             " .($vehicle_id !== null ? $vehicle_id : "NULL") . ",
             " .($pickup_location ? "'$pickup_location'" : "NULL") . ",
             " .($dropoff_location ? "'$dropoff_location'" : "NULL") . ",
+            " .($dropoff_contact ? "'$dropoff_contact'" : "NULL") . ",
             " .($trip_status ? "'$trip_status'" : "NULL") . ",
             " .($mileage_start !== null ? $mileage_start : "NULL") . ",
             " .($mileage_end !== null ? $mileage_end : "NULL") . "
@@ -671,7 +673,7 @@ function update_event($eventID, $eventDetails) {
     #$restricted = $eventDetails["restricted"];
     $endTime = $eventDetails["end-time"];
     $description = $eventDetails["description"];
-    $capacity = $eventDetails["capacity"];
+    //$capacity = $eventDetails["capacity"];
     #$completed = $eventDetails["completed"];
     #$restricted_signup = $eventDetails["restricted_signup"];
     $location = $eventDetails["location"];
@@ -688,14 +690,15 @@ function update_event($eventID, $eventDetails) {
     #";
 
     // new dbevents fields to use
-    $rider_id        = $event['rider_id'] ?? null;
-    $driver_id       = $event['driver_id'] ?? null;
-    $vehicle_id      = $event['vehicle_id'] ?? null;
-    $pickup_location = $event['pickup_location'] ?? null;
-    $dropoff_location= $event['dropoff_location'] ?? null;
-    $trip_status     = $event['trip_status'] ?? null;
-    $mileage_start   = $event['mileage_start'] ?? null;
-    $mileage_end     = $event['mileage_end'] ?? null;
+    $rider_id        = $eventDetails['rider_id'] ?? null;
+    $driver_id       = $eventDetails['driver_id'] ?? null;
+    $vehicle_id      = $eventDetails['vehicle_id'] ?? null;
+    $pickup_location = $eventDetails['pickup_location'] ?? null;
+    $dropoff_location= $eventDetails['dropoff_location'] ?? null;
+    $dropoff_contact = $eventDetails['dropoff_contact'] ?? null;
+    $trip_status     = $eventDetails['trip_status'] ?? null;
+    $mileage_start   = $eventDetails['mileage_start'] ?? null;
+    $mileage_end     = $eventDetails['mileage_end'] ?? null;
 
     // follow same syntax as above - RS
     $query = "
@@ -705,6 +708,7 @@ function update_event($eventID, $eventDetails) {
         . ($vehicle_id !== null ? ", vehicle_id=$vehicle_id" : "")
         . ($pickup_location ? ", pickup_location='$pickup_location'" : "")
         . ($dropoff_location ? ", dropoff_location='$dropoff_location'" : "")
+        . ($dropoff_contact ? ", dropoff_contact='$dropoff_contact'" : "")
         . ($trip_status ? ", trip_status='$trip_status'" : "")
         . ($mileage_start !== null ? ", mileage_start=$mileage_start" : "")
         . ($mileage_end !== null ? ", mileage_end=$mileage_end" : ""). "

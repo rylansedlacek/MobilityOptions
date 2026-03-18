@@ -269,6 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $event_description = $event_info['description'];
         $pickup_location = $event_info['pickup_location'];
         $dropoff_location = $event_info['dropoff_location'];
+        $dropoff_contact = $event_info['dropoff_contact'];
         $event_capacity = $event_info['capacity'];
         //$event_training_level = $event_info['affiliation'];
         $num_signups = $event_num_signups['RowCount'];
@@ -310,6 +311,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td class="label">Drop Off Location</td>
                     <td>
                         <?php echo wordwrap($dropoff_location, 50, "<br />\n"); ?>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">Drop Off Contact Information</td>
+                    <td>
+                        <?php echo wordwrap($dropoff_contact,50, "<br />\n"); ?>
                     </td>
                 </tr>
 

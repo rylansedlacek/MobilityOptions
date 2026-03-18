@@ -147,7 +147,7 @@
                                         $args['dropoff-city'] . ', ' . 
                                         $args['dropoff-state'] . ' ' . 
                                         $args['dropoff-zipcode'];
-
+            $args['dropoff_contact'] = $args['dropoff-contact'];
             $args['series_id'] = bin2hex(random_bytes(16)); // new new
             $args['completed'] = 'N';
 
@@ -394,12 +394,15 @@
                 <h2 class="mt-2">Drop-Off Information</h2>
                 <div class="event-datetime">
                
+                
+
                 <div class="event-date">
                     <label for="end-time">* End Time </label>
                     <input type="time" id="end-time" name="end-time" required>
                 </div>
             </div>
-                
+                <label for="dropoff-contact">* Drop Off Contact Information</label>
+                <input type="email" id="dropoff-contact" name="dropoff-contact" required>
 
                 <label for="dropoff-street_address"><em>* </em>Street Address</label>
                 <input type="text" id="dropoff-street_address" name="dropoff-street_address" required placeholder="Enter street address">

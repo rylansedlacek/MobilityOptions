@@ -188,6 +188,9 @@ $con = connect();
 
             <label for="name">Drop Off Location </label>
             <input type="text" id="dropoff_location" name="dropoff_location" value="<?php echo $event['dropoff_location'] ?>" placeholder="Enter location">
+            
+            <label for="name">Drop Off Contact Information</label>
+            <input type="text" id="dropoff_contact" name="dropoff_contact" value="<?php echo $event['dropoff_contact'] ?>" placeholder="Enter Contact Information">
 
             <label for="name">Start Time </label>
             <input type="text" id="start-time" name="start-time" value="<?php echo time24hto12h($event['startTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">

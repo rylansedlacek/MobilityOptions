@@ -588,6 +588,7 @@ function create_event($event) {
     $vehicle_id      = $event['vehicle_id'] ?? null;
     $pickup_location = $event['pickup_location'] ?? null;
     $dropoff_location= $event['dropoff_location'] ?? null;
+    $dropoff_contact = $event['dropoff_contact'] ?? null;
     $trip_status     = $event['trip_status'] ?? null;
     $mileage_start   = $event['mileage_start'] ?? null;
     $mileage_end     = $event['mileage_end'] ?? null;
@@ -619,7 +620,7 @@ function create_event($event) {
         insert into dbevents (
             name, startDate, startTime, endTime, endDate, access,
             description, capacity, completed, location, type, series_id,
-            rider_id, driver_id, vehicle_id, pickup_location, dropoff_location,
+            rider_id, driver_id, vehicle_id, pickup_location, dropoff_location, dropoff_contact,
             trip_status, mileage_start, mileage_end
         )
         values (
@@ -631,6 +632,7 @@ function create_event($event) {
             " .($vehicle_id !== null ? $vehicle_id : "NULL") . ",
             " .($pickup_location ? "'$pickup_location'" : "NULL") . ",
             " .($dropoff_location ? "'$dropoff_location'" : "NULL") . ",
+            " .($dropoff_contact ? "'$dropoff_contact'" : "NULL") . ",
             " .($trip_status ? "'$trip_status'" : "NULL") . ",
             " .($mileage_start !== null ? $mileage_start : "NULL") . ",
             " .($mileage_end !== null ? $mileage_end : "NULL") . "
@@ -693,6 +695,7 @@ function update_event($eventID, $eventDetails) {
     $vehicle_id      = $eventDetails['vehicle_id'] ?? null;
     $pickup_location = $eventDetails['pickup_location'] ?? null;
     $dropoff_location= $eventDetails['dropoff_location'] ?? null;
+    $dropoff_contact = $eventDetails['dropoff_contact'] ?? null;
     $trip_status     = $eventDetails['trip_status'] ?? null;
     $mileage_start   = $eventDetails['mileage_start'] ?? null;
     $mileage_end     = $eventDetails['mileage_end'] ?? null;
@@ -705,6 +708,7 @@ function update_event($eventID, $eventDetails) {
         . ($vehicle_id !== null ? ", vehicle_id=$vehicle_id" : "")
         . ($pickup_location ? ", pickup_location='$pickup_location'" : "")
         . ($dropoff_location ? ", dropoff_location='$dropoff_location'" : "")
+        . ($dropoff_contact ? ", dropoff_contact='$dropoff_contact'" : "")
         . ($trip_status ? ", trip_status='$trip_status'" : "")
         . ($mileage_start !== null ? ", mileage_start=$mileage_start" : "")
         . ($mileage_end !== null ? ", mileage_end=$mileage_end" : ""). "

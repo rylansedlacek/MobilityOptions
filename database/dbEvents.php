@@ -49,8 +49,8 @@ function add_event($event) {
                 $event->getDescription() . '","' .
                 $event->getCapacity() . "," .
                 $event->getLocation() . "," .
-                $event->getAffiliation() . "," .
-                $event->getBranch() . '","' . 
+                $event->getAttendance() . "," .
+                $event->getDropoffContact() . '","' . 
                 $event->Access() . '","' . 
                 $event->getCompleted() . "," .
                 #$event->getID() .            
@@ -364,8 +364,8 @@ function make_an_event($result_row) {
                     description: $result_row['description'],
                     capacity: $result_row['capacity'],
                     location: $result_row['location'],
-                    affiliation: $result_row['affiliation'],
-                    branch: $result_row['branch'],
+                    attended: $result_row['attended'],
+                    dropoff_contact: $result_row['dropoff_contact'],
                     access: $result_row['access'],
                     completed: $result_row['completed'],
                     rider_id: $result_row['rider_id'], 

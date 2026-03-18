@@ -270,7 +270,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pickup_location = $event_info['pickup_location'];
         $dropoff_location = $event_info['dropoff_location'];
         $event_capacity = $event_info['capacity'];
-        $event_training_level = $event_info['affiliation'];
+        //$event_training_level = $event_info['affiliation'];
         $num_signups = $event_num_signups['RowCount'];
         require_once('include/time.php');
         ?>

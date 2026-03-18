@@ -98,6 +98,25 @@ include 'database/dbEvents.php';
                                     $numSignups = count($signups); // Number of people signed up
                                     // Check if the user is signed up for this event
                                     $isSignedUp = check_if_signed_up($eventID, $userID);
+                            echo "
+                                <tr data-event-id='$eventID'>
+                                <td><a href='event.php?id=$eventID' style='color: black; text-decoration: underline;'>$title</a></td> <!-- Link updated here -->
+                                    <td>$startDate</td>
+                                    <td>$tripStatus</td>
+                                    <td>$scheduleLink</td>
+                                    <td></td>
+                                </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php else: ?>
+            <p class="no-events standout">There are currently no requests available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
+        <?php endif ?>
+        <a class="button cancel" href="eventManagement.php">Return to Dashboard</a>
+    </main>
+</body>
 
                                     //TODO: remove training_level_required and add other necessary fields -Blue
                                     echo "

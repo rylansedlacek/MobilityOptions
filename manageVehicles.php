@@ -1,0 +1,209 @@
+<?php
+    // Template for new VMS pages. Base your new page on this one
+
+    // Make session information accessible, allowing us to associate
+    // data with the logged-in user.
+    session_cache_expire(30);
+    session_start();
+
+    $loggedIn = false;
+    $accessLevel = 0;
+    $userID = null;
+    if (isset($_SESSION['_id'])) {
+        $loggedIn = true;
+        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+        $accessLevel = $_SESSION['access_level'];
+        $userID = $_SESSION['_id'];
+    }
+    // admin-only access
+    if ($accessLevel < 2) {
+        header('Location: index.php');
+        die();
+    }
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mobility Options | All Riders</title>
+    <link href="css/normal_tw.css" rel="stylesheet">
+<!-- BANDAID FIX FOR HEADER BEING WEIRD -->
+<?php
+$tailwind_mode = true;
+require_once('header.php');
+?>
+<style>
+        .date-box {
+            background: #C9AB81;
+            padding: 7px 30px;
+            border-radius: 50px;
+            box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+        }   
+        .dropdown {
+            padding-right: 50px;
+        }   
+
+        body, main {
+        background-color: #fafafa;
+        }
+
+        .text-blue-700,
+        .text-blue-700:visited {
+        color: #666 !important;
+        }   
+
+        /* .info-section .info-text {
+         color: #666 !important;
+        } */
+
+        .blue-div {
+        background-color: #fafafa !important;
+        }
+
+        .main-content-box label {
+        color: #000000 !important;
+        }
+        
+
+        .text-blue-700,
+        .text-blue-700:visited,
+        .text-blue-700:hover {
+            color: black !important;
+        }
+        
+        .sub-text {
+        color: #666 !important;
+        }
+ 
+        /* .main-content-box table,
+        .main-content-box table thead,
+        .main-content-box table tbody,
+        .main-content-box table tr,
+        .main-content-box table th, */
+        /* .main-content-box table td {
+            background-color: #fafafa !important;
+            color: #C9AB81 !important;
+            border: 1px solid #45892e !important;
+        }
+
+        .main-content-box table a.text-blue-700,
+        .main-content-box table a.text-blue-700:visited {
+            color: #C9AB81 !important;
+            }
+
+        .main-content-box table thead.bg-blue-400 th {
+            background-color: #1F1F21 !important;
+        }
+
+        .main-content-box table a.text-blue-700,
+        .main-content-box table a.text-blue-700:visited {
+            color: #C9AB81 !important;
+        } */
+    
+</style>
+<!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
+</head>
+<body>
+
+<header class="hero-header">
+    <div class="center-header">
+        <h1>Manage Vehicles</h1>
+    </div>
+</header>
+
+<main>
+    <div class="main-content-box w-[80%] p-8">
+
+        <?php
+            require_once('include/input-validation.php');
+            require_once('database/dbEvents.php');
+
+            $deleteError = null;
+            $deleteSuccess = null;
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['delete_id'])) {
+                $delete_id = (int) $_POST['delete_id'];
+                $ok = delete_vehicle($delete_id);
+                if ($ok) {
+                    $deleteSuccess = 'Vehicle has been removed successfully.';
+                } else {
+                    $deleteError = 'Could not delete vehicle. It may be assigned to a trip.';
+                }
+            }
+
+            if ($deleteSuccess): ?>
+                <div class="info-box" style="border-left:4px solid green; margin-bottom:1rem;">
+                    <p style="color:green;"><?= $deleteSuccess ?></p>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($deleteError): ?>
+                <div class="info-box" style="border-left:4px solid red; margin-bottom:1rem;">
+                    <p style="color:red;"><?= $deleteError ?></p>
+                </div>
+            <?php endif; ?>
+
+        <?php
+            $vehicles = get_all_vehicles_full();
+
+            if (count($vehicles) > 0):
+        ?>
+        <div class="overflow-x-auto">
+            <table>
+                <thead class="bg-blue-400">
+                    <tr>
+                        <th>Plate</th>
+                        <th>VIN</th>
+                        <th>Capacity</th>
+                        <th>Wheelchair Accessible</th>
+                        <th>Make / Model</th>
+                        <th>Notes</th>
+                        <th>Added</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($vehicles as $vehicle): ?>
+                    <tr>
+                        <td><?= $vehicle['plate'] ?></td>
+                        <td><?= $vehicle['vin'] ?></td>
+                        <td><?= $vehicle['capacity'] ?></td>
+                        <td><?= $vehicle['wheelchair_accessible'] ? 'Yes' : 'No' ?></td>
+                        <td><?= $vehicle['make_model'] ?? '—' ?></td>
+                        <td><?= $vehicle['notes'] ?? '—' ?></td>
+                        <td><?= date('M j, Y', strtotime($vehicle['created_at'])) ?></td>
+                        <td>
+                            <form method="POST" action="manageVehicles.php" style="display:inline;">
+                                <input type="hidden" name="delete_id" value="<?= (int) $vehicle['id'] ?>">
+                                <button type="submit"
+                                    onclick="return confirm('Are you sure you want to delete <?= (addslashes($vehicle['plate'] . ' — ' . ($vehicle['make_model'] ?? ''))) ?>? This cannot be undone.')"
+                                    style="color:red; background:none; border:none; cursor:pointer; text-decoration:underline;">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php else: ?>
+            <div class="error-block">No vehicles found.</div>
+        <?php endif; ?>
+
+    </div>
+
+    <div class="text-center mt-6">
+        <a href="driverVehicleManagement.php" class="return-button">Return to Driver &amp; Vehicle Management</a>
+    </div>
+
+    <div class="info-section">
+        <div class="blue-div"></div>
+    </div>
+</main>
+
+</body>
+</html>

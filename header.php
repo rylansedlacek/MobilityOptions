@@ -802,6 +802,12 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['createsuggestion.php'] = 1;
         $permission_array['viewsuggestion.php'] = 2;
          $permission_array['scheduletrip.php'] = 2;
+         $permission_array['drivervehiclemanagement.php'] = 2;
+         $permission_array['adddrivers.php'] = 2;
+         $permission_array['addvehicles.php'] = 2;
+         $permission_array['managedrivers.php'] = 2;
+         $permission_array['managevehicles.php'] = 2;
+         
         // LOWERCASE
 
 

@@ -247,6 +247,30 @@ function generate_valid_id($id) {
 
 }
 
+// to add drivers to the database
+function add_driver($first_name, $last_name, $email) {
+    $con = connect();
+
+    $base_id = strtolower(substr($first_name, 0, 3) . $last_name);
+    $id = generate_valid_id($base_id);
+
+    $stmt = $con->prepare(
+        "INSERT INTO dbpersons (id, first_name, last_name, email, type, contact_num)
+         VALUES (?, ?, ?, ?, 'driver', 'n/a')"
+    ); // type driver
+    if (!$stmt) {
+        $con->close();
+        return false;
+    }
+
+    $stmt->bind_param('ssss', $id, $first_name, $last_name, $email);
+    $success = $stmt->execute();
+    $stmt->close();
+    $con->close();
+
+    return $success ? $id : false;
+}
+
 
 // Name is first concat with last name. Example 'James Jones'
 // return array of Persons.
@@ -1748,7 +1772,7 @@ function get_total_vol_hours($dateFrom, $dateTo) {
  // get all dbpersons with type = 'driver'
 function get_drivers() {
     $connection = connect();
-    $query = "SELECT id, first_name, last_name FROM dbpersons WHERE type = 'driver' AND (archived IS NULL OR archived = 0) ORDER BY last_name, first_name";
+    $query = "SELECT id, first_name, last_name FROM dbpersons WHERE type = 'driver' ORDER BY last_name, first_name";
     $result = mysqli_query($connection, $query);
     if (!$result) {
         mysqli_close($connection);
@@ -1757,6 +1781,52 @@ function get_drivers() {
     $drivers = mysqli_fetch_all($result, MYSQLI_ASSOC);
     mysqli_close($connection);
     return $drivers;
+}
+
+// get drivers and their emails for display
+function get_drivers_with_email() {
+    $connection = connect();
+    $query = "SELECT id, first_name, last_name, email FROM dbpersons WHERE type = 'driver' ORDER BY last_name, first_name";
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+    $drivers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_close($connection);
+    return $drivers;
+}
+
+// delete drivers cant if they have a trip.
+function delete_driver($id) {
+    $con = connect();
+
+    $stmt = $con->prepare("SELECT COUNT(*) FROM dbevents WHERE driver_id = ?");
+    if (!$stmt) {
+        $con->close();
+        return false;
+    }
+    $stmt->bind_param('s', $id);
+    $stmt->execute();
+    $count = $stmt->get_result()->fetch_row()[0];
+    $stmt->close();
+
+    if ($count > 0) {
+        $con->close();
+        return false; // driver has assigned trips, cannot delete
+    }
+
+    $stmt = $con->prepare('DELETE FROM dbpersons WHERE id = ? AND type = \'driver\'');
+    if (!$stmt) {
+        $con->close();
+        return false;
+    }
+    $stmt->bind_param('s', $id);
+    $stmt->execute();
+    $deleted = $stmt->affected_rows > 0;
+    $stmt->close();
+    $con->close();
+    return $deleted;
 }
 
 

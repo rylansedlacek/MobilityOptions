@@ -91,12 +91,12 @@ if ($accessLevel < 2) {
 
             <!-- Buttons Section -->
             <div class="button-section">
-
+<!-- 
                 <button onclick="window.location.href='';">
                     <div class="button-left-gray"></div>
                     <div>Schedule Trip</div>
                     <img class="button-icon h-12 w-12 left-4" src="images/plus-solid.svg" alt="Calendar Icon">
-                </button>
+                </button> -->
 
                 <button onclick="window.location.href='';">
                     <div class="button-left-gray"></div>
@@ -108,6 +108,12 @@ if ($accessLevel < 2) {
                     <div class="button-left-gray"></div>
                     <div>Track Trip</div>
                     <img class="button-icon h-10 w-10 left-5" src="images/trackTripQuestionMarkLogo.jpg" alt="Calendar Icon">
+                </button>
+
+                 <button onclick="window.location.href='';">
+                    <div class="button-left-gray"></div>
+                    <div>View Trips</div>
+                    <img class="button-icon h-10 w-10 left-5" src="images/dispatchTripVehicleLogo.jpg" alt="Calendar Icon">
                 </button>
 
                  <button onclick="window.location.href='';">

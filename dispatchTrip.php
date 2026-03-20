@@ -92,27 +92,27 @@ if ($accessLevel < 2) {
             <!-- Buttons Section -->
             <div class="button-section">
 
-                <button onclick="window.location.href='';">
-                    <div class="button-left-gray"></div>
-                    <div>Schedule Trip</div>
-                    <img class="button-icon h-12 w-12 left-4" src="images/plus-solid.svg" alt="Calendar Icon">
-                </button>
-
-                <button onclick="window.location.href='';">
+                <button onclick="window.location.href='viewAllTrips.php';">
                     <div class="button-left-gray"></div>
                     <div>Dispatch Trip</div>
                     <img class="button-icon h-10 w-10 left-5" src="images/dispatchTripVehicleLogo.jpg" alt="Calendar Icon">
                 </button>
 
-                <button onclick="window.location.href='viewAllApplications.php';">
+                <!-- <button onclick="window.location.href='viewAllApplications.php';">
                     <div class="button-left-gray"></div>
                     <div>Track Trip</div>
                     <img class="button-icon h-10 w-10 left-5" src="images/trackTripQuestionMarkLogo.jpg" alt="Calendar Icon">
+                </button> -->
+
+                 <button onclick="window.location.href='completeTrips.php';">
+                    <div class="button-left-gray"></div>
+                    <div>Complete Trips</div>
+                    <img class="button-icon h-10 w-10 left-5" src="images/dispatchTripVehicleLogo.jpg" alt="Calendar Icon">
                 </button>
 
-                 <button onclick="window.location.href='';">
+                 <button onclick="window.location.href='cancelTrips.php';">
                     <div class="button-left-gray"></div>
-                    <div>Edit Trip</div>
+                    <div>Cancel Trip</div>
                     <img class="button-icon h-12 w-12 left-4" src="images/editTripDirectionLogo.avif" alt="Calendar Icon">
                 </button>
 

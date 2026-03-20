@@ -1227,4 +1227,3 @@ function assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id) {
     return $affected >= 0; // >= 0 so re-saving same values still counts as success, 
                             //TODO change
 }
-

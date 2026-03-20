@@ -106,7 +106,7 @@ include 'database/dbPersons.php';
                             $completed = $event->getCompleted();
 
                             foreach ($drivers as $driver) {
-                                // $driverName = $driver->get();
+                                $driverName = $driver->get_dr();
 
                                 if ($accessLevel < 3) {
                                     echo "

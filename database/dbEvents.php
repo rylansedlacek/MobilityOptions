@@ -1148,6 +1148,62 @@ function get_vehicles() {
     return $vehicles;
 }
 
+// get all vehicles with full details for display
+function get_all_vehicles_full() {
+    $connection = connect();
+    $query = "SELECT id, plate, vin, capacity, wheelchair_accessible, make_model, notes, created_at FROM vehicles ORDER BY make_model, plate";
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+    $vehicles = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_close($connection);
+    return $vehicles;
+}
+
+// delete a vehicle by id and  refuses if the vehicle is assigned to any trips
+function delete_vehicle($id) {
+    $connection = connect();
+    $id = (int) $id;
+    $stmt = $connection->prepare("SELECT COUNT(*) FROM dbevents WHERE vehicle_id = ?");
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+    if ($count > 0) {
+        $connection->close();
+        return false;
+    }
+    $stmt = $connection->prepare("DELETE FROM vehicles WHERE id = ?");
+    $stmt->bind_param('i', $id);
+    $success = $stmt->execute();
+    $stmt->close();
+    $connection->close();
+    return $success;
+}
+
+
+// add a new vehicle to the sustem. 
+function add_vehicle($plate, $vin, $capacity, $wheelchair_accessible, $make_model, $notes) {
+    $connection = connect();
+    $stmt = $connection->prepare(
+        "INSERT INTO vehicles (plate, vin, capacity, wheelchair_accessible, make_model, notes)
+         VALUES (?, ?, ?, ?, ?, ?)"
+    );
+    if (!$stmt) {
+        $connection->close();
+        return false;
+    }
+    $stmt->bind_param('ssiiss', $plate, $vin, $capacity, $wheelchair_accessible, $make_model, $notes);
+    $success = $stmt->execute();
+    $new_id = $success ? $connection->insert_id : false;
+    $stmt->close();
+    $connection->close();
+    return $new_id;
+}
+
 // assign a driver and vehicle to a dbEvnet and mark as Y - scheduled
 //true on success, false on failure.
 function assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id) {

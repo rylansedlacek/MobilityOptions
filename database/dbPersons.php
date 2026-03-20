@@ -1759,6 +1759,19 @@ function get_drivers() {
     return $drivers;
 }
 
+function get_drivers_name() {
+    $connection = connect();
+    $query = "SELECT id, first_name, last_name FROM dbpersons WHERE type = 'driver' AND (archived IS NULL OR archived = 0) ORDER BY last_name, first_name";
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+    $drivers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_close($connection);
+    return $drivers;
+}
+
 
 
     /*

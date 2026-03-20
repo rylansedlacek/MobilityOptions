@@ -63,7 +63,7 @@ $nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
         echo "<script> console.log('PHP variable end:', '\" . $end. \"');</script>";
 
         require_once('database/dbEvents.php');
-        $events = fetch_events_in_date_range($start, $end, $loggedIn);
+        $events = fetch_events_in_date_range($start, $end);
         echo "<script> console.log('Events:', " . json_encode($events) . ");</script>";
         
         echo '<tr class="calendar-week">';
@@ -85,29 +85,15 @@ $nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
                     if (isset($events[$e])) {
                         $dayEvents = $events[$e];
                         foreach ($dayEvents as $info) {
-
-                            $backgroundCol = '#294877'; // default color
-
-                           if(isset($_SESSION['access_level'])) { 
-    
-                                // This logic is for LOGGED-IN users
-                                if (is_archived($info['id'])) { // archived event
-                                    if ($_SESSION['access_level'] < 2) {
-                                        continue; // users cannot see archived events
-                                    }
-                                    $backgroundCol = '#aaaaaa';
-
-                                } elseif (check_if_signed_up($info['id'], $_SESSION['_id'])) {// user is signed-up for event
-                                    $backgroundCol = '#4CAF50';
-                                }
-                                
-                                $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=' . $_SESSION['_id'] . '">' . htmlspecialchars_decode($info['name']) . '</a>';
-
+                            $completedValue = strtoupper(trim((string)($info['completed'] ?? 'N')));
+                            $isScheduledRide = ($completedValue === 'Y' || $completedValue === 'YES');
+                            $backgroundCol = $isScheduledRide ? '#2E7D32' : '#FBC02D';
+                            if ($isScheduledRide) {
+                                $targetHref = 'scheduleTrip.php?id=' . $info['id'];
                             } else {
-                                
-                                // This logic is for GUEST users (not logged in)
-                                $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=guest' . '">' . htmlspecialchars_decode($info['name']) . '</a>';
+                                $targetHref = 'event.php?id=' . $info['id'] . '&user_id=' . (isset($_SESSION['_id']) ? $_SESSION['_id'] : 'guest');
                             }
+                            $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="' . $targetHref . '">' . htmlspecialchars_decode($info['name']) . '</a>';
 
                         }
                     }

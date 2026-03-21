@@ -58,7 +58,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="js/calendar.js"></script>
         <script src="js/view-switcher.js" defer></script>
-        <title>Whiskey Valor Foundation | Events Calendar</title>
+        <title>Mobility Options | Calendar</title>
         <style>.happy-toast { margin: 0 1rem 1rem 1rem; }</style>
     </head>
     <body>
@@ -134,28 +134,18 @@
             
             <h1 class='calendar-header' style="height: 75px;">
                 <img id="previous-month-button" src="images/arrow-back.png" data-month="<?php echo date("Y-m-d", $previousMonth); ?>">
-                <span id="calendar-heading-month" style="font-weight: 700; font-size: 36px;">Events - <?php echo date('F Y', $month); ?></span>
+                <span id="calendar-heading-month" style="font-weight: 700; font-size: 36px;">Rides - <?php echo date('F Y', $month); ?></span>
                 <img id="next-month-button" src="images/arrow-forward.png" data-month="<?php echo date("Y-m-d", $nextMonth); ?>">
             </h1>
 
-            <!-- Add JS to show and hide the filter menu.-->
-            <div class="filter-wrapper">
-                <div class="filter-menu-wrapper">
-                    <input type="checkbox" /> <!-- Toggle to show/hide filter menu -->
-                    <div class="filter-menu"><img class="filter-menu-icon" src="./images/menu.png" style="filter: invert(1);"></div>
-                    <div class="calendar-filter" style="height: 3rem;">
-                        <img id="list-view-button" class="filter-button" src="images/list-solid.svg" alt="List view">
-                        <img id="calendar-view-button" class="filter-button" src="images/view-calendar.png" alt="Calendar view">
-                        <img id="calendar-weekly-view-button" class="filter-button" src="images/new-event.png" alt="Calendar view: Weekly">
-                        <img id="calendar-day-view-button" class="filter-button" src="images/day-sunny-svgrepo-com.svg" alt="Calendar view: Day">
-                    </div>
-                </div>
-                <!-- <div class="time-filter" class="hidden"> <!-- will later be used for week<->month
-                    <img id="day-view-button" class="filter-button" class="hidden" src="images/day-view.png" alt="Day view">
-                    <img id="week-view-button" class="filter-button" class="hidden" src="images/week-view.png" alt="week view">
-                    <img id="month-view-button" class="filter-button" class="hidden" src="images/month-view.png" alt="month view">
-                </div> -->
+            <div style="text-align: center; margin: 0.25rem 0 1rem 0; font-weight: 600;">
+                <span style="color: #2E7D32;">Green = scheduled</span>
+                <span style="margin: 0 0.75rem;">|</span>
+                <span style="color: #FBC02D;">Yellow = requested not yet scheduled</span>
             </div>
+
+            <!-- Add JS to show and hide the filter menu.-->
+            
 
             <!-- <input type="date" id="month-jumper" value="<?php echo date('Y-m-d', $month); ?>" min="2023-01-01"> -->
             <?php if (isset($_GET['deleteSuccess'])) : ?>
@@ -195,7 +185,7 @@
                         $start = date('Y-m-d', $calendarStart);
                         $end = date('Y-m-d', $calendarEndEpoch);
                         require_once('database/dbEvents.php');
-                        $events = fetch_events_in_date_range($start, $end, $loggedIn);
+                        $events = fetch_events_in_date_range($start, $end);
                         for ($week = 0; $week < $weeks; $week++) {
                             echo '
                                 <tr class="calendar-week">

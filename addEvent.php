@@ -31,7 +31,7 @@
             "name", "date", "start-time", "end-time", "description", "type"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) { 
-            echo 'bad form data';
+            echo 'Missing required fields';
             die();
         } else {
            
@@ -150,6 +150,41 @@
             $args['dropoff_contact'] = $args['dropoff-contact'];
             $args['series_id'] = bin2hex(random_bytes(16)); // new new
             $args['completed'] = 'N';
+
+
+            //my duplicate check - gc
+            function check_duplicate_trip($args) {
+                $con = connect(); 
+
+        $query = "SELECT * FROM dbevents 
+              WHERE rider_id = ?
+              AND startDate = ?
+              AND startTime = ?
+              AND pickup_location = ?
+              AND dropoff_location = ?
+              LIMIT 1";
+
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, "issss",
+            $args['rider_id'],
+            $args['startDate'],
+            $args['startTime'],
+            $args['pickup_location'],
+            $args['dropoff_location']
+        );
+
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+    
+        return mysqli_num_rows($result) > 0;}
+
+            $duplicate = check_duplicate_trip($args);
+
+            if ($duplicate) {
+                header("Location: addEvent.php?error=duplicate");
+                exit();
+            }
 
             $id = create_event($args);
             if (!$id) {
@@ -658,6 +693,12 @@
                 <br/>
                 <br/>
                 <center><a class="button cancel" href="eventManagement.php">Return to Dashboard</a></center>
+
+                <?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate'): ?>
+                <script>
+                    alert("This ride has already been requested.");
+                </script>
+                <?php endif; ?>
                  
         </main>
         

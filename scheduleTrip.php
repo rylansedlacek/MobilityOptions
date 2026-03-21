@@ -37,8 +37,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign'])) {
     if ($driver_id === '' ) { $errors[] = 'Please select a driver.'; }
     if ($vehicle_id <= 0) { $errors[] = 'Please select a vehicle.'; }
 
+    function driver_has_time_conflict($driver_id, $startDate, $startTime) {
+    $con = connect();
+
+    $query = "SELECT series_id
+              FROM dbevents
+              WHERE driver_id = ?
+              AND startDate = ?
+              AND ABS(TIMESTAMPDIFF(MINUTE, startTime, ?)) < 30
+              LIMIT 1";
+
+    $stmt = mysqli_prepare($con, $query);
+
+    if (!$stmt) {
+        die("Prepare failed: " . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, "sss", $driver_id, $startDate, $startTime);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_num_rows($result) > 0;
+}
+
     if (empty($errors)) {
-        $ok = assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id); // update felds in dbevents
+    $tripDate = $event['startDate'];
+    $tripTime = $event['startTime'];
+
+    if (driver_has_time_conflict($driver_id, $tripDate, $tripTime)) {
+        $errors[] = 'This driver is already scheduled for another trip within 30 minutes of this time.';
+    } else {
+        $ok = assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id);
+
         if ($ok) {
             header('Location: viewAllEvents.php');
             exit;
@@ -46,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign'])) {
             $errors[] = 'Could not schedule request!';
         }
     }
+}
 }
 
 function val($key, $fallback = '') {

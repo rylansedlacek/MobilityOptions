@@ -1233,7 +1233,7 @@ function cancel_trip($eventID) {
     if(!$connection) return false;
 
     $eventID = (int) $eventID;
-    $status = 'canceled';
+    $status = 'cancelled';
 
     $query = "UPDATE dbevents SET trip_status = ? WHERE id = ?";
     $stmt = mysqli_prepare($connection, $query);

@@ -1227,3 +1227,35 @@ function assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id) {
     return $affected >= 0; // >= 0 so re-saving same values still counts as success, 
                             //TODO change
 }
+
+function cancel_trip($eventID) {
+    $connection = connect();
+    if(!$connection) return false;
+
+    $eventID = (int) $eventID;
+    $status = 'cancelled';
+
+    $query = "UPDATE dbevents SET trip_status = ? WHERE id = ?";
+    $stmt = mysqli_prepare($connection, $query);
+
+    if(!$stmt) {
+        mysqli_close($connection);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($stmt, 'si', $status, $eventID);
+    $result = mysqli_stmt_execute($stmt);
+
+    if(!$result) {
+        mysqli_stmt_close($stmt);
+        mysqli_close($connection);
+        return false;
+    }
+
+    $affected = mysqli_affected_rows($connection);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $affected > 0;
+}

@@ -52,12 +52,12 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
     }
 
     .button.confirm {
-        background: green;
+        background: #C04000;
         font-size: larger;
     }
 
     .button.cancel {
-        background: #C04000;
+        background: green;
         font-size: larger;
 
     }
@@ -109,7 +109,7 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                     ?>
                     <tbody class="standout">
                         <?php foreach ($events as $event): ?>
-                            <?php if ($event->getDriverId() !== null): ?>
+                            <?php if ($event->getTripStatus() === 'scheduled' && $event->getCompleted() === 'Y'): ?>
                                 <?php
                                 $eventID = $event->getID();
                                 $driverDI = $event->getDriverId();
@@ -137,15 +137,15 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                                         <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
                                         <td>
                                             <a href="#" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" style="color: black; text-decoration: underline;">
-                                                Cancel</a>
+                                                Cancel Trip</a>
                                         </td>
                                     </tr>
                                     <div id="popup<?= $eventID ?>" class="popup" style="display:none;">
                                         <div class="popup-box">
-                                            <p>Are you sure you want to dispatch this trip?</p>
+                                            <p>Are you sure you want to cancel this trip?</p>
                                             <div class="popup-actions">
-                                                <a href="dispatchTrip.php?id=<?= $eventID ?>" class="button confirm">Dispatch</a>
-                                                <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Cancel</a>
+                                                <a href="cancelTrip.php?id=<?= $eventID ?>" class="button confirm">Cancel Trip</a>
+                                                <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Go Back</a>
                                             </div>
                                         </div>
                                     </div>

@@ -105,7 +105,7 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
     <?php require_once('header.php'); ?>
 
     <main class="general">
-        <h1>Schedule Trip</h1>
+        <h1>Ride Scheduler</h1>
 
         <?php if (!empty($errors)): ?>
             <div class="error-box">
@@ -119,7 +119,7 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
             <input type="hidden" name="id" value="<?php echo htmlspecialchars($eventID); ?>">
 
             <section>
-                <h2>Ride Request</h2>
+                <h2>Ride Request Details</h2>
                 <br/>
                 <p><strong>Rider:</strong> <?php echo val('name'); ?></p>
                 <p><strong>Date:</strong> <?php echo val('startDate'); ?></p>
@@ -176,7 +176,11 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
             <div style="margin-top:1rem; display:flex; gap:0.75rem;">
                 <button type="submit" name="assign" class="button add">Schedule Trip</button>
                 <a class="button cancel" href="viewAllEvents.php">Back to list</a>
+                <a class="button" href="calendar.php">Calendar</a>
             </div>
+            <div style="margin-top:2rem; width:span; display:flex; gap:0.75rem;">
+                
+             </div>
         </form>
 
     </main>

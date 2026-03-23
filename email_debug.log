@@ -4,4 +4,4 @@
 
 [sendEmails] HTTP 0 | cURL Error: Failed to connect to localhost port 80 after 0 ms: Could not connect to server | Response: 
 [sendEmails] HTTP 0 | cURL Error: Failed to connect to localhost port 80 after 2 ms: Could not connect to server | Response: 
-[sendEmails] HTTP 0 | cURL Error: Failed to connect to localhost port 80 after 2 ms: Could not connect to server | Response: 
+[sendEmails] HTTP 200 | cURL Error:  | Response: {"success":false,"error":"Missing SMTP settings in email\/sendEmail.php"}

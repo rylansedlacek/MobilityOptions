@@ -90,13 +90,16 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
 
         if (sizeof(get_all_events()) && sizeof($drivers)): ?>
             <div class="table-wrapper">
-                <label> Select riders name below to edit ride request record:<br></label>
+                <label> Select the Driver you would like to dispatch below:<br></label>
                 <table class="general">
                     <thead>
                         <tr>
                             <th><b>Driver Name</b></th>
                             <th><b>Vehicle Model</b></th>
                             <th><b>Vehicle Plate</b></th>
+                            <th><b>Date</b></th>
+
+                            <th><b>Rider Name</b></th>
                             <th><b>Complete Trip</b></th>
 
                         </tr>
@@ -112,8 +115,12 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                             <?php if ($event->getDriverId() !== null): ?>
                                 <?php
                                 $eventID = $event->getID();
+                                $eventDate = $event->getStartDate();
+
                                 $driverDI = $event->getDriverId();
                                 $driverName = "";
+                                $riderName = $event->getName();
+
                                 foreach ($drivers as $driver) {
                                     if ($driver['id'] ==  $driverDI) {
                                         $driverName = $driver['first_name'] . ' ' . $driver['last_name'];
@@ -126,7 +133,7 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
 
                                 <?php if ($accessLevel < 3): ?>
                                     <tr data-event-id="<?= $eventID ?>">
-                                        <td><a href="event.php?id=<?= $eventID ?>"><?= $title ?></a></td>
+                                        <td><a href="event.php?id=<?= $eventID ?>"><?= $riderName ?></a></td>
                                         <td><?= $startDate ?></td>
                                         <td><a class="button sign-up" href="eventSignUp.php">Sign Up</a></td>
                                     </tr>
@@ -135,6 +142,10 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                                         <td><?= $driverName ?></td>
                                         <td><?= $vehicle ? htmlspecialchars($vehicle['make_model']) : 'no vehicle' ?></td>
                                         <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
+                                        <td><?= $eventDate ?></td>
+
+
+                                        <th><?= $riderName ?></td>
                                         <td>
                                             <a href="#" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" style="color: black; text-decoration: underline;">
                                                 Complete</a>
@@ -160,7 +171,7 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
         <?php else: ?>
             <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="">Create a New Trip</a> </p>
         <?php endif ?>
-        <a class="button return" href="dispatchTrip.php">Return to Dashboard</a>
+        <a class="button return" href="dispatchTrip.php">Return to Dispatch Trip Dashboard</a>
     </main>
 </body>
 

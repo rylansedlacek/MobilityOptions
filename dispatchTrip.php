@@ -128,7 +128,7 @@ if ($accessLevel < 2) {
                 <h1>Trip Management</h1>
                 <div class="div-blue"></div>
                 <p>
-                    Welcome to the trip managment Hub. Here you can create, edit, delete, schedule, and track Trips for riders and drivers.
+                    Welcome to the Trip Managment Hub. Here you dispatch, complete, and cancel trips for drivers and their passengers.
                 </p>
             </div>
 

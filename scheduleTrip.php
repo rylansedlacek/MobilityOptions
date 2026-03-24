@@ -63,6 +63,30 @@ function driver_has_time_conflict($driver_id, $startDate, $startTime, $eventID) 
     return mysqli_num_rows($result) > 0;
 }
 
+function vehicle_has_time_conflict($vehicle_id, $startDate, $startTime, $eventID) {
+    $con = connect();
+
+    $query = "SELECT id, vehicle_id, startDate, startTime
+              FROM dbevents
+              WHERE vehicle_id = ?
+                AND startDate = ?
+                AND id != ?
+                AND ABS(TIME_TO_SEC(TIMEDIFF(startTime, ?))) < 1800
+              LIMIT 1";
+
+    $stmt = mysqli_prepare($con, $query);
+
+    if (!$stmt) {
+        die('Prepare failed: ' . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, 'isis', $vehicle_id, $startDate, $eventID, $startTime);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_num_rows($result) > 0;
+}
+
     if (empty($errors)) {
     $tripDate = $event['startDate'];
     $tripTime = $event['startTime'];
@@ -72,6 +96,9 @@ function driver_has_time_conflict($driver_id, $startDate, $startTime, $eventID) 
     if (driver_has_time_conflict($driver_id, $tripDate, $tripTime, $eventID)) {
         $errors[] = 'This driver is already scheduled for another trip within 30 minutes of this time.';
         
+    }
+    else if(vehicle_has_time_conflict($vehicle_id, $tripDate, $tripTime, $eventID)){
+        $errors[] = 'This vehicle is already scheduled for another trip within 30 minutes of this time.';
     } else {
         $ok = assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id);
 

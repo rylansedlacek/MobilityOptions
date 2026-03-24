@@ -31,7 +31,7 @@
             "name", "date", "start-time", "end-time", "description", "type"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) { 
-            echo 'bad form data';
+            echo 'Missing required fields';
             die();
         } else {
            
@@ -77,6 +77,12 @@
                         history.back();
                     </script>
                 <?php
+            }
+
+            // Ensure we have a Person object for the rider (used for sending notification emails)
+            if (empty($rider) && !empty($args['rider_id'])) {
+                require_once('database/dbPersons.php');
+                $rider = retrieve_person($args['rider_id']);
             }
             
             if (validate24hTimeRange($args['start-time'], $args['end-time'])) {
@@ -141,15 +147,72 @@
                                         $args['dropoff-city'] . ', ' . 
                                         $args['dropoff-state'] . ' ' . 
                                         $args['dropoff-zipcode'];
-
+            $args['dropoff_contact'] = $args['dropoff-contact'];
             $args['series_id'] = bin2hex(random_bytes(16)); // new new
             $args['completed'] = 'N';
+
+
+            //my duplicate check - gc
+            function check_duplicate_trip($args) {
+                $con = connect(); 
+
+        $query = "SELECT * FROM dbevents 
+              WHERE rider_id = ?
+              AND startDate = ?
+              AND startTime = ?
+              AND pickup_location = ?
+              AND dropoff_location = ?
+              LIMIT 1";
+
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, "issss",
+            $args['rider_id'],
+            $args['startDate'],
+            $args['startTime'],
+            $args['pickup_location'],
+            $args['dropoff_location']
+        );
+
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+    
+        return mysqli_num_rows($result) > 0;}
+
+            $duplicate = check_duplicate_trip($args);
+
+            if ($duplicate) {
+                header("Location: addEvent.php?error=duplicate");
+                exit();
+            }
 
             $id = create_event($args);
             if (!$id) {
                 die();
             } else {
-    
+
+                // send rider confirmation email if we have a valid email address.
+                $riderEmail = '';
+                if (!empty($rider)) {
+                    $riderEmail = trim((string)$rider->get_email());
+                }
+
+                if ($riderEmail && filter_var($riderEmail, FILTER_VALIDATE_EMAIL)) {
+                    require_once('email.php'); 
+
+                    $subject = 'Ride Request Submitted';
+                    $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
+                        "Your ride request has been submitted with the following details:\n\n" .
+                        "Date: {$args['date']}\n" .
+                        "Time: {$args['start-time']} - {$args['end-time']}\n" .
+                        "Pickup: {$args['pickup_location']}\n" .
+                        "Dropoff: {$args['dropoff_location']}\n\n" .
+                        "Thank you,\n" .
+                        "Mobility Options";
+
+                    $sendResult = sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
+                }
+
                 $counts = [
                     'daily'   => 30,  // next 30 days
                     'weekly'  => 12,  // next 12 weeks
@@ -234,7 +297,7 @@
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Healthy Generations | Ride Request</title>
+        <title>Mobility Options | Request Ride</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -366,12 +429,15 @@
                 <h2 class="mt-2">Drop-Off Information</h2>
                 <div class="event-datetime">
                
+                
+
                 <div class="event-date">
                     <label for="end-time">* End Time </label>
                     <input type="time" id="end-time" name="end-time" required>
                 </div>
             </div>
-                
+                <label for="dropoff-contact">* Drop Off Contact Information</label>
+                <input type="email" id="dropoff-contact" name="dropoff-contact" required>
 
                 <label for="dropoff-street_address"><em>* </em>Street Address</label>
                 <input type="text" id="dropoff-street_address" name="dropoff-street_address" required placeholder="Enter street address">
@@ -624,6 +690,17 @@
                         }
                     })();
                 </script>
+                <br/>
+                <br/>
+                <center><a class="button cancel" href="eventManagement.php">Return to Dashboard</a></center>
+
+                <?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate'): ?>
+                <script>
+                    alert("This ride has already been requested.");
+                </script>
+                <?php endif; ?>
+                 
         </main>
+        
     </body>
 </html>

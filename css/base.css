@@ -743,7 +743,7 @@ button.cancel, a.cancel {
 }
 
 button.cancel:hover, a.cancel:hover {
-    background-color: var(--accent-color);
+    background-color: #8b0000;
 }
 
 #calendar-heading-month {

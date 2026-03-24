@@ -472,7 +472,7 @@
     <div class="full-width-bar">
     <div class="content-box">
         <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
-        <div class="small-text">Manage drivers and riders here.</div>
+        <div class="small-text">Manage riders here.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
     <span class="button-text">Go</span>
@@ -514,16 +514,29 @@
         <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">Dispatch today's trips.</div>
         <div class="large-text">Dispatch Trip</div>
-<button class="circle-arrow-button" onclick="window.location.href='viewAllApplications.php'">
+<button class="circle-arrow-button" onclick="window.location.href='dispatchTrip.php'">
     <span class="button-text">Dispatch</span>
     <div class="circle">&gt;</div>
 </button>
     </div>
 
+
+<div class="full-width-bar">
+    <div class="content-box">
+        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
+        <div class="small-text">Manage Drivers and Vehicles Here.</div>
+        <div class="large-text">Driver & Vehicle Management</div>
+        <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
+            <span class="button-text">Go</span>
+            <div class="circle">&gt;</div>
+        </button>
+    </div>
+</div>
+
 </div>
 
 <div style="margin-top: 50px; padding: 30px 20px;">
-    <h2><b>Admin Dashboard</b></h2>
+    <h2><b>Additional Menus</b></h2>
 </div>
 
 <div class="full-width-bar-sub">

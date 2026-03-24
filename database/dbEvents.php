@@ -49,8 +49,8 @@ function add_event($event) {
                 $event->getDescription() . '","' .
                 $event->getCapacity() . "," .
                 $event->getLocation() . "," .
-                $event->getAffiliation() . "," .
-                $event->getBranch() . '","' . 
+                $event->getAttendance() . "," .
+                $event->getDropoffContact() . '","' . 
                 $event->Access() . '","' . 
                 $event->getCompleted() . "," .
                 #$event->getID() .            
@@ -364,8 +364,8 @@ function make_an_event($result_row) {
                     description: $result_row['description'],
                     capacity: $result_row['capacity'],
                     location: $result_row['location'],
-                    affiliation: $result_row['affiliation'],
-                    branch: $result_row['branch'],
+                    attended: $result_row['attended'],
+                    dropoff_contact: $result_row['dropoff_contact'],
                     access: $result_row['access'],
                     completed: $result_row['completed'],
                     rider_id: $result_row['rider_id'], 
@@ -588,6 +588,7 @@ function create_event($event) {
     $vehicle_id      = $event['vehicle_id'] ?? null;
     $pickup_location = $event['pickup_location'] ?? null;
     $dropoff_location= $event['dropoff_location'] ?? null;
+    $dropoff_contact = $event['dropoff_contact'] ?? null;
     $trip_status     = $event['trip_status'] ?? null;
     $mileage_start   = $event['mileage_start'] ?? null;
     $mileage_end     = $event['mileage_end'] ?? null;
@@ -619,7 +620,7 @@ function create_event($event) {
         insert into dbevents (
             name, startDate, startTime, endTime, endDate, access,
             description, capacity, completed, location, type, series_id,
-            rider_id, driver_id, vehicle_id, pickup_location, dropoff_location,
+            rider_id, driver_id, vehicle_id, pickup_location, dropoff_location, dropoff_contact,
             trip_status, mileage_start, mileage_end
         )
         values (
@@ -631,6 +632,7 @@ function create_event($event) {
             " .($vehicle_id !== null ? $vehicle_id : "NULL") . ",
             " .($pickup_location ? "'$pickup_location'" : "NULL") . ",
             " .($dropoff_location ? "'$dropoff_location'" : "NULL") . ",
+            " .($dropoff_contact ? "'$dropoff_contact'" : "NULL") . ",
             " .($trip_status ? "'$trip_status'" : "NULL") . ",
             " .($mileage_start !== null ? $mileage_start : "NULL") . ",
             " .($mileage_end !== null ? $mileage_end : "NULL") . "
@@ -671,7 +673,7 @@ function update_event($eventID, $eventDetails) {
     #$restricted = $eventDetails["restricted"];
     $endTime = $eventDetails["end-time"];
     $description = $eventDetails["description"];
-    $capacity = $eventDetails["capacity"];
+    //$capacity = $eventDetails["capacity"];
     #$completed = $eventDetails["completed"];
     #$restricted_signup = $eventDetails["restricted_signup"];
     $location = $eventDetails["location"];
@@ -688,14 +690,15 @@ function update_event($eventID, $eventDetails) {
     #";
 
     // new dbevents fields to use
-    $rider_id        = $event['rider_id'] ?? null;
-    $driver_id       = $event['driver_id'] ?? null;
-    $vehicle_id      = $event['vehicle_id'] ?? null;
-    $pickup_location = $event['pickup_location'] ?? null;
-    $dropoff_location= $event['dropoff_location'] ?? null;
-    $trip_status     = $event['trip_status'] ?? null;
-    $mileage_start   = $event['mileage_start'] ?? null;
-    $mileage_end     = $event['mileage_end'] ?? null;
+    $rider_id        = $eventDetails['rider_id'] ?? null;
+    $driver_id       = $eventDetails['driver_id'] ?? null;
+    $vehicle_id      = $eventDetails['vehicle_id'] ?? null;
+    $pickup_location = $eventDetails['pickup_location'] ?? null;
+    $dropoff_location= $eventDetails['dropoff_location'] ?? null;
+    $dropoff_contact = $eventDetails['dropoff_contact'] ?? null;
+    $trip_status     = $eventDetails['trip_status'] ?? null;
+    $mileage_start   = $eventDetails['mileage_start'] ?? null;
+    $mileage_end     = $eventDetails['mileage_end'] ?? null;
 
     // follow same syntax as above - RS
     $query = "
@@ -705,6 +708,7 @@ function update_event($eventID, $eventDetails) {
         . ($vehicle_id !== null ? ", vehicle_id=$vehicle_id" : "")
         . ($pickup_location ? ", pickup_location='$pickup_location'" : "")
         . ($dropoff_location ? ", dropoff_location='$dropoff_location'" : "")
+        . ($dropoff_contact ? ", dropoff_contact='$dropoff_contact'" : "")
         . ($trip_status ? ", trip_status='$trip_status'" : "")
         . ($mileage_start !== null ? ", mileage_start=$mileage_start" : "")
         . ($mileage_end !== null ? ", mileage_end=$mileage_end" : ""). "
@@ -1129,3 +1133,129 @@ function update_animal2($animal) {
     return $userIDs;
 }
 
+// get all vehicles from the vehicles table
+// TODO migrate to vehicles.php file once vehicle managment is added
+function get_vehicles() {
+    $connection = connect();
+    $query = "SELECT id, make_model, plate, capacity, wheelchair_accessible FROM vehicles ORDER BY make_model, plate";
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+    $vehicles = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_close($connection);
+    return $vehicles;
+}
+
+// get all vehicles with full details for display
+function get_all_vehicles_full() {
+    $connection = connect();
+    $query = "SELECT id, plate, vin, capacity, wheelchair_accessible, make_model, notes, created_at FROM vehicles ORDER BY make_model, plate";
+    $result = mysqli_query($connection, $query);
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+    $vehicles = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    mysqli_close($connection);
+    return $vehicles;
+}
+
+// delete a vehicle by id and  refuses if the vehicle is assigned to any trips
+function delete_vehicle($id) {
+    $connection = connect();
+    $id = (int) $id;
+    $stmt = $connection->prepare("SELECT COUNT(*) FROM dbevents WHERE vehicle_id = ?");
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+    if ($count > 0) {
+        $connection->close();
+        return false;
+    }
+    $stmt = $connection->prepare("DELETE FROM vehicles WHERE id = ?");
+    $stmt->bind_param('i', $id);
+    $success = $stmt->execute();
+    $stmt->close();
+    $connection->close();
+    return $success;
+}
+
+
+// add a new vehicle to the sustem. 
+function add_vehicle($plate, $vin, $capacity, $wheelchair_accessible, $make_model, $notes) {
+    $connection = connect();
+    $stmt = $connection->prepare(
+        "INSERT INTO vehicles (plate, vin, capacity, wheelchair_accessible, make_model, notes)
+         VALUES (?, ?, ?, ?, ?, ?)"
+    );
+    if (!$stmt) {
+        $connection->close();
+        return false;
+    }
+    $stmt->bind_param('ssiiss', $plate, $vin, $capacity, $wheelchair_accessible, $make_model, $notes);
+    $success = $stmt->execute();
+    $new_id = $success ? $connection->insert_id : false;
+    $stmt->close();
+    $connection->close();
+    return $new_id;
+}
+
+// assign a driver and vehicle to a dbEvnet and mark as Y - scheduled
+//true on success, false on failure.
+function assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id) {
+    $connection = connect();
+    $eventID = (int) $eventID;
+    $driver_id =(string) $driver_id;
+    $vehicle_id = (int) $vehicle_id;
+    $query = "UPDATE dbevents SET driver_id = ?, vehicle_id = ?, trip_status = 'scheduled', completed = 'Y' WHERE id = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    
+    mysqli_stmt_bind_param($stmt, 'sii', $driver_id, $vehicle_id, $eventID);
+    $result = mysqli_stmt_execute($stmt);
+    if (!$result) {
+        mysqli_close($connection);
+        return [];
+    }
+    
+    $affected = mysqli_stmt_affected_rows($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+    return $affected >= 0; // >= 0 so re-saving same values still counts as success, 
+                            //TODO change
+}
+
+function cancel_trip($eventID) {
+    $connection = connect();
+    if(!$connection) return false;
+
+    $eventID = (int) $eventID;
+    $status = 'cancelled';
+
+    $query = "UPDATE dbevents SET trip_status = ? WHERE id = ?";
+    $stmt = mysqli_prepare($connection, $query);
+
+    if(!$stmt) {
+        mysqli_close($connection);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($stmt, 'si', $status, $eventID);
+    $result = mysqli_stmt_execute($stmt);
+
+    if(!$result) {
+        mysqli_stmt_close($stmt);
+        mysqli_close($connection);
+        return false;
+    }
+
+    $affected = mysqli_affected_rows($connection);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $affected > 0;
+}

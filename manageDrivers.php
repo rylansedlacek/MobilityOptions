@@ -110,82 +110,94 @@ require_once('header.php');
 
 <header class="hero-header">
     <div class="center-header">
-        <h1>All Riders</h1>
+        <h1>Manage Drivers</h1>
     </div>
 </header>
 
 <main>
     <div class="main-content-box w-[80%] p-8">
 
-        
-
         <?php
             require_once('include/input-validation.php');
             require_once('database/dbPersons.php');
-            require_once('include/output.php');
 
-            $persons = getall_persons();
+            $deleteError = null;
+            $deleteSuccess = null;
 
-            if (count($persons) > 0) {
-                echo '
-                <div class="overflow-x-auto">
-                    <table>
-                        <thead class="bg-blue-400">
-                            <tr>
-                                <th>First</th>
-                                <th>Last</th>
-                                <th>Username</th>
-                                <th>Phone</th>
-                                <th>Zip Code</th>
-                                <th>Profile</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-                $mailingList = '';
-                $notFirst = false;
-                foreach ($persons as $person) {
-                    if ($notFirst) {
-                        $mailingList .= ', ';
-                    } else {
-                        $notFirst = true;
-                    }
-                    $mailingList .= $person->get_email();
-                    echo '
-                            <tr>
-                                <td>' . $person->get_first_name() . '</td>
-                                <td>' . $person->get_last_name() . '</td>
-                                <td><a href="mailto:' . $person->get_id() . '" class="text-blue-700 underline">' . $person->get_id() . '</a></td>
-                                <td><a href="tel:' . $person->get_phone1() . '" class="text-blue-700 underline">' . formatPhoneNumber($person->get_phone1()) . '</a></td>
-                                <td>' . $person->get_zip_code() . '</td>
-                                <td><a href="viewProfile.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Profile</a></td>
-                                <td><a href="modifyUserRole.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Update Status</a></td>
-                            </tr>';
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['delete_id'])) {
+                $delete_id = sanitize($_POST)['delete_id'];
+                $ok = delete_driver($delete_id);
+                if ($ok) {
+                    $deleteSuccess = 'Driver has been removed successfully.';
+                } else {
+                    $deleteError = 'Could not delete driver. They may have trips assigned.';
                 }
-                echo '
-                        </tbody>
-                    </table>
-                </div>';
-
-                echo '
-                <div class="mt-4">
-                    <label>Mailing List:</label>
-                    <p class="text-gray-700 break-words">' . $mailingList . '</p>
-                </div>';
-            } else {
-                echo '<div class="error-block">No riders found.</div>';
             }
+
+            if ($deleteSuccess): ?>
+                <div class="info-box" style="border-left:4px solid green; margin-bottom:1rem;">
+                    <p style="color:green;"><?= $deleteSuccess ?></p>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($deleteError): ?>
+                <div class="info-box" style="border-left:4px solid red; margin-bottom:1rem;">
+                    <p style="color:red;"><?= $deleteError ?></p>
+                </div>
+            <?php endif; ?>
+
+        <?php
+            $drivers = get_drivers_with_email();
+
+            if (count($drivers) > 0):
         ?>
+        <div class="overflow-x-auto">
+            <table>
+                <thead class="bg-blue-400">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($drivers as $driver): ?>
+                    <tr>
+                        <td><?= $driver['first_name'] ?></td>
+                        <td><?= $driver['last_name'] ?></td>
+                        <td>
+                            <a href="mailto:<?= $driver['email'] ?>" class="text-blue-700 underline">
+                                <?= $driver['email'] ?? '—' ?>
+                            </a>
+                        </td>
+                        <td>
+                            <form method="POST" action="manageDrivers.php" style="display:inline;">
+                                <input type="hidden" name="delete_id" value="<?= $driver['id'] ?>">
+                                <button type="submit"
+                                    onclick="return confirm('Are you sure you want to delete <?= ($driver['first_name'] . ' ' . $driver['last_name']) ?>? This cannot be undone.')"
+                                    style="color:red; background:none; border:none; cursor:pointer; text-decoration:underline;">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php else: ?>
+            <div class="error-block">No drivers found.</div>
+        <?php endif; ?>
 
     </div>
 
     <div class="text-center mt-6">
-        <a href="volunteerManagement.php" class="return-button">Return to Rider Management</a>
+        <a href="driverVehicleManagement.php" class="return-button">Return to Driver &amp; Vehicle Management</a>
     </div>
 
     <div class="info-section">
         <div class="blue-div"></div>
-        
     </div>
 </main>
 

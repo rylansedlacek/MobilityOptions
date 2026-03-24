@@ -18,30 +18,31 @@ if (date("H:i:s") > "18:19:59") {
 // user cannot access anything else without 
 // logging back in
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-<?php if (empty($tailwind_mode)): ?>
-        * {
+        <?php if (empty($tailwind_mode)): ?>* {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-<?php endif; ?>
-        body {
+
+        <?php endif; ?>body {
             font-family: Nunito, Quicksand, sans-serif;
             padding-top: 96px;
             font-size: 14pt;
         }
+
         h2 {
-        	font-weight: normal;
+            font-weight: normal;
             font-size: 30px;
         }
 
-/*BEGIN STYLE TEST*/
-         .extra-info {
+        /*BEGIN STYLE TEST*/
+        .extra-info {
             max-height: 0px;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
@@ -49,10 +50,13 @@ if (date("H:i:s") > "18:19:59") {
             color: #444;
             margin-top: 5px;
         }
-       .content-box-test{
-            flex: 1 1 370px; /* Adjusts width dynamically */
+
+        .content-box-test {
+            flex: 1 1 370px;
+            /* Adjusts width dynamically */
             max-width: 470px;
-            padding: 10px 10px; /* Altered padding to make closer */
+            padding: 10px 10px;
+            /* Altered padding to make closer */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -64,10 +68,12 @@ if (date("H:i:s") > "18:19:59") {
             border-radius: 10px;
             border-bottom-right-radius: 50px;
         }
-         .content-box-test:hover {
+
+        .content-box-test:hover {
             border: 4px solid #31c300;
         }
-/*END STYLE TEST*/
+
+        /*END STYLE TEST*/
 
         .full-width-bar {
             width: 100%;
@@ -78,6 +84,7 @@ if (date("H:i:s") > "18:19:59") {
             justify-content: center;
             gap: 20px;
         }
+
         .full-width-bar-sub {
             width: 100%;
             background: white;
@@ -89,9 +96,11 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .content-box {
-            flex: 1 1 280px; /* Adjusts width dynamically */
+            flex: 1 1 280px;
+            /* Adjusts width dynamically */
             max-width: 375px;
-            padding: 10px 2px; /* Altered padding to make closer */
+            padding: 10px 2px;
+            /* Altered padding to make closer */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -101,9 +110,11 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .content-box-sub {
-            flex: 1 1 300px; /* Adjusts width dynamically */
+            flex: 1 1 300px;
+            /* Adjusts width dynamically */
             max-width: 470px;
-            padding: 10px 10px; /* Altered padding to make closer */
+            padding: 10px 10px;
+            /* Altered padding to make closer */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -174,7 +185,7 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Navbar Container */
         .navbar {
-	    gap: 10px;
+            gap: 10px;
             width: 100%;
             height: 100px;
             position: fixed;
@@ -192,7 +203,8 @@ if (date("H:i:s") > "18:19:59") {
         .left-section {
             display: flex;
             align-items: center;
-            gap: 20px; /* Space between logo and links */
+            gap: 20px;
+            /* Space between logo and links */
         }
 
         /* Logo */
@@ -224,11 +236,12 @@ if (date("H:i:s") > "18:19:59") {
 
         /* Right Section: Date & Icon */
         .right-section {
-            margin-left: auto; /* Pushes right section to the end */
+            margin-left: auto;
+            /* Pushes right section to the end */
             display: flex;
             align-items: center;
             gap: 20px;
-	    }
+        }
 
         .center-section {
             position: absolute;
@@ -250,24 +263,27 @@ if (date("H:i:s") > "18:19:59") {
             position: absolute;
             top: 150%;
             left: -10%;
-            background-color: rgb(31,31,33);
-            border: 1px solid rgb(31,31,33);
+            background-color: rgb(31, 31, 33);
+            border: 1px solid rgb(31, 31, 33);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
             min-width: 150px;
             padding: 10px;
             color: white;
         }
+
         .dropdown div {
             padding: 8px;
             white-space: nowrap;
             transition: background 0.3s;
         }
+
         .dropdown div:hover {
             background: rgba(0, 0, 0, 0.1);
         }
 
-        .nav-item:hover, .nav-item.active {
+        .nav-item:hover,
+        .nav-item.active {
             color: #f5ce7aff;
             outline: 1px solid #f5d07aff;
             outline-offset: 7px;
@@ -291,67 +307,71 @@ if (date("H:i:s") > "18:19:59") {
             border-radius: 50%;
 
         }
-.nav-buttons {
-    position: absolute;
-    bottom: 10%; /* Adjust as needed */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    width: 100%;
-}
 
-/* Button Styling */
-.nav-button {
-    background: rgb(201, 171, 129);
-    border: none;
-    color: white;
-    font-size: 20px;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 600;
-    border-radius: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.4s ease-in-out;
-    backdrop-filter: blur(8px);
-    padding: 6px 8px;
-    padding-top: 10px;
-    width: 55px; /* Initially a circle */
-    overflow: hidden;
-    white-space: nowrap;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        .nav-buttons {
+            position: absolute;
+            bottom: 10%;
+            /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+        }
 
-/* Expand button on hover */
-.nav-button:hover {
-    width: 160px;
-    padding: 6px 8px;
-    padding-top: 10px
-}
+        /* Button Styling */
+        .nav-button {
+            background: rgb(201, 171, 129);
+            border: none;
+            color: white;
+            font-size: 20px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s ease-in-out;
+            backdrop-filter: blur(8px);
+            padding: 6px 8px;
+            padding-top: 10px;
+            width: 55px;
+            /* Initially a circle */
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.nav-button .text {
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
+        /* Expand button on hover */
+        .nav-button:hover {
+            width: 160px;
+            padding: 6px 8px;
+            padding-top: 10px
+        }
 
-.nav-button:hover .text {
-    opacity: 1;
-    transform: translateX(0);
-}
+        .nav-button .text {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
 
-.nav-button .arrow {
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
+        .nav-button:hover .text {
+            opacity: 1;
+            transform: translateX(0);
+        }
 
-.nav-button:hover .arrow {
-    transform: translateX(5px);
-}
-       /* Button Control */
+        .nav-button .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-button:hover .arrow {
+            transform: translateX(5px);
+        }
+
+        /* Button Control */
         .arrow-button {
             position: absolute;
             bottom: 24px;
@@ -367,7 +387,8 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .arrow-button:hover {
-            transform: translateX(5px); /* Moves the arrow slightly on hover */
+            transform: translateX(5px);
+            /* Moves the arrow slightly on hover */
             background: transparent;
         }
 
@@ -390,7 +411,8 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .footer-logo {
-            width: 150px; /* Adjust logo size */
+            width: 150px;
+            /* Adjust logo size */
             margin-bottom: 15px;
         }
 
@@ -407,7 +429,7 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .social-icons a:hover {
-            color: rgb(31,31,33);
+            color: rgb(31, 31, 33);
         }
 
         /* Right Section */
@@ -453,10 +475,12 @@ if (date("H:i:s") > "18:19:59") {
 
         .icon-overlay {
             position: absolute;
-            top: 40px; /* Adjust as needed */
+            top: 40px;
+            /* Adjust as needed */
             left: 50%;
             transform: translateX(-50%);
-            background: rgb(31,31,33); /* Optional background for better visibility */
+            background: rgb(31, 31, 33);
+            /* Optional background for better visibility */
             padding: 10px;
             border-radius: 50%;
             display: flex;
@@ -465,7 +489,8 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .icon-overlay img {
-            width: 40px; /* Adjust size as needed */
+            width: 40px;
+            /* Adjust size as needed */
             height: 40px;
             opacity: 0.9;
             filter: invert(1);
@@ -476,11 +501,12 @@ if (date("H:i:s") > "18:19:59") {
             transition: filter 0.3s, background-color 0.3s;
         }
 
-        .nav-item:hover img, .nav-item.active img {
+        .nav-item:hover img,
+        .nav-item.active img {
             filter: none;
         }
-       
-        .icon .dropdown{
+
+        .icon .dropdown {
             top: 130%;
             left: -415%;
         }
@@ -490,11 +516,12 @@ if (date("H:i:s") > "18:19:59") {
             align-items: center;
             gap: 8px;
         }
-	.in-nav span {
-	    font-size:24px;
-	}
 
-	.in-nav img {
+        .in-nav span {
+            font-size: 24px;
+        }
+
+        .in-nav img {
             width: 40px;
             height: 40px;
             border-radius: 5px;
@@ -502,22 +529,24 @@ if (date("H:i:s") > "18:19:59") {
             filter: invert(1) !important;
         }
 
-/* for calendar */
-    .icon-butt svg {
-        transition: transform 0.2s ease, fill 0.2s ease;
-        cursor: pointer;
-    }
+        /* for calendar */
+        .icon-butt svg {
+            transition: transform 0.2s ease, fill 0.2s ease;
+            cursor: pointer;
+        }
 
-    .icon-butt:hover svg {
-        transform: scale(1.1) rotate(5deg); /* Slight enlarge & tilt effect */
-        fill: #7aacf5; /* Changes to a blue shade */
-    }
+        .icon-butt:hover svg {
+            transform: scale(1.1) rotate(5deg);
+            /* Slight enlarge & tilt effect */
+            fill: #7aacf5;
+            /* Changes to a blue shade */
+        }
 
-    .font-change {
-	font-size: 30px;
-	font-family: Quicksand;
-    color: white;
-    }
+        .font-change {
+            font-size: 30px;
+            font-family: Quicksand;
+            color: white;
+        }
 
         /* Accessibility menu styles */
         .accessibility-btn {
@@ -536,6 +565,7 @@ if (date("H:i:s") > "18:19:59") {
             justify-content: center;
             padding: 4px;
         }
+
         .accessibility-btn img {
             width: 100%;
             height: 100%;
@@ -548,12 +578,13 @@ if (date("H:i:s") > "18:19:59") {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 2100;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
+
         .accessibility-modal {
             background: #1f1f21;
             color: white;
@@ -561,40 +592,106 @@ if (date("H:i:s") > "18:19:59") {
             width: 100%;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
         }
-        .accessibility-modal h3 { margin-bottom: 8px; }
-        .modal-header { display:flex; justify-content:space-between; align-items:center; }
-        .nav-link { color: white; text-decoration: none; }
-        .dropdown-link { color: inherit; text-decoration: none; display:block; }
-        .icon-img { filter: invert(1); }
-        .modal-close { background:transparent;border:none;color:white;font-size:30px;cursor:pointer; }
-        .modal-desc { color: rgba(255,255,255,0.7); }
-        .accessibility-row { display:flex; gap:12px; align-items:center; margin:10px 0; }
-        .accessibility-row label { min-width: 120px; font-weight:600; }
-        .accessibility-modal select, .accessibility-modal input[type="radio"]{ font-size:16px; }
-        .accessibility-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:16px; }
-        .accessibility-actions button { padding:8px 12px; border-radius:8px; cursor:pointer; border:none; }
-        .accessibility-actions .save { background:var(--wv-accent-color); color:var(--wv-accent-foreground); }
-        .accessibility-actions .reset { background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.12); }
+
+        .accessibility-modal h3 {
+            margin-bottom: 8px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .dropdown-link {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
+        .icon-img {
+            filter: invert(1);
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .modal-desc {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .accessibility-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .accessibility-row label {
+            min-width: 120px;
+            font-weight: 600;
+        }
+
+        .accessibility-modal select,
+        .accessibility-modal input[type="radio"] {
+            font-size: 16px;
+        }
+
+        .accessibility-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .accessibility-actions button {
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .accessibility-actions .save {
+            background: var(--wv-accent-color);
+            color: var(--wv-accent-foreground);
+        }
+
+        .accessibility-actions .reset {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
 
         /* Bigger base font sizes applied by class toggles via JS */
 
 
 
         /* Responsive Design */
-	@media (max-width: 0px) {
-	   .content-box-test {
-		flex: 1 1 300px;
-	    }
-	}
+        @media (max-width: 0px) {
+            .content-box-test {
+                flex: 1 1 300px;
+            }
+        }
 
         @media (max-width: 900px) {
-           .footer {
+            .footer {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
             }
+
             .footer-right {
                 flex-direction: column;
                 align-items: center;
@@ -613,7 +710,7 @@ if (date("H:i:s") > "18:19:59") {
                     document.querySelectorAll(".nav-item").forEach(nav => {
                         if (nav !== item) {
                             nav.classList.remove("active");
-                            if(nav.querySelector(".dropdown") !== null) {
+                            if (nav.querySelector(".dropdown") !== null) {
                                 nav.querySelector(".dropdown").style.display = "none";
                             }
                         }
@@ -628,7 +725,7 @@ if (date("H:i:s") > "18:19:59") {
             document.addEventListener("click", function() {
                 document.querySelectorAll(".nav-item").forEach(nav => {
                     nav.classList.remove("active");
-                    if(nav.querySelector(".dropdown") !== null) {
+                    if (nav.querySelector(".dropdown") !== null) {
                         nav.querySelector(".dropdown").style.display = "none";
                     }
                 });
@@ -641,12 +738,12 @@ if (date("H:i:s") > "18:19:59") {
 
     <?php
     //KAT NOTE: Since this will only be accessed by logged in employees, should we cut entirely?
-    
+
     //Log-in security
     //If they aren't logged in, display our log-in form.
     $showing_login = false;
     if (!isset($_SESSION['logged_in'])) {
-		echo('<div class="navbar">
+        echo ('<div class="navbar">
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
@@ -677,7 +774,6 @@ if (date("H:i:s") > "18:19:59") {
             </div>
         </div>
     </div>');
-
     } else if ($_SESSION['logged_in']) {
 
         /*         * Set our permission array.
@@ -699,24 +795,24 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['apply.php'] = 0; //WVF - Not able to directly access
         $permission_array['logout.php'] = 0; //WVF - Logout page ain
         $permission_array['volunteerregister.php'] = 0; //WVF - Alter to registering for account
-	    $permission_array['leaderboard.php'] = 0; //WVF - Probably get rid of this guy
+        $permission_array['leaderboard.php'] = 0; //WVF - Probably get rid of this guy
         // $permission_array['findanimal.php'] = 0; //TODO DELETE
         //pages volunteers can view
         $permission_array['help.php'] = 1;
         $permission_array['dashboard.php'] = 1; //WVF - Might be good to alter this for registered users to be able to see registered events and where they can edit user info 
         $permission_array['calendar.php'] = 0; //WVF - Everyone can see this
-        $permission_array['eventsearch.php'] = 1; 
+        $permission_array['eventsearch.php'] = 1;
         $permission_array['changepassword.php'] = 1;
         $permission_array['editprofile.php'] = 1; //WVF - Repurpose for SCRUM-5
         $permission_array['inbox.php'] = 1; //WVF - Not for registered users, since they want emails. But would be good for 'suggestions' for ADMINS to see 
-        $permission_array['date.php'] = 1; 
-        $permission_array['event.php'] = 0; 
+        $permission_array['date.php'] = 1;
+        $permission_array['event.php'] = 0;
         $permission_array['viewprofile.php'] = 1;
         $permission_array['viewnotification.php'] = 1;
         $permission_array['volunteerreport.php'] = 1; //WVF - Attendance Report?
         $permission_array['viewmyupcomingevents.php'] = 1;
-        $permission_array['volunteerviewgroup.php'] = 1; 
-	    $permission_array['viewcheckinout.php'] = 1;
+        $permission_array['volunteerviewgroup.php'] = 1;
+        $permission_array['viewcheckinout.php'] = 1;
         $permission_array['viewresources.php'] = 1;
         $permission_array['discussionmain.php'] = 1;
         $permission_array['viewdiscussions.php'] = 1; //WVF - Edit discussions for suggestions?
@@ -755,7 +851,7 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['vieweventsignups.php'] = 2;
         $permission_array['viewpendingapps.php'] = 2;
         $permission_array['resources.php'] = 2;
-        $permission_array['uploadresources.php'] = 2;        
+        $permission_array['uploadresources.php'] = 2;
         $permission_array['deleteresources.php'] = 2;
         $permission_array['creategroup.php'] = 2;
         $permission_array['showgroups.php'] = 2;
@@ -773,7 +869,7 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['clockoutbulk.php'] = 2;
         $permission_array['clockOut.php'] = 2;
         $permission_array['edithours.php'] = 2;
-        $permission_array['eventlist.php'] = 1;   
+        $permission_array['eventlist.php'] = 1;
         $permission_array['eventsignup.php'] = 1;
         $permission_array['eventfailure.php'] = 1;
         $permission_array['signupsuccess.php'] = 1;
@@ -801,15 +897,27 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['upload_encrypted_image.php'] = 1;
         $permission_array['createsuggestion.php'] = 1;
         $permission_array['viewsuggestion.php'] = 2;
+        $permission_array['scheduletrip.php'] = 2;
+        $permission_array['completetrips.php'] = 2;
+        $permission_array['viewalltrips.php'] = 2;
+        $permission_array['canceltrips.php'] = 2;
+        $permission_array['scheduletrip.php'] = 2;
+        $permission_array['drivervehiclemanagement.php'] = 2;
+        $permission_array['adddrivers.php'] = 2;
+        $permission_array['addvehicles.php'] = 2;
+        $permission_array['managedrivers.php'] = 2;
+        $permission_array['managevehicles.php'] = 2;
+        $permission_array['dispatchtrip.php'] = 2;
+
         // LOWERCASE
 
 
 
         //Check if they're at a valid page for their access level.
         $current_page = strtolower(substr($_SERVER['PHP_SELF'], strrpos($_SERVER['PHP_SELF'], '/') + 1));
-        $current_page = substr($current_page, strpos($current_page,"/"));
-        
-        if($permission_array[$current_page]>$_SESSION['access_level']){
+        $current_page = substr($current_page, strpos($current_page, "/"));
+
+        if ($permission_array[$current_page] > $_SESSION['access_level']) {
             //in this case, the user doesn't have permission to view this page.
             //we redirect them to the index page.
             echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
@@ -819,13 +927,13 @@ if (date("H:i:s") > "18:19:59") {
         }
         //This line gives us the path to the html pages in question, useful if the server isn't installed @ root.
         $path = strrev(substr(strrev($_SERVER['SCRIPT_NAME']), strpos(strrev($_SERVER['SCRIPT_NAME']), '/')));
-		$venues = array("portland"=>"RMH Portland"); // Is this used anywhere? Do we need it? -Blue
-        
+        $venues = array("portland" => "RMH Portland"); // Is this used anywhere? Do we need it? -Blue
+
         //they're logged in and session variables are set.
-	//
-	// SUPER ADMIN ONLY HEADER
+        //
+        // SUPER ADMIN ONLY HEADER
         if ($_SESSION['access_level'] >= 2) {
-		echo('<div class="navbar">
+            echo ('<div class="navbar">
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
                 <!--<a href="viewCheckInOut.php" style="color: white; text-decoration: none;"><div class="date-box">Check In/Out</div></a>-->
@@ -898,11 +1006,11 @@ if (date("H:i:s") > "18:19:59") {
             </div>
         </div>
     </div>');
-	}
+        }
 
         // VOLUNTEER ONLY HEADER
         if ($_SESSION['access_level'] <= 1) {
-		echo('<div class="navbar">
+            echo ('<div class="navbar">
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="logo-container">
@@ -970,209 +1078,231 @@ if (date("H:i:s") > "18:19:59") {
         </div>
     </div>');
         }
-
-
     }
     ?>
-<script>
-  function updateDateAndCheckBoxes() {
-    const now = new Date();
-    const width = window.innerWidth;
+    <script>
+        function updateDateAndCheckBoxes() {
+            const now = new Date();
+            const width = window.innerWidth;
 
-    // Format the date based on width
-    let formatted = "";
-    if (width > 1650) {
-      formatted = "Today is " + now.toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
-    } else if (width >= 1450) {
-      formatted = now.toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
-    } else {
-      formatted = now.toLocaleDateString("en-US"); // e.g., 04/17/2025
-    }
-
-    // Update right-section date boxes
-    document.querySelectorAll(".right-section .date-box").forEach(el => {
-      if (width < 1130) {
-        el.style.display = "none";
-      } else {
-        el.style.display = "";
-        el.textContent = formatted;
-      }
-    });
-
-    // Update left-section date boxes (Check In / Out or icon)
-document.querySelectorAll(".left-section .date-box").forEach(el => {
-  if (width < 750) {
-    el.style.display = "none";
-  } else {
-    el.style.display = "";
-    el.textContent = width < 1130 ? "🔁" : "Check In/Out";
-  }
-});
-
-document.querySelectorAll(".icon-butt").forEach(el => {
-  if (width < 800) {
-    el.style.display = "none";
-  } else {
-    el.style.display = "";
-  } 
-});
-
-
-
-
-  }
-
-  // Run on load and resize
-  window.addEventListener("resize", updateDateAndCheckBoxes);
-  window.addEventListener("load", updateDateAndCheckBoxes);
-</script>
-<!-- Accessibility Button + Modal -->
-<button class="accessibility-btn" id="accessibilityBtn" aria-haspopup="dialog" aria-controls="accessibilityModal" title="Accessibility settings">
-    <img src="images/accessibility-menu.png" alt="Accessibility Menu">
-</button>
-
-<div class="accessibility-modal-backdrop" id="accessibilityBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="accessibility-modal" id="accessibilityModal">
-        <div class="modal-header">
-            <h3>Accessibility Settings</h3>
-            <button id="accessibilityClose" class="modal-close" style="max-width: 22%;">&times;</button>
-        </div>
-        <p class="modal-desc">Adjust font size, font style, and color scheme. Settings persist across pages and visits.</p>
-
-        <div class="accessibility-row">
-            <label for="acc-font-size">Font size</label>
-            <div style="display:flex; align-items:center; gap:8px;">
-                <input id="acc-font-size" type="range" min="12" max="24" step="1" value="14">
-                <span id="acc-font-size-value">14pt</span>
-            </div>
-        </div>
-
-        <div class="accessibility-row">
-            <label for="acc-font-family">Font style</label>
-            <select id="acc-font-family">
-                <option value="nunito">Nunito (default)</option>
-                <option value="quicksand">Quicksand</option>
-                <option value="comic">Comic Sans</option>
-                <option value="opendyslexic">OpenDyslexic</option>
-                <option value="times">Times New Roman</option>
-            </select>
-        </div>
-
-        <!-- Color scheme removed; keeping font controls only -->
-
-        <div class="accessibility-actions">
-            <button class="reset" id="accReset">Reset</button>
-            <button class="save" id="accSave">Save</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    (function(){
-        const KEY = 'wv_accessibility_settings';
-        const defaults = { fontSize: 14, fontFamily: 'nunito' };
-
-        function getSettings(){
-            try{
-                const raw = localStorage.getItem(KEY);
-                return raw ? JSON.parse(raw) : Object.assign({}, defaults);
-            }catch(e){ return Object.assign({}, defaults); }
-        }
-
-        function saveSettings(s){
-            try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){}
-        }
-
-        function applySettings(s){
-            // font size in points
-            var size = Number(s.fontSize) || defaults.fontSize;
-            if(size < 12) size = 12; if(size > 24) size = 24;
-            document.documentElement.style.fontSize = size + 'pt';
-            // update visible slider value if present
-            var sizeDisplay = document.getElementById('acc-font-size-value'); if(sizeDisplay) sizeDisplay.textContent = size + 'pt';
-
-            // font family mapping
-            if(s.fontFamily === 'nunito'){
-                document.body.style.fontFamily = 'Nunito, Quicksand, sans-serif';
-            } else if (s.fontFamily === 'quicksand'){
-                document.body.style.fontFamily = 'Quicksand, sans-serif';
-            } else if (s.fontFamily === 'comic'){
-                document.body.style.fontFamily = '"Comic Sans MS", "Comic Sans", cursive';
-            } else if (s.fontFamily === 'opendyslexic'){
-                document.body.style.fontFamily = 'OpenDyslexic, "Arial", sans-serif';
-            } else if (s.fontFamily === 'times'){
-                document.body.style.fontFamily = '"Times New Roman", Times, serif';
+            // Format the date based on width
+            let formatted = "";
+            if (width > 1650) {
+                formatted = "Today is " + now.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                });
+            } else if (width >= 1450) {
+                formatted = now.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                });
+            } else {
+                formatted = now.toLocaleDateString("en-US"); // e.g., 04/17/2025
             }
 
-            // color scheme support removed; icons keep their default CSS filters
+            // Update right-section date boxes
+            document.querySelectorAll(".right-section .date-box").forEach(el => {
+                if (width < 1130) {
+                    el.style.display = "none";
+                } else {
+                    el.style.display = "";
+                    el.textContent = formatted;
+                }
+            });
+
+            // Update left-section date boxes (Check In / Out or icon)
+            document.querySelectorAll(".left-section .date-box").forEach(el => {
+                if (width < 750) {
+                    el.style.display = "none";
+                } else {
+                    el.style.display = "";
+                    el.textContent = width < 1130 ? "🔁" : "Check In/Out";
+                }
+            });
+
+            document.querySelectorAll(".icon-butt").forEach(el => {
+                if (width < 800) {
+                    el.style.display = "none";
+                } else {
+                    el.style.display = "";
+                }
+            });
+
+
+
+
         }
 
-        // Initialize UI values from settings
-        function populateUI(s){
-            const size = document.getElementById('acc-font-size');
-            const sizeVal = document.getElementById('acc-font-size-value');
-            const ff = document.getElementById('acc-font-family');
-            if(size) size.value = (s.fontSize !== undefined ? s.fontSize : defaults.fontSize);
-            if(sizeVal) sizeVal.textContent = (s.fontSize !== undefined ? s.fontSize : defaults.fontSize) + 'pt';
-            if(ff) ff.value = s.fontFamily || defaults.fontFamily;
-        }
+        // Run on load and resize
+        window.addEventListener("resize", updateDateAndCheckBoxes);
+        window.addEventListener("load", updateDateAndCheckBoxes);
+    </script>
+    <!-- Accessibility Button + Modal -->
+    <button class="accessibility-btn" id="accessibilityBtn" aria-haspopup="dialog" aria-controls="accessibilityModal" title="Accessibility settings">
+        <img src="images/accessibility-menu.png" alt="Accessibility Menu">
+    </button>
 
-        // DOM elements
-        const btn = document.getElementById('accessibilityBtn');
-        const backdrop = document.getElementById('accessibilityBackdrop');
-        const closeBtn = document.getElementById('accessibilityClose');
-        const saveBtn = document.getElementById('accSave');
-        const resetBtn = document.getElementById('accReset');
+    <div class="accessibility-modal-backdrop" id="accessibilityBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="accessibility-modal" id="accessibilityModal">
+            <div class="modal-header">
+                <h3>Accessibility Settings</h3>
+                <button id="accessibilityClose" class="modal-close" style="max-width: 22%;">&times;</button>
+            </div>
+            <p class="modal-desc">Adjust font size, font style, and color scheme. Settings persist across pages and visits.</p>
 
-        // open/close helpers
-        function openModal(){ backdrop.style.display = 'flex'; backdrop.setAttribute('aria-hidden','false'); document.getElementById('acc-font-size').focus(); }
-        function closeModal(){ backdrop.style.display = 'none'; backdrop.setAttribute('aria-hidden','true'); btn.focus(); }
+            <div class="accessibility-row">
+                <label for="acc-font-size">Font size</label>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <input id="acc-font-size" type="range" min="12" max="24" step="1" value="14">
+                    <span id="acc-font-size-value">14pt</span>
+                </div>
+            </div>
 
-        btn.addEventListener('click', function(e){
-            e.stopPropagation();
-            const s = getSettings();
-            populateUI(s);
-            openModal();
-        });
-        closeBtn.addEventListener('click', closeModal);
-        backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeModal(); });
+            <div class="accessibility-row">
+                <label for="acc-font-family">Font style</label>
+                <select id="acc-font-family">
+                    <option value="nunito">Nunito (default)</option>
+                    <option value="quicksand">Quicksand</option>
+                    <option value="comic">Comic Sans</option>
+                    <option value="opendyslexic">OpenDyslexic</option>
+                    <option value="times">Times New Roman</option>
+                </select>
+            </div>
 
-        saveBtn.addEventListener('click', function(){
-            const s = {
-                fontSize: Number(document.getElementById('acc-font-size').value),
-                fontFamily: document.getElementById('acc-font-family').value
+            <!-- Color scheme removed; keeping font controls only -->
+
+            <div class="accessibility-actions">
+                <button class="reset" id="accReset">Reset</button>
+                <button class="save" id="accSave">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const KEY = 'wv_accessibility_settings';
+            const defaults = {
+                fontSize: 14,
+                fontFamily: 'nunito'
             };
-            applySettings(s);
-            saveSettings(s);
-            closeModal();
-        });
 
-        // live update when moving slider
-        const slider = document.getElementById('acc-font-size');
-        if(slider){ slider.addEventListener('input', function(){ document.getElementById('acc-font-size-value').textContent = this.value + 'pt'; }); }
+            function getSettings() {
+                try {
+                    const raw = localStorage.getItem(KEY);
+                    return raw ? JSON.parse(raw) : Object.assign({}, defaults);
+                } catch (e) {
+                    return Object.assign({}, defaults);
+                }
+            }
 
-        resetBtn.addEventListener('click', function(){
-            localStorage.removeItem(KEY);
-            const s = Object.assign({}, defaults);
-            applySettings(s);
-            populateUI(s);
-        });
+            function saveSettings(s) {
+                try {
+                    localStorage.setItem(KEY, JSON.stringify(s));
+                } catch (e) {}
+            }
 
-        // apply on load
-        document.addEventListener('DOMContentLoaded', function(){
-            const s = getSettings();
-            applySettings(s);
-        });
-    })();
-</script>
+            function applySettings(s) {
+                // font size in points
+                var size = Number(s.fontSize) || defaults.fontSize;
+                if (size < 12) size = 12;
+                if (size > 24) size = 24;
+                document.documentElement.style.fontSize = size + 'pt';
+                // update visible slider value if present
+                var sizeDisplay = document.getElementById('acc-font-size-value');
+                if (sizeDisplay) sizeDisplay.textContent = size + 'pt';
+
+                // font family mapping
+                if (s.fontFamily === 'nunito') {
+                    document.body.style.fontFamily = 'Nunito, Quicksand, sans-serif';
+                } else if (s.fontFamily === 'quicksand') {
+                    document.body.style.fontFamily = 'Quicksand, sans-serif';
+                } else if (s.fontFamily === 'comic') {
+                    document.body.style.fontFamily = '"Comic Sans MS", "Comic Sans", cursive';
+                } else if (s.fontFamily === 'opendyslexic') {
+                    document.body.style.fontFamily = 'OpenDyslexic, "Arial", sans-serif';
+                } else if (s.fontFamily === 'times') {
+                    document.body.style.fontFamily = '"Times New Roman", Times, serif';
+                }
+
+                // color scheme support removed; icons keep their default CSS filters
+            }
+
+            // Initialize UI values from settings
+            function populateUI(s) {
+                const size = document.getElementById('acc-font-size');
+                const sizeVal = document.getElementById('acc-font-size-value');
+                const ff = document.getElementById('acc-font-family');
+                if (size) size.value = (s.fontSize !== undefined ? s.fontSize : defaults.fontSize);
+                if (sizeVal) sizeVal.textContent = (s.fontSize !== undefined ? s.fontSize : defaults.fontSize) + 'pt';
+                if (ff) ff.value = s.fontFamily || defaults.fontFamily;
+            }
+
+            // DOM elements
+            const btn = document.getElementById('accessibilityBtn');
+            const backdrop = document.getElementById('accessibilityBackdrop');
+            const closeBtn = document.getElementById('accessibilityClose');
+            const saveBtn = document.getElementById('accSave');
+            const resetBtn = document.getElementById('accReset');
+
+            // open/close helpers
+            function openModal() {
+                backdrop.style.display = 'flex';
+                backdrop.setAttribute('aria-hidden', 'false');
+                document.getElementById('acc-font-size').focus();
+            }
+
+            function closeModal() {
+                backdrop.style.display = 'none';
+                backdrop.setAttribute('aria-hidden', 'true');
+                btn.focus();
+            }
+
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const s = getSettings();
+                populateUI(s);
+                openModal();
+            });
+            closeBtn.addEventListener('click', closeModal);
+            backdrop.addEventListener('click', function(e) {
+                if (e.target === backdrop) closeModal();
+            });
+
+            saveBtn.addEventListener('click', function() {
+                const s = {
+                    fontSize: Number(document.getElementById('acc-font-size').value),
+                    fontFamily: document.getElementById('acc-font-family').value
+                };
+                applySettings(s);
+                saveSettings(s);
+                closeModal();
+            });
+
+            // live update when moving slider
+            const slider = document.getElementById('acc-font-size');
+            if (slider) {
+                slider.addEventListener('input', function() {
+                    document.getElementById('acc-font-size-value').textContent = this.value + 'pt';
+                });
+            }
+
+            resetBtn.addEventListener('click', function() {
+                localStorage.removeItem(KEY);
+                const s = Object.assign({}, defaults);
+                applySettings(s);
+                populateUI(s);
+            });
+
+            // apply on load
+            document.addEventListener('DOMContentLoaded', function() {
+                const s = getSettings();
+                applySettings(s);
+            });
+        })();
+    </script>
 </header>

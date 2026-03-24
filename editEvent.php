@@ -56,12 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $endTime   = $args['end-time']   = $validated[1];
         $date      = $args['date']       = validateDate($args["date"]);
 
-        $capacity = intval($args["capacity"]);
+        /*$capacity = intval($args["capacity"]);
         $assignedVolunteerCount = count(getvolunteers_byevent($id));
         $difference = $assignedVolunteerCount - $capacity;
         if ($capacity < $assignedVolunteerCount) {
             $errors .= "<p>There are currently $assignedVolunteerCount volunteers assigned to this event. The new capacity must not exceed this number. You must remove $difference volunteer(s) from the event to reduce the capacity to $capacity.</p>";
-        }
+        }*/
 
         if (!$startTime || !$date > 11) {
             $errors .= '<p>Your request was missing arguments.</p>';
@@ -163,17 +163,17 @@ $con = connect();
 
 <head>
     <?php require_once('universal.inc') ?>
-    <title>Whiskey Valor | Edit Event</title>
+    <title>Healthy Generations | Edit Ride</title>
 </head>
 
 <body>
     <?php require_once('header.php') ?>
-    <h1>Edit Event</h1>
+    <h1>Edit Ride</h1>
     <main class="date">
         <?php if ($errors): ?>
             <div class="error-toast"><?php echo $errors ?></div>
         <?php endif ?>
-        <h2>Event Details</h2>
+        <h2>Ride Details</h2>
         <form id="new-event-form" method="post">
 
             <label for="name">Rider Name </label>
@@ -184,10 +184,13 @@ $con = connect();
             <input type="date" id="date" name="date" value="<?php echo $event['startDate'] ?>" min="<?php echo date('Y-m-d'); ?>" required>
 
             <label for="name">Pickup Location </label>
-            <input type="text" id="location" name="location" value="<?php echo $event['pickup_location'] ?>" placeholder="Enter location">
+            <input type="text" id="pickup_location" name="pickup_location" value="<?php echo $event['pickup_location'] ?>" placeholder="Enter location">
 
             <label for="name">Drop Off Location </label>
-            <input type="text" id="location" name="location" value="<?php echo $event['dropoff_location'] ?>" placeholder="Enter location">
+            <input type="text" id="dropoff_location" name="dropoff_location" value="<?php echo $event['dropoff_location'] ?>" placeholder="Enter location">
+            
+            <label for="name">Drop Off Contact Information</label>
+            <input type="text" id="dropoff_contact" name="dropoff_contact" value="<?php echo $event['dropoff_contact'] ?>" placeholder="Enter Contact Information">
 
             <label for="name">Start Time </label>
             <input type="text" id="start-time" name="start-time" value="<?php echo time24hto12h($event['startTime']) ?>" pattern="([1-9]|10|11|12):[0-5][0-9] ?([aApP][mM])" required placeholder="Enter start time. Ex. 12:00 PM">

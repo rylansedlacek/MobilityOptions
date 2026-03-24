@@ -114,36 +114,32 @@ require_once('header.php');
 
       <!-- Buttons Section -->
       <div class="button-section">
-        <button onclick="window.location.href='VolunteerRegister.php';">
+        <button onclick="window.location.href='addDrivers.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Register New Rider</div>
+	  <div>Add Driver</div>
 	  <img class="button-icon" src="images/add-person.svg" alt="Person Icon">
         </button>
 
-        <button onclick="window.location.href='allRiders.php';">
+        <button onclick="window.location.href='manageDrivers.php';">
 	  <div class="button-left-gray"></div>
-	  <div>View All Riders</div>
+	  <div>Manage Drivers</div>
 	  <img class="button-icon h-10 w-10 left-5" src="images/clipboard-regular.svg" alt="Person Icon">
         </button>
 
-        <button onclick="window.location.href='personSearch.php';">
+        <button onclick="window.location.href='addVehicles.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Search Registered Riders</div>
+	  <div>Add Vehicles</div>
 	  <img class="button-icon" src="images/person-search.svg" alt="Person Icon">
         </button>
 
-    <button onclick="window.location.href='noShows.php';">
+    <button onclick="window.location.href='manageVehicles.php';">
 	  <div class="button-left-gray"></div>
-	  <div>View No Shows?</div>
+	  <div>Manage Vehicles</div>
 	  <img class="button-icon h-10 w-10 left-5" src="images/clipboard-regular.svg" alt="Person Icon">
     </button>
 
 
-    <button onclick="window.location.href='deleteUserSearch.php';">
-        <div class="button-left-gray"></div>
-        <div>Delete Rider</div>
-        <img class="button-icon h-10 w-10 left-5" src="images/trash.svg" alt="Person Icon">
-    </button>
+    
 
 	<!--<button onclick="window.location.href='selectVOTM.php';">
 	  <div class="button-left-gray"></div>
@@ -165,10 +161,10 @@ require_once('header.php');
 
       <!-- Text Section -->
       <div class="text-section">
-        <h1>Rider Account Management</h1>
+        <h1>Driver and Vehicle Management</h1>
         <div class="div-blue"></div>
         <p>
-          Welcome to the rider management hub. From this menu, you will have access to operations such as creating, deleting, and searching riders. More features soon to be implemented.
+          Welcome to the Driver and Vehicle management hub. Here you can add and manage Drivers and Vehicles in the system.
         </p>
       </div>
 

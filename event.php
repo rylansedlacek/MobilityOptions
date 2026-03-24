@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <?php require_once('header.php') ?>
-    <h1>View Ride Request</h1>
+    <h1>Ride Request Details</h1>
     <main class="event-info">
         <!-- Success notifications -->
         <?php if (isset($_GET['createSuccess'])): ?>
@@ -269,8 +269,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $event_description = $event_info['description'];
         $pickup_location = $event_info['pickup_location'];
         $dropoff_location = $event_info['dropoff_location'];
+        $dropoff_contact = $event_info['dropoff_contact'];
         $event_capacity = $event_info['capacity'];
-        $event_training_level = $event_info['affiliation'];
+        //$event_training_level = $event_info['affiliation'];
         $num_signups = $event_num_signups['RowCount'];
         require_once('include/time.php');
         ?>
@@ -310,6 +311,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td class="label">Drop Off Location</td>
                     <td>
                         <?php echo wordwrap($dropoff_location, 50, "<br />\n"); ?>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">Drop Off Contact Information</td>
+                    <td>
+                        <?php echo wordwrap($dropoff_contact,50, "<br />\n"); ?>
                     </td>
                 </tr>
 
@@ -391,20 +399,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="hidden" name="id" value="<?php echo $event_info['id']; ?>">
                         <!-- <button type="submit" class="button">Archive</button> -->
                     </form>
-
                 <?php endif ?>
 
                 <!-- end of Thomas's work -->
 
-                <a href="editEvent.php?id=<?= $id ?>" class="button cancel">Edit Ride Request</a>
+                <a href="editEvent.php?id=<?= $id ?>" class="button edit">Edit Ride Request</a>
 
-                <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button cancel">Ride Calendar</a>
+                <a class='button add' href='scheduleTrip.php?id=<?= urlencode($id) ?>'>Schedule Ride Request</a>
+
+                <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button calendar">Ride Calendar</a>
 
                 <?php if (isset($_SESSION['access_level']) && $access_level >= 2): ?>
                     <!-- <a href="deleteEvent.php?id<?= $id ?>"title="Delete Event" class="button signup">Delete Ride Request</a>  -->
-                    <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="button signup"
-                        onclick="return confirm('<?= htmlspecialchars($confirmText, ENT_QUOTES) ?>');">
-                        <i class="fas fa-trash"></i>
+                    <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="button cancel"
+                        onclick="return confirm('<?= htmlspecialchars($confirmText, ENT_QUOTES) ?>');">Delete Ride Request<br>
+                       
                     </a>
                 <?php endif; ?>
 

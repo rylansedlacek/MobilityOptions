@@ -21,6 +21,8 @@ require_once('database/dbEvents.php');
 require_once('database/dbPersons.php');
 require_once('include/input-validation.php');
 
+
+
 $eventID = $_GET['id'] ?? $_POST['id'] ?? null;
 $event = fetch_event_by_id($eventID);
 
@@ -37,23 +39,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign'])) {
     if ($driver_id === '' ) { $errors[] = 'Please select a driver.'; }
     if ($vehicle_id <= 0) { $errors[] = 'Please select a vehicle.'; }
 
-    function driver_has_time_conflict($driver_id, $startDate, $startTime) {
+function driver_has_time_conflict($driver_id, $startDate, $startTime, $eventID) {
     $con = connect();
 
-    $query = "SELECT series_id
+    $query = "SELECT id, driver_id, startDate, startTime
               FROM dbevents
               WHERE driver_id = ?
-              AND startDate = ?
-              AND ABS(TIMESTAMPDIFF(MINUTE, startTime, ?)) < 30
+                AND startDate = ?
+                AND id != ?
+                AND ABS(TIME_TO_SEC(TIMEDIFF(startTime, ?))) < 1800
               LIMIT 1";
 
     $stmt = mysqli_prepare($con, $query);
 
     if (!$stmt) {
-        die("Prepare failed: " . mysqli_error($con));
+        die('Prepare failed: ' . mysqli_error($con));
     }
 
-    mysqli_stmt_bind_param($stmt, "sss", $driver_id, $startDate, $startTime);
+    mysqli_stmt_bind_param($stmt, 'ssis', $driver_id, $startDate, $eventID, $startTime);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
@@ -64,8 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign'])) {
     $tripDate = $event['startDate'];
     $tripTime = $event['startTime'];
 
-    if (driver_has_time_conflict($driver_id, $tripDate, $tripTime)) {
+
+    
+    if (driver_has_time_conflict($driver_id, $tripDate, $tripTime, $eventID)) {
         $errors[] = 'This driver is already scheduled for another trip within 30 minutes of this time.';
+        
     } else {
         $ok = assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id);
 
@@ -78,6 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign'])) {
     }
 }
 }
+
+
 
 function val($key, $fallback = '') {
     global $event;
@@ -95,6 +103,8 @@ $drivers  = get_drivers(); // get all drivers for drop donw
 $vehicles = get_vehicles(); // get all vehicles for drop down
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,14 +116,17 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
 
     <main class="general">
         <h1>Ride Scheduler</h1>
+    
+        
 
-        <?php if (!empty($errors)): ?>
-            <div class="error-box">
-                <?php foreach ($errors as $e): ?>
-                    <p class="error"><?php $e; ?></p>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+    <?php if (!empty($errors)): ?>
+       
+        <div class="error-box">
+         <?php foreach ($errors as $e): ?>
+                <p class="error"><?php echo $e; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
         <form method="POST" class="general">
             <input type="hidden" name="id" value="<?php echo htmlspecialchars($eventID); ?>">
@@ -180,7 +193,7 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
             </div>
             <div style="margin-top:2rem; width:span; display:flex; gap:0.75rem;">
                 
-             </div>
+            </div>
         </form>
 
     </main>

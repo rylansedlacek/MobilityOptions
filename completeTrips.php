@@ -76,7 +76,7 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
     <?php require_once('database/dbEvents.php'); ?>
     <?php require_once('database/dbPersons.php'); ?>
 
-    <h1>Driver and Trips</h1>
+    <h1>Complete Trip</h1>
     <main class="general">
         <?php
         //require_once('database/dbMessages.php');
@@ -158,9 +158,11 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
             <script>
             </script>
         <?php else: ?>
-            <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="">Create a New Trip</a> </p>
+            <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
         <?php endif ?>
+        <p class="no-events standout">
         <a class="button return" href="dispatchTrip.php">Return to Dashboard</a>
+        </p>
     </main>
 </body>
 

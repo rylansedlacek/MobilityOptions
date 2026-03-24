@@ -120,13 +120,10 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
         
 
     <?php if (!empty($errors)): ?>
-       
-        <div class="error-box">
-         <?php foreach ($errors as $e): ?>
-                <p class="error"><?php echo $e; ?></p>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
+<script>
+    alert("<?php echo implode('\n', $errors); ?>");
+</script>
+<?php endif; ?>
 
         <form method="POST" class="general">
             <input type="hidden" name="id" value="<?php echo htmlspecialchars($eventID); ?>">

@@ -601,7 +601,7 @@
         </div>
         
         <div class="large-text-sub">Generate Report</div>
-        <div class="graph-text">From this quarter or annual.</div>
+        <div class="graph-text">Current Operational Report Generation.</div>
         <button class="arrow-button">→</button>
     </div>
 

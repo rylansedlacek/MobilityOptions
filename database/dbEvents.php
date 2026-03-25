@@ -396,7 +396,7 @@ function make_an_event($result_row)
 function get_all_events()
 {
     $con = connect();
-    $query = "SELECT * FROM dbevents" .
+    $query = "SELECT * FROM dbevents WHERE trip_status != 'in_progress' and trip_status != 'cancelled'" .
         " ORDER BY completed";
     $result = mysqli_query($con, $query);
     $theEvents = array();

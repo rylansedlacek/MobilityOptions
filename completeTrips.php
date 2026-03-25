@@ -16,162 +16,77 @@ if (isset($_SESSION['_id'])) {
     $userID = $_SESSION['_id'];
 }
 include 'database/dbEvents.php';
-include 'database/dbPersons.php';
-
-$selectedDriver = trim((string) ($_POST['driver_id'] ?? ($event['driver_id'] ?? '')));
-$selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
 //include 'domain/Event.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
-
-
-<style>
-    .popup {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 10, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-    }
-
-    .popup-box {
-        background: #fafafa;
-        padding: 2rem;
-        border-radius: 4px;
-        text-align: center;
-    }
-
-    .popup-actions {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin-top: 1rem;
-    }
-
-    .button.confirm {
-        background: green;
-        font-size: larger;
-    }
-
-    .button.cancel {
-        background: #C04000;
-        font-size: larger;
-
-    }
-</style>
+<html>
 
 <head>
     <?php require_once('universal.inc') ?>
     <link rel="stylesheet" href="css/messages.css">
     </link>
     <script src="js/messages.js"></script>
-    <title>Mobility Options | Ride Requests</title>
+    <title>Mobility Options | View Rides</title>
 </head>
 
 <body>
     <?php require_once('header.php') ?>
     <?php require_once('database/dbEvents.php'); ?>
-    <?php require_once('database/dbPersons.php'); ?>
-
-    <h1>Driver and Trips</h1>
+    <h1>Ride Requests</h1>
     <main class="general">
         <?php
         //require_once('database/dbMessages.php');
         //$messages = get_user_messages($userID);
         //require_once('database/dbevents.php');
         //require_once('domain/Event.php');
-
         $events = get_all_events();
-        $drivers  = get_drivers_with_email();
-        $vehicles = get_vehicles();
-
-        if (sizeof(get_all_events()) && sizeof($drivers)): ?>
+        if (sizeof(get_all_events())): ?>
             <div class="table-wrapper">
-                <label> Select the Driver you would like to dispatch below:<br></label>
+                <label>Finalize the ride by selecting "Complete".</label> <br/>
                 <table class="general">
                     <thead>
                         <tr>
-                            <th><b>Driver Name</b></th>
-                            <th><b>Vehicle Model</b></th>
-                            <th><b>Vehicle Plate</b></th>
-                            <th><b>Date</b></th>
-
-                            <th><b>Rider Name</b></th>
-                            <th><b>Complete Trip</b></th>
-
+                            <th>Rider Name</th>
+                            <th>Date Of Ride</th>
+                            <th>Pick Up Time</th>
+                            <th>Complete Trip</th>
+                            <th style="width:1px"></th>
                         </tr>
                     </thead>
-                    <?php
-                    $vehicleMap = [];
-                    foreach ($vehicles as $v) {
-                        $vehicleMap[(int)$v['id']] = $v;
-                    }
-                    ?>
                     <tbody class="standout">
-                        <?php foreach ($events as $event): ?>
-                            <?php if ($event->getDriverId() !== null): ?>
-                                <?php
-                                $eventID = $event->getID();
-                                $eventDate = $event->getStartDate();
+                        <?php
+                        // require_once('database/dbPersons.php');
+                        // require_once('include/output.php');
+                        // $id_to_name_hash = [];
+                        foreach ($events as $event) {
+                            $eventID = $event->getID();
+                            $title = $event->getName();
+                            $startDate = $event->getStartDate();
+                            $tripStatus = $event->getTripStatus() ?: 'N';
 
-                                $driverDI = $event->getDriverId();
-                                $driverName = "";
-                                $riderName = $event->getName();
+                            $viewLink = "<a href='event.php?id=$eventID'>$title</a>";
+                            $completeLink = "";
+                            if ($accessLevel >= 2) {
+                                $completeLink = "<a class='button add' href='CompleteTripForm.php?id=$eventID'>Complete</a>";
+                            }
 
-                                foreach ($drivers as $driver) {
-                                    if ($driver['id'] ==  $driverDI) {
-                                        $driverName = $driver['first_name'] . ' ' . $driver['last_name'];
-                                        break;
-                                    }
-                                }
-                                $vehicleID = (int)$event->getVehicleId();
-                                $vehicle = isset($vehicleMap[$vehicleID]) ? $vehicleMap[$vehicleID] : null;
-                                ?>
-
-                                <?php if ($accessLevel < 3): ?>
-                                    <tr data-event-id="<?= $eventID ?>">
-                                        <td><a href="event.php?id=<?= $eventID ?>"><?= $riderName ?></a></td>
-                                        <td><?= $startDate ?></td>
-                                        <td><a class="button sign-up" href="eventSignUp.php">Sign Up</a></td>
-                                    </tr>
-                                <?php else: ?>
-                                    <tr data-event-id="<?= $eventID ?>">
-                                        <td><?= $driverName ?></td>
-                                        <td><?= $vehicle ? htmlspecialchars($vehicle['make_model']) : 'no vehicle' ?></td>
-                                        <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
-                                        <td><?= $eventDate ?></td>
-
-
-                                        <th><?= $riderName ?></td>
-                                        <td>
-                                            <a href="#" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" style="color: black; text-decoration: underline;">
-                                                Complete</a>
-                                        </td>
-                                    </tr>
-                                    <div id="popup<?= $eventID ?>" class="popup" style="display:none;">
-                                        <div class="popup-box">
-                                            <p>Are you sure you want to dispatch this trip?</p>
-                                            <div class="popup-actions">
-                                                <a href="dispatchTrip.php?id=<?= $eventID ?>" class="button confirm">Dispatch</a>
-                                                <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Cancel</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
+                            echo "
+                                <tr data-event-id='$eventID'>
+                                <td><a href='event.php?id=$eventID' style='color: black; text-decoration: underline;'>$title</a></td> <!-- Link updated here -->
+                                    <td>$startDate</td>
+                                    <td>$tripStatus</td>
+                                    <td>$completeLink</td>
+                                    <td></td>
+                                </tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
-            <script>
-            </script>
         <?php else: ?>
-            <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="">Create a New Trip</a> </p>
+            <p class="no-events standout">There are currently no requests available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
         <?php endif ?>
-        <a class="button return" href="dispatchTrip.php">Return to Dispatch Trip Dashboard</a>
+        <a class="button cancel" href="eventManagement.php">Return to Dashboard</a>
     </main>
 </body>
 

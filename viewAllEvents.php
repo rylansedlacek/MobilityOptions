@@ -39,8 +39,8 @@ include 'database/dbEvents.php';
         //$messages = get_user_messages($userID);
         //require_once('database/dbevents.php');
         //require_once('domain/Event.php');
-        $events = get_all_events();
-        if (sizeof(get_all_events())): ?>
+        $events = get_pending_ride_requests();
+        if (sizeof($events)): ?>
             <div class="table-wrapper">
                 <label> Click Schedule to schedule request.</label>
                 <table class="general">

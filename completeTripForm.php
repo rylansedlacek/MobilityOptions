@@ -403,10 +403,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- end of Thomas's work -->
 
-                <a class='button add' href='completeTrip.php?id=<?= urlencode($id) ?>'>Complete Trip</a>
-
-                <a href="completeTrips.php?id=<?= $id ?>" class="button cancel">Back</a>
-
                 
                 <!-- Additional Information Required for Completing Trip -->
                 <!-- Includes: PICKUP TIME, DROPOFF TIME, MILEAGE, COMPLETION STATUS-->
@@ -434,6 +430,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="Cancelled">Cancelled</option>
                 </select>
             </fieldset>
+
+             <a class='button add' href='completeTrip.php?id=<?= urlencode($id) ?>'>Complete Trip</a>
+
+                <a href="completeTrips.php?id=<?= $id ?>" class="button cancel">Back</a>
 
             <?php endif ?>
 

@@ -1321,3 +1321,26 @@ function dispatch_trip($eventID)
     mysqli_close($connection);
     return $affected > 0;
 }
+
+function complete_trip($eventID)
+{
+    $connection = connect();
+    $eventID = (int) $eventID;
+    $status = 'completed';
+
+    $query = "UPDATE dbevents SET trip_status = ? where id = ?";
+    $stmt = mysqli_prepare($connection, $query);
+
+    mysqli_stmt_bind_param($stmt, 'si', $status, $eventID);
+    $result = mysqli_stmt_execute($stmt);
+    if (!$result) {
+        mysqli_stmt_close($stmt);
+        mysqli_close($connection);
+        return false;
+    }
+
+    $affected = mysqli_stmt_affected_rows($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+    return $affected > 0;
+}

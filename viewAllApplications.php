@@ -27,7 +27,7 @@
         <?php require_once('universal.inc') ?>
         <link rel="stylesheet" href="css/event.css">
         <script src="js/messages.js"></script>
-        <title>Viewing All Applications | Whiskey Valor Foundation</title>
+        <title>View Pending Rides </title>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -71,7 +71,7 @@
                                     $status = $app->getStatus();
                                     $flagged = $app->getFlagged();
                                     $event = retrieve_event($event_id);
-                                    $eventName = $event->getName();
+                                    $eventName = $event->get_pending_trips();
 
 
                                     //TODO: remove training_level_required and add other necessary fields -Blue

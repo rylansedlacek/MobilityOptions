@@ -73,7 +73,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <link rel="stylesheet" href="css/messages.css">
     </link>
     <script src="js/messages.js"></script>
-    <title>Mobility Options | Ride Requests</title>
+    <title>Mobility Options | Dispatch Trip </title>
 </head>
 
 <body>
@@ -81,7 +81,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <?php require_once('database/dbEvents.php'); ?>
     <?php require_once('database/dbPersons.php'); ?>
 
-    <h1>Driver and Trips</h1>
+    <h1>Dispatch Trip</h1>
     <main class="general">
         <?php
         $events = get_all_events();
@@ -97,10 +97,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                             <th><b>Driver Name</b></th>
                             <th><b>Vehicle Model</b></th>
                             <th><b>Vehicle Plate</b></th>
-                            <th><b>Date</b></th>
-                            <th><b>Rider Name</b></th>
-                            <!-- <th><b>View Passengers</b></th> -->
-                            <th><b>Dispath Trip</b></th>
+                            <th><b>Dispatch Trip</b></th>
+
                         </tr>
                     </thead>
                     <?php
@@ -173,9 +171,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <script>
             </script>
         <?php else: ?>
-            <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="">Create a New Trip</a> </p>
+            <p class="no-events standout">
+                There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a>
+            </p>
         <?php endif ?>
-        <a class="button return" href="dispatchTrip.php">Return to Dispatch Trip Dashboard</a>
+        <p class="no-events standout">
+            <a class="button return" href="dispatchTrip.php">Return to Dashboard</a>
+            </p>
     </main>
 </body>
 

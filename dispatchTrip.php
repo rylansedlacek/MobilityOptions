@@ -106,7 +106,7 @@ if ($accessLevel < 2) {
 
                  <button onclick="window.location.href='completeTrips.php';">
                     <div class="button-left-gray"></div>
-                    <div>Complete Trips</div>
+                    <div>Complete Trip</div>
                     <img class="button-icon h-10 w-10 left-5" src="images/dispatchTripVehicleLogo.jpg" alt="Calendar Icon">
                 </button>
 
@@ -128,7 +128,7 @@ if ($accessLevel < 2) {
                 <h1>Trip Management</h1>
                 <div class="div-blue"></div>
                 <p>
-                    Welcome to the Trip Managment Hub. Here you dispatch, complete, and cancel trips for drivers and their passengers.
+                    Dispatch trips, complete trips, and cancel trips here.
                 </p>
             </div>
 

@@ -322,7 +322,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </tr>
 
                 <tr>
-                    <td class="label">Accomodation Notes</td>
+                    <td class="label">Description</td>
                     <td>
                         <?php echo wordwrap($event_description, 50, "<br />\n"); ?>
                     </td>
@@ -403,11 +403,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- end of Thomas's work -->
 
-                <a class='button add' href='completeTripForm.php?id=<?= urlencode($id) ?>'>Complete Trip</a>
-                <a href="completeTrips.php?id=<?= $id ?>" class="button edit">Back</a>
+                <a href="editEvent.php?id=<?= $id ?>" class="button edit">Edit Ride Request</a>
+
+                <a class='button add' href='scheduleTrip.php?id=<?= urlencode($id) ?>'>Schedule Ride Request</a>
+
+                <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button calendar">Ride Calendar</a>
 
                 <?php if (isset($_SESSION['access_level']) && $access_level >= 2): ?>
                     <!-- <a href="deleteEvent.php?id<?= $id ?>"title="Delete Event" class="button signup">Delete Ride Request</a>  -->
+                    <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="button cancel"
+                        onclick="return confirm('<?= htmlspecialchars($confirmText, ENT_QUOTES) ?>');">Delete Ride Request<br>
+                       
+                    </a>
                 <?php endif; ?>
 
             <?php endif ?>

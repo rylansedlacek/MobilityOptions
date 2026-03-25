@@ -42,14 +42,13 @@ include 'database/dbEvents.php';
         $events = get_all_events();
         if (sizeof(get_all_events())): ?>
             <div class="table-wrapper">
-                <label>Finalize the ride by selecting "Schedule".</label>
+                <label>Finalize the ride by selecting "Complete".</label> <br/>
                 <table class="general">
                     <thead>
                         <tr>
                             <th>Rider Name</th>
                             <th>Date Of Ride</th>
                             <th>Pick Up Time</th>
-                            <th>Assigned Driver</th>
                             <th>Complete Trip</th>
                             <th style="width:1px"></th>
                         </tr>

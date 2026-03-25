@@ -9,8 +9,8 @@ ini_set('display_errors', 1);
 // -------------------------------------------------------
 $SMTP_SERVER = 'smtp.gmail.com';
 $SMTP_PORT   = 587;
-$SMTP_USER   = '';
-$SMTP_PASS   = '';
+$SMTP_USER   = 'mobilityoptions.notifications@gmail.com';
+$SMTP_PASS   = 'pbhg xxgo ejop ycgt';
 
 if (!$SMTP_SERVER || !$SMTP_USER || !$SMTP_PASS) {
     echo json_encode(["success" => false, "error" => "Missing SMTP settings in email/sendEmail.php"]);
@@ -41,9 +41,9 @@ if (trim($subject) === "") {
 // -------------------------------------------------------
 // Load PHPMailer
 // -------------------------------------------------------
-require_once __DIR__ . "/PHPMailer/src/PHPMailer.php";
-require_once __DIR__ . "/PHPMailer/src/SMTP.php";
-require_once __DIR__ . "/PHPMailer/src/Exception.php";
+require_once __DIR__ . "/PHPMailer/PHPMailer/src/PHPMailer.php";
+require_once __DIR__ . "/PHPMailer/PHPMailer/src/SMTP.php";
+require_once __DIR__ . "/PHPMailer/PHPMailer/src/Exception.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -83,7 +83,10 @@ foreach ($emails as $email) {
         $errorMsg = "[" . date('Y-m-d H:i:s') . "] Failed to send to {$email}: " . $e->getMessage() . PHP_EOL;
         
         // Write to email_errors.log file (ensure this path is writable)
-        file_put_contents(__DIR__ . '/email_errors.log', $errorMsg, FILE_APPEND);
+        $logFile = __DIR__ . '/email_errors.log';
+        if (is_writable(__DIR__)) {
+            file_put_contents($logFile, $errorMsg, FILE_APPEND);
+        }
 
         $failed[] = [
             "email" => $email,

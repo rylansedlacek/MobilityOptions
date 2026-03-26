@@ -98,6 +98,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                             <th><b>Vehicle Model</b></th>
                             <th><b>Vehicle Plate</b></th>
                             <th><b>Dispatch Trip</b></th>
+                            <th><b>Rider Name</b></th>
+                            <th><b>Dispatch</b></th>
 
                         </tr>
                     </thead>
@@ -148,7 +150,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                                 Passenger List </a>
                                         </td> -->
                                         <td>
-                                            <a href="#" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" style="color: black; text-decoration: underline;">
+                                            <a href="#" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" class="button confirm">
                                                 Dispatch Trip </a>
                                         </td>
                                     </tr>
@@ -157,7 +159,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                         <div class="popup-box">
                                             <p>Are you sure you want to dispatch this trip?</p>
                                             <div class="popup-actions">
-                                                <a href="viewAllTrips.php?id=<?= $eventID ?>" class="button confirm">Dispatch</a>
+                                                <a href="viewAllTrips.php?id=<?= $eventID ?>" class="button confirm">Confirm</a>
                                                 <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Cancel</a>
                                             </div>
                                         </div>

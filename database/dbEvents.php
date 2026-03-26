@@ -393,11 +393,25 @@ function make_an_event($result_row)
     return $theEvent;
 }
 
-function get_all_events()
-{
+function get_all_events() {
     $con = connect();
-    $query = "SELECT * FROM dbevents" .
+    $query = "SELECT * FROM dbevents WHERE trip_status != 'in_progress' and trip_status != 'cancelled'" .
         " ORDER BY completed";
+    $result = mysqli_query($con, $query);
+    $theEvents = array();
+    while ($result_row = mysqli_fetch_assoc($result)) {
+        $theEvent = make_an_event($result_row);
+        $theEvents[] = $theEvent;
+    }
+    mysqli_close($con);
+    return $theEvents;
+}
+
+function get_pending_ride_requests() {
+    $con = connect();
+    $query = "select * from dbevents where completed = 'N'" .
+        "and (trip_status is null or trip_status not in ('in_progress', 'cancelled', 'completed')) " .
+        "order by startDate asc, startTime asc";
     $result = mysqli_query($con, $query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {

@@ -82,8 +82,11 @@ function sendEmails(array $emails, string $senderName, string $subject, string $
     curl_close($ch);
 
     // Log raw response and HTTP status for debugging
-    $log = "[sendEmails] HTTP $httpCode | cURL Error: $curlError | Response: $response\n";
-    file_put_contents(__DIR__ . '/email_debug.log', $log, FILE_APPEND);
+    $logFile = __DIR__ . '/email_debug.log';
+    if (is_writable(__DIR__)) {
+        $log = "[sendEmails] HTTP $httpCode | cURL Error: $curlError | Response: $response\n";
+        file_put_contents($logFile, $log, FILE_APPEND);
+    }
 
     $decoded = json_decode($response, true);
 

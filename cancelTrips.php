@@ -76,7 +76,7 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
     <?php require_once('database/dbEvents.php'); ?>
     <?php require_once('database/dbPersons.php'); ?>
 
-    <h1>Driver and Trips</h1>
+    <h1>Cancel Trip</h1>
     <main class="general">
         <?php
         //require_once('database/dbMessages.php');
@@ -90,13 +90,15 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
 
         if (sizeof(get_all_events()) && sizeof($drivers)): ?>
             <div class="table-wrapper">
-                <label> Select riders name below to edit ride request record:<br></label>
+                <label> Select driver below to cancel scheduled trip:<br></label>
                 <table class="general">
                     <thead>
                         <tr>
                             <th><b>Driver Name</b></th>
                             <th><b>Vehicle Model</b></th>
                             <th><b>Vehicle Plate</b></th>
+                            <th><b>Date</b></th>
+                            <th><b>Rider Name</b></th>
                             <th><b>Cancel Trip</b></th>
 
                         </tr>
@@ -112,8 +114,10 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                             <?php if ($event->getTripStatus() === 'scheduled' && $event->getCompleted() === 'Y'): ?>
                                 <?php
                                 $eventID = $event->getID();
+                                $eventDate = $event->getStartDate();
                                 $driverDI = $event->getDriverId();
                                 $driverName = "";
+                                $riderName = $event->getName();
                                 foreach ($drivers as $driver) {
                                     if ($driver['id'] ==  $driverDI) {
                                         $driverName = $driver['first_name'] . ' ' . $driver['last_name'];
@@ -135,16 +139,20 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                                         <td><?= $driverName ?></td>
                                         <td><?= $vehicle ? htmlspecialchars($vehicle['make_model']) : 'no vehicle' ?></td>
                                         <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
+                                        <td><?= $eventDate ?></td>
+
+                                        <td><?= $riderName ?></td>
+
                                         <td>
-                                            <a href="#" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" style="color: black; text-decoration: underline;">
-                                                Cancel Trip</a>
+                                            <a href="#" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" class="button confirm">
+                                                Cancel Trip </a>
                                         </td>
                                     </tr>
                                     <div id="popup<?= $eventID ?>" class="popup" style="display:none;">
                                         <div class="popup-box">
                                             <p>Are you sure you want to cancel this trip?</p>
                                             <div class="popup-actions">
-                                                <a href="cancelTrip.php?id=<?= $eventID ?>" class="button confirm">Cancel Trip</a>
+                                                <a href="cancelTrip.php?id=<?= $eventID ?>" class="button confirm">Confirm</a>
                                                 <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Go Back</a>
                                             </div>
                                         </div>
@@ -158,9 +166,11 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
             <script>
             </script>
         <?php else: ?>
-            <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="">Create a New Trip</a> </p>
+            <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
         <?php endif ?>
+        <p class="no-events standout">
         <a class="button return" href="dispatchTrip.php">Return to Dashboard</a>
+        </p>
     </main>
 </body>
 

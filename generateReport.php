@@ -10,12 +10,6 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
     header('Location: login.php');
     die();
 }
-
-// Get current fiscal year
-$currentMonth = date("m");
-$currentYear = date("Y");
-$fiscalYearStart = ($currentMonth >= 10) ? $currentYear : $currentYear - 1;
-$fiscalYearEnd = $fiscalYearStart + 1;
 ?>
 
 <!DOCTYPE html>
@@ -23,82 +17,29 @@ $fiscalYearEnd = $fiscalYearStart + 1;
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Whiskey Valor | Attendance Reports</title>
+    <title> Mobility Options | Operational Reports</title>
     <!--<script src="js/data-filters.js" defer></script>-->
     <link href="css/base.css" rel="stylesheet">
     <?php require_once('header.php'); ?>
 </head>
 <body>
-    <?php require_once('database/dbEvents.php');?>
-    <?php require_once('database/dbPersons.php');?>
-
     <!-- Hero Section with Title -->
         <div class="center-header">
-            <h1 style="color:white;">Generate Attendance Report</h1>
+            <h1 style="color:black;">Generate Operational Report</h1>
         </div>
                 <!-- Info Section -->
-        <section class="section-box">
-            <p style="margin-top: 1rem;text-align:center;">
-                Use this tool to generate monthly or annual reports on volunteer activity. Reports are available in Excel or CSV format.
-            </p>
-        </section>
 
     <main>
-        <?php $events = get_all_events_sorted_by_date_not_archived();?>
-
         <div class="main-content-box">
-            <!--<div class="text-center">
-                <p style="font-size: 18px; color: #c2c2c2ff; margin-top: 0.5rem; margin-bottom: 0.5rem;">Fiscal Year: <?= $fiscalYearStart ?> - <?= $fiscalYearEnd ?></p>
-            </div>-->
-
             <form method="POST" action="processReport.php">
-                <!-- Event ID -->
                 <div style="margin-bottom: 1.5rem;">
-                    <label for="eventID" style="font-weight: 600;">Select Event</label>
-                    <select name="eventID" id="eventID">
-                        <?php foreach ($events as $event) {
-                            $eventID = $event->getID();
-                            $eventName = $event->getName();
-                            echo "<option value='$eventID'>$eventName (ID: $eventID)</option>";
-                        }
-                        ?>
-                    </select>
+                    <label style="font-weight: 600;">Report Contents</label>
+                    <p style="font-size: 16px; margin-top: 0.5rem; margin-bottom: 0.5rem; color: #c2c2c2ff;">
+                  Includes system totals for: trips, ride requests, scheduled rides, in-progress rides, completed rides, canceled rides, active drivers, and vehicles.
+                    </p>
                 </div>
-
-                <!-- Month (conditionally hidden)
-                <div id="monthField">
-                    <label for="month" class="font-semibold">Select Month:</label>
-                    <select name="month" id="month">
-                        <?php
-                        $months = [
-                            '10' => 'October', '11' => 'November', '12' => 'December', '01' => 'January',
-                            '02' => 'February', '03' => 'March', '04' => 'April', '05' => 'May',
-                            '06' => 'June', '07' => 'July', '08' => 'August', '09' => 'September'
-                        ];
-                        foreach ($months as $num => $name) {
-                            echo "<option value='$num'>$name</option>";
-                        }
-                        ?>
-                    </select>
-                </div> -->
-
-                <!-- Content Select -->
-
-                    <h4 style="margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--accent-color);">Field Selector</h4>
-                    <p style="font-size: 16px; color: #c2c2c2ff; margin-top: 0.5rem; margin-bottom: 0.5rem;">If any fields are selected, the report will include all users who signed up and whether they attended.</p>
-                    <div id="field-picker">
-                            <div class="checkbox-grouping">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" value="user" name="user" id="user" checked> Username</label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" value="name" name="name" id="name" checked> Full Name</label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" value="branch" name="branch" id="branch"> Branch</label>
-                                <label class="checkbox-label">
-                                    <input type="checkbox" value="affiliation" name="affiliation" id="affiliation"> Affiliation</label>
-                        </div>
-                    </div>
-                </section>
+                <!-- pass operations_snapshot to processReport so it knows to make our report -->
+                <input type="hidden" name="reportType" value="operations_snapshot">
 
                 <!-- Format -->
                 <div style="margin-bottom: 1.5rem; margin-top: 1.5rem;">
@@ -123,15 +64,6 @@ $fiscalYearEnd = $fiscalYearStart + 1;
         </div>
 
     </main>
-
-    <script>
-        function toggleDateFields() {
-            const eventID = document.getElementById("eventID").value;
-            // const monthField = document.getElementById("monthField");
-            // monthField.style.display = reportType === "annually" ? "none" : "block";
-        }
-        document.addEventListener("DOMContentLoaded", toggleDateFields);
-    </script>
 </body>
 </html>
 

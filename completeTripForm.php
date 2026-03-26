@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <?php require_once('header.php') ?>
-    <h1>Ride Request Details</h1>
+    <h1>Complete Trip</h1>
     <main class="event-info">
         <!-- Success notifications -->
         <?php if (isset($_GET['createSuccess'])): ?>
@@ -403,19 +403,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- end of Thomas's work -->
 
-                <a href="editEvent.php?id=<?= $id ?>" class="button edit">Edit Ride Request</a>
+                
+                <!-- Additional Information Required for Completing Trip -->
+                <!-- Includes: PICKUP TIME, DROPOFF TIME, MILEAGE, COMPLETION STATUS-->
+                <fieldset class="section-box mb-4">
 
-                <a class='button add' href='scheduleTrip.php?id=<?= urlencode($id) ?>'>Schedule Ride Request</a>
+                <h3>Additional Details</h3>
+                <p class="mb-2">Please provide information for trip reporting purposes.</p>
+                <div class="blue-div"></div>
+                <label for="pick_up_time"><em>* </em>Actual Pick-Up TIme</label>
+                <input type="text" id="pick_up_time" name="pick_up_time" required placeholder="Enter their first name">
 
-                <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button calendar">Ride Calendar</a>
+                <label for="drop_off_time"><em>* </em>Actual Drop-Off Time</label>
+                <input type="text" id="drop_off_time" name="drop_off_time" required placeholder="Enter their last name">
+                <label for="emergency_email"><em>* </em>E-mail</label>
+                <input type="email" id="emergency_email" name="emergency_email" required placeholder="Enter their email address">
 
-                <?php if (isset($_SESSION['access_level']) && $access_level >= 2): ?>
-                    <!-- <a href="deleteEvent.php?id<?= $id ?>"title="Delete Event" class="button signup">Delete Ride Request</a>  -->
-                    <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="button cancel"
-                        onclick="return confirm('<?= htmlspecialchars($confirmText, ENT_QUOTES) ?>');">Delete Ride Request<br>
-                       
-                    </a>
-                <?php endif; ?>
+                <label for="mileage"> <em>* </em>Mileage (in mi.)</label>
+                <input type="text" id="mileage" name="mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
+
+                <label for="completion_status"><em>* </em>Completion Status</label>
+                <select id="completion_status" name="completion_status" required>
+                    <option value="" disabled selected></option>
+                    <option value="Completed">Completed</option>
+                    <option value="Rescheduled">Rescheduled</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </fieldset>
+
+             <a class='button add' href='completeTrip.php?id=<?= urlencode($id) ?>'>Complete Trip</a>
+
+                <a href="completeTrips.php?id=<?= $id ?>" class="button cancel">Back</a>
 
             <?php endif ?>
 

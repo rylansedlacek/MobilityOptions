@@ -17,7 +17,7 @@ if(!$event) {
     die("Trip not found.");
 }
 
-if(cancel_trip($eventID)) {
+if(complete_trip($eventID)) {
     header("Location: completeTrips.php?status=success");
     exit;
 }

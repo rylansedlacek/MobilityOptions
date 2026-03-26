@@ -26,13 +26,13 @@ include 'database/dbEvents.php';
     <link rel="stylesheet" href="css/messages.css">
     </link>
     <script src="js/messages.js"></script>
-    <title>Mobility Options | View Rides</title>
+    <title>Mobility Options | Complete Trip</title>
 </head>
 
 <body>
     <?php require_once('header.php') ?>
     <?php require_once('database/dbEvents.php'); ?>
-    <h1>Ride Requests</h1>
+    <h1>Complete Trip</h1>
     <main class="general">
         <?php
         //require_once('database/dbMessages.php');

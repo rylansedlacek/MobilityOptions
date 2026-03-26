@@ -205,6 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once('universal.inc');
     ?>
     <title>Mobility Options | Complete Trip <?php echo $event_info['name'] ?></title>
+    <title>Mobility Options | Complete Trip <?php echo $event_info['name'] ?></title>
     <link rel="stylesheet" href="event.css" type="text/css" />
     <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
         <script src="js/event.js"></script>

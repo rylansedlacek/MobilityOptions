@@ -28,13 +28,12 @@ include 'database/dbPersons.php';
     </link>
     <script src="js/messages.js"></script>
     <title>Mobility Options | Complete Trip</title>
+    <title>Mobility Options | Complete Trip</title>
 </head>
 
 <body>
     <?php require_once('header.php') ?>
     <?php require_once('database/dbEvents.php'); ?>
-    <?php require_once('database/dbPersons.php'); ?>
-    
     <h1>Complete Trip</h1>
     <main class="general">
         <?php

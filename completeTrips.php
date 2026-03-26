@@ -42,7 +42,7 @@ include 'database/dbEvents.php';
         $events = get_all_prog_events();
         if (sizeof(get_all_prog_events())): ?>
             <div class="table-wrapper">
-                <label>Finalize the ride by selecting "Complete".</label> <br/>
+                <label>Finalize the ride by selecting "Complete".</label>
                 <table class="general">
                     <thead>
                         <tr>

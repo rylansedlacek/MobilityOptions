@@ -21,6 +21,10 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
     <!--<script src="js/data-filters.js" defer></script>-->
     <link href="css/base.css" rel="stylesheet">
     <?php require_once('header.php'); ?>
+    <?php
+    require_once('database/dbReports.php');
+    $previousReports = get_all_reports();
+    ?>
 </head>
 <body>
     <!-- Hero Section with Title -->
@@ -53,17 +57,75 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
                 <div style="text-align: center; margin-top: 2rem;">
                     <input type="hidden" value="<?php echo $_SESSION['_id']; ?>" name="admin" id="admin">
                     <input type="hidden" value="<?php echo date("d-M-Y H:i:s e") ?>" name="time" id="time">
+                    <input type="hidden" name="action" value="generate">
                     <input type="submit" value="Generate Report" class="button generate-btn">
                 </div>
             </form>
 
-        <!-- Return Button -->
+        
         </div>
+
+        <div class="center-header">
+            <h1 style="color:black;">Previous Operational Reports</h1>
+        </div>
+
+        <div class="main-content-box">
+    <?php if (empty($previousReports)) { ?>
+        <p>No previous reports found.</p>
+    <?php } else { ?>
+        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr>
+                    <th>Report ID</th>
+                    <th>Created At</th>
+                    <th>Total Trips</th>
+                    <th>Total Completed</th>
+                    <th>Total Drivers</th>
+                    <th>Total Vehicles</th>
+                    <th>Download CSV</th>
+                    <th>Download Excel</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($previousReports as $report) { ?>
+                    <tr>
+                        <td><?php echo (int)$report['report_id']; ?></td>
+                        <td><?php echo htmlspecialchars($report['created_at']); ?></td>
+                        <td><?php echo (int)$report['total_trips']; ?></td>
+                        <td><?php echo (int)$report['total_completed']; ?></td>
+                        <td><?php echo (int)$report['total_drivers']; ?></td>
+                        <td><?php echo (int)$report['total_vehicles']; ?></td>
+                        <td>
+                            <form method="POST" action="processReport.php" style="margin: 0;">
+                                <input type="hidden" name="action" value="download_existing">
+                                <input type="hidden" name="report_id" value="<?php echo (int)$report['report_id']; ?>">
+                                <input type="hidden" name="format" value="csv">
+                                <input type="submit" value="CSV" class="button">
+                            </form>
+                        </td>
+                        <td>
+                            <form method="POST" action="processReport.php" style="margin: 0;">
+                                <input type="hidden" name="action" value="download_existing">
+                                <input type="hidden" name="report_id" value="<?php echo (int)$report['report_id']; ?>">
+                                <input type="hidden" name="format" value="excel">
+                                <input type="submit" value="Excel" class="button">
+                            </form>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    <?php } ?>
+</div>
+
+        <!-- Return Button -->
         <div style="text-align: center; margin-top: 2rem;">
             <a href="index.php" class="button" style="display: inline-block; text-decoration: none; width: 41%;">Return to Dashboard</a>
         </div>
 
     </main>
+
+    
 </body>
 </html>
 

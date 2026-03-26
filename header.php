@@ -908,6 +908,8 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['managedrivers.php'] = 2;
         $permission_array['managevehicles.php'] = 2;
         $permission_array['dispatchtrip.php'] = 2;
+        $permission_array['completetripform.php'] = 2;
+        
 
         // LOWERCASE
 

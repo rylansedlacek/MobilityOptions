@@ -14,24 +14,48 @@ require_once('database/dbPersons.php');
 require_once('database/dbEvents.php');
 require_once('database/dbReports.php');
 
+
 // fixes old complicated one
 function get_post_value($key, $defaultValue) {
     if (isset($_POST[$key])) { return $_POST[$key]; }
     return $defaultValue;
 }
 
-$reportType = get_post_value('reportType', '');
+
+$action = get_post_value('action', 'generate');
 $format = get_post_value('format', 'csv');
 
-
-if ($reportType === 'operations_snapshot') {
+if ($action === 'generate') {
     $snapshot = create_report();
-   
-    if (!$snapshot) { echo 'Failed to generate report.'; exit();}
-    
-    if ($format === 'csv') { operational_report_csv($snapshot); exit();}
 
-    // defaults excel
+    if (!$snapshot) {
+        echo 'Failed to generate report.';
+        exit();
+    }
+
+    if ($format === 'csv') {
+        operational_report_csv($snapshot);
+        exit();
+    }
+
+    operational_report_excel($snapshot);
+    exit();
+}
+
+if ($action === 'download_existing') {
+    $reportId = (int)get_post_value('report_id', 0);
+    $snapshot = get_report_by_id($reportId);
+
+    if (!$snapshot) {
+        echo 'Report not found.';
+        exit();
+    }
+
+    if ($format === 'csv') {
+        operational_report_csv($snapshot);
+        exit();
+    }
+
     operational_report_excel($snapshot);
     exit();
 }

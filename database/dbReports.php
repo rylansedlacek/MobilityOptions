@@ -130,5 +130,41 @@ function get_value_int($row, $key) {
     return (int) $row[$key];
 }
 
+//this is for the report history page, gets all reports saved in our reports db in desc order for display
+function get_all_reports() {
+    $connection = connect();
 
+    $query = "SELECT report_id, created_at, total_trips, total_scheduled, total_in_progress,
+                     total_canceled, total_completed, total_requested, total_drivers, total_vehicles
+              FROM reports
+              ORDER BY created_at DESC";
+
+    $result = mysqli_query($connection, $query);
+
+    $reports = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $reports[] = $row;
+    }
+
+    mysqli_close($connection);
+    return $reports;
+}
+
+//this funcion searches for a report by id
+function get_report_by_id($reportId) {
+    $connection = connect();
+    $reportId = (int)$reportId;
+
+    $query = "SELECT report_id, created_at, total_trips, total_scheduled, total_in_progress,
+                     total_canceled, total_completed, total_requested, total_drivers, total_vehicles
+              FROM reports
+              WHERE report_id = $reportId
+              LIMIT 1";
+
+    $result = mysqli_query($connection, $query);
+    $report = mysqli_fetch_assoc($result);
+
+    mysqli_close($connection);
+    return $report ? $report : null;
+}
 

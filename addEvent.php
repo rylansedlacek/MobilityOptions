@@ -204,11 +204,11 @@
                     $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
                         "Your ride request has been submitted with the following details:\n\n" .
                         "Date: {$args['date']}\n" .
-                        "Time: {$args['start-time']} - {$args['end-time']}\n" .
+                        "Time: " . date('g:i A', strtotime($args['start-time'])) . " - " . date('g:i A', strtotime($args['end-time'])) . "\n" .
                         "Pickup: {$args['pickup_location']}\n" .
                         "Dropoff: {$args['dropoff_location']}\n\n" .
                         "Thank you,\n" .
-                        "Mobility Options";
+                        "Healthy Generations - Mobility Options";
 
                     $sendResult = sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
                 }

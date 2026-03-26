@@ -142,9 +142,9 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                                     </tr>
                                     <div id="popup<?= $eventID ?>" class="popup" style="display:none;">
                                         <div class="popup-box">
-                                            <p>Are you sure you want to dispatch this trip?</p>
+                                            <p>Are you sure you want to complete this trip?</p>
                                             <div class="popup-actions">
-                                                <a href="dispatchTrip.php?id=<?= $eventID ?>" class="button confirm">Dispatch</a>
+                                                <a href="dispatchTrip.php?id=<?= $eventID ?>" class="button confirm">Complete</a>
                                                 <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Cancel</a>
                                             </div>
                                         </div>

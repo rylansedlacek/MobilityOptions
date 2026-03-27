@@ -195,7 +195,7 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
                         <?php foreach ($vehicles as $vehicle):
                             $vID = (int) $vehicle['id'];
                             $vLabel = $vehicle['make_model'] .
-                            ' [' . $vehicle['plate'] . ']' .
+                            ' [ID: ' . $vehicle['plate'] . ']' .
                             ' — Capacity: ' . $vehicle['capacity'] .
                             ' — Wheelchair Accessible: ' .
                              ($vehicle['wheelchair_accessible'] ? ' Yes' : 'No');

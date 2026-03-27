@@ -26,7 +26,6 @@ $previousWeek = strtotime(date('Y-m-d', $dayEpoch) . ' -7 days');
 $nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
 
 
-
 ?>
 <table id="calendar"
        data-current-month="<?php echo date('Y-m-d', $dayEpoch); ?>"
@@ -93,7 +92,7 @@ $nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
                             } else {
                                 $targetHref = 'event.php?id=' . $info['id'] . '&user_id=' . (isset($_SESSION['_id']) ? $_SESSION['_id'] : 'guest');
                             }
-                            $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="' . $targetHref . '">' . htmlspecialchars_decode($info['name']) . '</a>';
+                            $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="' . $targetHref . '">' . htmlspecialchars($eventLabel, ENT_QUOTES, 'UTF-8') . '</a>';
 
                         }
                     }

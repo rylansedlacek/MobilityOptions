@@ -40,14 +40,14 @@ require_once('header.php');
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $args = sanitize($_POST);
 
-        $required = ['plate', 'vin', 'capacity'];
+        $required = ['plate', 'capacity'];
 
         if (!wereRequiredFieldsSubmitted($args, $required)) {
             $errors[] = 'Please fill in all required fields.';
         }
 
         $plate    = trim($args['plate']);
-        $vin      = trim($args['vin']);
+      //  $vin      = trim($args['vin']);
         $capacity = (int) $args['capacity'];
         $wheelchair_accessible = isset($args['wheelchair_accessible']) ? 1 : 0;
         $make_model = trim($args['make_model'] ?? '');
@@ -58,7 +58,7 @@ require_once('header.php');
         }
 
         if (empty($errors)) {
-            $result = add_vehicle($plate, $vin, $capacity, $wheelchair_accessible, $make_model, $notes);
+            $result = add_vehicle($plate, $capacity, $wheelchair_accessible, $make_model, $notes);
             if ($result === false) {
                 $errors[] = 'Could not add vehicle. Please try again.';
             } else {
@@ -106,13 +106,11 @@ require_once('header.php');
                 <p class="mb-2">The following information will be used to create a vehicle record.</p>
                 <div class="blue-div"></div>
 
-                <label for="plate"><em>* </em>License Plate</label>
-                <input type="text" id="plate" name="plate" required placeholder="Enter license plate"
+                <label for="plate"><em>* </em>ID</label>
+                <input type="text" id="plate" name="plate" required placeholder="Enter vehicle ID number"
                        value="<?= ($args['plate'] ?? '') ?>">
 
-                <label for="vin"><em>* </em>VIN</label>
-                <input type="text" id="vin" name="vin" required placeholder="Enter VIN"
-                       value="<?= ($args['vin'] ?? '') ?>">
+               
 
                 <label for="capacity"><em>* </em>Capacity</label>
                 <input type="number" id="capacity" name="capacity" required min="1" placeholder="Enter passenger capacity"

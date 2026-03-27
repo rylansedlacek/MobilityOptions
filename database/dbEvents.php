@@ -1250,18 +1250,18 @@ function delete_vehicle($id)
 
 
 // add a new vehicle to the sustem. 
-function add_vehicle($plate, $vin, $capacity, $wheelchair_accessible, $make_model, $notes)
+function add_vehicle($plate, $capacity, $wheelchair_accessible, $make_model, $notes)
 {
     $connection = connect();
     $stmt = $connection->prepare(
-        "INSERT INTO vehicles (plate, vin, capacity, wheelchair_accessible, make_model, notes)
-         VALUES (?, ?, ?, ?, ?, ?)"
+        "INSERT INTO vehicles (plate, capacity, wheelchair_accessible, make_model, notes)
+         VALUES (?, ?, ?, ?, ?)"
     );
     if (!$stmt) {
         $connection->close();
         return false;
     }
-    $stmt->bind_param('ssiiss', $plate, $vin, $capacity, $wheelchair_accessible, $make_model, $notes);
+    $stmt->bind_param('siiss', $plate, $capacity, $wheelchair_accessible, $make_model, $notes);
     $success = $stmt->execute();
     $new_id = $success ? $connection->insert_id : false;
     $stmt->close();

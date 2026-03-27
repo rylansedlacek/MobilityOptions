@@ -39,8 +39,8 @@ include 'database/dbEvents.php';
         //$messages = get_user_messages($userID);
         //require_once('database/dbevents.php');
         //require_once('domain/Event.php');
-        $events = get_all_events();
-        if (sizeof(get_all_events())): ?>
+        $events = get_all_prog_events();
+        if (sizeof(get_all_prog_events())): ?>
             <div class="table-wrapper">
                 <label>Finalize the ride by selecting "Complete".</label> <br/>
                 <table class="general">
@@ -49,8 +49,8 @@ include 'database/dbEvents.php';
                             <th>Rider Name</th>
                             <th>Date Of Ride</th>
                             <th>Pick Up Time</th>
+                            <th>Trip Status</th>
                             <th>Complete Trip</th>
-                            <th style="width:1px"></th>
                         </tr>
                     </thead>
                     <tbody class="standout">
@@ -62,6 +62,8 @@ include 'database/dbEvents.php';
                             $eventID = $event->getID();
                             $title = $event->getName();
                             $startDate = $event->getStartDate();
+                            $startTime = $event->getStartTime();
+                            $startTime = $startTime ? date('g:i A', strtotime($startTime)) : '';
                             $tripStatus = $event->getTripStatus() ?: 'N';
 
                             $viewLink = "<a href='event.php?id=$eventID'>$title</a>";
@@ -72,11 +74,11 @@ include 'database/dbEvents.php';
 
                             echo "
                                 <tr data-event-id='$eventID'>
-                                <td><a href='event.php?id=$eventID' style='color: black; text-decoration: underline;'>$title</a></td> <!-- Link updated here -->
+                                    <td><a href='event.php?id=$eventID' style='color: black; text-decoration: underline;'>$title</a></td>
                                     <td>$startDate</td>
+                                    <td>$startTime</td>
                                     <td>$tripStatus</td>
                                     <td>$completeLink</td>
-                                    <td></td>
                                 </tr>";
                         }
                         ?>
@@ -86,7 +88,7 @@ include 'database/dbEvents.php';
         <?php else: ?>
             <p class="no-events standout">There are currently no requests available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
         <?php endif ?>
-        <a class="button cancel" href="eventManagement.php">Return to Dashboard</a>
+        <a class="button cancel" href="dispatchTrip.php">Return to Dashboard</a>
     </main>
 </body>
 

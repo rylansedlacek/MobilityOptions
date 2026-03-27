@@ -407,6 +407,20 @@ function get_all_events() {
     return $theEvents;
 }
 
+function get_all_prog_events() {
+    $con = connect();
+    $query = "SELECT * FROM dbevents WHERE trip_status = 'in_progress' and trip_status != 'cancelled'";
+   
+    $result = mysqli_query($con, $query);
+    $theEvents = array();
+    while ($result_row = mysqli_fetch_assoc($result)) {
+        $theEvent = make_an_event($result_row);
+        $theEvents[] = $theEvent;
+    }
+    mysqli_close($con);
+    return $theEvents;
+}
+
 function get_pending_ride_requests() {
     $con = connect();
     $query = "select * from dbevents where completed = 'N'" .

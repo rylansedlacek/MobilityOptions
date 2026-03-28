@@ -290,7 +290,7 @@
         /* Footer */
         .footer {
             width: 100%;
-            background: #385a2c;
+            background: #45892e;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -568,7 +568,30 @@
 
     
 
-    <!-- System Notifications -->
+    
+    <!-- Generate Report -->
+    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
+        </div>
+        
+        <div class="large-text-sub">Generate Operational Report</div>
+        <div class="graph-text">Operational Statistics - Report Generation.</div>
+        <button class="arrow-button">→</button>
+    </div>
+
+    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
+        </div>
+        
+        <div class="large-text-sub">Generate Ride Statistics Report</div>
+        <div class="graph-text">Rider Statistics - Report Generation.</div>
+        <button class="arrow-button">→</button>
+    </div>
+
+               
+    <!-- System Notifications 
     <div class="content-box-test" onclick="window.location.href='inbox.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
@@ -584,17 +607,8 @@
         <div class="graph-text">Stay up to date.</div>
         <button class="arrow-button">→</button>
     </div>
+    -->
 
-    <!-- Generate Report -->
-    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
-        <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
-        </div>
-        
-        <div class="large-text-sub">Generate Report</div>
-        <div class="graph-text">Current Operational Report Generation.</div>
-        <button class="arrow-button">→</button>
-    </div>
 </div>
 
 

@@ -25,6 +25,41 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
     require_once('database/dbReports.php');
     $previousReports = get_all_reports();
     ?>
+    
+    <!--for the previous reports table-->
+    <style>
+        
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #DDD;
+    }
+
+    th {
+    font-weight: bold;
+    background-color: #4a6cf7;   
+    color: white;                
+    text-transform: uppercase;  
+    letter-spacing: 0.5px;      
+    border-bottom: 2px solid #2f4fd1; 
+    }
+
+    tr:nth-child(even) {
+    background-color: #0000;
+    }
+    tr:nth-child(odd) {
+    background-color: #2222;
+    }
+
+    tr:hover {background-color: #a1b7ffa0;}
+
+    </style>
+
 </head>
 <body>
     <!-- Hero Section with Title -->
@@ -73,7 +108,7 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
     <?php if (empty($previousReports)) { ?>
         <p>No previous reports found.</p>
     <?php } else { ?>
-    <!--This is kinda ugly but it works for now x-->
+    <!--This is kinda ugly but it works for now-->
         <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
                 <tr>

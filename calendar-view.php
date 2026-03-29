@@ -45,6 +45,36 @@ if (date('m', strtotime($calendarEnd . ' +1 day')) != $monthEpoch) {
     $calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +41 day'));
     $calendarEndEpoch = strtotime($calendarEnd);
 }
+
+
+function time_label($eventInfo, $isScheduledRide) {
+    $rawStartTime = trim((string)($eventInfo['startTime'] ?? ''));
+    $displayTime = 'Time not entered';
+    if ($rawStartTime !== '') {
+        $parsedTime = DateTime::createFromFormat('H:i:s', $rawStartTime);
+        if (!($parsedTime instanceof DateTime)) {
+            $parsedTime = DateTime::createFromFormat('H:i', $rawStartTime);
+        }
+        
+        $displayTime = null;
+        if ($parsedTime instanceof DateTime) {
+             $displayTime = $parsedTime->format('g:i A');
+        } else {
+            $displayTime = $rawStartTime;
+        }
+    }
+
+    $prefix = null;
+    if ($isScheduledRide ) {
+        $prefix = 'Scheduled: ';
+    } else {
+         $prefix ='Requested: ';
+    }
+
+    return $prefix . $displayTime;
+}
+
+
 ?>
 
                 <!-- Add navigation data to the calendar -->
@@ -93,13 +123,14 @@ if (date('m', strtotime($calendarEnd . ' +1 day')) != $monthEpoch) {
                                     foreach ($dayEvents as $info) {
                                         $completedValue = strtoupper(trim((string)($info['completed'] ?? 'N')));
                                         $isScheduledRide = ($completedValue === 'Y');
+                                        $eventLabel = time_label($info, $isScheduledRide);
                                         $backgroundCol = $isScheduledRide ? '#2E7D32' : '#FBC02D';
                                         if ($isScheduledRide) {
                                             $targetHref = 'scheduleTrip.php?id=' . $info['id'];
                                         } else {
                                             $targetHref = 'event.php?id=' . $info['id'] . '&user_id=' . (isset($_SESSION['_id']) ? $_SESSION['_id'] : 'guest');
                                         }
-                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="' . $targetHref . '">' . htmlspecialchars_decode($info['name']) . '</a>';
+                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="' . $targetHref . '">' . htmlspecialchars($eventLabel, ENT_QUOTES, 'UTF-8') . '</a>';
                                         
                                     }
                                 }

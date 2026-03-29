@@ -19,68 +19,65 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title> Mobility Options | Operational Reports</title>
     <!--<script src="js/data-filters.js" defer></script>-->
-    <link href="css/base.css" rel="stylesheet">
-    <?php require_once('header.php'); ?>
+    <link href="css/normal_tw.css" rel="stylesheet">
+    <?php
+    $tailwind_mode = true;
+    require_once('header.php');
+    ?>
     <?php
     require_once('database/dbReports.php');
     $previousReports = get_all_reports();
     ?>
-    
-    <!--for the previous reports table-->
     <style>
-        
-    table {
-    border-collapse: collapse;
-    width: 100%;
-    }
+        body, main {
+            background-color: #fafafa;
+        }
 
-    th, td {
-    padding: 8px;
-    text-align: center;
-    border-bottom: 1px solid #DDD;
-    }
+        .blue-div {
+            background-color: #fafafa !important;
+        }
 
-    th {
-    font-weight: bold;
-    background-color: #4a6cf7;   
-    color: white;                
-    text-transform: uppercase;  
-    letter-spacing: 0.5px;      
-    border-bottom: 2px solid #2f4fd1; 
-    }
+        .main-content-box label {
+            color: #000 !important;
+        }
 
-    td {
-    color: #474646;           
-    font-size: 1rem;   
-    line-height: 1.4;
-    text-align: center;     
-    }
+        .text-blue-700,
+        .text-blue-700:visited,
+        .text-blue-700:hover {
+            color: #000 !important;
+        }
 
-    tr:nth-child(even) {
-    background-color: #0000;
-    }
-    tr:nth-child(odd) {
-    background-color: #2222;
-    }
+        .sub-text {
+            color: #666 !important;
+        }
 
-    tr:hover {background-color: #a1b7ffa0;}
+        select {
+            width: 100%;
+            max-width: 20rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.625rem 0.875rem;
+            background-color: #fff;
+        }
 
+        .report-actions {
+            white-space: nowrap;
+        }
     </style>
-
 </head>
 <body>
-    <!-- Hero Section with Title -->
+    <header class="hero-header">
         <div class="center-header">
-            <h1 style="color:black;">Generate Operational Report</h1>
+            <h1>Generate Operational Report</h1>
         </div>
-                <!-- Info Section -->
+    </header>
 
     <main>
-        <div class="main-content-box">
+        <div class="main-content-box w-[80%] p-8">
             <form method="POST" action="processReport.php">
                 <div style="margin-bottom: 1.5rem;">
                     <label style="font-weight: 600;">Report Contents</label>
-                    <p style="font-size: 16px; margin-top: 0.5rem; margin-bottom: 0.5rem; color: #c2c2c2ff;">
+                    <p class="sub-text" style="font-size: 16px; margin-top: 0.5rem; margin-bottom: 0.5rem;">
                   Includes system totals for: trips, ride requests, scheduled rides, in-progress rides, completed rides, canceled rides, active drivers, and vehicles.
                     </p>
                 </div>
@@ -100,70 +97,80 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
                     <input type="hidden" value="<?php echo $_SESSION['_id']; ?>" name="admin" id="admin">
                     <input type="hidden" value="<?php echo date("d-M-Y H:i:s e") ?>" name="time" id="time">
                     <input type="hidden" name="action" value="generate">
-                    <input type="submit" value="Generate Report" class="button generate-btn">
+                    <input type="submit" value="Generate Report" class="blue-button">
                 </div>
             </form>
 
         
         </div>
 
-        <div class="center-header">
-            <h1 style="color:black;">Previous Operational Reports</h1>
+        <header class="hero-header">
+            <div class="center-header">
+                <h1>Previous Operational Reports</h1>
+            </div>
+        </header>
+
+        <div class="main-content-box w-[80%] p-8">
+            <?php
+                if (count($previousReports) > 0) {
+                    echo '
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead class="bg-blue-400">
+                                <tr>
+                                    <th>Report ID</th>
+                                    <th>Created At</th>
+                                    <th>Total Trips</th>
+                                    <th>Total Completed</th>
+                                    <th>Total Drivers</th>
+                                    <th>Total Vehicles</th>
+                                    <th>Download</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+
+                    foreach ($previousReports as $report) {
+                        echo '
+                                <tr>
+                                    <td>' . (int)$report['report_id'] . '</td>
+                                    <td>' . (string)$report['created_at'] . '</td>
+                                    <td>' . (int)$report['total_trips'] . '</td>
+                                    <td>' . (int)$report['total_completed'] . '</td>
+                                    <td>' . (int)$report['total_drivers'] . '</td>
+                                    <td>' . (int)$report['total_vehicles'] . '</td>
+                                    <td class="report-actions">
+                                        <form method="POST" action="processReport.php" style="display: inline; margin: 0;">
+                                            <input type="hidden" name="action" value="download_existing">
+                                            <input type="hidden" name="report_id" value="' . (int)$report['report_id'] . '">
+                                            <input type="hidden" name="format" value="csv">
+                                            <button type="submit" class="text-blue-700 underline" style="margin-right: 1rem;">CSV</button>
+                                        </form>
+                                        <form method="POST" action="processReport.php" style="display: inline; margin: 0;">
+                                            <input type="hidden" name="action" value="download_existing">
+                                            <input type="hidden" name="report_id" value="' . (int)$report['report_id'] . '">
+                                            <input type="hidden" name="format" value="excel">
+                                            <button type="submit" class="text-blue-700 underline">Excel</button>
+                                        </form>
+                                    </td>
+                                </tr>';
+                    }
+
+                    echo '
+                            </tbody>
+                        </table>
+                    </div>';
+                } else {
+                    echo '<div class="error-block">No previous reports found.</div>';
+                }
+            ?>
         </div>
 
-        <div class="main-content-box">
-    <?php if (empty($previousReports)) { ?>
-        <p>No previous reports found.</p>
-    <?php } else { ?>
-    <!--This is kinda ugly but it works for now-->
-        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: center;">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Created At</th>
-                    <th>Total Trips</th>
-                    <th>Total Completed</th>
-                    <th>Total Drivers</th>
-                    <th>Total Vehicles</th>
-                    <th  colspan="2">Download</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($previousReports as $report) { ?>
-                    <tr>
-                        <td><?php echo (int)$report['report_id']; ?></td>
-                        <td><?php echo htmlspecialchars($report['created_at']); ?></td>
-                        <td><?php echo (int)$report['total_trips']; ?></td>
-                        <td><?php echo (int)$report['total_completed']; ?></td>
-                        <td><?php echo (int)$report['total_drivers']; ?></td>
-                        <td><?php echo (int)$report['total_vehicles']; ?></td>
-                        <td>
-                            <form method="POST" action="processReport.php" style="margin: 0;">
-                                <input type="hidden" name="action" value="download_existing">
-                                <input type="hidden" name="report_id" value="<?php echo (int)$report['report_id']; ?>">
-                                <input type="hidden" name="format" value="csv">
-                                <input type="submit" value="CSV" class="button">
-                            </form>
-                        </td>
-                        <td>
-                            <form method="POST" action="processReport.php" style="margin: 0;">
-                                <input type="hidden" name="action" value="download_existing">
-                                <input type="hidden" name="report_id" value="<?php echo (int)$report['report_id']; ?>">
-                                <input type="hidden" name="format" value="excel">
-                                <input type="submit" value="Excel" class="button">
-                            </form>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    <?php } ?>
-</div>
+        <div class="text-center mt-6">
+            <a href="index.php" class="return-button">Return to Dashboard</a>
+        </div>
 
-        <!-- Return Button -->
-        <div style="text-align: center; margin-top: 2rem;">
-            <a href="index.php" class="button" style="display: inline-block; text-decoration: none; width: 41%;">Return to Dashboard</a>
+        <div class="info-section">
+            <div class="blue-div"></div>
         </div>
 
     </main>

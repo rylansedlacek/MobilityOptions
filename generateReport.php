@@ -36,7 +36,7 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
 
     th, td {
     padding: 8px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #DDD;
     }
 
@@ -47,6 +47,13 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
     text-transform: uppercase;  
     letter-spacing: 0.5px;      
     border-bottom: 2px solid #2f4fd1; 
+    }
+
+    td {
+    color: #474646;           
+    font-size: 1rem;   
+    line-height: 1.4;
+    text-align: center;     
     }
 
     tr:nth-child(even) {
@@ -109,17 +116,17 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
         <p>No previous reports found.</p>
     <?php } else { ?>
     <!--This is kinda ugly but it works for now-->
-        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: center;">
             <thead>
                 <tr>
-                    <th>Report ID</th>
+                    <th>ID</th>
                     <th>Created At</th>
                     <th>Total Trips</th>
                     <th>Total Completed</th>
                     <th>Total Drivers</th>
                     <th>Total Vehicles</th>
-                    <th>Download CSV</th>
-                    <th>Download Excel</th>
+                    <th  colspan="2">Download</th>
+                    
                 </tr>
             </thead>
             <tbody>

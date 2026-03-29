@@ -73,6 +73,7 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
     <?php if (empty($previousReports)) { ?>
         <p>No previous reports found.</p>
     <?php } else { ?>
+    <!--This is kinda ugly but it works for now x-->
         <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
                 <tr>

@@ -407,6 +407,20 @@ function get_all_events() {
     return $theEvents;
 }
 
+function get_all_prog_events() {
+    $con = connect();
+    $query = "SELECT * FROM dbevents WHERE trip_status = 'in_progress' and trip_status != 'cancelled'";
+   
+    $result = mysqli_query($con, $query);
+    $theEvents = array();
+    while ($result_row = mysqli_fetch_assoc($result)) {
+        $theEvent = make_an_event($result_row);
+        $theEvents[] = $theEvent;
+    }
+    mysqli_close($con);
+    return $theEvents;
+}
+
 function get_pending_ride_requests() {
     $con = connect();
     $query = "select * from dbevents where completed = 'N'" .
@@ -1236,18 +1250,18 @@ function delete_vehicle($id)
 
 
 // add a new vehicle to the sustem. 
-function add_vehicle($plate, $vin, $capacity, $wheelchair_accessible, $make_model, $notes)
+function add_vehicle($plate, $capacity, $wheelchair_accessible, $make_model, $notes)
 {
     $connection = connect();
     $stmt = $connection->prepare(
-        "INSERT INTO vehicles (plate, vin, capacity, wheelchair_accessible, make_model, notes)
-         VALUES (?, ?, ?, ?, ?, ?)"
+        "INSERT INTO vehicles (plate, capacity, wheelchair_accessible, make_model, notes)
+         VALUES (?, ?, ?, ?, ?)"
     );
     if (!$stmt) {
         $connection->close();
         return false;
     }
-    $stmt->bind_param('ssiiss', $plate, $vin, $capacity, $wheelchair_accessible, $make_model, $notes);
+    $stmt->bind_param('siiss', $plate, $capacity, $wheelchair_accessible, $make_model, $notes);
     $success = $stmt->execute();
     $new_id = $success ? $connection->insert_id : false;
     $stmt->close();

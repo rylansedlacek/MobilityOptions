@@ -155,8 +155,8 @@ require_once('header.php');
             <table>
                 <thead class="bg-blue-400">
                     <tr>
-                        <th>Plate</th>
-                        <th>VIN</th>
+                        <th>ID</th>
+                        
                         <th>Capacity</th>
                         <th>Wheelchair Accessible</th>
                         <th>Make / Model</th>
@@ -169,7 +169,7 @@ require_once('header.php');
                     <?php foreach ($vehicles as $vehicle): ?>
                     <tr>
                         <td><?= $vehicle['plate'] ?></td>
-                        <td><?= $vehicle['vin'] ?></td>
+                        
                         <td><?= $vehicle['capacity'] ?></td>
                         <td><?= $vehicle['wheelchair_accessible'] ? 'Yes' : 'No' ?></td>
                         <td><?= $vehicle['make_model'] ?? '—' ?></td>

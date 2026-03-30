@@ -178,7 +178,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             </p>
         <?php endif ?>
         <p class="no-events standout">
-            <a class="button return" href="dispatchTrip.php">Return to Dashboard</a>
+            <a class="button return" href="index.php">Return to Dashboard</a>
             </p>
     </main>
 </body>

@@ -40,6 +40,7 @@ include 'database/dbPersons.php';
         <?php
         $events = get_all_prog_events();
         $drivers = get_drivers_with_email();
+        $vehicles = get_vehicles();
 
         if (sizeof(get_all_prog_events()) && sizeof($drivers)): ?>
             <div class="table-wrapper">

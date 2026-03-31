@@ -169,7 +169,7 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
             <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
         <?php endif ?>
         <p class="no-events standout">
-        <a class="button return" href="dispatchTrip.php">Return to Dashboard</a>
+        <a class="button return" href="index.php">Return to Dashboard</a>
         </p>
     </main>
 </body>

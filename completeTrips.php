@@ -40,7 +40,7 @@ include 'database/dbPersons.php';
     <h1>Complete Trip</h1>
     <main class="general">
         <?php
-        $events = get_all__prog_events();
+        $events = get_all_prog_events();
         $drivers = get_drivers_with_email();
         $vehicles = get_vehicles();
 

@@ -75,7 +75,7 @@ include 'database/dbPersons.php';
                                 $driverName = "";
                                 $riderName = $event->getName();
 
-                                if ($tripStatus !== 'Scheduled') continue;
+                                if ($tripStatus !== 'in_progress') continue;
                                 foreach ($drivers as $driver) {
                                     if ($driver['id'] ==  $driverDI) {
                                         $driverName = $driver['first_name'] . ' ' . $driver['last_name'];

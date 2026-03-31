@@ -47,7 +47,6 @@ include 'database/dbPersons.php';
         if (sizeof(get_all_prog_events()) && sizeof($drivers)): ?>
             <div class="table-wrapper">
                 <label>Finalize dispatched trips for reporting by selecting "Complete".</label>
-                <label>Finalize dispatched trips by selecting "Complete".</label>
                 <table class="general">
                     <thead>
                         <tr>
@@ -117,6 +116,7 @@ include 'database/dbPersons.php';
                 </table>
             </div>
         <?php else: ?>
+            <p class="no-events standout">There are currently no dispatched trips to complete.<a class="button add" href="viewAllTrips.php">Dispatch a Trip</a> </p>
             <p class="no-events standout">There are currently no dispatched trips to complete.<a class="button add" href="viewAllTrips.php">Dispatch a Trip</a> </p>
         <?php endif ?>
         <div class="text-center mt-6">

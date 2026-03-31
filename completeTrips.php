@@ -40,11 +40,11 @@ include 'database/dbPersons.php';
     <h1>Complete Trip</h1>
     <main class="general">
         <?php
-        $events = get_all_events();
+        $events = get_all__prog_events();
         $drivers = get_drivers_with_email();
         $vehicles = get_vehicles();
 
-        if (sizeof(get_all_events()) && sizeof($drivers)): ?>
+        if (sizeof(get_all_prog_events()) && sizeof($drivers)): ?>
             <div class="table-wrapper">
                 <label>Finalize dispatched trips for reporting by selecting "Complete".</label>
                 <table class="general">
@@ -75,7 +75,7 @@ include 'database/dbPersons.php';
                                 $driverName = "";
                                 $riderName = $event->getName();
 
-                                if ($tripStatus !== 'in_progress') continue;
+                                if ($tripStatus !== 'Scheduled') continue;
                                 foreach ($drivers as $driver) {
                                     if ($driver['id'] ==  $driverDI) {
                                         $driverName = $driver['first_name'] . ' ' . $driver['last_name'];

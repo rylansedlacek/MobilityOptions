@@ -112,7 +112,7 @@ include 'database/dbPersons.php';
                                         <div class="popup-box">
                                             <p>Are you sure you want to complete this trip?</p>
                                             <div class="popup-actions">
-                                                <a href="completeTrips.php?id=<?= $eventID ?>" class="button confirm">Confirm</a>
+                                                <a href="completeTrip.php?id=<?= $eventID ?>" class="button confirm">Confirm</a>
                                                 <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Cancel</a>
                                             </div>
                                         </div>

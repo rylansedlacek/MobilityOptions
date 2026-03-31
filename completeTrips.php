@@ -17,6 +17,7 @@ if (isset($_SESSION['_id'])) {
 }
 include 'database/dbEvents.php';
 include 'database/dbPersons.php';
+include 'database/dbPersons.php';
 //include 'domain/Event.php';
 ?>
 <!DOCTYPE html>
@@ -34,6 +35,8 @@ include 'database/dbPersons.php';
 <body>
     <?php require_once('header.php') ?>
     <?php require_once('database/dbEvents.php'); ?>
+    <?php require_once('database/dbPersons.php'); ?>
+    
     <h1>Complete Trip</h1>
     <main class="general">
         <?php
@@ -44,6 +47,7 @@ include 'database/dbPersons.php';
         if (sizeof(get_all_prog_events()) && sizeof($drivers)): ?>
             <div class="table-wrapper">
                 <label>Finalize dispatched trips for reporting by selecting "Complete".</label>
+                <label>Finalize dispatched trips by selecting "Complete".</label>
                 <table class="general">
                     <thead>
                         <tr>

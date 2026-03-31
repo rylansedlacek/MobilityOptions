@@ -43,16 +43,15 @@ include 'database/dbPersons.php';
 
         if (sizeof(get_all_prog_events()) && sizeof($drivers)): ?>
             <div class="table-wrapper">
-                <label>Finalize dispatched trips by selecting "Complete".</label>
+                <label>Finalize dispatched trips for reporting by selecting "Complete".</label>
                 <table class="general">
                     <thead>
                         <tr>
-                            <th><b>Driver Name</b></th>
-                            <th><b>Vehicle Model</b></th>
-                            <th><b>Vehicle Plate</b></th>
-                            <th><b>Dispatch Trip</b></th>
-                            <th><b>Rider Name</b></th>
-                            <th><b>Dispatch</b></th>
+                            <th><b>Trip Date</b></th>
+                            <th><b>Trip Time</b></th>
+                            <th><b>Assigned Driver</b></th>
+                            <th><b>Assigned Rider</b></th>
+                            <th><b>Complete Trip</b></th>
 
                         </tr>
                     </thead>
@@ -68,6 +67,7 @@ include 'database/dbPersons.php';
                                 <?php
                                 $eventID = $event->getID();
                                 $eventDate = $event->getStartDate();
+                                $eventTime = $event->getStartTime();
                                 $driverDI = $event->getDriverId();
                                 $tripStatus = $event->getTripStatus();
                                 $driverName = "";
@@ -80,7 +80,7 @@ include 'database/dbPersons.php';
                                         break;
                                     }
                                 }
-                                $vehicleID = (int)$event->getVehicleId();
+                                $vehicleID = (int)$event->getVehicleId(); 
                                 $vehicle = isset($vehicleMap[$vehicleID]) ? $vehicleMap[$vehicleID] : null;
                                 ?>
 
@@ -92,11 +92,11 @@ include 'database/dbPersons.php';
                                     </tr>
                                 <?php else: ?>
                                     <tr data-event-id="<?= $eventID ?>">
-                                        <td><?= $driverName ?></td>
-                                        <td><?= $vehicle ? htmlspecialchars($vehicle['make_model']) : 'no vehicle' ?></td>
-                                        <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
                                         <td><?= $eventDate ?></td>
+                                        <td><?= $eventTime ?></td>
+                                        <td><?= $driverName ?></td>
                                         <th><?= $riderName ?></td>
+
 
                                             <!-- <td>
                                             <a href="#" onclick="window.location.href = 'viewPassengers.php'" style.display='flex' ; style="color: black; text-decoration: underline;">
@@ -104,15 +104,15 @@ include 'database/dbPersons.php';
                                         </td> -->
                                         <td>
                                             <a href="#" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" class="button confirm">
-                                                Dispatch Trip </a>
+                                                Complete Trip </a>
                                         </td>
                                     </tr>
 
                                     <div id="popup<?= $eventID ?>" class="popup" style="display:none;">
                                         <div class="popup-box">
-                                            <p>Are you sure you want to dispatch this trip?</p>
+                                            <p>Are you sure you want to complete this trip?</p>
                                             <div class="popup-actions">
-                                                <a href="viewAllTrips.php?id=<?= $eventID ?>" class="button confirm">Confirm</a>
+                                                <a href="completeTrips.php?id=<?= $eventID ?>" class="button confirm">Confirm</a>
                                                 <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Cancel</a>
                                             </div>
                                         </div>
@@ -124,7 +124,7 @@ include 'database/dbPersons.php';
                 </table>
             </div>
         <?php else: ?>
-            <p class="no-events standout">There are currently no requests available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
+            <p class="no-events standout">There are currently no dispatched trips to complete.<a class="button add" href="viewAllTrips.php">Dispatch a Trip</a> </p>
         <?php endif ?>
         <a class="button return" href="index.php">Return to Dashboard</a>
     </main>

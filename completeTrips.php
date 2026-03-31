@@ -42,7 +42,7 @@ include 'database/dbPersons.php';
         $drivers = get_drivers_with_email();
         $vehicles = get_vehicles();
 
-        if (sizeof(get_all_prog_events()) && sizeof($drivers)): ?>
+        if (sizeof(get_all_prog_events())): ?>
             <div class="table-wrapper">
                 <label>Finalize dispatched trips for reporting by selecting "Complete".</label>
                 <table class="general">

@@ -159,7 +159,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                         <div class="popup-box">
                                             <p>Are you sure you want to dispatch this trip?</p>
                                             <div class="popup-actions">
-                                                <a href="completeTripForm.php?id=<?= $eventID ?>" class="button confirm">Confirm</a>
+                                                <a href="viewAllTrips.php?id=<?= $eventID ?>" class="button confirm">Confirm</a>
                                                 <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Cancel</a>
                                             </div>
                                         </div>

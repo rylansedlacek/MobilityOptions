@@ -11,3 +11,4 @@
 [sendEmails] HTTP 200 | cURL Error:  | Response: {"success":false,"error":"Missing SMTP settings in email\/sendEmail.php"}
 [sendEmails] HTTP 200 | cURL Error:  | Response: {"success":true,"sent":["email@email.com"],"failed":[],"error":""}
 [sendEmails] HTTP 200 | cURL Error:  | Response: {"success":true,"sent":["email@email.com"],"failed":[],"error":""}
+[sendEmails] HTTP 200 | cURL Error:  | Response: {"success":true,"sent":["email@email.com"],"failed":[],"error":""}

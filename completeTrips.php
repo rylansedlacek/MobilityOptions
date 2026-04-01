@@ -103,7 +103,7 @@ include 'database/dbPersons.php';
                                                 Passenger List </a>
                                         </td> -->
                                         <td>
-                                            <a href="completeTripForm.php" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" class="button confirm">
+                                            <a href="completeTripForm.php?id=<?= $eventID ?>" class="button confirm">
                                                 Complete Trip </a>
                                         </td>
                                     </tr>

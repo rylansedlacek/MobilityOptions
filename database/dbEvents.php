@@ -1359,12 +1359,12 @@ function complete_trip($eventID, $mileage_start, $mileage_end)
     $query = "UPDATE dbevents SET
                 trip_status = ?,
                 mileage_start = ?,
-                mileage_end = ?,
+                mileage_end = ?
             where id = ?";
     $stmt = mysqli_prepare($connection, $query);
 
-    mysqli_stmt_bind_param($stmt, 'sssssssi', 
-        $trip_status, 
+    mysqli_stmt_bind_param($stmt, 'sssi', 
+        $status, 
         $mileage_start, 
         $mileage_end, 
         $eventID

@@ -406,6 +406,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <!-- Additional Information Required for Completing Trip -->
                 <!-- Includes: PICKUP TIME, DROPOFF TIME, MILEAGE, COMPLETION STATUS-->
+            <form method="POST" action="completeTrip.php?id<?= urlencode($id) ?>">
                 <fieldset class="section-box mb-4">
 
                 <h3>Additional Details</h3>
@@ -418,10 +419,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" id="drop_off_time" name="drop_off_time" required placeholder="Ex: 10:30 AM">
 
                 <label for="start_mileage"> <em>* </em>Start Mileage (in mi.)</label>
-                <input type="text" id="mileage" name="start_mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
+                <input type="text" id="start_mileage" name="start_mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
 
                 <label for="end_mileage"> <em>* </em>End Mileage (in mi.)</label>
-                <input type="text" id="mileage" name="end_mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
+                <input type="text" id="end_mileage" name="end_mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
 
                 <label for="donation_amt"> <em>* </em>Donation Amount (if recieved, otherwise 0)</label>
                 <input type="text" id="donation_amt" name="donation_amt" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
@@ -435,10 +436,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
 
                 <div>
-                    <a class='button add' href='completeTrip.php?id=<?= urlencode($id) ?>'>Complete Trip</a>
+                    <button type="submit" class="button add">Complete Trip</button>
                     <a href="completeTrips.php?id=<?= $id ?>" class="button cancel">Back</a>
                 </div>
             </fieldset>
+            </form>
 
             <?php endif ?>
 

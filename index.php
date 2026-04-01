@@ -590,6 +590,16 @@
         <button class="arrow-button">→</button>
     </div>
 
+    <div class="content-box-test" onclick="window.location.href='generateRidersReport.php'" style="border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
+        </div>
+        
+        <div class="large-text-sub">Generate Rider Statistics Report</div>
+        <div class="graph-text">Rider Statistics - Report Generation.</div>
+        <button class="arrow-button">→</button>
+    </div>
+
                
     <!-- System Notifications 
     <div class="content-box-test" onclick="window.location.href='inbox.php'" style="border-radius: 12px; padding: 20px;">

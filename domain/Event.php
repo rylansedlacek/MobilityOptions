@@ -13,8 +13,8 @@ class Event {
     private $description;
     private $capacity;
     private $location;
-    private $affiliation;
-    private $branch;
+    private $attended;
+    private $dropoff_contact;
     private $access;
     private $completed;
 
@@ -28,7 +28,7 @@ class Event {
     private $mileage_start;
     private $mileage_end;
 
-    function __construct($id, $name, $type, $startDate, $startTime, $endTime, $endDate, $description, $capacity, $location, $affiliation, $branch, $access, $completed,
+    function __construct($id, $name, $type, $startDate, $startTime, $endTime, $endDate, $description, $capacity, $location, $attended, $dropoff_contact, $access, $completed,
                          $rider_id = null, $driver_id = null, $vehicle_id = null,
                          $pickup_location = null, $dropoff_location = null,
                          $trip_status = null, $mileage_start = null, $mileage_end = null) {
@@ -42,8 +42,8 @@ class Event {
         $this->description = $description;
         $this->capacity = $capacity;
         $this->location = $location;
-        $this->affiliation = $affiliation;
-        $this->branch = $branch;
+        $this->attended = $attended;
+        $this->dropoff_contact = $dropoff_contact;
         $this->access = $access;
         $this->completed = $completed;
         
@@ -102,12 +102,12 @@ class Event {
         return $this->type;
     }
 
-    function getBranch(){
-        return $this->branch;
+    function getDropoffContact(){
+        return $this->dropoff_contact;
     }
 
-    function getAffiliation(){
-        return $this->affiliation;
+    function getAttended(){
+        return $this->attended;
     }
 
     function getAccess(){

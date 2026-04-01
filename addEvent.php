@@ -31,7 +31,7 @@
             "name", "date", "start-time", "end-time", "description", "type"
         );
         if (!wereRequiredFieldsSubmitted($args, $required)) { 
-            echo 'bad form data';
+            echo 'Missing required fields';
             die();
         } else {
            
@@ -147,9 +147,44 @@
                                         $args['dropoff-city'] . ', ' . 
                                         $args['dropoff-state'] . ' ' . 
                                         $args['dropoff-zipcode'];
-
+            $args['dropoff_contact'] = $args['dropoff-contact'];
             $args['series_id'] = bin2hex(random_bytes(16)); // new new
             $args['completed'] = 'N';
+
+
+            //my duplicate check - gc
+            function check_duplicate_trip($args) {
+                $con = connect(); 
+
+        $query = "SELECT * FROM dbevents 
+              WHERE rider_id = ?
+              AND startDate = ?
+              AND startTime = ?
+              AND pickup_location = ?
+              AND dropoff_location = ?
+              LIMIT 1";
+
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, "issss",
+            $args['rider_id'],
+            $args['startDate'],
+            $args['startTime'],
+            $args['pickup_location'],
+            $args['dropoff_location']
+        );
+
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+    
+        return mysqli_num_rows($result) > 0;}
+
+            $duplicate = check_duplicate_trip($args);
+
+            if ($duplicate) {
+                header("Location: addEvent.php?error=duplicate");
+                exit();
+            }
 
             $id = create_event($args);
             if (!$id) {
@@ -169,11 +204,11 @@
                     $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
                         "Your ride request has been submitted with the following details:\n\n" .
                         "Date: {$args['date']}\n" .
-                        "Time: {$args['start-time']} - {$args['end-time']}\n" .
+                        "Time: " . date('g:i A', strtotime($args['start-time'])) . " - " . date('g:i A', strtotime($args['end-time'])) . "\n" .
                         "Pickup: {$args['pickup_location']}\n" .
                         "Dropoff: {$args['dropoff_location']}\n\n" .
                         "Thank you,\n" .
-                        "Mobility Options";
+                        "Healthy Generations - Mobility Options";
 
                     $sendResult = sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
                 }
@@ -292,18 +327,20 @@
                         <ul style="list-style:none; padding:0; margin-bottom:12px; max-height:150px; overflow:auto; border:2px solid #45892e; border-radius:4px;">
                             <?php foreach ($search_results as $rider): ?>
                                 <li style="padding:6px; border-bottom:1px solid #eee; cursor:pointer;" onclick="selectRider('<?php echo $rider->get_first_name().' '.$rider->get_last_name(); ?>','<?php echo $rider->get_id(); ?>')">
-                                    <?php echo $rider->get_first_name().' '.$rider->get_last_name(); ?>
+                                    <?php echo $rider->get_first_name().' '.$rider->get_last_name().' ('.$rider->get_id().')'; ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
                     <?php endif; ?>
+
+                            <!-- Gabe add the Favorite Table stuff here! - rs -->
                 </div>
 
                  <div class="event-sect">
                     <h2 class="mt-2">Rider Information</h2>
                     <label for="name">* Rider Name </label>
-                    <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>">
-                    <input type="hidden" id="rider_id" name="rider_id" value="<?php echo isset($_POST['rider_id']) ? htmlspecialchars($_POST['rider_id']) : ''; ?>">
+                    <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_POST['name']) ? ($_POST['name']) : ''; ?>">
+                    <input type="hidden" id="rider_id" name="rider_id" value="<?php echo isset($_POST['rider_id']) ? $_POST['rider_id'] : (isset($_GET['rider_id']) ? ($_GET['rider_id']) : ''); ?>">
                  </div>
 
                 <div class="event-sect">
@@ -394,12 +431,15 @@
                 <h2 class="mt-2">Drop-Off Information</h2>
                 <div class="event-datetime">
                
+                
+
                 <div class="event-date">
                     <label for="end-time">* End Time </label>
                     <input type="time" id="end-time" name="end-time" required>
                 </div>
             </div>
-                
+                <label for="dropoff-contact">* Drop Off Contact Information</label>
+                <input type="email" id="dropoff-contact" name="dropoff-contact" required>
 
                 <label for="dropoff-street_address"><em>* </em>Street Address</label>
                 <input type="text" id="dropoff-street_address" name="dropoff-street_address" required placeholder="Enter street address">
@@ -605,7 +645,9 @@
                     function selectRider(name, id) {
                         document.getElementById('name').value = name;
                         document.getElementById('rider_id').value = id;
-                        history.replaceState(null, '', 'addEvent.php');
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('rider_id', id);
+                        history.replaceState(null, '', url.pathname + '?' + url.searchParams.toString());
                         
                     }
 
@@ -655,6 +697,12 @@
                 <br/>
                 <br/>
                 <center><a class="button cancel" href="index.php">Return to Dashboard</a></center>
+
+                <?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate'): ?>
+                <script>
+                    alert("This ride has already been requested.");
+                </script>
+                <?php endif; ?>
                  
         </main>
         

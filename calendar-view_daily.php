@@ -56,27 +56,15 @@ $nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
     $eventsStr = '';
     if (!empty($dayEvents)) {
         foreach ($dayEvents as $info) {
-            $backgroundCol = '#294877'; // default color
-
-            if (isset($_SESSION['access_level'])) {
-                // Logged-in user logic
-                if (is_archived($info['id'])) {
-                    if ($_SESSION['access_level'] < 2) {
-                        continue; // users cannot see archived events
-                    }
-                    $backgroundCol = '#aaaaaa';
-                } elseif (check_if_signed_up($info['id'], $_SESSION['_id'])) {
-                    $backgroundCol = '#4CAF50';
-                }
-
-                $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=' . $_SESSION['_id'] . '">' . htmlspecialchars_decode($info['name']) . '</a>';
+            $completedValue = strtoupper(trim((string)($info['completed'] ?? 'N')));
+            $isScheduledRide = ($completedValue === 'Y');
+            $backgroundCol = $isScheduledRide ? '#2E7D32' : '#FBC02D';
+            if ($isScheduledRide) {
+                $targetHref = 'scheduleTrip.php?id=' . $info['id'];
             } else {
-                // Guest logic
-                if (is_archived($info['id'])) {
-                    continue;
-                }
-                $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="event.php?id=' . $info['id'] . '&user_id=guest">' . htmlspecialchars_decode($info['name']) . '</a>';
+                $targetHref = 'event.php?id=' . $info['id'] . '&user_id=' . (isset($_SESSION['_id']) ? $_SESSION['_id'] : 'guest');
             }
+            $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="' . $targetHref . '">' . htmlspecialchars($eventLabel, ENT_QUOTES, 'UTF-8') . '</a>';
         }
     }
 

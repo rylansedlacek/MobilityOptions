@@ -253,7 +253,7 @@
     }
 
     .button-text {
-        color: white;
+        color: #bbd8b1;
     }
 
     .circle {
@@ -290,7 +290,7 @@
         /* Footer */
         .footer {
             width: 100%;
-            background: #385a2c;
+            background: #45892e;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -472,7 +472,7 @@
     <div class="full-width-bar">
     <div class="content-box">
         <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
-        <div class="small-text">Manage drivers and riders here.</div>
+        <div class="small-text">Manage riders here.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
     <span class="button-text">Go</span>
@@ -520,10 +520,23 @@
 </button>
     </div>
 
+
+<div class="full-width-bar">
+    <div class="content-box">
+        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
+        <div class="small-text">Manage Drivers and Vehicles Here.</div>
+        <div class="large-text">Driver & Vehicle Management</div>
+        <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
+            <span class="button-text">Go</span>
+            <div class="circle">&gt;</div>
+        </button>
+    </div>
+</div>
+
 </div>
 
 <div style="margin-top: 50px; padding: 30px 20px;">
-    <h2><b>Admin Dashboard</b></h2>
+    <h2><b>Additional Menus</b></h2>
 </div>
 
 <div class="full-width-bar-sub">
@@ -553,18 +566,32 @@
         <button class="arrow-button">→</button>
     </div>
 
-    <!-- Manage Documents -->
-    <!-- <div class="content-box-test" onclick="window.location.href='view_encrypted_gallery.php'" style="border-radius: 12px; padding: 20px; position: relative;">
-        <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/file-regular.svg" alt="Document Icon">
-        </div>
-       
-        <div class="large-text-sub">View Pending IDs</div>
-        <div class="graph-text">View pending and arbitrate user submitted IDs.</div>
-        <button class="arrow-button">→</button>
-    </div> -->
+    
 
-    <!-- System Notifications -->
+    
+    <!-- Generate Report -->
+    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
+        </div>
+        
+        <div class="large-text-sub">Generate Operational Report</div>
+        <div class="graph-text">Operational Statistics - Report Generation.</div>
+        <button class="arrow-button">→</button>
+    </div>
+
+    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
+        </div>
+        
+        <div class="large-text-sub">Generate Ride Statistics Report</div>
+        <div class="graph-text">Rider Statistics - Report Generation.</div>
+        <button class="arrow-button">→</button>
+    </div>
+
+               
+    <!-- System Notifications 
     <div class="content-box-test" onclick="window.location.href='inbox.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/<?php echo $inboxIcon ?>" alt="Notification Icon">
@@ -580,67 +607,10 @@
         <div class="graph-text">Stay up to date.</div>
         <button class="arrow-button">→</button>
     </div>
-
-    <!-- Generate Report -->
-    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
-        <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
-        </div>
-        
-        <div class="large-text-sub">Generate Report</div>
-        <div class="graph-text">From this quarter or annual.</div>
-        <button class="arrow-button">→</button>
-    </div>
-
-    <!-- Create Email -->
-    <!-- <div class="content-box-test" onclick="window.location.href='createEmail.php'" style="border-radius: 12px; padding: 20px;">
-        <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/inbox.svg" alt="Email Icon">
-        </div>
-        
-        <div class="large-text-sub">Create Email</div>
-        <div class="graph-text">Send new messages to riders.</div>
-        <button class="arrow-button">→</button>
-    </div> -->
-
-    <!-- View Drafts -->
-    <!-- <div class="content-box-test" onclick="window.location.href='viewDrafts.php'" style="border-radius: 12px; padding: 20px;">
-        <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/search.svg" alt="Drafts Icon">
-        </div>
-        
-        <div class="large-text-sub">View Drafts</div>
-        <div class="graph-text">Check saved email drafts.</div>
-        <button class="arrow-button">→</button>
-    </div> -->
-
-    <!-- Generate Email List -->
-    <!-- <div class="content-box-test" onclick="window.location.href='generateEmailList.php'" style="border-radius: 12px; padding: 20px;">
-        <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/send.png" alt="Email List Icon">
-        </div>
-         
-        <div class="large-text-sub">Generate Email List</div>
-        <div class="graph-text">Rider Emails</div>
-        <button class="arrow-button">→</button>
-    </div> -->
-
-    <!-- Discussions -->
-    <!-- <div class="content-box-test" onclick="window.location.href='viewSuggestions.php'" style="border-radius: 12px; padding: 20px;">
-        <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/clipboard-regular.svg" alt="Discussions Icon">
-        </div>
-        
-        <div class="large-text-sub">User Suggestions</div>
-        <div class="graph-text">View user submitted suggestions.</div>
-        <button class="arrow-button">→</button>
-    </div> -->
+    -->
 
 </div>
 
-
-
-    
 
 <div style="width: 90%; /* Stops before page ends */
             height: 100%;
@@ -667,15 +637,10 @@
         <div class="footer-right">
             <div class="footer-section">
                 <div class="footer-topic">Connect</div>
-                <!-- <a href="https://www.facebook.com/profile.php?id=61566628001672&mibextid=LQQJ4d">Facebook</a>
-                <a href="https://www.instagram.com/whiskeyvalor/#">Instagram</a> -->
-                <a href="https://healthygenerations.org/">Main Website</a>
+                
+                <a href="https://healthygenerations.org">Main Website</a>
             </div>
-            <!-- <div class="footer-section">
-                <div class="footer-topic">Contact Us</div>
-                <a href="https://whiskeyvalor.org/pages/contact">Send Us An Email</a>
-                <a href="tel:5408981500">540-898-1500 (ext 117)</a>
-            </div> -->
+            
         </div>
     </footer>
 

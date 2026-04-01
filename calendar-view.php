@@ -197,7 +197,15 @@ function time_label($eventInfo, $isScheduledRide) {
                                         if($popupParsedTime == false) {
                                             $popupTime = "N/A";
                                         } else {
+                                        if($popupParsedTime == false) {
+                                            $popupTime = "N/A";
+                                        } else {
                                             $popupTime = $popupParsedTime->format('g:i A');
+                                        }                                        }
+                                        if($popupParsedTime == false) {
+                                            $popupTime = "N/A";
+                                        } else {
+                                        $popupTime = $popupParsedTime->format('g:i A');
                                         }
 
                                         $rawDate = trim((string)($info['startDate'] ?? '')); // get date and format

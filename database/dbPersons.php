@@ -1656,7 +1656,7 @@ function get_total_vol_hours($dateFrom, $dateTo) {
             "ssssss",
             $user_id,
             $id_type,
-            $status,
+            //$status,
             $approved_by,
             $expiration_date,
             $notes

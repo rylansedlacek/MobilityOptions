@@ -1372,3 +1372,19 @@ function complete_trip($eventID)
     mysqli_close($connection);
     return $affected > 0;
 }
+
+// //get event based on rider id
+// function get_all_riders(){
+//     $connection = connect();
+//     $query = "SELECT * FROM dbevents WHERE rider_id = :rider_id";
+//     $result = mysqli_query($connection, $query);
+
+//     if(!$result){
+//         mysqli_close($connection);
+//         return [];
+//     }
+
+//     $riders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+//     mysqli_close($connection);
+//     return $riders;
+// }

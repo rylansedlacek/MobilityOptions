@@ -105,7 +105,7 @@ function format_time_12h($time) {
                             <th><b>Vehicle ID</b></th>
                             <th><b>Trip Date</b></th>
                             <th><b>Trip Time</b></th>
-                            <th><b>Rider Name</b></th>
+                            <th><b>Notification</b></th>
                             <th><b>Dispatch</b></th>
 
                         </tr>
@@ -122,11 +122,22 @@ function format_time_12h($time) {
                                 <?php
                                 $eventID = $event->getID();
                                 $eventDate = $event->getStartDate();
-                                $eventTime = format_time_12h($event->getStartTime());
+                                $eventTimeRaw = $event->getStartTime();
+                                $eventTime = format_time_12h($eventTimeRaw);
                                 $driverDI = $event->getDriverId();
                                 $tripStatus = $event->getTripStatus();
                                 $driverName = "";
                                 $riderName = $event->getName();
+                                $alertFlag = '';
+
+                                $tripDateTime = strtotime(trim((string)$eventDate . ' ' . (string)$eventTimeRaw));
+                                if ($tripDateTime !== false) {
+                                    if ($tripDateTime < time()) {
+                                        $alertFlag = "<span style='display:inline-block;padding:4px 8px;border-radius:999px;background:#fff1f0;color:#c62828;font-weight:700;font-size:.8rem;border:1px solid #ef9a9a;'>OVERDUE</span>";
+                                    } elseif ($eventDate === date('Y-m-d')) {
+                                        $alertFlag = "<span style='display:inline-block;padding:4px 8px;border-radius:999px;background:#fff8e1;color:#8a6d1f;font-weight:700;font-size:.8rem;border:1px solid #f0c36d;'>ON THIS DATE</span>";
+                                    }
+                                }
 
                                 if ($tripStatus !== 'scheduled') continue;
                                 foreach ($drivers as $driver) {
@@ -151,7 +162,8 @@ function format_time_12h($time) {
                                         <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
                                         <td><?= $eventDate ?></td>
                                         <td><?= $eventTime ?></td>
-                                        <th><?= $riderName ?></td>
+                                        <td><?= $alertFlag ?></td>
+                                        
 
                                             <!-- <td>
                                             <a href="#" onclick="window.location.href = 'viewPassengers.php'" style.display='flex' ; style="color: black; text-decoration: underline;">

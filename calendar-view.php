@@ -194,8 +194,11 @@ function time_label($eventInfo, $isScheduledRide) {
 
                                         $rawStartTime = trim((string)($info['startTime'] ?? ''));
                                         $popupParsedTime = DateTime::createFromFormat('H:i', $rawStartTime);
+                                        if($popupParsedTime == false) {
+                                            $popupTime = "N/A";
+                                        } else {
                                         $popupTime = $popupParsedTime->format('g:i A');
-
+                                        }
 
                                         $rawDate = trim((string)($info['startDate'] ?? '')); // get date and format
                                         $popupDateEpoch = strtotime($rawDate);

@@ -399,6 +399,10 @@
         </fieldset>-->
             <p class="text-center notice"></p>
             <input type="submit" name="registration-form" value="Submit" style="width: 50%; margin: auto;">
+
+            <div class="text-center mt-6">
+        <a href="volunteerManagement.php" class="return-button">Return to Rider Management</a>
+    </div>
         </form>
     </div>
 </main>

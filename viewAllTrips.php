@@ -26,6 +26,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         exit;
     }
 }
+
+function format_time_12h($time) {
+    $dt = DateTime::createFromFormat('H:i', $time);
+    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    return $time;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -95,9 +102,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     <thead>
                         <tr>
                             <th><b>Driver Name</b></th>
-                            <th><b>Vehicle Model</b></th>
-                            <th><b>Vehicle Plate</b></th>
-                            <th><b>Dispatch Trip</b></th>
+                            <th><b>Vehicle ID</b></th>
+                            <th><b>Trip Date</b></th>
+                            <th><b>Trip Time</b></th>
                             <th><b>Rider Name</b></th>
                             <th><b>Dispatch</b></th>
 
@@ -115,6 +122,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                 <?php
                                 $eventID = $event->getID();
                                 $eventDate = $event->getStartDate();
+                                $eventTime = format_time_12h($event->getStartTime());
                                 $driverDI = $event->getDriverId();
                                 $tripStatus = $event->getTripStatus();
                                 $driverName = "";
@@ -140,9 +148,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                 <?php else: ?>
                                     <tr data-event-id="<?= $eventID ?>">
                                         <td><?= $driverName ?></td>
-                                        <td><?= $vehicle ? htmlspecialchars($vehicle['make_model']) : 'no vehicle' ?></td>
                                         <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
                                         <td><?= $eventDate ?></td>
+                                        <td><?= $eventTime ?></td>
                                         <th><?= $riderName ?></td>
 
                                             <!-- <td>
@@ -176,7 +184,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <p class="no-events standout"> There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
         <?php endif ?>
         <p class="no-events standout">
-            <a class="button return" href="dispatchTrip.php">Return to Dashboard</a>
+            <a class="button return" href="dispatchTrip.php">Return to Trip Management</a>
             </p>
     </main>
 </body>

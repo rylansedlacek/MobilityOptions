@@ -1350,16 +1350,26 @@ function dispatch_trip($eventID)
     return $affected > 0;
 }
 
-function complete_trip($eventID)
+function complete_trip($eventID, $mileage_start, $mileage_end)
 {
     $connection = connect();
     $eventID = (int) $eventID;
     $status = 'completed';
 
-    $query = "UPDATE dbevents SET trip_status = ? where id = ?";
+    $query = "UPDATE dbevents SET
+                trip_status = ?,
+                mileage_start = ?,
+                mileage_end = ?
+            where id = ?";
     $stmt = mysqli_prepare($connection, $query);
 
-    mysqli_stmt_bind_param($stmt, 'si', $status, $eventID);
+    mysqli_stmt_bind_param($stmt, 'sssi', 
+        $status, 
+        $mileage_start, 
+        $mileage_end, 
+        $eventID
+    );
+
     $result = mysqli_stmt_execute($stmt);
     if (!$result) {
         mysqli_stmt_close($stmt);

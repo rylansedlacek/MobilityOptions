@@ -137,8 +137,8 @@ require_once('header.php');
                                 <th>Username</th>
                                 <th>Phone</th>
                                 <th>Zip Code</th>
-                                <th>Profile</th>
-                                <th>Actions</th>
+                                <th>Update Eligibility</th>
+                               
                             </tr>
                         </thead>
                         <tbody>';
@@ -159,7 +159,7 @@ require_once('header.php');
                                 <td><a href="tel:' . $person->get_phone1() . '" class="text-blue-700 underline">' . formatPhoneNumber($person->get_phone1()) . '</a></td>
                                 <td>' . $person->get_zip_code() . '</td>
                                 <td><a href="viewProfile.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Profile</a></td>
-                                <td><a href="modifyUserRole.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Update Status</a></td>
+                             
                             </tr>';
                 }
                 echo '
@@ -167,11 +167,6 @@ require_once('header.php');
                     </table>
                 </div>';
 
-                echo '
-                <div class="mt-4">
-                    <label>Mailing List:</label>
-                    <p class="text-gray-700 break-words">' . $mailingList . '</p>
-                </div>';
             } else {
                 echo '<div class="error-block">No riders found.</div>';
             }

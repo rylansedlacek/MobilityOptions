@@ -327,18 +327,20 @@
                         <ul style="list-style:none; padding:0; margin-bottom:12px; max-height:150px; overflow:auto; border:2px solid #45892e; border-radius:4px;">
                             <?php foreach ($search_results as $rider): ?>
                                 <li style="padding:6px; border-bottom:1px solid #eee; cursor:pointer;" onclick="selectRider('<?php echo $rider->get_first_name().' '.$rider->get_last_name(); ?>','<?php echo $rider->get_id(); ?>')">
-                                    <?php echo $rider->get_first_name().' '.$rider->get_last_name(); ?>
+                                    <?php echo $rider->get_first_name().' '.$rider->get_last_name().' ('.$rider->get_id().')'; ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
                     <?php endif; ?>
+
+                            <!-- Gabe add the Favorite Table stuff here! - rs -->
                 </div>
 
                  <div class="event-sect">
                     <h2 class="mt-2">Rider Information</h2>
                     <label for="name">* Rider Name </label>
-                    <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>">
-                    <input type="hidden" id="rider_id" name="rider_id" value="<?php echo isset($_POST['rider_id']) ? htmlspecialchars($_POST['rider_id']) : ''; ?>">
+                    <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_POST['name']) ? ($_POST['name']) : ''; ?>">
+                    <input type="hidden" id="rider_id" name="rider_id" value="<?php echo isset($_POST['rider_id']) ? $_POST['rider_id'] : (isset($_GET['rider_id']) ? ($_GET['rider_id']) : ''); ?>">
                  </div>
 
                 <div class="event-sect">
@@ -643,7 +645,9 @@
                     function selectRider(name, id) {
                         document.getElementById('name').value = name;
                         document.getElementById('rider_id').value = id;
-                        history.replaceState(null, '', 'addEvent.php');
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('rider_id', id);
+                        history.replaceState(null, '', url.pathname + '?' + url.searchParams.toString());
                         
                     }
 
@@ -692,7 +696,7 @@
                 </script>
                 <br/>
                 <br/>
-                <center><a class="button cancel" href="eventManagement.php">Return to Dashboard</a></center>
+                <center><a class="button cancel" href="eventManagement.php">Return to Ride Management</a></center>
 
                 <?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate'): ?>
                 <script>

@@ -122,13 +122,13 @@ require_once('header.php');
 
         <button onclick="window.location.href='allRiders.php';">
 	  <div class="button-left-gray"></div>
-	  <div>View All Riders</div>
+	  <div>View All Riders - Update Eligibility</div>
 	  <img class="button-icon h-10 w-10 left-5" src="images/clipboard-regular.svg" alt="Person Icon">
         </button>
 
         <button onclick="window.location.href='personSearch.php';">
 	  <div class="button-left-gray"></div>
-	  <div>Search Registered Riders</div>
+	  <div>Search Riders - Update Eligibility</div>
 	  <img class="button-icon" src="images/person-search.svg" alt="Person Icon">
         </button>
 

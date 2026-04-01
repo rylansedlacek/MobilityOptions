@@ -475,7 +475,7 @@
         <div class="small-text">Manage riders here.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
-    <span class="button-text">Go</span>
+    <span class="button-text">Register</span>
     <div class="circle">&gt;</div>
 </button>
 <!--
@@ -505,7 +505,7 @@
                         if (sizeof($pendingsignups) > 0) {
                             echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
                         }   
-                    ?> Go </span>
+                    ?> Schedule </span>
     <div class="circle">&gt;</div>
 </button>
     </div>
@@ -527,7 +527,7 @@
         <div class="small-text">Manage Drivers and Vehicles Here.</div>
         <div class="large-text">Driver & Vehicle Management</div>
         <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
-            <span class="button-text">Go</span>
+            <span class="button-text"> Manage</span>
             <div class="circle">&gt;</div>
         </button>
     </div>

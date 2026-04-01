@@ -54,19 +54,22 @@ require_once('header.php');
 
 
         body, main{
-            background-color: #1F1F21;
+            background-color: #ffffff;
         }
 
         .main-content-box table,
-        .main-content-box table thead,
         .main-content-box table tbody,
         .main-content-box table tr,
-        .main-content-box table th,
         .main-content-box table td {
-        background-color: #1F1F21 !important;
-        color: #C9AB81 !important;
-        border: 1px solid #C9AB81 !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        border: 1px solid #ccc !important;
 }
+
+        .main-content-box table thead {
+            background-color: #4299e1;
+            color: #ffffff;
+        }
 
 
 
@@ -86,7 +89,7 @@ require_once('header.php');
             <?php if (isset($error)) echo "<p style='color: red;'>$error</p>"; ?>
 
             <table>
-                <thead>
+                <thead class="bg-blue-400 text-white">
                     <tr>
                         <th>Username</th>
                         <th>Name</th>
@@ -125,7 +128,7 @@ require_once('header.php');
 
         </div>
         <div class="text-center mt-4">
-                <a href="index.php" class="return-button">Back to Dashboard</a>
+                <a href="volunteerManagement.php" class="return-button">Return to Rider Management</a>
             </div>
 
         <div class="info-section">

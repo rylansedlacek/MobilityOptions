@@ -17,6 +17,7 @@ if (isset($_SESSION['_id'])) {
 }
 include 'database/dbEvents.php';
 include 'database/dbPersons.php';
+include 'database/dbPersons.php';
 //include 'domain/Event.php';
 ?>
 <!DOCTYPE html>
@@ -116,7 +117,9 @@ include 'database/dbPersons.php';
         <?php else: ?>
             <p class="no-events standout">There are currently no dispatched trips to complete.<a class="button add" href="viewAllTrips.php">Dispatch a Trip</a> </p>
         <?php endif ?>
+        <div class="text-center mt-6">
         <a class="button return" href="index.php">Return to Dashboard</a>
+        </div>
     </main>
 </body>
 

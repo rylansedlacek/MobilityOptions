@@ -406,7 +406,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <!-- Additional Information Required for Completing Trip -->
                 <!-- Includes: PICKUP TIME, DROPOFF TIME, MILEAGE, COMPLETION STATUS-->
-            <form method="POST" action="completeTrip.php?id<?= urlencode($id) ?>">
+            <form method="POST" action="completeTrip.php?id=<?= urlencode($id) ?>">
                 <fieldset class="section-box mb-4">
 
                 <h3>Additional Details</h3>

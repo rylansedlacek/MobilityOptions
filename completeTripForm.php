@@ -417,8 +417,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="drop_off_time"><em>* </em>Actual Drop-Off Time</label>
                 <input type="text" id="drop_off_time" name="drop_off_time" required placeholder="Ex: 10:30 AM">
 
-                <label for="mileage"> <em>* </em>Mileage (in mi.)</label>
-                <input type="text" id="mileage" name="mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
+                <label for="start_mileage"> <em>* </em>Start Mileage (in mi.)</label>
+                <input type="text" id="mileage" name="start_mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
+
+                <label for="end_mileage"> <em>* </em>End Mileage (in mi.)</label>
+                <input type="text" id="mileage" name="end_mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
+
+                <label for="donation_amt"> <em>* </em>Donation Amount (if recieved, otherwise 0)</label>
+                <input type="text" id="donation_amt" name="donation_amt" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
 
                 <label for="completion_status"><em>* </em>Completion Status</label>
                 <select id="completion_status" name="completion_status" required>

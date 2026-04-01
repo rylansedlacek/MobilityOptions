@@ -1645,7 +1645,7 @@ function get_total_vol_hours($dateFrom, $dateTo) {
 
         $query = 
         "INSERT into user_verified_ids
-        (user_id, id_type, approved_by, expiration_date, notes)
+        (user_id, id_type, status, approved_by, expiration_date, notes)
         VALUES (?, ?, ?, ?, ?, ?)";
         
         $stmt = $con->prepare($query);

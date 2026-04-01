@@ -17,7 +17,6 @@ if (isset($_SESSION['_id'])) {
 }
 include 'database/dbEvents.php';
 include 'database/dbPersons.php';
-include 'database/dbPersons.php';
 //include 'domain/Event.php';
 ?>
 <!DOCTYPE html>

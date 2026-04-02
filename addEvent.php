@@ -615,31 +615,6 @@
                 <input type="number" id="capacity" name="capacity" required placeholder="Enter capacity (e.g. 1-99)">
                 </div> -->
 
-                <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                    <legend>Make this a recurring event</legend>
-
-                    <label style="margin-top:12px; padding:12px; border:1px solid #e0e0e0; border-radius:8px;">
-                        <input type="checkbox" id="recurring" name="recurring" value="1">
-                        Recurring
-                    </label>
-
-                    <div id="recurring-options" style="display:none; margin-top:6px;">
-                        <label for="recurrence_type">Recurrence:</label>
-                        <select name="recurrence_type" id="recurrence_type">
-                            <option value="">-- Select --</option>
-                            <option value="daily">Daily</option>
-                            <option value="weekly">Weekly</option>
-                            <option value="monthly">Monthly</option>
-                            <option value="custom">Custom</option>
-                        </select>
-
-                        <div id="custom-interval" style="display:none; margin-top:8px;">
-                            <label for="custom_days">Repeat every:</label>
-                            <input type="number" min="1" id="custom_days" name="custom_days" placeholder="e.g. 10">
-                            <span>days</span>
-                        </div>
-                    </div>
-                </fieldset>
                 
                 <!-- show favorite option only when a rider is selected and addresses are filled manually (so they cant add duplicats) -->
             <?php if (!empty($_GET['rider_id'])): ?>
@@ -652,7 +627,7 @@
             </fieldset>
             <?php endif; ?>
 
-                <input type="submit" value="Create Event" style="width:100%;">
+                <input type="submit" value="Schedule Ride" style="width:100%;">
                 
             </form>
                 <script>

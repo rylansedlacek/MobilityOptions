@@ -95,7 +95,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     </header>
     <main>
         <div class="main-content-box w-[80%] p-8">
-            <form method="POST" action="processReport.php">
+            <form method="POST" action="processRiderReport.php">
                 <div style="margin-bottom: 1.5rem;">
                     <label style="font-weight: 600;">Report Contents</label>
                     <p class="sub-text" style="font-size: 16px; margin-top: 0.5rem; margin-bottom: 0.5rem;">
@@ -139,11 +139,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
             if (sizeof(get_all_events()) && sizeof($drivers)): ?>
                 <div class="table-wrapper">
-                    <label> Select the Driver you would like to dispatch below:<br></label>
+                    <label> Select the Rider you would like to generate a report for below:<br></label>
                     <table class="general">
                         <thead>
                             <tr>
-                                <th><b>Report ID</b></th>
+                                <!-- <th><b>Report ID</b></th> -->
                                 <th><b>Rider Name</b></th>
                                 <th><b>Trip Date</b></th>
                                 <th><b>Start Time</b></th>
@@ -164,7 +164,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                         <tbody class="standout">
                             <?php foreach ($riderReports as $reports): ?>
                                 <?php
-                                $reportsID = $reports['report_id'];
+                                // $reportsID = $reports['report_id'];
                                 $startDate = $reports['startDate'];
                                 $riderName = get_riders_name($reports['rider_id']);
                                 // $endDate = $reports['endDate'];
@@ -172,19 +172,23 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                 $endTime = $reports['endTime'];
                                 $mileageStart = $reports['mileageStart'];
                                 $mileageEnd = $reports['mileageEnd'];
-                                $tripStatus = $reports['trip_status'];
                                 $pickupLocation = $reports['pickup_location'];
                                 $dropOffLocation = $reports['dropoff_location'];
 
-                                // if ($tripStatus !== 'scheduled') continue;
-                                // foreach ($drivers as $driver) {
-                                //     if ($driver['id'] ==  $driverDI) {
-                                //         $driverName = $driver['first_name'] . ' ' . $driver['last_name'];
-                                //         break;
-                                //     }
-                                // }
-                                // $vehicleID = (int)$event->getVehicleId();
-                                // $vehicle = isset($vehicleMap[$vehicleID]) ? $vehicleMap[$vehicleID] : null;
+                                $tripStatus = $reports['trip_status'];
+                                $tripStatusType = "";
+
+                                if ($tripStatus === "in_progress") {
+                                    $tripStatusType = "In Progress";
+                                } elseif ($tripStatus === "scheduled") {
+                                    $tripStatusType = "Scheduled";
+                                } elseif ($tripStatus === "completed") {
+                                    $tripStatusType = "Completed";
+                                } elseif ($tripStatus === "cancelled") {
+                                    $tripStatusType = "Cancelled";
+                                } else {
+                                    $tripStatusType = "Not Scheduled";
+                                }
                                 ?>
 
                                 <?php if ($accessLevel < 3): ?>
@@ -195,14 +199,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                     </tr>
                                 <?php else: ?>
                                     <tr>
-                                        <td><?= $reportsID ?></td>
+                                        <!-- <td><?= $reportsID ?></td> -->
                                         <td><?= $riderName ?></td>
                                         <td><?= $startDate ?></td>
                                         <td><?= $startTime ?></td>
                                         <td><?= $endTime ?></td>
                                         <td><?= $mileageStart ?></td>
                                         <td><?= $mileageEnd ?></td>
-                                        <td><?= $tripStatus ?></td>
+                                        <td><?= $tripStatusType ?></td>
                                         <td><?= $pickupLocation ?></td>
                                         <td><?= $dropOffLocation ?></td>
 
@@ -224,11 +228,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <?php else: ?>
                 <p class="no-events standout"> There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
             <?php endif ?>
-            <p class="no-events standout">
-                <a class="button return" href="index.php">Return to Dashboard</a>
-            </p>
+        </div>
+        <div class="text-center mt-6">
+            <a href="index.php" class="return-button">Return to Dashboard</a>
         </div>
     </main>
 </body>
-
-</html>

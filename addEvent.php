@@ -23,7 +23,7 @@
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once('include/input-validation.php');
-        require_once('database/dbEvents.php');
+        require('database/dbEvents.php');
         $args = sanitize($_POST, null);
         $args['type'] = 'Normal'; // default to "Normal" type for now since we removed the form option 
         $required = array(
@@ -190,6 +190,19 @@
             if (!$id) {
                 die();
             } else {
+            //if the "Save as Favorite" button is checked then save the trip details to the favorites table for this rider (id by rider ID)
+            if (!empty($_POST['favorite']) && $_POST['favorite'] == '1') {
+                require_once('database/dbEvents.php');
+                $label = !empty($args['description']) ? $args['description'] : 'Favorite Trip';
+                saveFavoriteTrip(
+                    $args['rider_id'],
+                    $label,
+                    $args['pickup_location'],
+                    $args['dropoff_location'],
+                    $args['dropoff_contact'],
+                    $args['description']
+                );
+            }
 
                 // send rider confirmation email if we have a valid email address.
                 $riderEmail = '';
@@ -287,6 +300,13 @@
         $namePass = trim($_GET['search_name']);
         $search_results = find_users($namePass, '', '', '', null, null); // dbpersons name search
     }
+
+    //if the rider_id is set from the search results or from the rider selection, then  pull riders favorite trips using addEvent func and save into favorite_trips
+    $favorite_trips = [];
+    if (!empty($_GET['rider_id'])) {
+        require_once('database/dbEvents.php'); 
+        $favorite_trips = getFavoriteTripsByRiderId($_GET['rider_id']);
+    }
     
 ?><!DOCTYPE html>
 <header class="hero-header">
@@ -334,12 +354,28 @@
                     <?php endif; ?>
 
                             <!-- Gabe add the Favorite Table stuff here! - rs -->
+                            <!-- Added, this is the display of favorite trips (displayed if the variable set earlier is not empty)-->
+                    <?php if (!empty($favorite_trips)): ?>
+                        <h3 class="mt-2">Favorite Trips</h3>
+                        <ul style="list-style:none; padding:0; margin-bottom:12px; max-height:200px; overflow:auto; border:2px solid #45892e; border-radius:4px;">
+                            <?php foreach ($favorite_trips as $fav): ?>
+                                <!-- this json_encode is just a way to convert the PHP formatted data into a js friednly format-->
+                                <li onclick="applyFavorite(<?php echo htmlspecialchars(json_encode($fav), ENT_QUOTES); ?>)"
+                                style="padding:8px; border-bottom:1px solid #eee; cursor:pointer;"
+                                onmouseover="this.style.background='#f0f8ed'"
+                                onmouseout="this.style.background=''">
+                                <strong><?php echo htmlspecialchars($fav['label']); ?></strong><br>
+                                <small><?php echo htmlspecialchars($fav['pickup_location']); ?> --> <?php echo htmlspecialchars($fav['dropoff_location']); ?></small>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
                 </div>
 
                  <div class="event-sect">
                     <h2 class="mt-2">Rider Information</h2>
                     <label for="name">* Rider Name </label>
-                    <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_POST['name']) ? ($_POST['name']) : ''; ?>">
+                    <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_GET['rider_name']) ? htmlspecialchars($_GET['rider_name']) : (isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''); ?>">
                     <input type="hidden" id="rider_id" name="rider_id" value="<?php echo isset($_POST['rider_id']) ? $_POST['rider_id'] : (isset($_GET['rider_id']) ? ($_GET['rider_id']) : ''); ?>">
                  </div>
 
@@ -605,6 +641,17 @@
                     </div>
                 </fieldset>
                 
+                <!-- show favorite option only when a rider is selected and addresses are filled manually (so they cant add duplicats) -->
+            <?php if (!empty($_GET['rider_id'])): ?>
+            <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;" id="favorite-fieldset">
+                <legend>Save as Favorite Trip</legend>
+                <label style="margin-top:12px; padding:12px; border:1px solid #e0e0e0; border-radius:8px;">
+                    <input type="checkbox" id="favorite" name="favorite" value="1">
+                    Save this trip as a favorite
+                </label>
+            </fieldset>
+            <?php endif; ?>
+
                 <input type="submit" value="Create Event" style="width:100%;">
                 
             </form>
@@ -643,13 +690,65 @@
                 <script type="text/javascript">
                     // populate the rider name and id when a search result is clicked
                     function selectRider(name, id) {
-                        document.getElementById('name').value = name;
-                        document.getElementById('rider_id').value = id;
-                        const url = new URL(window.location.href);
-                        url.searchParams.set('rider_id', id);
-                        history.replaceState(null, '', url.pathname + '?' + url.searchParams.toString());
-                        
-                    }
+    document.getElementById('name').value = name;
+    document.getElementById('rider_id').value = id;
+    const url = new URL(window.location.href);
+    url.searchParams.set('rider_id', id); 
+    url.searchParams.set('rider_name', name);
+    url.searchParams.set('search_name', document.getElementById('search_name').value);
+    window.location = url.toString();
+}
+//this parses the info passed in from the db to be able to insert it automatically into the form when a favorite trip is clicked (when full)
+                    function applyFavorite(fav) {
+    function parseAddress(full) {
+        if (!full) return { street: '', city: '', state: 'VA', zip: '' };
+        const parts = full.split(',');
+        const street = parts[0] || '';
+        const city = parts[1] || '';
+        const stateZip = (parts[2] || '').trim().split(' ');
+        const state = stateZip[0] || 'VA';
+        const zip = stateZip[1] || '';
+        return { street, city, state, zip };
+    }
+
+    const pickup  = parseAddress(fav.pickup_location);
+    const dropoff = parseAddress(fav.dropoff_location);
+
+    document.getElementById('pickup-street_address').value = pickup.street;
+    document.getElementById('pickup-city').value = pickup.city;
+    document.getElementById('pickup-state').value = pickup.state;
+    document.getElementById('pickup-zipcode').value   = pickup.zip;
+
+    document.getElementById('dropoff-street_address').value = dropoff.street;
+    document.getElementById('dropoff-city').value = dropoff.city;
+    document.getElementById('dropoff-state').value   = dropoff.state;
+    document.getElementById('dropoff-zipcode').value = dropoff.zip;
+
+    if (fav.dropoff_contact) {
+        document.getElementById('dropoff-contact').value = fav.dropoff_contact;
+    }
+    if (fav.description) {
+        document.getElementById('description').value = fav.description;
+    }
+    //this scrolls to the next part the user needs to fill in after they select a favorite (which is the pickup date)
+    document.getElementById('date').scrollIntoView({ behavior: 'smooth' });
+}
+
+//show "save as favorite" only once pickup and dropoff addresses are entered manually (not when applying a favorite item) (uses my function below)
+document.getElementById('pickup-street_address').addEventListener('input', checkShowFavorite);
+document.getElementById('dropoff-street_address').addEventListener('input', checkShowFavorite);
+
+function checkShowFavorite() {
+    const fieldset = document.getElementById('favorite-fieldset');
+    if (!fieldset) return;
+    const pickupFilled  = document.getElementById('pickup-street_address').value.trim() !== '';
+    const dropoffFilled = document.getElementById('dropoff-street_address').value.trim() !== '';
+    //this checks if both values set above are true, if so display as flex, if not hide the option to save as favorite
+    fieldset.style.display = (pickupFilled && dropoffFilled) ? 'flex' : 'none';
+}
+
+//this run on load in case fields are already filled (from applyFavorite)
+checkShowFavorite();
 
                     $(document).ready(function(){
                         var checkboxes = $('.checkboxes');

@@ -795,7 +795,7 @@ checkShowFavorite();
                 </script>
                 <br/>
                 <br/>
-                <center><a class="button cancel" href="index.php">Return to Dashboard</a></center>
+                <center><a class="button cancel" href="eventManagement.php">Return to Ride Management</a></center>
 
                 <?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate'): ?>
                 <script>

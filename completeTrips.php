@@ -18,6 +18,15 @@ if (isset($_SESSION['_id'])) {
 include 'database/dbEvents.php';
 include 'database/dbPersons.php';
 //include 'domain/Event.php';
+
+
+function format_time_12h($time) {
+    $dt = DateTime::createFromFormat('H:i', $time);
+    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    return $time;
+}
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -51,8 +60,8 @@ include 'database/dbPersons.php';
                         <tr>
                             <th><b>Trip Date</b></th>
                             <th><b>Trip Time</b></th>
+                            <th><b>Trip Status</b></th>
                             <th><b>Assigned Driver</b></th>
-                            <th><b>Assigned Rider</b></th>
                             <th><b>Complete Trip</b></th>
                         </tr>
                     </thead>
@@ -68,19 +77,24 @@ include 'database/dbPersons.php';
                                 <?php
                                 $eventID = $event->getID();
                                 $eventDate = $event->getStartDate();
-                                $eventTime = $event->getStartTime();
+                                $eventTime = format_time_12h($event->getStartTime());
                                 $driverDI = $event->getDriverId();
                                 $tripStatus = $event->getTripStatus();
                                 $driverName = "";
                                 $riderName = $event->getName();
 
                                 if ($tripStatus !== 'in_progress') continue;
+                                if ($tripStatus == 'in_progress') $tripStatus = "In Progress";
+
                                 foreach ($drivers as $driver) {
                                     if ($driver['id'] ==  $driverDI) {
                                         $driverName = $driver['first_name'] . ' ' . $driver['last_name'];
                                         break;
                                     }
                                 }
+
+                                if ($driverName == "") { $driverName = "No Driver Found."; }
+
                                 $vehicleID = (int)$event->getVehicleId(); 
                                 $vehicle = isset($vehicleMap[$vehicleID]) ? $vehicleMap[$vehicleID] : null;
                                 ?>
@@ -95,8 +109,9 @@ include 'database/dbPersons.php';
                                     <tr data-event-id="<?= $eventID ?>">
                                         <td><?= $eventDate ?></td>
                                         <td><?= $eventTime ?></td>
+                                        <td><?= $tripStatus ?></td>
                                         <td><?= $driverName ?></td>
-                                        <th><?= $riderName ?></td>
+                                       
 
 
                                             <!-- <td>
@@ -118,7 +133,7 @@ include 'database/dbPersons.php';
             <p class="no-events standout">There are currently no dispatched trips to complete.<a class="button add" href="viewAllTrips.php">Dispatch a Trip</a> </p>
         <?php endif ?>
         <div class="text-center mt-6">
-        <a class="button return" href="dispatchTrip.php">Return to Dashboard</a>
+        <a class="button return" href="dispatchTrip.php">Return to Trip Management</a>
         </div>
     </main>
 </body>

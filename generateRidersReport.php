@@ -125,7 +125,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
         <header class="hero-header">
             <div class="center-header">
-                <h1>Previous Operational Reports</h1>
+                <h1>Individual Rider Reports</h1>
             </div>
         </header>
         <!-- //////////////////////////////generate table below (format viewAllTabs.php/////////////////////////////////////// -->
@@ -139,7 +139,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             $riders = getall_persons();
             
 
-            if (sizeof(get_all_events()) && sizeof($drivers)): ?>
+            if (!empty($riders)): ?>
                 <div class="table-wrapper">
                     <label> Select the Rider you would like to generate a report for below:<br></label>
                     <table class="general">
@@ -167,9 +167,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                     <td>
                                         <form method="POST" action="processRiderReport.php" style="display:inline;">
                                             <input type="hidden" name="action" value="download_rider">
-                                            <input type="hidden" name="rider_id" value="<?= $rider['id'] ?>">
+                                            <input type="hidden" name="rider_id" value="<?= $rider->get_id() ?>">
                                             <label for="format">Select Report Format:</label>
-                                            <select name="format" id="rider_format">
+                                            <select name="format" class="rider-format-select">
                                                 <option value="csv">CSV (.csv)</option>
                                                 <option value="excel">Excel (.xls)</option>
                                             </select>
@@ -181,7 +181,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                         </tbody>
                     </table>
                 </div>
-                </script>
             <?php else: ?>
                 <p class="no-events standout"> There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
             <?php endif ?>

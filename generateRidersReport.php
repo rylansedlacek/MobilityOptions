@@ -125,7 +125,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
         <header class="hero-header">
             <div class="center-header">
-                <h1>Individual Rider Reports</h1>
+                <h1>Generate Individual Rider Reports</h1>
             </div>
         </header>
         <!-- //////////////////////////////generate table below (format viewAllTabs.php/////////////////////////////////////// -->

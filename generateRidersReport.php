@@ -135,7 +135,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             $events = get_all_events();
             $drivers  = get_drivers_with_email();
             $vehicles = get_vehicles();
-            $riderReports = get_rider_report_information();
+            //$riderReports = get_rider_report_information();
+            $riders = getall_persons();
+            
 
             if (sizeof(get_all_events()) && sizeof($drivers)): ?>
                 <div class="table-wrapper">
@@ -144,15 +146,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                         <thead>
                             <tr>
                                 <!-- <th><b>Report ID</b></th> -->
-                                <th><b>Rider Name</b></th>
-                                <th><b>Trip Date</b></th>
-                                <th><b>Start Time</b></th>
-                                <th><b>End Time</b></th>
-                                <th><b>Mileage Start</b></th>
-                                <th><b>Mileage End</b></th>
-                                <th><b>Trip Status</b></th>
-                                <th><b>Pickup Location</b></th>
-                                <th><b>Drop Off Location</b></th>
+                                <th><b>First Name</b></th>
+                                <th><b>Last Name</b></th>
+                                <th><b>Rider ID</b></th>
+                                <th><b>Download Report</b></th>
                             </tr>
                         </thead>
                         <!-- <?php
@@ -162,64 +159,24 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                 }
                                 ?> -->
                         <tbody class="standout">
-                            <?php foreach ($riderReports as $reports): ?>
-                                <?php
-                                // $reportsID = $reports['report_id'];
-                                $startDate = $reports['startDate'];
-                                $riderName = get_riders_name($reports['rider_id']);
-                                // $endDate = $reports['endDate'];
-                                $startTime = $reports['startTime'];
-                                $endTime = $reports['endTime'];
-                                $mileageStart = $reports['mileageStart'];
-                                $mileageEnd = $reports['mileageEnd'];
-                                $pickupLocation = $reports['pickup_location'];
-                                $dropOffLocation = $reports['dropoff_location'];
-
-                                $tripStatus = $reports['trip_status'];
-                                $tripStatusType = "";
-
-                                if ($tripStatus === "in_progress") {
-                                    $tripStatusType = "In Progress";
-                                } elseif ($tripStatus === "scheduled") {
-                                    $tripStatusType = "Scheduled";
-                                } elseif ($tripStatus === "completed") {
-                                    $tripStatusType = "Completed";
-                                } elseif ($tripStatus === "cancelled") {
-                                    $tripStatusType = "Cancelled";
-                                } else {
-                                    $tripStatusType = "Not Scheduled";
-                                }
-                                ?>
-
-                                <?php if ($accessLevel < 3): ?>
-                                    <tr data-event-id="<?= $eventID ?>">
-                                        <td><a href="event.php?id=<?= $eventID ?>"><?= $riderName ?></a></td>
-                                        <!-- <td><?= $startDate ?></td> -->
-                                        <td><a class="button sign-up" href="eventSignUp.php">Sign Up</a></td>
-                                    </tr>
-                                <?php else: ?>
-                                    <tr>
-                                        <!-- <td><?= $reportsID ?></td> -->
-                                        <td><?= $riderName ?></td>
-                                        <td><?= $startDate ?></td>
-                                        <td><?= $startTime ?></td>
-                                        <td><?= $endTime ?></td>
-                                        <td><?= $mileageStart ?></td>
-                                        <td><?= $mileageEnd ?></td>
-                                        <td><?= $tripStatusType ?></td>
-                                        <td><?= $pickupLocation ?></td>
-                                        <td><?= $dropOffLocation ?></td>
-
-                                        <!-- <td>
-                                            <a href="#" onclick="window.location.href = 'viewPassengers.php'" style.display='flex' ; style="color: black; text-decoration: underline;">
-                                                Passenger List </a>
-                                        </td> -->
-                                        <!-- <td>
-                                            <a href="#" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" class="button confirm">
-                                                Dispatch Trip </a>
-                                        </td> -->
-                                    </tr>
-                                <?php endif; ?>
+                            <?php foreach ($riders as $rider): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($rider->get_first_name()) ?></td>
+                                    <td><?= htmlspecialchars($rider->get_last_name()) ?></td>
+                                    <td><?= $rider->get_id() ?></td>
+                                    <td>
+                                        <form method="POST" action="processRiderReport.php" style="display:inline;">
+                                            <input type="hidden" name="action" value="download_rider">
+                                            <input type="hidden" name="rider_id" value="<?= $rider['id'] ?>">
+                                            <label for="format">Select Report Format:</label>
+                                            <select name="format" id="rider_format">
+                                                <option value="csv">CSV (.csv)</option>
+                                                <option value="excel">Excel (.xls)</option>
+                                            </select>
+                                            <button type="submit">Download Report</button>
+                                        </form>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>

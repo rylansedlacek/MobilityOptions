@@ -1427,3 +1427,19 @@ function saveFavoriteTrip($userId, $label, $pickupLocation, $dropoffLocation, $d
 //     mysqli_close($connection);
 //     return $riders;
 // }
+
+//function get_events_by_rider($rider_id) {
+  //  $connection = connect();
+    //$rider_id = (int)$rider_id;
+    //$query = "SELECT * FROM dbEvents WHERE rider_id = $rider_id";
+    //$result = mysqli_query($connection, $query);
+
+    //if(!$result) {
+     //   mysqli_close($connection);
+      //  return[];
+    //}
+
+    //$events = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    //mysqli_close($connection);
+    //return $events;
+//}

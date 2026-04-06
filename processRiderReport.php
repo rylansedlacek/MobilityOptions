@@ -27,19 +27,24 @@ function get_post_value($key, $defaultValue)
 
 $action = get_post_value('action', 'generate');
 $format = get_post_value('format', 'csv');
-$riderID = get_post_value('rider_id', null);
 
-if ($action === 'download_rider') {
+if ($action === 'generate') {
+    $snapshot = get_rider_report_information();
+
+    if (!$snapshot) {
+        echo 'Failed to generate report.';
+        exit();
+    }
+
     if ($format === 'csv') {
-        riders_report_csv($riderID);
+        riders_report_csv($snapshot);
         exit();
     }
-    else {
-        riders_report_excel($riderID);
-        exit();
-    }
+
+    riders_report_excel($snapshot);
+    exit();
 }
-/*
+
 if ($action === 'download_existing') {
     $reportId = (int)get_post_value('report_id', 0);
     $snapshot = get_report_by_id($reportId);
@@ -57,7 +62,6 @@ if ($action === 'download_existing') {
     riders_report_excel($snapshot);
     exit();
 }
-*/
 
 // mobility options csv style report
 function riders_report_csv()

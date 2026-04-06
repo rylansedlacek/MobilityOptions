@@ -153,6 +153,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                 <th><b>Trip Status</b></th>
                                 <th><b>Pickup Location</b></th>
                                 <th><b>Drop Off Location</b></th>
+                                <th><b>Download Report</b></th>
                             </tr>
                         </thead>
                         <!-- <?php
@@ -210,6 +211,22 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                         <td><?= $pickupLocation ?></td>
                                         <td><?= $dropOffLocation ?></td>
 
+                                        <td class="report-actions">
+                                            <form method="POST" action="processRiderReport.php" style="display: flex; gap: 5px; align-items: center;">
+                                                <input type="hidden" name="action" value="generate">
+                                                <input type="hidden" name="reportType" value="single_rider">
+                                                <input type="hidden" name="rider_id" value="<?= $reports['rider_id'] ?>">
+
+                                                <select name="format" style="width: 70px; padding: 2px; font-size: 12px; height: 30px; color: #000;">
+                                                    <option value="csv">.csv</option>
+                                                    <option value="excel">.xls</option>
+                                                </select>
+
+                                                <button type="submit" class="blue-button" style="padding: 2px 10; font-size: 12px; height: 30px;">
+                                                    Download
+                                                </button>
+                                            </form>
+                                        </td>
                                         <!-- <td>
                                             <a href="#" onclick="window.location.href = 'viewPassengers.php'" style.display='flex' ; style="color: black; text-decoration: underline;">
                                                 Passenger List </a>

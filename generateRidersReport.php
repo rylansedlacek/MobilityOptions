@@ -33,6 +33,36 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         exit;
     }
 }
+
+function format_time_12h($time) {
+    $dt = DateTime::createFromFormat('H:i', $time);
+    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    return $time;
+}
+
+function format_trip_status_label($tripStatus) {
+    $status = strtolower(trim((string)$tripStatus));
+
+    if ($status === 'in_progress') {
+        return 'In Progress';
+    }
+    if ($status === 'scheduled') {
+        return 'Scheduled';
+    }
+    if ($status === 'completed') {
+        return 'Completed';
+    }
+    if ($status === 'cancelled' || $status === 'canceled') {
+        return 'Cancelled';
+    }
+    if ($status === 'requested' || $status === '') {
+        return 'Requested';
+    }
+
+    return 'Not Scheduled';
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -84,23 +114,57 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         .report-actions {
             white-space: nowrap;
         }
+
+        .table-wrapper {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            overflow-x: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .table-wrapper label,
+        .table-wrapper .sub-text {
+            width: 100%;
+        }
+
+        .table-wrapper table.general {
+            width: auto;
+            margin: 0 auto;
+            table-layout: auto;
+        }
+
+        .table-wrapper table.general th,
+        .table-wrapper table.general td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table-wrapper table.general th,
+        .table-wrapper table.general td {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
     </style>
 </head>
 
 <body>
     <header class="hero-header">
         <div class="center-header">
-            <h1>Generate Rider Reports</h1>
+            <h1>Generate All Rider Report</h1>
         </div>
     </header>
     <main>
-        <div class="main-content-box w-[80%] p-8">
+        <div class="main-content-box w-[95%] p-8">
             <form method="POST" action="processRiderReport.php">
                 <div style="margin-bottom: 1.5rem;">
                     <label style="font-weight: 600;">Report Contents</label>
                     <p class="sub-text" style="font-size: 16px; margin-top: 0.5rem; margin-bottom: 0.5rem;">
                         Select the format in which you would like to generate the rider report for all riders.
                     </p>
+                    
                 </div>
                 <!-- pass operations_snapshot to processReport so it knows to make our report -->
                 <input type="hidden" name="reportType" value="operations_snapshot">
@@ -125,35 +189,38 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
         <header class="hero-header">
             <div class="center-header">
-                <h1>Previous Operational Reports</h1>
+                <h1>Generate Single Rider Report</h1>
             </div>
         </header>
         <!-- //////////////////////////////generate table below (format viewAllTabs.php/////////////////////////////////////// -->
 
-        <div class="main-content-box w-[80%] p-8">
+        <div class="main-content-box w-[95%] p-8">
             <?php
             $events = get_all_events();
             $drivers  = get_drivers_with_email();
             $vehicles = get_vehicles();
             $riderReports = get_rider_report_information();
 
-            if (sizeof(get_all_events()) && sizeof($drivers)): ?>
+            if (sizeof($riderReports) > 0): ?>
                 <div class="table-wrapper">
                     <label> Select the Rider you would like to generate a report for below:<br></label>
+                    <p class="sub-text" style="font-size: 16px; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                        The report created contains data for all rides requested, scheduled, or cancelled by a rider in the system.
+                    </p>
                     <table class="general">
                         <thead>
                             <tr>
                                 <!-- <th><b>Report ID</b></th> -->
                                 <th><b>Rider Name</b></th>
                                 <th><b>Trip Date</b></th>
-                                <th><b>Start Time</b></th>
-                                <th><b>End Time</b></th>
+                                <th><b>Start</b></th>
+                                <th><b>End</b></th>
                                 <!-- <th><b>Mileage Start</b></th>
                                 <th><b>Mileage End</b></th> -->
-                                <th><b>Trip Status</b></th>
-                                <th><b>Pickup Location</b></th>
-                                <th><b>Drop Off Location</b></th>
-                                <th><b>Download Report</b></th>
+                                <th><b>Status</b></th>
+                                <th><b>Pickup</b></th>
+                                <th><b>Drop Off</b></th>
+                                <th><b>Download</b></th>
                             </tr>
                         </thead>
                         <!-- <?php
@@ -169,27 +236,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                 $startDate = $reports['startDate'];
                                 $riderName = get_riders_name($reports['rider_id']);
                                 // $endDate = $reports['endDate'];
-                                $startTime = $reports['startTime'];
-                                $endTime = $reports['endTime'];
+                                $startTime = format_time_12h($reports['startTime']);
+                                $endTime = format_time_12h($reports['endTime']);
                                 $mileageStart = $reports['mileageStart'];
                                 $mileageEnd = $reports['mileageEnd'];
                                 $pickupLocation = $reports['pickup_location'];
                                 $dropOffLocation = $reports['dropoff_location'];
 
-                                $tripStatus = $reports['trip_status'];
-                                $tripStatusType = "";
-
-                                if ($tripStatus === "in_progress") {
-                                    $tripStatusType = "In Progress";
-                                } elseif ($tripStatus === "scheduled") {
-                                    $tripStatusType = "Scheduled";
-                                } elseif ($tripStatus === "completed") {
-                                    $tripStatusType = "Completed";
-                                } elseif ($tripStatus === "cancelled") {
-                                    $tripStatusType = "Cancelled";
-                                } else {
-                                    $tripStatusType = "Not Scheduled";
-                                }
+                                $tripStatusType = format_trip_status_label($reports['trip_status']);
                                 ?>
 
                                 <?php if ($accessLevel < 3): ?>
@@ -212,7 +266,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                         <td><?= $dropOffLocation ?></td>
 
                                         <td class="report-actions">
-                                            <form method="POST" action="processRiderReport.php" style="display: flex; gap: 5px; align-items: center;">
+                                            <form method="POST" action="processRiderReport.php" style="display: flex; flex-direction: column; gap: 5px; align-items: center;">
                                                 <input type="hidden" name="action" value="generate">
                                                 <input type="hidden" name="reportType" value="single_rider">
                                                 <input type="hidden" name="rider_id" value="<?= $reports['rider_id'] ?>">
@@ -222,7 +276,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                                     <option value="excel">.xls</option>
                                                 </select>
 
-                                                <button type="submit" class="blue-button" style="padding: 2px 10; font-size: 12px; height: 30px;">
+                                                <button type="submit" class="blue-button" style="padding: 2px 20; font-size: 12px; height: 35px;">
                                                     Download
                                                 </button>
                                             </form>

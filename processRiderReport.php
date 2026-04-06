@@ -24,6 +24,46 @@ function get_post_value($key, $defaultValue)
     return $defaultValue;
 }
 
+function format_time_12h($time) {
+    $dt = DateTime::createFromFormat('H:i', $time);
+    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    return $time;
+}
+
+function format_trip_status_label($tripStatus)
+{
+    $status = strtolower(trim((string)$tripStatus));
+
+    if ($status === 'in_progress') {
+        return 'In Progress';
+    }
+    if ($status === 'scheduled') {
+        return 'Scheduled';
+    }
+    if ($status === 'completed') {
+        return 'Completed';
+    }
+    if ($status === 'cancelled' || $status === 'canceled') {
+        return 'Cancelled';
+    }
+    if ($status === 'requested' || $status === '') {
+        return 'Requested';
+    }
+
+    return 'Not Scheduled';
+}
+
+function single_rider_report_filename($riderID, $extension)
+{
+    $riderName = (string) get_riders_name($riderID);
+    $riderName = trim($riderName);
+    if ($riderName === '') {
+        $riderName = 'rider';
+    }
+
+    return $riderName. '_single_rider_report.' . $extension;
+}
+
 
 $action = get_post_value('action', 'generate');
 $format = get_post_value('format', 'csv');
@@ -79,14 +119,14 @@ function riders_report_csv()
 
     // most of this is taken from commented sections below
     header('Content-Type: text/csv');
-    header("Content-Disposition: attachment; filename=rider_report.csv");
+    header("Content-Disposition: attachment; filename=all_rider_report.csv");
     header('Pragma: no-cache');
     header('Expires: 0');
 
     $output = fopen('php://output', 'w');
 
     // gets the report number from where its stored in reports table
-    fputcsv($output, ["Mobility Options Riders Reports"]);
+    fputcsv($output, ["Mobility Options - All Riders Report"]);
     fputcsv($output, []);
     fputcsv($output, [
         'Rider name',
@@ -101,26 +141,13 @@ function riders_report_csv()
     ]);
     foreach (get_rider_report_information() as $row) {
         $riderName = get_riders_name($row['rider_id']);
-        $tripStatus = htmlspecialchars((string)$row['trip_status']);
-        $tripStatusType = "";
-
-        if ($tripStatus === "in_progress") {
-            $tripStatusType = "In Progress";
-        } elseif ($tripStatus === "scheduled") {
-            $tripStatusType = "Scheduled";
-        } elseif ($tripStatus === "completed") {
-            $tripStatusType = "Completed";
-        } elseif ($tripStatus === "cancelled") {
-            $tripStatusType = "Cancelled";
-        } else {
-            $tripStatusType = "Not Scheduled";
-        }
+        $tripStatusType = format_trip_status_label($row['trip_status']);
 
         fputcsv($output, [
             (string)$riderName,
             (string) $row['startDate'],
-            (string) $row['startTime'],
-            (string) $row['endTime'],
+            (string) format_time_12h($row['startTime']),
+            (string) format_time_12h( $row['endTime']),
             (string) $row['mileageStart'],
             (string) $row['mileageEnd'],
             (string) $tripStatusType,
@@ -139,13 +166,13 @@ function riders_report_excel()
 {
     // again taken from commented out sections below
     header('Content-Type: application/vnd.ms-excel');
-    header("Content-Disposition: attachment; filename=rider_report.xls");
+    header("Content-Disposition: attachment; filename=all_rider_report.xls");
     header('Pragma: no-cache');
     header('Expires: 0');
 
     echo "<html><head><meta charset='UTF-8'></head><body>";
     echo "<table border='1' style='border-collapse: collapse; font-family: Arial, sans-serif; text-align: center;'>";
-    echo "<tr><th colspan='9' style='font-size: 18px; background-color: #004488; color: white; padding: 10px;'>Mobility Options Rider Report</th></tr>";
+    echo "<tr><th colspan='9' style='font-size: 18px; background-color: #004488; color: white; padding: 10px;'>Mobility Options - All Riders Report</th></tr>";
     echo "<tr>";
     echo "<th style='background-color: #52af3f; padding: 5px;width='100''>Rider ID</th>";
     echo "<th style='background-color: #3e87d0; padding: 5px;'>Trip Date</th>";
@@ -161,26 +188,13 @@ function riders_report_excel()
 
     foreach (get_rider_report_information() as $row) {
         $riderName = get_riders_name($row['rider_id']);
-        $tripStatus = htmlspecialchars((string)$row['trip_status']);
-        $tripStatusType = "";
-
-        if ($tripStatus === "in_progress") {
-            $tripStatusType = "In Progress";
-        } elseif ($tripStatus === "scheduled") {
-            $tripStatusType = "Scheduled";
-        } elseif ($tripStatus === "completed") {
-            $tripStatusType = "Completed";
-        } elseif ($tripStatus === "cancelled") {
-            $tripStatusType = "Cancelled";
-        } else {
-            $tripStatusType = "Not Scheduled";
-        }
+        $tripStatusType = format_trip_status_label($row['trip_status']);
 
         echo "<tr>";
         echo "<td style='padding: 5px;'width='100'>" . htmlspecialchars((string)$riderName) . "</td>";
-        echo "<td style='padding: 5px;'>" . htmlspecialchars((string)$row['startDate']) . "</td>";
-        echo "<td style='padding: 5px;'>" . htmlspecialchars((string)$row['startTime']) . "</td>";
-        echo "<td style='padding: 5px;'>" . htmlspecialchars((string)$row['endTime']) . "</td>";
+        echo "<td style='padding: 5px;'>" . htmlspecialchars((string) $row['startDate']) . "</td>";
+        echo "<td style='padding: 5px;'>" . htmlspecialchars((string) format_time_12h($row['startTime'])) . "</td>";
+        echo "<td style='padding: 5px;'>" . htmlspecialchars((string) format_time_12h($row['endTime'])) . "</td>";
         echo "<td style='padding: 5px;'>" . htmlspecialchars((string)$row['mileageStart']) . "</td>";
         echo "<td style='padding: 5px;'>" . htmlspecialchars((string)$row['mileageEnd']) . "</td>";
         echo "<td style='padding: 5px;'width='100'>" . htmlspecialchars((string)$tripStatusType) . "</td>";
@@ -199,14 +213,15 @@ function riders_report_csv_single($riderID)
 
     // most of this is taken from commented sections below
     header('Content-Type: text/csv');
-    header("Content-Disposition: attachment; filename=rider_report.csv");
+    $fileName = single_rider_report_filename($riderID, 'csv');
+    header('Content-Disposition: attachment; filename=' . $fileName);
     header('Pragma: no-cache');
     header('Expires: 0');
 
     $output = fopen('php://output', 'w');
 
     // gets the report number from where its stored in reports table
-    fputcsv($output, ["Mobility Options Riders Reports"]);
+    fputcsv($output, ["Mobility Options - Single Rider Report"]);
     fputcsv($output, []);
     fputcsv($output, [
         'Rider name',
@@ -221,26 +236,13 @@ function riders_report_csv_single($riderID)
     ]);
     foreach (get_single_rider_report_information($riderID) as $row) {
         $riderName = get_riders_name($row['rider_id']);
-        $tripStatus = htmlspecialchars((string)$row['trip_status']);
-        $tripStatusType = "";
-
-        if ($tripStatus === "in_progress") {
-            $tripStatusType = "In Progress";
-        } elseif ($tripStatus === "scheduled") {
-            $tripStatusType = "Scheduled";
-        } elseif ($tripStatus === "completed") {
-            $tripStatusType = "Completed";
-        } elseif ($tripStatus === "cancelled") {
-            $tripStatusType = "Cancelled";
-        } else {
-            $tripStatusType = "Not Scheduled";
-        }
+        $tripStatusType = format_trip_status_label($row['trip_status']);
 
         fputcsv($output, [
             (string)$riderName,
             (string) $row['startDate'],
-            (string) $row['startTime'],
-            (string) $row['endTime'],
+            (string) format_time_12h($row['startTime']),
+            (string) format_time_12h( $row['endTime']),
             (string) $row['mileageStart'],
             (string) $row['mileageEnd'],
             (string) $tripStatusType,
@@ -257,48 +259,36 @@ function riders_report_excel_single($riderID)
 {
     // again taken from commented out sections below
     header('Content-Type: application/vnd.ms-excel');
-    header("Content-Disposition: attachment; filename=rider_report.xls");
+    $fileName = single_rider_report_filename($riderID, 'xls');
+    header('Content-Disposition: attachment; filename=' . $fileName);
     header('Pragma: no-cache');
     header('Expires: 0');
 
     echo "<html><head><meta charset='UTF-8'></head><body>";
     echo "<table border='1' style='border-collapse: collapse; font-family: Arial, sans-serif; text-align: center;'>";
-    echo "<tr><th colspan='9' style='font-size: 18px; background-color: #004488; color: white; padding: 10px;'>Mobility Options Rider Report</th></tr>";
+    echo "<tr><th colspan='9' style='font-size: 18px; background-color: #004488; color: white; padding: 10px;'>Mobility Options - Single Rider Report</th></tr>";
     echo "<tr>";
     echo "<th style='background-color: #52af3f; padding: 5px;width='100''>Rider ID</th>";
-    echo "<th style='background-color: #3e87d0; padding: 5px;'>Trip Date</th>";
+    echo "<th style='background-color: #52af3f; padding: 5px;'>Trip Date</th>";
     echo "<th style='background-color: #52af3f; padding: 5px;'>Trip Time</th>";
-    echo "<th style='background-color: #3e87d0; padding: 5px;'>End Time</th>";
+    echo "<th style='background-color: #52af3f; padding: 5px;'>End Time</th>";
     echo "<th style='background-color: #52af3f; padding: 5px;'>Mileage Start</th>";
-    echo "<th style='background-color: #3e87d0; padding: 5px;'>Mileage End</th>";
+    echo "<th style='background-color: #52af3f; padding: 5px;'>Mileage End</th>";
     echo "<th style='background-color: #52af3f; padding: 5px;width='100''>Trip Status</th>";
-    echo "<th style='background-color: #3e87d0; padding: 5px;width='100''>Pickup Location</th>";
+    echo "<th style='background-color: #52af3f; padding: 5px;width='100''>Pickup Location</th>";
     echo "<th style='background-color: #52af3f; padding: 5px;width='100''>Drop Off Location</th>";
     echo "</tr>";
 
 
     foreach (get_single_rider_report_information($riderID) as $row) {
         $riderName = get_riders_name($row['rider_id']);
-        $tripStatus = htmlspecialchars((string)$row['trip_status']);
-        $tripStatusType = "";
-
-        if ($tripStatus === "in_progress") {
-            $tripStatusType = "In Progress";
-        } elseif ($tripStatus === "scheduled") {
-            $tripStatusType = "Scheduled";
-        } elseif ($tripStatus === "completed") {
-            $tripStatusType = "Completed";
-        } elseif ($tripStatus === "cancelled") {
-            $tripStatusType = "Cancelled";
-        } else {
-            $tripStatusType = "Not Scheduled";
-        }
+        $tripStatusType = format_trip_status_label($row['trip_status']);
 
         echo "<tr>";
         echo "<td style='padding: 5px;'width='100'>" . htmlspecialchars((string)$riderName) . "</td>";
         echo "<td style='padding: 5px;'>" . htmlspecialchars((string)$row['startDate']) . "</td>";
-        echo "<td style='padding: 5px;'>" . htmlspecialchars((string)$row['startTime']) . "</td>";
-        echo "<td style='padding: 5px;'>" . htmlspecialchars((string)$row['endTime']) . "</td>";
+        echo "<td style='padding: 5px;'>" . htmlspecialchars((string) format_time_12h($row['startTime'])) . "</td>";
+        echo "<td style='padding: 5px;'>" . htmlspecialchars((string) format_time_12h($row['endTime'])) . "</td>";
         echo "<td style='padding: 5px;'>" . htmlspecialchars((string)$row['mileageStart']) . "</td>";
         echo "<td style='padding: 5px;'>" . htmlspecialchars((string)$row['mileageEnd']) . "</td>";
         echo "<td style='padding: 5px;'width='100'>" . htmlspecialchars((string)$tripStatusType) . "</td>";

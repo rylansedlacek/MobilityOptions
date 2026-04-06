@@ -148,8 +148,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                 <th><b>Trip Date</b></th>
                                 <th><b>Start Time</b></th>
                                 <th><b>End Time</b></th>
-                                <th><b>Mileage Start</b></th>
-                                <th><b>Mileage End</b></th>
+                                <!-- <th><b>Mileage Start</b></th>
+                                <th><b>Mileage End</b></th> -->
                                 <th><b>Trip Status</b></th>
                                 <th><b>Pickup Location</b></th>
                                 <th><b>Drop Off Location</b></th>
@@ -205,8 +205,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                         <td><?= $startDate ?></td>
                                         <td><?= $startTime ?></td>
                                         <td><?= $endTime ?></td>
-                                        <td><?= $mileageStart ?></td>
-                                        <td><?= $mileageEnd ?></td>
+                                        <!--<td><?= $mileageStart ?></td>
+                                        <td><?= $mileageEnd ?></td>-->
                                         <td><?= $tripStatusType ?></td>
                                         <td><?= $pickupLocation ?></td>
                                         <td><?= $dropOffLocation ?></td>

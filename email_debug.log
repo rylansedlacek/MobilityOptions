@@ -16,3 +16,4 @@
 [sendEmails] HTTP 0 | cURL Error: Failed to connect to localhost port 80 after 0 ms: Could not connect to server | Response: 
 [sendEmails] Direct call | Result: {"success":true,"sent":["chrisboulder@stars.com"],"failed":[],"error":""}
 [sendEmails] Direct call | Result: {"success":true,"sent":["carlos@stars.com"],"failed":[],"error":""}
+[sendEmails] Direct call | Result: {"success":true,"sent":["carlos@stars.com"],"failed":[],"error":""}

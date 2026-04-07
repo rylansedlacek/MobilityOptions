@@ -99,7 +99,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     /* Global rules */
     font-size: 18px;
-    font-family: Montserrat;
+    font-family: 'Georgia', serif;
     font-weight: 300;
 }
 
@@ -142,7 +142,7 @@ header {
 body {
     background-color: #fff;
     color: var(--page-font-color);
-    font-family: Georgia, serif;
+    font-family: 'Georgia', serif;
 }
 
 header > img {

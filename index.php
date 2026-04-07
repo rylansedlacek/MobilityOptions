@@ -521,7 +521,6 @@
     </div>
 
 
-<div class="full-width-bar">
     <div class="content-box">
         <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">Manage Drivers and Vehicles Here.</div>
@@ -531,8 +530,6 @@
             <div class="circle">&gt;</div>
         </button>
     </div>
-</div>
-
 </div>
 
 <div style="margin-top: 50px; padding: 30px 20px;">

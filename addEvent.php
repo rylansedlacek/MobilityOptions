@@ -311,13 +311,13 @@
 ?><!DOCTYPE html>
 <header class="hero-header">
     <div class="center-header">
-        <h1>Ride Scheduling</h1>
+        <h1>Ride Request</h1>
     </div>
 </header>
 <html>
     <head>
         <?php require_once('universal.inc') ?>
-        <title>Mobility Options | Request Ride</title>
+        <title>Mobility Options | Ride Request</title>
     </head>
     <body>
         <?php require_once('header.php') ?>
@@ -627,7 +627,7 @@
             </fieldset>
             <?php endif; ?>
 
-                <input type="submit" value="Schedule Ride" style="width:100%;">
+                <input type="submit" value="Submit Ride Request" style="width:100%;">
                 
             </form>
                 <script>

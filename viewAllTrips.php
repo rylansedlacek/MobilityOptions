@@ -17,11 +17,56 @@ if (isset($_SESSION['_id'])) {
 }
 include 'database/dbEvents.php';
 include 'database/dbPersons.php';
+require_once('email.php');
+
+function send_trip_dispatched_email($event) {
+    if (empty($event['rider_id'])) { return; }
+
+    $rider = retrieve_person((string) $event['rider_id']);
+    if (!$rider) { return; }
+
+    $riderEmail = trim((string) $rider->get_email());
+    if (!$riderEmail) { return; }
+
+    $driverName = 'Assigned Driver';
+    if (!empty($event['driver_id'])) {
+        $driver = retrieve_person((string) $event['driver_id']);
+        if ($driver) { $driverName = trim($driver->get_first_name() . ' ' . $driver->get_last_name()); }
+    }
+
+    $vehicleLabel = 'Vehicle';
+    if (!empty($event['vehicle_id'])) {
+        $vehicleLabel = 'Vehicle ID: ' . (int) $event['vehicle_id'];
+        foreach (get_vehicles() as $vehicle) {
+            if ((int) $vehicle['id'] === (int) $event['vehicle_id']) {
+                $makeModel = (string) ($vehicle['make_model']);
+                $plate = (string) ($vehicle['plate']);
+                $vehicleLabel = $makeModel . (' [ID: ' . $plate . ']');
+                break;
+            }
+        }
+    }
+
+    $subject = 'Trip Dispatched';
+    $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
+        "Your scheduled ride has been dispatched and is now in progress with the following details:\n\n" .
+        "Date: {$event['startDate']}\n" .
+        "Time: " . format_time_12h((string) $event['startTime']) . " - " . format_time_12h((string) $event['endTime']) . "\n" .
+        "Pickup: {$event['pickup_location']}\n" .
+        "Dropoff: {$event['dropoff_location']}\n" .
+        "Driver: {$driverName}\n" .
+        "Vehicle: {$vehicleLabel}\n\n" .
+        "Thank you,\n" .
+        "Healthy Generations - Mobility Options";
+
+    sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
+}
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $eventID = (int)$_GET['id'];
     $event = fetch_event_by_id($eventID);
     if ($event && dispatch_trip($eventID)) {
+        send_trip_dispatched_email($event);
         header("Location: viewAllTrips.php?status=success");
         exit;
     }
@@ -90,6 +135,17 @@ function format_time_12h($time) {
 
     <h1>Dispatch Trip</h1>
     <main class="general">
+        <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
+            <div id="trip-status-toast" class="happy-toast">Trip Dispatched!</div>
+            <script>
+                setTimeout(function() {
+                    const toast = document.getElementById('trip-status-toast');
+                    if (toast) {
+                        toast.style.display = 'none';
+                    }
+                }, 1200);
+            </script>
+        <?php endif; ?>
         <?php
         $events = get_all_events();
         $drivers  = get_drivers_with_email();

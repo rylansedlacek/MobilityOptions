@@ -1264,7 +1264,7 @@ if (date("H:i:s") > "18:19:59") {
 
                 // font family mapping
                 if (s.fontFamily === 'nunito') {
-                    document.body.style.fontFamily = 'Georgia, serif';
+                    document.body.style.fontFamily = 'Nunito, Quicksand, sans-serif';
                 } else if (s.fontFamily === 'quicksand') {
                     document.body.style.fontFamily = 'Quicksand, sans-serif';
                 } else if (s.fontFamily === 'comic') {

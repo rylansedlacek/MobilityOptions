@@ -31,7 +31,7 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         <?php endif; ?>body {
-            font-family: Nunito, Quicksand, sans-serif;
+            font-family: Georgia, serif;
             padding-top: 96px;
             font-size: 14pt;
         }

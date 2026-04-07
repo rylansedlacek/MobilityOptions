@@ -31,7 +31,7 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         <?php endif; ?>body {
-            font-family: Georgia, serif;
+            font-family: 'Georgia', serif;
             padding-top: 96px;
             font-size: 14pt;
         }
@@ -326,7 +326,7 @@ if (date("H:i:s") > "18:19:59") {
             border: none;
             color: white;
             font-size: 20px;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Georgia', serif;
             font-weight: 600;
             border-radius: 20px;
             cursor: pointer;

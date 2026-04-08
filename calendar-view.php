@@ -136,6 +136,23 @@ function time_label($eventInfo, $isScheduledRide) {
     border-color: #d44b44;
     color: #fff;
 }
+
+.calendar-see-more {
+    display: block;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.78rem;
+    color: #fff;
+    background-color: #1f4ba3;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-top: 1px;
+    text-align: center;
+    transition: background-color .2s;
+}
+
+.calendar-see-more:hover {
+    background-color: #4196ff;
+}
 </style>
 
                 <!-- Add navigation data to the calendar -->
@@ -181,6 +198,9 @@ function time_label($eventInfo, $isScheduledRide) {
 
                                 if (isset($events[$e])) {
                                     $dayEvents = $events[$e];
+                                    $maxVisible = 2;
+                                    $totalDayEvents = count($dayEvents);
+                                    $shownCount = 0;
                                     foreach ($dayEvents as $info) {
                                         $completedValue = strtoupper(trim((string)($info['completed'] ?? 'N')));
                                         $isScheduledRide = ($completedValue === 'Y');
@@ -230,7 +250,12 @@ function time_label($eventInfo, $isScheduledRide) {
                                         $eventsStr .= '</div>';
                                         $eventsStr .= '</div>';
                                         $eventsStr .= '</div>';
-                                        
+                                        $shownCount++;
+                                    }
+                                    if ($totalDayEvents > $maxVisible) {
+                                        $remaining = $totalDayEvents - $maxVisible;
+                                        $dailyUrl = 'calendar-view_daily.php?month=' . $e;
+                                        $eventsStr .= '<a class="calendar-see-more" href="' . $dailyUrl . '">+' . $remaining . ' more</a>';
                                     }
                                 }
                                 echo '<td class="calendar-day' . $extraClasses . '" ' . $extraAttributes . ' data-date="' . date('Y-m-d', $date) . '">

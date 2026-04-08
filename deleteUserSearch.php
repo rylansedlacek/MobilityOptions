@@ -79,7 +79,7 @@ require_once('header.php');
 
 <header class="hero-header">
     <div class="center-header">
-        <h1>Delete Rider Account From Organization</h1>
+        <h1>Delete Rider Profile</h1>
     </div>
 </header>
 
@@ -108,26 +108,22 @@ require_once('header.php');
                 // }
 
                 $name = $args['name'];
-                $id = $args['id'];
-                $phone = preg_replace("/[^0-9]/", "", $args['phone']);
+                //$id = $args['id'];
+                //$phone = preg_replace("/[^0-9]/", "", $args['phone']);
                 $zip = $args['zip'];
-                $role = $args['role'];
-                $status = $args['status'];
+               // $role = $args['role'];
+                //$status = $args['status'];
                // $photo_release = $args['photo_release'];
 
                 //if (!($name || $id || $phone || $zip || $role || $status || $photo_release)) {
-                if (!($name || $id || $phone || $zip || $role || $status)) {
+                if (!($name || $zip )) {
                     echo '<div class="error-block">At least one search criterion is required.</div>';
-                } else if (!valueConstrainedTo($role, ['admin', 'participant', 'superadmin', 'volunteer', ''])) {
-                    echo '<div class="error-block">The system did not understand your request.</div>';
-                } else if (!valueConstrainedTo($status, ['Active', 'Inactive', ''])) {
-                    echo '<div class="error-block">The system did not understand your request.</div>';
                 //} else if (!valueConstrainedTo($photo_release, ['Restricted', 'Not Restricted', ''])) {
                     //echo '<div class="error-block">The system did not understand your request.</div>';
                 } else {
                     echo "<h3>Search Results</h3>";
                     //$persons = find_users($name, $id, $phone, $zip, $role, $status, $photo_release);
-                    $persons = find_users($name, $id, $phone, $zip, $role, $status);
+                    $persons = find_users($name, '', '', $zip, 'rider', '');
 
                     require_once('include/output.php');
 
@@ -140,10 +136,10 @@ require_once('header.php');
                                         <th>First</th>
                                         <th>Last</th>
                                         <th>Username</th>
-                                        <th>Phone</th>
+                                       
                                         <th>Zip Code</th>
-                                        <th>Role</th>
-                                        <th>Archive Status</th>
+                                       
+                                        <th>Type</th>
                                         <th>Profile</th>
                                         <th>Delete?</th>
                                     </tr>
@@ -163,12 +159,11 @@ require_once('header.php');
                                         <td>' . $person->get_first_name() . '</td>
                                         <td>' . $person->get_last_name() . '</td>
                                         <td><a href="mailto:' . $person->get_id() . '" class="text-blue-700 underline">' . $person->get_id() . '</a></td>
-                                        <td><a href="tel:' . $person->get_phone1() . '" class="text-blue-700 underline">' . formatPhoneNumber($person->get_phone1()) . '</a></td>
+                                        
                                         <td>' . $person->get_zip_code() . '</td>
                                         <td>' . ucfirst($person->get_type()) . '</td>
-                                        <td>' . ucfirst($person->get_status()) . '</td>
                                         <td><a href="viewProfile.php?id=' . $person->get_id() . '" class="text-blue-700 underline">Profile</a></td>
-                                        <td><a href="deleteUser.php?id=' . $person->get_id() . '" onclick="return confirm(\'Are You Sure?\');" class="text-blue-700 underline"">Delete User</a></td>
+                                        <td><a href="deleteUser.php?id=' . $person->get_id() . '" onclick="return confirm(\'Are You Sure?\');" class="text-blue-700 underline"">Delete Rider</a></td>
                                     </tr>';
                         }
                         echo '
@@ -194,10 +189,7 @@ require_once('header.php');
                 <input type="text" id="name" name="name" class="w-full" value="<?php if (isset($name)) echo htmlspecialchars($_GET['name']); ?>" placeholder="Enter the user's first and/or last name">
             </div>
 
-            <div>
-                <label for="id">Username</label>
-                <input type="text" id="id" name="id" class="w-full" value="<?php if (isset($id)) echo htmlspecialchars($_GET['id']); ?>" placeholder="Enter the user's username (login ID)">
-            </div>
+           
 
             <!-- <div>
                 <label for="phone">Phone Number</label>
@@ -218,14 +210,7 @@ require_once('header.php');
                 </select>
             </div> -->
 
-            <div>
-                <label for="status">Archive Status</label>
-                <select id="status" name="status" class="w-full">
-                    <option value="">Any</option>
-                    <option value="Active" <?php if (isset($status) && $status == 'Active') echo 'selected'; ?>>Active</option>
-                    <option value="Inactive" <?php if (isset($status) && $status == 'Inactive') echo 'selected'; ?>>Archived</option>
-                </select>
-            </div>
+           
             <!-- 
             <div>
                 <label for="photo_release">Photo Release</label>
@@ -245,13 +230,13 @@ require_once('header.php');
     </div>
 
     <div class="text-center mt-6">
-        <a href="index.php" class="return-button">Return to Dashboard</a>
+        <a href="volunteerManagement.php" class="return-button">Return to Rider Management</a>
     </div>
 
     <div class="info-section">
         <div class="blue-div"></div>
         <p class="info-text">
-            Use this tool to filter and search for user accounts by their role, zip code, phone, archive status, and more. User account will be deleted upon confirmation.
+            Use this tool to filter and search for Rider Profiles by name and more. Rider Profile will be deleted upon confirmation.
         </p>
         <div style="height: 30px;"></div>
     </div>

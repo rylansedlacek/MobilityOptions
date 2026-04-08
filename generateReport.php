@@ -18,7 +18,7 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title> Mobility Options | Operational Reports</title>
-    <!--<script src="js/data-filters.js" defer></script>-->
+    <!--<script src="js/data-filters.js" 0defer></script>-->
     <link href="css/normal_tw.css" rel="stylesheet">
     <?php
     $tailwind_mode = true;

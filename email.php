@@ -60,49 +60,18 @@ function retrieveAllEmails(array $ids = []): array {
 }
 
 function sendEmails(array $emails, string $senderName, string $subject, string $body): array {
-    
-    $url = "http://localhost/MobilityOptions/email/sendEmail.php";
+    require_once __DIR__ . '/email/sendEmail.php';
 
-    $payload = [
-        "emails" => $emails,
-        "subject" => $subject,
-        "body" => $body,
-        "senderName" => $senderName
-    ];
+    $result = sendEmailsDirect($emails, $senderName, $subject, $body);
 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-    $response = curl_exec($ch);
-    $curlError = curl_error($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    // Log raw response and HTTP status for debugging
+    // Log for debugging
     $logFile = __DIR__ . '/email_debug.log';
     if (is_writable(__DIR__)) {
-        $log = "[sendEmails] HTTP $httpCode | cURL Error: $curlError | Response: $response\n";
+        $log = "[sendEmails] Direct call | Result: " . json_encode($result) . "\n";
         file_put_contents($logFile, $log, FILE_APPEND);
     }
 
-    $decoded = json_decode($response, true);
-
-    if (!is_array($decoded)) {
-        return [
-            "success" => false,
-            "results" => [[
-                "email" => "all",
-                "success" => false,
-                "error" => $curlError ?: "Invalid JSON response",
-                "raw_output" => $response
-            ]]
-        ];
-    }
-
-    return $decoded;
+    return $result;
 }
 
 

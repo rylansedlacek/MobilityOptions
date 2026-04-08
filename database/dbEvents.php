@@ -1382,3 +1382,48 @@ function complete_trip($eventID, $mileage_start, $mileage_end)
     mysqli_close($connection);
     return $affected > 0;
 }
+
+function getFavoriteTripsByRiderId($riderId) {
+    $con = connect();
+    $query = "SELECT * FROM dbFavoriteTrips WHERE user_id = ?";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, "s", $riderId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $favoriteTrips = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $favoriteTrips[] = $row;
+    }
+    mysqli_stmt_close($stmt);
+    mysqli_close($con);
+    return $favoriteTrips;
+}
+
+//this function is to save the entered trip into dbFavoriteTrips table for future use. It takes the user id, label, pickup location, dropoff location, dropoff contact and description as parameters and inserts a new record into the dbFavoriteTrips table. It returns true if the insertion is successful and false otherwise.
+function saveFavoriteTrip($userId, $label, $pickupLocation, $dropoffLocation, $dropoffContact, $description) {
+    $con = connect();
+    $query = "INSERT INTO dbFavoriteTrips (user_id, label, pickup_location, dropoff_location, dropoff_contact, description) 
+              VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($con, $query);
+    mysqli_stmt_bind_param($stmt, "ssssss", $userId, $label, $pickupLocation, $dropoffLocation, $dropoffContact, $description);
+    $ok = mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($con);
+    return $ok;
+}
+
+// //get event based on rider id
+// function get_all_riders(){
+//     $connection = connect();
+//     $query = "SELECT * FROM dbevents WHERE rider_id = :rider_id";
+//     $result = mysqli_query($connection, $query);
+
+//     if(!$result){
+//         mysqli_close($connection);
+//         return [];
+//     }
+
+//     $riders = mysqli_fetch_all($result, MYSQLI_ASSOC);
+//     mysqli_close($connection);
+//     return $riders;
+// }

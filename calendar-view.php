@@ -202,6 +202,10 @@ function time_label($eventInfo, $isScheduledRide) {
                                     $totalDayEvents = count($dayEvents);
                                     $shownCount = 0;
                                     foreach ($dayEvents as $info) {
+                                        if ($shownCount >= $maxVisible) {
+                                            break;
+                                        }
+
                                         $completedValue = strtoupper(trim((string)($info['completed'] ?? 'N')));
                                         $isScheduledRide = ($completedValue === 'Y');
                                         $eventLabel = time_label($info, $isScheduledRide);

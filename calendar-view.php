@@ -74,8 +74,69 @@ function time_label($eventInfo, $isScheduledRide) {
     return $prefix . $displayTime;
 }
 
-
+// add Modal css here
 ?>
+ 
+<style>
+.trip-popup {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #11111124;
+}
+
+.trip-popup:target {
+    display: block;
+}
+
+.trip-popup-card {
+    width: 92%;
+    max-width: 430px;
+    margin: 90px auto;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 8px 22px #11111124;
+}
+
+.trip-popup-card h3 {
+    margin: 0 0 12px 0;
+    font-size: 19px;
+}
+
+
+.trip-popup-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.trip-popup-btn {
+    text-decoration: none;
+    border: 1px solid #888;
+    border-radius: 7px;
+    padding: 9px 12px;
+    color: #111;
+    background: #f6f6f6;
+    font-size: 14px;
+}
+
+.trip-popup-btn-primary {
+    background: #2E7D32;
+    border-color: #2E7D32;
+    color: #fff;
+}
+.trip-popup-btn-close {
+    background: #d44b44;
+    border-color: #d44b44;
+    color: #fff;
+}
+</style>
 
                 <!-- Add navigation data to the calendar -->
                 <table id="calendar" 
@@ -125,12 +186,50 @@ function time_label($eventInfo, $isScheduledRide) {
                                         $isScheduledRide = ($completedValue === 'Y');
                                         $eventLabel = time_label($info, $isScheduledRide);
                                         $backgroundCol = $isScheduledRide ? '#2E7D32' : '#FBC02D';
-                                        if ($isScheduledRide) {
-                                            $targetHref = 'scheduleTrip.php?id=' . $info['id'];
+                                        $popupId = 'trip-popup-' . $info['id'] . '-' . str_replace('-', '', $e); // this makes the url
+                                        $rideSchedulerHref = 'scheduleTrip.php?id=' . $info['id']; // so its prepopulated
+
+                                        $riderName = trim((string)($info['name'] ?? ''));
+                                        if ($riderName === '') { $riderName = 'Not entered'; }
+
+                                        $rawStartTime = trim((string)($info['startTime'] ?? ''));
+                                        $popupParsedTime = DateTime::createFromFormat('H:i', $rawStartTime);
+                                        if($popupParsedTime == false) {
+                                            $popupTime = "N/A";
                                         } else {
-                                            $targetHref = 'event.php?id=' . $info['id'] . '&user_id=' . (isset($_SESSION['_id']) ? $_SESSION['_id'] : 'guest');
+                                        if($popupParsedTime == false) {
+                                            $popupTime = "N/A";
+                                        } else {
+                                            $popupTime = $popupParsedTime->format('g:i A');
+                                        }                                        }
+                                        if($popupParsedTime == false) {
+                                            $popupTime = "N/A";
+                                        } else {
+                                        $popupTime = $popupParsedTime->format('g:i A');
                                         }
-                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="' . $targetHref . '">' . htmlspecialchars($eventLabel, ENT_QUOTES, 'UTF-8') . '</a>';
+
+                                        $rawDate = trim((string)($info['startDate'] ?? '')); // get date and format
+                                        $popupDateEpoch = strtotime($rawDate);
+                                        $popupDate = date('m/d/Y', $popupDateEpoch);
+                                       
+                                        $pickupLocation = trim((string)($info['pickup_location'] ?? ''));
+
+                                       // this was so silly to do this way - but I like it
+                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="#' .$popupId . '">' . $eventLabel . '</a>';
+                                        $eventsStr .= '<div id="' . $popupId . '" class="trip-popup">';
+                                        $eventsStr .= '<div class="trip-popup-card">';
+                                        $eventsStr .= '<h3>Trip Details</h3>';
+                                        $eventsStr .= '<div class="trip-popup-row"><strong>Rider:</strong> ' . $riderName . '</div>';
+                                        $eventsStr .= '<div class="trip-popup-row"><strong>Time:</strong> ' . $popupTime . '</div>';
+                                        $eventsStr .= '<div class="trip-popup-row"><strong>Date:</strong> ' . $popupDate . '</div>';
+                                        $eventsStr .= '<div class="trip-popup-row"><strong>Pickup:</strong> ' . $pickupLocation . '</div>';
+                                      
+                                        $eventsStr .= '<div class="trip-popup-actions">';
+                                        $eventsStr .= '<a class="trip-popup-btn trip-popup-btn-primary" href="' . $rideSchedulerHref . '">Go To Scheduler</a>';
+                                        $eventsStr .= '<a class="trip-popup-btn trip-popup-btn-close" href="#">Close</a>';
+                                        $eventsStr .= '</div>';
+                                        $eventsStr .= '</div>';
+                                        $eventsStr .= '</div>';
                                         
                                     }
                                 }

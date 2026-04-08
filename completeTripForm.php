@@ -204,7 +204,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php
     require_once('universal.inc');
     ?>
-    <title>Whiskey Valor Foundation | <?php echo $event_info['name'] ?></title>
+    <title>Mobility Options | Complete Trip <?php echo $event_info['name'] ?></title>
+    <title>Mobility Options | Complete Trip <?php echo $event_info['name'] ?></title>
     <link rel="stylesheet" href="event.css" type="text/css" />
     <?php if (isset($_SESSION['access_level']) && $access_level >= 2) : ?>
         <script src="js/event.js"></script>
@@ -218,13 +219,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="event-info">
         <!-- Success notifications -->
         <?php if (isset($_GET['createSuccess'])): ?>
-            <div class="happy-toast">Event created successfully!</div>
+            <div class="happy-toast">Trip Completed!</div>
+            <script>
+                setTimeout(function() {
+                    window.location = 'completeTrips.php';
+                }, 1200);
+            </script>
         <?php endif ?>
         <?php if (isset($_GET['editSuccess'])): ?>
-            <div class="happy-toast">Event details updated successfully!</div>
+            <div class="happy-toast">Trip details updated successfully!</div>
         <?php endif ?>
         <?php if (isset($_GET['cancelSuccess'])): ?>
-            <div class="happy-toast">Sign-up canceled successfully!</div>
+            <div class="happy-toast">Trip canceled successfully!</div>
         <?php endif ?>
         <?php if ($displayUpdateMessage): ?>
             <div class="happy-toast">Attendance information updated successfully!</div>
@@ -322,7 +328,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </tr>
 
                 <tr>
-                    <td class="label">Description</td>
+                    <td class="label">Accomodation Notes</td>
                     <td>
                         <?php echo wordwrap($event_description, 50, "<br />\n"); ?>
                     </td>
@@ -406,21 +412,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <!-- Additional Information Required for Completing Trip -->
                 <!-- Includes: PICKUP TIME, DROPOFF TIME, MILEAGE, COMPLETION STATUS-->
+            <form method="POST" action="completeTrip.php?id=<?= urlencode($id) ?>">
                 <fieldset class="section-box mb-4">
 
                 <h3>Additional Details</h3>
                 <p class="mb-2">Please provide information for trip reporting purposes.</p>
                 <div class="blue-div"></div>
-                <label for="pick_up_time"><em>* </em>Actual Pick-Up TIme</label>
-                <input type="text" id="pick_up_time" name="pick_up_time" required placeholder="Enter their first name">
+                <label for="pick_up_time"><em>* </em>Actual Pick-Up Time</label>
+                <input type="text" id="pick_up_time" name="pick_up_time" required placeholder="Ex: 10:00 AM">
 
                 <label for="drop_off_time"><em>* </em>Actual Drop-Off Time</label>
-                <input type="text" id="drop_off_time" name="drop_off_time" required placeholder="Enter their last name">
-                <label for="emergency_email"><em>* </em>E-mail</label>
-                <input type="email" id="emergency_email" name="emergency_email" required placeholder="Enter their email address">
+                <input type="text" id="drop_off_time" name="drop_off_time" required placeholder="Ex: 10:30 AM">
 
-                <label for="mileage"> <em>* </em>Mileage (in mi.)</label>
-                <input type="text" id="mileage" name="mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
+                <label for="start_mileage"> <em>* </em>Start Mileage (in mi.)</label>
+                <input type="text" id="start_mileage" name="start_mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
+
+                <label for="end_mileage"> <em>* </em>End Mileage (in mi.)</label>
+                <input type="text" id="end_mileage" name="end_mileage" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
+
+                <label for="donation_amt"> <em>* </em>Donation Amount (if recieved, otherwise 0)</label>
+                <input type="text" id="donation_amt" name="donation_amt" inputmode="decimal" pattern="[0-9]*" required placeholder="00000">
 
                 <label for="completion_status"><em>* </em>Completion Status</label>
                 <select id="completion_status" name="completion_status" required>
@@ -429,11 +440,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="Rescheduled">Rescheduled</option>
                     <option value="Cancelled">Cancelled</option>
                 </select>
+
+                <div>
+                    <button type="submit" class="button add">Complete Trip</button>
+                    <a href="completeTrips.php?id=<?= $id ?>" class="button cancel">Back</a>
+                </div>
             </fieldset>
-
-             <a class='button add' href='completeTrip.php?id=<?= urlencode($id) ?>'>Complete Trip</a>
-
-                <a href="completeTrips.php?id=<?= $id ?>" class="button cancel">Back</a>
+            </form>
 
             <?php endif ?>
 

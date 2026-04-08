@@ -17,6 +17,13 @@ if (isset($_SESSION['_id'])) {
 }
 include 'database/dbEvents.php';
 //include 'domain/Event.php';
+
+function format_time_12h($time) {
+    $dt = DateTime::createFromFormat('H:i', $time);
+    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    return $time;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,8 +54,9 @@ include 'database/dbEvents.php';
                     <thead>
                         <tr>
                             <th>Rider Name</th>
-                            <th>Date Of Ride</th>
-                            <th>Scheduled?</th>
+                            <th>Date of Ride</th>
+                            <th>Time of Ride</th>
+                            <th>Notification</th>
                             <th>Schedule Trip</th>
                             <th style="width:1px"></th>
                         </tr>
@@ -62,7 +70,23 @@ include 'database/dbEvents.php';
                             $eventID = $event->getID();
                             $title = $event->getName();
                             $startDate = $event->getStartDate();
+                            $startTimeRaw = $event->getStartTime();
+                            $startTime = format_time_12h($startTimeRaw);
                             $tripStatus = $event->getTripStatus() ?: 'N';
+                           
+                            $isUnscheduled = ($tripStatus === 'N' || $tripStatus === 'requested');
+                            $alertFlag = '';
+                             if ($tripStatus == 'N') $tripStatus = "Not Scheduled";
+
+                            $rideDateTime = strtotime(trim((string) $startDate . ' ' . (string) $startTimeRaw));
+                            if ($isUnscheduled && $rideDateTime !== false) {
+                                $secondsUntilRide = $rideDateTime - time();
+                                if ($secondsUntilRide < 0) {
+                                    $alertFlag = "<span style='display:inline-block;padding:4px 8px;border-radius:999px;background:#fff1f0;color:#c62828;font-weight:700;font-size:.8rem;border:1px solid #ef9a9a;'>OVERDUE</span>";
+                                } elseif ($secondsUntilRide <= 86400) {
+                                    $alertFlag = "<span style='display:inline-block;padding:4px 8px;border-radius:999px;background:#fff8e1;color:#8a6d1f;font-weight:700;font-size:.8rem;border:1px solid #f0c36d;'>24hrs til</span>";
+                                }
+                            }
 
                             $viewLink = "<a href='event.php?id=$eventID'>$title</a>";
                             $scheduleLink = "";
@@ -74,7 +98,8 @@ include 'database/dbEvents.php';
                                 <tr data-event-id='$eventID'>
                                 <td><a href='event.php?id=$eventID' style='color: black; text-decoration: underline;'>$title</a></td> <!-- Link updated here -->
                                     <td>$startDate</td>
-                                    <td>$tripStatus</td>
+                                    <td>$startTime</td>
+                                    <td>$alertFlag</td>
                                     <td>$scheduleLink</td>
                                     <td></td>
                                 </tr>";
@@ -87,7 +112,7 @@ include 'database/dbEvents.php';
             <p class="no-events standout">There are currently no requests available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
         <?php endif ?>
         <a class="button" href="viewAllTrips.php">Dispatch Trips</a>
-        <a class="button cancel" href="eventManagement.php">Return to Dashboard</a>
+        <a class="button cancel" href="eventManagement.php">Return to Ride Management</a>
         
     </main>
 </body>

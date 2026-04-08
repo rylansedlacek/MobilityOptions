@@ -17,10 +17,54 @@ if (isset($_SESSION['_id'])) {
 }
 include 'database/dbEvents.php';
 include 'database/dbPersons.php';
+require_once('email.php');
 
 $selectedDriver = trim((string) ($_POST['driver_id'] ?? ($event['driver_id'] ?? '')));
 $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
 //include 'domain/Event.php';
+
+
+function format_time_12h($time) {
+    $dt = DateTime::createFromFormat('H:i', $time);
+    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    return $time;
+}
+
+function send_trip_cancelled_email($event) {
+    if (empty($event['rider_id'])) { return; }
+
+    $rider = retrieve_person((string) $event['rider_id']);
+    if (!$rider) { return; }
+
+    $riderEmail = trim((string) $rider->get_email());
+    if ($riderEmail === '') { return; }
+
+    $subject = 'Trip Cancelled';
+    $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
+        "Your trip has been cancelled.\n\n" .
+        "Date: {$event['startDate']}\n" .
+        "Time: " . format_time_12h((string) $event['startTime']) . " - " . format_time_12h((string) $event['endTime']) . "\n" .
+        "Pickup: {$event['pickup_location']}\n" .
+        "Dropoff: {$event['dropoff_location']}\n\n" .
+        "If you need assistance with a replacement ride, please contact Healthy Generations.\n\n" .
+        "Thank you,\n" .
+        "Healthy Generations - Mobility Options";
+
+    sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_trip_id'])) {
+    $eventID = (int) $_POST['cancel_trip_id'];
+    $eventToCancel = fetch_event_by_id($eventID);
+
+
+    if (cancel_trip($eventID)) {
+        send_trip_cancelled_email($eventToCancel);
+        header('Location: cancelTrips.php?status=success');
+        exit;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,6 +122,9 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
 
     <h1>Cancel Trip</h1>
     <main class="general">
+        <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
+            <div id="trip-status-toast" class="happy-toast">Trip Cancelled!</div>
+        <?php endif; ?>
         <?php
         //require_once('database/dbMessages.php');
         //$messages = get_user_messages($userID);
@@ -95,9 +142,9 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                     <thead>
                         <tr>
                             <th><b>Driver Name</b></th>
-                            <th><b>Vehicle Model</b></th>
-                            <th><b>Vehicle Plate</b></th>
-                            <th><b>Date</b></th>
+                            <th><b>Vehicle ID</b></th>
+                            <th><b>Trip Date</b></th>
+                            <th><b>Trip Time</b></th>
                             <th><b>Rider Name</b></th>
                             <th><b>Cancel Trip</b></th>
 
@@ -115,6 +162,7 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                                 <?php
                                 $eventID = $event->getID();
                                 $eventDate = $event->getStartDate();
+                                $eventTime = format_time_12h($event->getStartTime());
                                 $driverDI = $event->getDriverId();
                                 $driverName = "";
                                 $riderName = $event->getName();
@@ -137,10 +185,9 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                                 <?php else: ?>
                                     <tr data-event-id="<?= $eventID ?>">
                                         <td><?= $driverName ?></td>
-                                        <td><?= $vehicle ? htmlspecialchars($vehicle['make_model']) : 'no vehicle' ?></td>
                                         <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
                                         <td><?= $eventDate ?></td>
-
+                                        <td><?= $eventTime ?></td>
                                         <td><?= $riderName ?></td>
 
                                         <td>
@@ -152,7 +199,10 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
                                         <div class="popup-box">
                                             <p>Are you sure you want to cancel this trip?</p>
                                             <div class="popup-actions">
-                                                <a href="cancelTrip.php?id=<?= $eventID ?>" class="button confirm">Confirm</a>
+                                                <form method="POST" style="margin: 0;">
+                                                    <input type="hidden" name="cancel_trip_id" value="<?= $eventID ?>">
+                                                    <button type="submit" class="button confirm">Confirm</button>
+                                                </form>
                                                 <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Go Back</a>
                                             </div>
                                         </div>
@@ -169,7 +219,7 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
             <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
         <?php endif ?>
         <p class="no-events standout">
-        <a class="button return" href="dispatchTrip.php">Return to Dashboard</a>
+        <a class="button return" href="dispatchTrip.php">Return to Trip Management</a>
         </p>
     </main>
 </body>

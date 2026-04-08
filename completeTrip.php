@@ -3,7 +3,7 @@ session_start();
 include 'database/dbEvents.php'; 
 
 if(!isset($_SESSION['_id']) || $_SESSION['access_level'] < 2) {
-   die("Access denied. ");
+   die("Access denied.");
 }
 
 if(!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -17,12 +17,17 @@ if(!$event) {
     die("Trip not found.");
 }
 
-if(cancel_trip($eventID)) {
-    header("Location: completeTrips.php?status=success");
-    exit;
-}
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $mileage_start = $_POST['start_mileage'];
+    $mileage_end   = $_POST['end_mileage'];
 
-else {
-    die("Failed to complete the trip. Please try again.");
+    if(complete_trip($eventID, $mileage_start, $mileage_end)) {
+        header("Location: completeTripForm.php?id=" . urlencode((string)$eventID) . "&createSuccess=1");
+        exit;
+    } else {
+        die("Failed to complete the trip. Please try again.");
+    }
+} else {
+    die("Invalid request method.");
 }
 ?>

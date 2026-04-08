@@ -475,7 +475,7 @@
         <div class="small-text">Manage riders here.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
-    <span class="button-text">Go</span>
+    <span class="button-text">Register</span>
     <div class="circle">&gt;</div>
 </button>
 <!--
@@ -505,7 +505,7 @@
                         if (sizeof($pendingsignups) > 0) {
                             echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
                         }   
-                    ?> Go </span>
+                    ?> Schedule </span>
     <div class="circle">&gt;</div>
 </button>
     </div>
@@ -527,7 +527,7 @@
         <div class="small-text">Manage Drivers and Vehicles Here.</div>
         <div class="large-text">Driver & Vehicle Management</div>
         <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
-            <span class="button-text">Go</span>
+            <span class="button-text"> Manage</span>
             <div class="circle">&gt;</div>
         </button>
     </div>
@@ -580,12 +580,22 @@
         <button class="arrow-button">→</button>
     </div>
 
-    <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
+    <!-- <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
         
         <div class="large-text-sub">Generate Ride Statistics Report</div>
+        <div class="graph-text">Rider Statistics - Report Generation.</div>
+        <button class="arrow-button">→</button>
+    </div> -->
+
+    <div class="content-box-test" onclick="window.location.href='generateRidersReport.php'" style="border-radius: 12px; padding: 20px;">
+        <div class="icon-overlay">
+            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
+        </div>
+        
+        <div class="large-text-sub">Generate Rider Statistics Report</div>
         <div class="graph-text">Rider Statistics - Report Generation.</div>
         <button class="arrow-button">→</button>
     </div>

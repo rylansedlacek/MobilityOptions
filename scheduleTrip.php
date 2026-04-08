@@ -20,7 +20,7 @@ if (isset($_SESSION['_id'])) {
 require_once('database/dbEvents.php');
 require_once('database/dbPersons.php');
 require_once('include/input-validation.php');
-require_once('email.php');
+require_once('include/trip-workflow.php');
 
 
 
@@ -39,54 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign'])) {
 
     if ($driver_id === '' ) { $errors[] = 'Please select a driver.'; }
     if ($vehicle_id <= 0) { $errors[] = 'Please select a vehicle.'; }
-
-function driver_has_time_conflict($driver_id, $startDate, $startTime, $eventID) {
-    $con = connect();
-
-    $query = "SELECT id, driver_id, startDate, startTime
-              FROM dbevents
-              WHERE driver_id = ?
-                AND startDate = ?
-                AND id != ?
-                AND ABS(TIME_TO_SEC(TIMEDIFF(startTime, ?))) < 1800
-              LIMIT 1";
-
-    $stmt = mysqli_prepare($con, $query);
-
-    if (!$stmt) {
-        die('Prepare failed: ' . mysqli_error($con));
-    }
-
-    mysqli_stmt_bind_param($stmt, 'ssis', $driver_id, $startDate, $eventID, $startTime);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    return mysqli_num_rows($result) > 0;
-}
-
-function vehicle_has_time_conflict($vehicle_id, $startDate, $startTime, $eventID) {
-    $con = connect();
-
-    $query = "SELECT id, vehicle_id, startDate, startTime
-              FROM dbevents
-              WHERE vehicle_id = ?
-                AND startDate = ?
-                AND id != ?
-                AND ABS(TIME_TO_SEC(TIMEDIFF(startTime, ?))) < 1800
-              LIMIT 1";
-
-    $stmt = mysqli_prepare($con, $query);
-
-    if (!$stmt) {
-        die('Prepare failed: ' . mysqli_error($con));
-    }
-
-    mysqli_stmt_bind_param($stmt, 'isis', $vehicle_id, $startDate, $eventID, $startTime);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    return mysqli_num_rows($result) > 0;
-}
 
     if (empty($errors)) {
     $tripDate = $event['startDate'];
@@ -119,51 +71,6 @@ function vehicle_has_time_conflict($vehicle_id, $startDate, $startTime, $eventID
 function val($key, $fallback = '') {
     global $event;
     return ($event[$key] ?? $fallback);
-}
-
-// stole this - formats time
-function format_time_12h($time) {
-    $dt = DateTime::createFromFormat('H:i', $time);
-    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
-    return $time;
-}
-
-function send_trip_scheduled_email($event, $driverID, $vehicleID) {
-    if (empty($event['rider_id'])) { return; }
-
-    $rider = retrieve_person((string) $event['rider_id']);
-    if (!$rider) { return; }
-
-    $riderEmail = trim((string) $rider->get_email());
-    if (!$riderEmail) { return; }
-
-    $driverName = 'Assigned Driver';
-    $driver = retrieve_person((string) $driverID);
-    if ($driver) { $driverName = trim($driver->get_first_name() . ' ' . $driver->get_last_name()); }
-
-    $vehicleLabel = 'Vehicle ID: ' . (int) $vehicleID;
-    foreach (get_vehicles() as $vehicle) {
-        if ((int) $vehicle['id'] === (int) $vehicleID) {
-            $makeModel = (string) $vehicle['make_model'];
-            $plate = (string) ($vehicle['plate']);
-            $vehicleLabel = $makeModel . ('[ID: ' . $plate . ']');
-            break;
-        }
-    }
-
-    $subject = 'Trip Scheduled';
-    $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
-        "Your ride request has been scheduled with the following details:\n\n" .
-        "Date: {$event['startDate']}\n" .
-        "Time: " . format_time_12h((string) $event['startTime']) . " - " . format_time_12h((string) $event['endTime']) . "\n" .
-        "Pickup: {$event['pickup_location']}\n" .
-        "Dropoff: {$event['dropoff_location']}\n" .
-        "Driver: {$driverName}\n" .
-        "Vehicle: {$vehicleLabel}\n\n" .
-        "Thank you,\n" .
-        "Healthy Generations - Mobility Options";
-
-    sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
 }
 
 $drivers  = get_drivers(); // get all drivers for drop donw
@@ -209,8 +116,8 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
                 <br/>
                 <p><strong>Rider:</strong> <?php echo val('name'); ?></p>
                 <p><strong>Date:</strong> <?php echo val('startDate'); ?></p>
-                <p><strong>Time:</strong> <?php echo format_time_12h(val('startTime')); ?> 
-                &ndash; <?php echo format_time_12h(val('endTime')); ?></p>
+                <p><strong>Time:</strong> <?php echo format_trip_time_12h(val('startTime')); ?> 
+                &ndash; <?php echo format_trip_time_12h(val('endTime')); ?></p>
                 <p><strong>Pickup:</strong> <?php echo val('pickup_location'); ?></p>
                 <p><strong>Dropoff:</strong> <?php echo val('dropoff_location'); ?></p>
                 <p><strong>Notes:</strong> <?php echo val('description'); ?></p>

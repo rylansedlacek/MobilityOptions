@@ -39,7 +39,7 @@ while (date('w', $calendarStart) > 0) { // date('w') returns 0 for Sunday
 $calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +34 day'));
 $calendarEndEpoch = strtotime($calendarEnd);
 $weeks = 5;
-if (date('m', strtotime($calendarEnd . ' +1 day')) != $monthEpoch) {
+if (date('m', strtotime($calendarEnd . ' +1 day')) != date('m', $monthEpoch)) {
     // Need another row (6 weeks) to show all days of the month
     $weeks = 6;
     $calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +41 day'));

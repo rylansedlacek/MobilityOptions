@@ -219,7 +219,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="event-info">
         <!-- Success notifications -->
         <?php if (isset($_GET['createSuccess'])): ?>
-            <div class="happy-toast">Trip completed successfully!</div>
+            <div class="happy-toast">Trip Completed!</div>
+            <script>
+                setTimeout(function() {
+                    window.location = 'completeTrips.php';
+                }, 1200);
+            </script>
         <?php endif ?>
         <?php if (isset($_GET['editSuccess'])): ?>
             <div class="happy-toast">Trip details updated successfully!</div>

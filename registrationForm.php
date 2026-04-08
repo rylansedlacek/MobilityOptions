@@ -2,11 +2,69 @@
 <script src="https://nosir.github.io/cleave.js/dist/cleave.min.js"></script>
 <script src="https://nosir.github.io/cleave.js/dist/cleave-phone.i18n.js"></script>
 <!-- Hero Section with Title -->
-<header class="hero-header">
-    <div class="center-header">
-        <h1>Rider Registration</h1>
+<body>
+
+    <div class="navbar">
+        <div class="left-section">
+            <div class="nav-links">
+                <div class="nav-item">
+                    <p style="color: #4f7dbe;">Quick Access</p>
+                    <div class="dropdown">
+                        <a href="addEvent.php" style="text-decoration: none;">
+  <div class="in-nav">
+    <img src="images/plus-solid.svg">
+    <span>Schedule a Ride</span>
+  </div>
+</a>
+<a href="calendar.php" style="text-decoration: none;">
+  <div class="in-nav">
+    <img src="images/list-solid.svg">
+    <span>View Scheduled Rides</span>
+  </div>
+</a>
+<a href="editHours.php" style="text-decoration: none;">
+  <div class="in-nav">
+    <img src="images/clock-regular.svg">
+    <span>Change Scheduled Ride Time</span>
+  </div>
+</a>
+<a href="viewPendingApps.php" style="text-decoration: none;">
+  <div class="in-nav">
+    <img src="images/users-solid.svg">
+    <span>Pending Applications</span>
+  </div>
+</a>
+<a href="adminViewingEvents.php" style="text-decoration: none;">
+  <div class="in-nav">
+    <img src="images/list-solid.svg">
+    <span>Edit Ride Details</span>
+  </div>
+</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="center-section">
+            <a href="index.php" class="logo-container">
+                <img src="images/healthyGenPageLogo.png" alt="Logo" style="height: 5rem;">
+            </a>
+        </div>
+
+        <div class="right-section">
+            <div class="nav-links">
+                <div class="nav-item">
+                    <div class="icon">
+                        <img src="images/usaicon.png" alt="User Icon" class="icon-img in-nav-img">
+                        <div class="dropdown" style="left: -100px;">
+                            <a href="changePassword.php" class="dropdown-link"><div>Change Password</div></a>
+                            <a href="logout.php" class="dropdown-link"><div>Log Out</div></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</header>
 
 <main>
     <div class="main-content-box">

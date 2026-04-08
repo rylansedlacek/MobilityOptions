@@ -981,7 +981,7 @@ if (date("H:i:s") > "18:19:59") {
             </div>
         </div>
         <!-- Center Section: Logo -->
-        <div class="center-section">>
+        <div class="center-section">
             <a href="index.php" class="logo-container">
                 <img src="images/healthyGenPageLogo.png" alt="Logo">
             </a>

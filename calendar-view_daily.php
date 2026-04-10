@@ -155,7 +155,7 @@ $trips = fetch_events_on_date($dayStr, $loggedIn);
             if ($parsed) { $time = $parsed->format('g:i A'); }
         }
 
-        $link = 'scheduleTrip.php?id=' . $trip['id'];
+        $link = 'editCalendarEvent.php?id=' . $trip['id'];
     ?>
     <a class="daily-trip-card" href="<?php echo ($link); ?>">
         <div class="daily-trip-card-accent" style="background-color: <?php echo $color; ?>"></div>

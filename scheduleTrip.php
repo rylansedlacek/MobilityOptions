@@ -20,6 +20,7 @@ if (isset($_SESSION['_id'])) {
 require_once('database/dbEvents.php');
 require_once('database/dbPersons.php');
 require_once('include/input-validation.php');
+require_once('include/trip-workflow.php');
 
 
 
@@ -39,54 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign'])) {
     if ($driver_id === '' ) { $errors[] = 'Please select a driver.'; }
     if ($vehicle_id <= 0) { $errors[] = 'Please select a vehicle.'; }
 
-function driver_has_time_conflict($driver_id, $startDate, $startTime, $eventID) {
-    $con = connect();
-
-    $query = "SELECT id, driver_id, startDate, startTime
-              FROM dbevents
-              WHERE driver_id = ?
-                AND startDate = ?
-                AND id != ?
-                AND ABS(TIME_TO_SEC(TIMEDIFF(startTime, ?))) < 1800
-              LIMIT 1";
-
-    $stmt = mysqli_prepare($con, $query);
-
-    if (!$stmt) {
-        die('Prepare failed: ' . mysqli_error($con));
-    }
-
-    mysqli_stmt_bind_param($stmt, 'ssis', $driver_id, $startDate, $eventID, $startTime);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    return mysqli_num_rows($result) > 0;
-}
-
-function vehicle_has_time_conflict($vehicle_id, $startDate, $startTime, $eventID) {
-    $con = connect();
-
-    $query = "SELECT id, vehicle_id, startDate, startTime
-              FROM dbevents
-              WHERE vehicle_id = ?
-                AND startDate = ?
-                AND id != ?
-                AND ABS(TIME_TO_SEC(TIMEDIFF(startTime, ?))) < 1800
-              LIMIT 1";
-
-    $stmt = mysqli_prepare($con, $query);
-
-    if (!$stmt) {
-        die('Prepare failed: ' . mysqli_error($con));
-    }
-
-    mysqli_stmt_bind_param($stmt, 'isis', $vehicle_id, $startDate, $eventID, $startTime);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    return mysqli_num_rows($result) > 0;
-}
-
     if (empty($errors)) {
     $tripDate = $event['startDate'];
     $tripTime = $event['startTime'];
@@ -103,7 +56,8 @@ function vehicle_has_time_conflict($vehicle_id, $startDate, $startTime, $eventID
         $ok = assign_trip_driver_vehicle($eventID, $driver_id, $vehicle_id);
 
         if ($ok) {
-            header('Location: viewAllEvents.php');
+            send_trip_scheduled_email($event, $driver_id, $vehicle_id);
+            header('Location: scheduleTrip.php?id=' . urlencode((string) $eventID) . '&status=scheduled');
             exit;
         } else {
             $errors[] = 'Could not schedule request!';
@@ -117,13 +71,6 @@ function vehicle_has_time_conflict($vehicle_id, $startDate, $startTime, $eventID
 function val($key, $fallback = '') {
     global $event;
     return ($event[$key] ?? $fallback);
-}
-
-// stole this - formats time
-function format_time_12h($time) {
-    $dt = DateTime::createFromFormat('H:i', $time);
-    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
-    return $time;
 }
 
 $drivers  = get_drivers(); // get all drivers for drop donw
@@ -143,6 +90,15 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
 
     <main class="general">
         <h1>Ride Scheduler</h1>
+
+    <?php if (isset($_GET['status']) && $_GET['status'] === 'scheduled'): ?>
+        <div id="trip-status-toast" class="happy-toast">Trip Scheduled!</div>
+        <script>
+            setTimeout(function() {
+                window.location = 'viewAllEvents.php';
+            }, 1200);
+        </script>
+    <?php endif; ?>
     
         
 
@@ -160,8 +116,8 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
                 <br/>
                 <p><strong>Rider:</strong> <?php echo val('name'); ?></p>
                 <p><strong>Date:</strong> <?php echo val('startDate'); ?></p>
-                <p><strong>Time:</strong> <?php echo format_time_12h(val('startTime')); ?> 
-                &ndash; <?php echo format_time_12h(val('endTime')); ?></p>
+                <p><strong>Time:</strong> <?php echo format_trip_time_12h(val('startTime')); ?> 
+                &ndash; <?php echo format_trip_time_12h(val('endTime')); ?></p>
                 <p><strong>Pickup:</strong> <?php echo val('pickup_location'); ?></p>
                 <p><strong>Dropoff:</strong> <?php echo val('dropoff_location'); ?></p>
                 <p><strong>Notes:</strong> <?php echo val('description'); ?></p>

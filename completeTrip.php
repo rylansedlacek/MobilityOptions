@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mileage_end   = $_POST['end_mileage'];
 
     if(complete_trip($eventID, $mileage_start, $mileage_end)) {
-        header("Location: completeTrips.php?status=success");
+        header("Location: completeTripForm.php?id=" . urlencode((string)$eventID) . "&createSuccess=1");
         exit;
     } else {
         die("Failed to complete the trip. Please try again.");

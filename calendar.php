@@ -57,7 +57,7 @@
         <?php require('header.php'); ?>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="js/calendar.js"></script>
-        <script src="js/view-switcher.js" defer></script>
+        <script src="js/view-switcher.js?v=<?php echo @filemtime(__DIR__ . '/js/view-switcher.js'); ?>" defer></script>
         <title>Mobility Options | Calendar</title>
         <style>.happy-toast { margin: 0 1rem 1rem 1rem; }</style>
     </head>

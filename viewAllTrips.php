@@ -17,15 +17,67 @@ if (isset($_SESSION['_id'])) {
 }
 include 'database/dbEvents.php';
 include 'database/dbPersons.php';
+require_once('email.php');
+
+function send_trip_dispatched_email($event) {
+    if (empty($event['rider_id'])) { return; }
+
+    $rider = retrieve_person((string) $event['rider_id']);
+    if (!$rider) { return; }
+
+    $riderEmail = trim((string) $rider->get_email());
+    if (!$riderEmail) { return; }
+
+    $driverName = 'Assigned Driver';
+    if (!empty($event['driver_id'])) {
+        $driver = retrieve_person((string) $event['driver_id']);
+        if ($driver) { $driverName = trim($driver->get_first_name() . ' ' . $driver->get_last_name()); }
+    }
+
+    $vehicleLabel = 'Vehicle';
+    if (!empty($event['vehicle_id'])) {
+        $vehicleLabel = 'Vehicle ID: ' . (int) $event['vehicle_id'];
+        foreach (get_vehicles() as $vehicle) {
+            if ((int) $vehicle['id'] === (int) $event['vehicle_id']) {
+                $makeModel = (string) ($vehicle['make_model']);
+                $plate = (string) ($vehicle['plate']);
+                $vehicleLabel = $makeModel . (' [ID: ' . $plate . ']');
+                break;
+            }
+        }
+    }
+
+    $subject = 'Trip Dispatched';
+    $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
+        "Your scheduled ride has been dispatched and is now in progress with the following details:\n\n" .
+        "Date: {$event['startDate']}\n" .
+        "Time: " . format_time_12h((string) $event['startTime']) . " - " . format_time_12h((string) $event['endTime']) . "\n" .
+        "Pickup: {$event['pickup_location']}\n" .
+        "Dropoff: {$event['dropoff_location']}\n" .
+        "Driver: {$driverName}\n" .
+        "Vehicle: {$vehicleLabel}\n\n" .
+        "Thank you,\n" .
+        "Healthy Generations - Mobility Options";
+
+    sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
+}
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $eventID = (int)$_GET['id'];
     $event = fetch_event_by_id($eventID);
     if ($event && dispatch_trip($eventID)) {
+        send_trip_dispatched_email($event);
         header("Location: viewAllTrips.php?status=success");
         exit;
     }
 }
+
+function format_time_12h($time) {
+    $dt = DateTime::createFromFormat('H:i', $time);
+    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    return $time;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -83,6 +135,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
     <h1>Dispatch Trip</h1>
     <main class="general">
+        <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
+            <div id="trip-status-toast" class="happy-toast">Trip Dispatched!</div>
+            <script>
+                setTimeout(function() {
+                    const toast = document.getElementById('trip-status-toast');
+                    if (toast) {
+                        toast.style.display = 'none';
+                    }
+                }, 1200);
+            </script>
+        <?php endif; ?>
         <?php
         $events = get_all_events();
         $drivers  = get_drivers_with_email();
@@ -95,10 +158,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     <thead>
                         <tr>
                             <th><b>Driver Name</b></th>
-                            <th><b>Vehicle Model</b></th>
-                            <th><b>Vehicle Plate</b></th>
+                            <th><b>Vehicle ID</b></th>
                             <th><b>Trip Date</b></th>
-                            <th><b>Rider Name</b></th>
+                            <th><b>Trip Time</b></th>
+                            <th><b>Notification</b></th>
                             <th><b>Dispatch</b></th>
 
                         </tr>
@@ -115,10 +178,22 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                 <?php
                                 $eventID = $event->getID();
                                 $eventDate = $event->getStartDate();
+                                $eventTimeRaw = $event->getStartTime();
+                                $eventTime = format_time_12h($eventTimeRaw);
                                 $driverDI = $event->getDriverId();
                                 $tripStatus = $event->getTripStatus();
                                 $driverName = "";
                                 $riderName = $event->getName();
+                                $alertFlag = '';
+
+                                $tripDateTime = strtotime(trim((string)$eventDate . ' ' . (string)$eventTimeRaw));
+                                if ($tripDateTime !== false) {
+                                    if ($tripDateTime < time()) {
+                                        $alertFlag = "<span style='display:inline-block;padding:4px 8px;border-radius:999px;background:#fff1f0;color:#c62828;font-weight:700;font-size:.8rem;border:1px solid #ef9a9a;'>OVERDUE</span>";
+                                    } elseif ($eventDate === date('Y-m-d')) {
+                                        $alertFlag = "<span style='display:inline-block;padding:4px 8px;border-radius:999px;background:#fff8e1;color:#8a6d1f;font-weight:700;font-size:.8rem;border:1px solid #f0c36d;'>ON THIS DATE</span>";
+                                    }
+                                }
 
                                 if ($tripStatus !== 'scheduled') continue;
                                 foreach ($drivers as $driver) {
@@ -140,10 +215,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                 <?php else: ?>
                                     <tr data-event-id="<?= $eventID ?>">
                                         <td><?= $driverName ?></td>
-                                        <td><?= $vehicle ? htmlspecialchars($vehicle['make_model']) : 'no vehicle' ?></td>
                                         <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
                                         <td><?= $eventDate ?></td>
-                                        <th><?= $riderName ?></td>
+                                        <td><?= $eventTime ?></td>
+                                        <td><?= $alertFlag ?></td>
+                                        
 
                                             <!-- <td>
                                             <a href="#" onclick="window.location.href = 'viewPassengers.php'" style.display='flex' ; style="color: black; text-decoration: underline;">
@@ -173,12 +249,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <script>
             </script>
         <?php else: ?>
-            <p class="no-events standout">
-                There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a>
-            </p>
+            <p class="no-events standout"> There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
         <?php endif ?>
         <p class="no-events standout">
-            <a class="button return" href="index.php">Return to Dashboard</a>
+            <a class="button return" href="dispatchTrip.php">Return to Trip Management</a>
             </p>
     </main>
 </body>

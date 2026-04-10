@@ -203,7 +203,7 @@
 <html>
 <head>
     <?php require_once('universal.inc'); ?>
-    <title>Whiskey Valor | Edit Profile</title>
+    <title>Mobility Options | Edit Profile</title>
     <link src="css/base.css" rel="stylesheet">
 </head>
 <body>

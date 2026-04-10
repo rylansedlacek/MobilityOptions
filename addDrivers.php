@@ -1,18 +1,24 @@
 <?php
+    session_start();
     require_once('include/input-validation.php');
 ?>
 
 <!DOCTYPE html>
+<header class="hero-header">
+    <div class="center-header">
+        <h1>Add Driver</h1>
+    </div>
+</header>
+
 <html>
 <head>
-    <?php require_once('database/dbMessages.php'); ?>
+    <?php require_once('universal.inc'); ?>
     <title>Mobility Options | Add Driver</title>
-    <link href="css/base.css" rel="stylesheet">
-<!-- BANDAID FIX FOR HEADER BEING WEIRD -->
-<?php
-$tailwind_mode = true;
-require_once('header.php');
-?>
+</head>
+
+<body class="relative">
+    <?php require_once('header.php'); ?>
+
 <style>
     .date-box {
         background: #C9AB81;
@@ -64,12 +70,7 @@ require_once('header.php');
     }
 ?>
 
-<!-- Hero Section with Title -->
-<header class="hero-header">
-    <div class="center-header">
-        <h1>Add Driver</h1>
-    </div>
-</header>
+
 
 <main>
     <div class="main-content-box">

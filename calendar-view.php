@@ -211,7 +211,7 @@ function time_label($eventInfo, $isScheduledRide) {
                                         $eventLabel = time_label($info, $isScheduledRide);
                                         $backgroundCol = $isScheduledRide ? '#2E7D32' : '#FBC02D';
                                         $popupId = 'trip-popup-' . $info['id'] . '-' . str_replace('-', '', $e); // this makes the url
-                                        $rideSchedulerHref = 'scheduleTrip.php?id=' . $info['id']; // so its prepopulated
+                                        $rideSchedulerHref = 'editCalendarEvent.php?id=' . $info['id'];
 
                                         $riderName = trim((string)($info['name'] ?? ''));
                                         if ($riderName === '') { $riderName = 'Not entered'; }
@@ -238,8 +238,8 @@ function time_label($eventInfo, $isScheduledRide) {
                                        
                                         $pickupLocation = trim((string)($info['pickup_location'] ?? ''));
 
-                                       // this was so silly to do this way - but I like it
-                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="#' .$popupId . '">' . $eventLabel . '</a>';
+                                       // direct link so rides can be edited inline from calendar
+                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="' . $rideSchedulerHref . '">' . $eventLabel . '</a>';
                                         $eventsStr .= '<div id="' . $popupId . '" class="trip-popup">';
                                         $eventsStr .= '<div class="trip-popup-card">';
                                         $eventsStr .= '<h3>Trip Details</h3>';

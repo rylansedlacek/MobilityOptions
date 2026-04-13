@@ -86,9 +86,13 @@ $(document).ready(function () {
 });
 
 function loadView(viewFile) {
+    const separator = viewFile.includes('?') ? '&' : '?';
+    const freshViewUrl = `${viewFile}${separator}_cb=${Date.now()}`;
+
     $.ajax({
-        url: viewFile,
+        url: freshViewUrl,
         method: "GET",
+        cache: false,
         beforeSend: function () {
             $("#event-viewer").html("<em>Loading events...</em>");
         },

@@ -96,6 +96,12 @@ require_once('header.php');
 	  <img class="button-icon h-12 w-12 left-4" src="images/plus-solid.svg" alt="Calendar Icon">
         </button>
 
+        <button onclick="window.location.href='quickSchedule.php';">
+    <div class="button-left-gray"></div>
+    <div>Quick Schedule</div>
+    <img class="button-icon h-10 w-10 left-5" src="images/calendar-plus-regular.svg" alt="Quick Schedule Icon">
+        </button>
+
         <button onclick="window.location.href='adminViewingEvents.php';">
 	  <div class="button-left-gray"></div>
 	  <div>Edit Ride Requests</div>
@@ -149,7 +155,7 @@ require_once('header.php');
         <h1>Ride Management</h1>
         <div class="div-blue"></div>
         <p>
-         Welcome to the Ride managment Hub. Here you can create, edit, delete, and schedule pending ride requests for Riders.
+         Welcome to the Ride managment Hub. Here you can create, quick schedule, edit, delete, and schedule pending ride requests for Riders.
         </p>
       </div>
 

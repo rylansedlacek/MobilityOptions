@@ -39,7 +39,7 @@ while (date('w', $calendarStart) > 0) { // date('w') returns 0 for Sunday
 $calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +34 day'));
 $calendarEndEpoch = strtotime($calendarEnd);
 $weeks = 5;
-if (date('m', strtotime($calendarEnd . ' +1 day')) != $monthEpoch) {
+if (date('m', strtotime($calendarEnd . ' +1 day')) != date('m', $monthEpoch)) {
     // Need another row (6 weeks) to show all days of the month
     $weeks = 6;
     $calendarEnd = date('Y-m-d', strtotime(date('Y-m-d', $calendarStart) . ' +41 day'));
@@ -136,6 +136,23 @@ function time_label($eventInfo, $isScheduledRide) {
     border-color: #d44b44;
     color: #fff;
 }
+
+.calendar-see-more {
+    display: block;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.78rem;
+    color: #fff;
+    background-color: #1f4ba3;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-top: 1px;
+    text-align: center;
+    transition: background-color .2s;
+}
+
+.calendar-see-more:hover {
+    background-color: #4196ff;
+}
 </style>
 
                 <!-- Add navigation data to the calendar -->
@@ -181,13 +198,20 @@ function time_label($eventInfo, $isScheduledRide) {
 
                                 if (isset($events[$e])) {
                                     $dayEvents = $events[$e];
+                                    $maxVisible = 2;
+                                    $totalDayEvents = count($dayEvents);
+                                    $shownCount = 0;
                                     foreach ($dayEvents as $info) {
+                                        if ($shownCount >= $maxVisible) {
+                                            break;
+                                        }
+
                                         $completedValue = strtoupper(trim((string)($info['completed'] ?? 'N')));
                                         $isScheduledRide = ($completedValue === 'Y');
                                         $eventLabel = time_label($info, $isScheduledRide);
                                         $backgroundCol = $isScheduledRide ? '#2E7D32' : '#FBC02D';
                                         $popupId = 'trip-popup-' . $info['id'] . '-' . str_replace('-', '', $e); // this makes the url
-                                        $rideSchedulerHref = 'scheduleTrip.php?id=' . $info['id']; // so its prepopulated
+                                        $rideSchedulerHref = 'editCalendarEvent.php?id=' . $info['id'];
 
                                         $riderName = trim((string)($info['name'] ?? ''));
                                         if ($riderName === '') { $riderName = 'Not entered'; }
@@ -214,8 +238,8 @@ function time_label($eventInfo, $isScheduledRide) {
                                        
                                         $pickupLocation = trim((string)($info['pickup_location'] ?? ''));
 
-                                       // this was so silly to do this way - but I like it
-                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="#' .$popupId . '">' . $eventLabel . '</a>';
+                                       // direct link so rides can be edited inline from calendar
+                                        $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="' . $rideSchedulerHref . '">' . $eventLabel . '</a>';
                                         $eventsStr .= '<div id="' . $popupId . '" class="trip-popup">';
                                         $eventsStr .= '<div class="trip-popup-card">';
                                         $eventsStr .= '<h3>Trip Details</h3>';
@@ -230,7 +254,12 @@ function time_label($eventInfo, $isScheduledRide) {
                                         $eventsStr .= '</div>';
                                         $eventsStr .= '</div>';
                                         $eventsStr .= '</div>';
-                                        
+                                        $shownCount++;
+                                    }
+                                    if ($totalDayEvents > $maxVisible) {
+                                        $remaining = $totalDayEvents - $maxVisible;
+                                        $dailyUrl = 'calendar-view_daily.php?month=' . $e;
+                                        $eventsStr .= '<a class="calendar-see-more" href="' . $dailyUrl . '">+' . $remaining . ' more</a>';
                                     }
                                 }
                                 echo '<td class="calendar-day' . $extraClasses . '" ' . $extraAttributes . ' data-date="' . date('Y-m-d', $date) . '">

@@ -3,80 +3,169 @@ session_start();
 
 date_default_timezone_set("America/New_York");
 
-// Accept ?month=YYYY-MM-DD, fallback to today
+// get the date from the url, default to today
+$dayStr = date('Y-m-d');
 if (isset($_GET['month']) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $_GET['month'])) {
     $dayStr = $_GET['month'];
-} else {
-    $dayStr = date('Y-m-d'); // Default to today
 }
 
-// Get the timestamp for the day we are viewing
 $dayEpoch = strtotime($dayStr);
 if (!$dayEpoch) {
     header('Location: calendar.php?month=' . date("Y-m-d"));
     exit;
 }
 
-$today = strtotime(date("Y-m-d"));
+$prevDay = date('Y-m-d', strtotime($dayStr . ' -1 day'));
+$nextDay = date('Y-m-d', strtotime($dayStr . ' +1 day'));
+$backMonth = date('Y-m', $dayEpoch);
 
-// Compute previous and next week
-$previousWeek = strtotime(date('Y-m-d', $dayEpoch) . ' -7 days');
-$nextWeek = strtotime(date('Y-m-d', $dayEpoch) . ' +7 days');
+require_once('database/dbEvents.php');
+$loggedIn = 0;
+if (isset($_SESSION['_id'])) {
+    $loggedIn = 1;
+}
+$trips = fetch_events_on_date($dayStr, $loggedIn);
 ?>
+<style>
+.daily-view-header,
+.daily-trip-list,
+.daily-trip-card,
+.daily-trip-card-title,
+.daily-trip-card-meta,
+.daily-trip-card-badge,
+.daily-view-nav a,
+.daily-no-trips {
+    font-family: Montserrat, sans-serif;
+}
 
-<table id="calendar"
-       data-current-month="<?php echo date('Y-m-d', $dayEpoch); ?>"
-       data-prev-month="<?php echo date('Y-m-d', $previousWeek); ?>"
-       data-next-month="<?php echo date('Y-m-d', $nextWeek); ?>">
-    <thead>
-        <?php
-        // Use the validated day string
-        $selectedDateString = $dayStr;
-        $date = $dayEpoch;
+.daily-view-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0 1rem;
+}
 
-        require_once('database/dbEvents.php');
-        echo "<tr><th>" . htmlspecialchars($selectedDateString) . "</th></tr>";
-        ?>
-    </thead>
-    <tbody>
-    <?php
-    // Determine logged-in status for db query (avoid undefined variable)
-    $loggedIn = isset($_SESSION['_id']) ? 1 : 0;
+.daily-view-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+}
 
-    $dayEvents = fetch_events_on_date($selectedDateString, $loggedIn);
-    echo "<script>console.log('Events:', " . json_encode($dayEvents) . ");</script>";
+.daily-view-nav {
+    display: flex;
+    gap: 0.5rem;
+}
 
-    // Prepare cell attributes
-    $extraAttributes = '';
-    $extraClasses = '';
-    if (date('Y-m-d', $date) == date('Y-m-d', $today)) {
-        $extraClasses = ' today';
-    }
+.daily-view-nav a {
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    border: 1px solid #ccc;
+    color: #111;
+    background: #f5f5f5;
+}
 
-    $eventsStr = '';
-    if (!empty($dayEvents)) {
-        foreach ($dayEvents as $info) {
-            $completedValue = strtoupper(trim((string)($info['completed'] ?? 'N')));
-            $isScheduledRide = ($completedValue === 'Y');
-            $backgroundCol = $isScheduledRide ? '#2E7D32' : '#FBC02D';
-            if ($isScheduledRide) {
-                $targetHref = 'scheduleTrip.php?id=' . $info['id'];
-            } else {
-                $targetHref = 'event.php?id=' . $info['id'] . '&user_id=' . (isset($_SESSION['_id']) ? $_SESSION['_id'] : 'guest');
-            }
-            $eventsStr .= '<a class="calendar-event" style="background-color: ' . $backgroundCol . '" href="' . $targetHref . '">' . htmlspecialchars($eventLabel, ENT_QUOTES, 'UTF-8') . '</a>';
+.daily-trip-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-bottom: 1.5rem;
+}
+.daily-trip-card {
+    display: flex;
+    align-items: stretch;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #111;
+    background: #fff;
+    transition: box-shadow .2s;
+}
+
+.daily-trip-card:hover {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+
+.daily-trip-card-accent {
+    width: 7px;
+    flex-shrink: 0;
+}
+
+.daily-trip-card-body {
+    padding: 0.75rem 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.daily-trip-card-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.daily-trip-card-badge {
+    align-self: flex-start;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    margin-top: 4px;
+}
+
+.daily-no-trips {
+    color: #888;
+    font-style: italic;
+    padding: 1rem 0;
+}
+
+</style>
+
+<div class="daily-view-header">
+    <div class="daily-view-nav">
+        <a href="calendar.php?month=<?php echo $backMonth; ?>">&larr; Back to Calendar</a>
+        
+    </div>
+    <h2><?php echo date('l, F j, Y', $dayEpoch); ?></h2>
+</div>
+
+<div class="daily-trip-list">
+<?php if (empty($trips)): ?>
+    <p class="daily-no-trips">No trips scheduled on this day.</p>
+<?php else: ?>
+    <?php foreach ($trips as $trip):
+        $color = '#FBC02D';
+        $badge = 'Requested';
+        if (strtoupper(trim($trip['completed'])) === 'Y') {
+            $color = '#2E7D32';
+            $badge = 'Scheduled';
         }
-    }
 
-    // Output the single-row daily view
-    echo '<tr class="calendar-week">';
-    echo '<td class="calendar-day' . $extraClasses . '" ' . $extraAttributes . ' data-date="' . date('Y-m-d', $date) . '">
-            <div class="calendar-day-wrapper">
-                <p class="calendar-day-number">' . date('j', $date) . '</p>
-                ' . $eventsStr . '
-            </div>
-        </td>';
-    echo '</tr>';
+        $name = trim($trip['name']);
+        if ($name == '') { $name = 'Not entered'; }
+
+        $pickup = trim($trip['pickup_location']);
+        if ($pickup == '') { $pickup = 'Not entered'; }
+
+        $time = 'Time not entered';
+        if (trim($trip['startTime']) != '') {
+            $parsed = DateTime::createFromFormat('H:i:s', trim($trip['startTime']));
+            if (!$parsed) { $parsed = DateTime::createFromFormat('H:i', trim($trip['startTime'])); }
+            if ($parsed) { $time = $parsed->format('g:i A'); }
+        }
+
+        $link = 'editCalendarEvent.php?id=' . $trip['id'];
     ?>
-    </tbody>
-</table>
+    <a class="daily-trip-card" href="<?php echo ($link); ?>">
+        <div class="daily-trip-card-accent" style="background-color: <?php echo $color; ?>"></div>
+        <div class="daily-trip-card-body">
+            <div class="daily-trip-card-title"><?php echo ($name); ?></div>
+            <div class="daily-trip-card-meta"> <?php echo ($time); ?></div>
+            <div class="daily-trip-card-meta"> <?php echo ($pickup); ?></div>
+            <div class="daily-trip-card-badge" style="background-color: <?php echo $color; ?>"><?php echo $badge; ?></div>
+        </div>
+    </a>
+    <?php endforeach; ?>
+<?php endif; ?>
+</div>

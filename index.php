@@ -520,8 +520,6 @@
 </button>
     </div>
 
-
-<div class="full-width-bar">
     <div class="content-box">
         <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">Manage Drivers and Vehicles Here.</div>
@@ -531,8 +529,18 @@
             <div class="circle">&gt;</div>
         </button>
     </div>
-</div>
 
+<div class="full-width-bar">
+    <div class="content-box">
+        <img src="images/*.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
+        <div class="small-text">Sample Text</div>
+        <div class="large-text">New Test Box</div>
+        <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
+            <span class="button-text">Test</span>
+            <div class="circle">&gt;</div>
+        </button>
+    </div>
+</div>
 </div>
 
 <div style="margin-top: 50px; padding: 30px 20px;">

@@ -12,17 +12,22 @@ define('IMAP_PASS',  'pbhg xxgo ejop ycgt');
 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'mobilitydb');
-define('DB_USER', 'root');
-define('DB_PASS', 'root');
+define('DB_USER', 'mobilitydb');
+define('DB_PASS', 'mobilitydb');
 
 function getDb(): PDO {
     static $pdo = null;
     if (!$pdo) {
-        $pdo = new PDO(
-            'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8',
-            DB_USER, DB_PASS,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
+        try {
+            $pdo = new PDO(
+                'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8',
+                DB_USER, DB_PASS,
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            );
+        } catch (PDOException $e) {
+            logIt('Database connection failed: ' . $e->getMessage());
+            throw new RuntimeException('Database connection failed. Check DB_USER/DB_PASS in email/checkInbox.php.');
+        }
     }
     return $pdo;
 }
@@ -30,6 +35,20 @@ function getDb(): PDO {
 function logIt(string $msg): void {
     file_put_contents(__DIR__ . '/inbox_errors.log',
         '[' . date('Y-m-d H:i:s') . '] ' . $msg . PHP_EOL, FILE_APPEND);
+}
+
+function doTripStatus($tripStatus, $completed) {
+    $status = strtolower((string)$tripStatus);
+    $completedValue = strtoupper((string)$completed);
+    if ($status === 'in_progress') { return 'In Progress'; }
+    if ($status === 'scheduled') { return 'Scheduled'; }
+    if ($status === 'completed') { return 'Completed'; }
+    if ($status === 'cancelled' || $status === 'canceled') { return 'Cancelled'; }
+    if ($status === 'requested') { return 'Requested'; }
+    if ($completedValue === 'N') { return 'Requested';  }
+    if ($completedValue === 'Y') { return 'Scheduled'; }
+
+    return 'Not Scheduled';
 }
 
 // connect to Gmail via IMAP 
@@ -99,7 +118,8 @@ if (stripos($subject, 'status') === false && stripos($body, 'status') === false)
             e.endTime,
             e.pickup_location,
             e.dropoff_location,
-            e.trip_status
+            e.trip_status,
+            e.completed
         FROM dbpersons p
         JOIN dbevents e ON e.rider_id = p.id
         WHERE LOWER(p.email) = :email
@@ -133,7 +153,7 @@ if (stripos($subject, 'status') === false && stripos($body, 'status') === false)
     $endTime   = date('g:i A', strtotime($ride['endTime']));
     $pickup    = $ride['pickup_location'];
     $dropoff   = $ride['dropoff_location'];
-    $status    = $ride['trip_status'];
+    $status    = doTripStatus($ride['trip_status'], $ride['completed']);
     //? ucfirst(str_replace('_', ' ', $ride['trip_status'])) : 'Unknown';
     //ucfirst(str_replace('_', ' ', $ride['trip_status']));
 
@@ -158,7 +178,6 @@ if (stripos($subject, 'status') === false && stripos($body, 'status') === false)
 
     if ($result['success']) {
         echo "→ Status reply sent to: {$fromEmail}<br>";
-        echo "→ Status {$trip_status}<br>";
         logIt("Status reply sent to: {$fromEmail}");
     } else {
         echo "→ Failed to send reply to: {$fromEmail}<br>";

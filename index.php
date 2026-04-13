@@ -72,6 +72,7 @@
 
         .content-box {
             flex: 1 1 280px; /* Adjusts width dynamically */
+            height: 15rem;
             max-width: 375px;
             padding: 10px 2px; /* Altered padding to make closer */
             display: flex;
@@ -237,23 +238,21 @@
         }
     .circle-arrow-button {
         position: absolute;
+        width: auto;
         bottom: 30px;
-        right: 18px;
         display: flex;
-        align-items: center;
         gap: 10px;
-        background: transparent;
-        border: none;
+        background-color: white;
+        border-radius: 3rem;
         font-size: 20px;
         font-family: Quicksand, sans-serif;
         font-weight: bold;
-        color: black;
         cursor: pointer;
-        transition: transform 0.3s ease;
     }
 
     .button-text {
-        color: #bbd8b1;
+        color: #000;
+        font-weight: 500;
     }
 
     .circle {
@@ -532,7 +531,6 @@
 
 <div class="full-width-bar">
     <div class="content-box">
-        <img src="images/*.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
         <div class="small-text">Sample Text</div>
         <div class="large-text">New Test Box</div>
         <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">

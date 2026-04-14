@@ -25,6 +25,21 @@ require_once 'domain/Event.php';
 $no_shows = fetch_no_shows() ?? null;
 
 
+$all_riders = getall_persons();
+
+$no_shows_arr = fetch_no_shows() ?? [];
+$no_show_counts = [];
+foreach ($no_shows_arr as $row) {
+    $no_show_counts[$row[0]] = $row[1];
+}
+
+$no_show_riders = [];
+foreach (array_keys($no_show_counts) as $userID) {
+    $person = retrieve_person($userID);
+    if ($person) {
+        $no_show_riders[] = $person;
+    }
+}
 
 ?>
 
@@ -94,32 +109,27 @@ require_once('header.php');
                         <th>Username</th>
                         <th>Name</th>
                         <th>Number of No Shows</th>
+                        <th>Edit Profile</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!empty($no_shows)): ?>
-                        <?php 
-                        $num_no_shows = count($no_shows);
-                        ?>
-                        <?php for ($i=0; $i<$num_no_shows; $i++) {
-                            $userID = $no_shows[$i][0];
-                            $user = retrieve_person($userID);
-                            $name = get_name_from_id($userID);
-                            $no_sho = $no_shows[$i][1];
-                            
-                            echo "
+                    <?php if (!empty($no_show_riders)): ?>
+                        <?php foreach ($no_show_riders as $rider): ?>
+                            <?php
+                                $userID = $rider->get_id();
+                                $name = $rider->get_first_name() . ' ' . $rider->get_last_name();
+                                $no_sho = isset($no_show_counts[$userID]) ? $no_show_counts[$userID] : 0;
+                                $profile_link = "viewProfile.php?id=" . urlencode($userID);
+                            ?>
                             <tr>
-                                <td>$userID</td>
-                                <td>$name</td>
-                                <td>$no_sho</td>
-                            </tr>";
-                        }?>
-                            
-
-
-
+                                <td><?= $userID ?></td>
+                                <td><?= ($name) ?></td>
+                                <td><?= ($no_sho) ?></td>
+                                <td><a href="<?= $profile_link ?>" class="button">Edit</a></td>
+                            </tr>
+                        <?php endforeach; ?>
                     <?php else: ?>
-                        <tr><td colspan="3">No no-shows found.</td></tr>
+                        <tr><td colspan="4">No riders with no-shows found.</td></tr>
                     <?php endif; ?>
                 </tbody>
             </table>

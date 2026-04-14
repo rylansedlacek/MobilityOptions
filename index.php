@@ -79,8 +79,10 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+          
             position: relative;
             background-color: #45892e;
+            border-radius: 20px; /* Rounded corners */
         }
 
         .content-box-sub {
@@ -92,6 +94,7 @@
             align-items: center;
             text-align: center;
             position: relative;
+            border-radius: 20px; /* Rounded corners */
         }
 
         .content-box img {
@@ -289,7 +292,7 @@
         /* Footer */
         .footer {
             width: 100%;
-            background: #45892e;
+            background: #45892e !important;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -470,11 +473,11 @@
 
     <div class="full-width-bar">
     <div class="content-box">
-        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
+      
         <div class="small-text">Manage riders here.</div>
         <div class="large-text">User Management</div>
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
-    <span class="button-text">Register</span>
+    <span class="button-text">Go</span>
     <div class="circle">&gt;</div>
 </button>
 <!--
@@ -492,9 +495,9 @@
     </div>
 
     <div class="content-box">
-        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
+       
         <div class="small-text">See current and future rides.</div>
-        <div class="large-text">Ride Management</div>
+        <div class="large-text">Ride Requests & Scheduling</div>
 <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
     <span class="button-text"><?php 
                         require_once('database/dbEvents.php');
@@ -504,41 +507,32 @@
                         if (sizeof($pendingsignups) > 0) {
                             echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
                         }   
-                    ?> Schedule </span>
+                    ?> Go </span>
     <div class="circle">&gt;</div>
 </button>
     </div>
 
     <div class="content-box">
-        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
+       
         <div class="small-text">Dispatch today's trips.</div>
-        <div class="large-text">Dispatch Trip</div>
+        <div class="large-text">Dispatch & Complete Trips</div>
 <button class="circle-arrow-button" onclick="window.location.href='dispatchTrip.php'">
-    <span class="button-text">Dispatch</span>
+    <span class="button-text">Go</span>
     <div class="circle">&gt;</div>
 </button>
     </div>
 
     <div class="content-box">
-        <img src="images/content-box-image.jpg" style="filter:brightness(1) contrast(25%) blur(1px);">
+       
         <div class="small-text">Manage Drivers and Vehicles Here.</div>
         <div class="large-text">Driver & Vehicle Management</div>
         <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
-            <span class="button-text"> Manage</span>
+            <span class="button-text"> Go</span>
             <div class="circle">&gt;</div>
         </button>
     </div>
 
-<div class="full-width-bar">
-    <div class="content-box">
-        <div class="small-text">Sample Text</div>
-        <div class="large-text">New Test Box</div>
-        <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
-            <span class="button-text">Test</span>
-            <div class="circle">&gt;</div>
-        </button>
-    </div>
-</div>
+
 </div>
 
 <div style="margin-top: 50px; padding: 30px 20px;">

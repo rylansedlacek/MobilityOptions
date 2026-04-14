@@ -199,8 +199,14 @@ function format_trip_status_label($tripStatus) {
             $events = get_all_events();
             $drivers  = get_drivers_with_email();
             $vehicles = get_vehicles();
-            $riderReports = get_rider_report_information();
+            $riderReports = get_rider_report_information(); ?>
 
+            <div style="margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                <input type="text" id="riderSearch" placeholder="Search by rider name"
+                    style="width: 100%; max-width: 400px; padding: 10px; border: 1px solid #d1d5db; border-radius: 0.5rem;">
+            </div>
+
+            <?php
             if (sizeof($riderReports) > 0): ?>
                 <div class="table-wrapper">
                     <label> Select the Rider you would like to generate a report for below:<br></label>
@@ -272,8 +278,8 @@ function format_trip_status_label($tripStatus) {
                                                 <input type="hidden" name="rider_id" value="<?= $reports['rider_id'] ?>">
 
                                                 <select name="format" style="width: 70px; padding: 2px; font-size: 12px; height: 30px; color: #000;">
-                                                    <option value="csv">.csv</option>
                                                     <option value="excel">.xls</option>
+                                                    <option value="csv">.csv</option>
                                                 </select>
 
                                                 <button type="submit" class="blue-button" style="padding: 2px 20; font-size: 12px; height: 35px;">
@@ -304,4 +310,22 @@ function format_trip_status_label($tripStatus) {
             <a href="index.php" class="return-button">Return to Dashboard</a>
         </div>
     </main>
+    <script>
+        document.getElementById('riderSearch').addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const tableRows = document.querySelectorAll('tbody.standout tr');
+
+            tableRows.forEach(row => {
+                const riderName = row.cells[0].textContent.toLowerCase();
+
+                if(riderName.includes(searchTerm)) {
+                    row.style.display = "";
+                }
+
+                else {
+                row.style.display = "none";
+                }
+            });
+        });
+    </script>
 </body>

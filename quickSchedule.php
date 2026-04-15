@@ -119,10 +119,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (empty($errors) && !validateEmail($formData['dropoff-contact'])) {
-        $errors[] = 'Enter a valid drop-off contact email address.';
-    }
-
     if (empty($errors) && !validateZipcode($formData['pickup-zipcode'])) {
         $errors[] = 'Enter a valid pickup ZIP code.';
     }
@@ -333,7 +329,7 @@ function option_selected($field, $value) {
                 <div class="event-sect">
                     <h2 class="mt-2">Rider Information</h2>
                     <label for="name">* Rider Name </label>
-                    <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo field_value('name'); ?>">
+                    <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo field_value('name'); ?>" <?php echo field_value('rider_id') !== '' ? 'readonly' : ''; ?>>
                     <input type="hidden" id="rider_id" name="rider_id" value="<?php echo field_value('rider_id'); ?>">
                 </div>
 
@@ -426,7 +422,7 @@ function option_selected($field, $value) {
                     </div>
 
                     <label for="dropoff-contact">* Drop Off Contact Information</label>
-                    <input type="email" id="dropoff-contact" name="dropoff-contact" required value="<?php echo field_value('dropoff-contact'); ?>">
+                    <input type="text" id="dropoff-contact" name="dropoff-contact" required value="<?php echo field_value('dropoff-contact'); ?>">
 
                     <label for="dropoff-street_address"><em>* </em>Street Address</label>
                     <input type="text" id="dropoff-street_address" name="dropoff-street_address" required placeholder="Enter street address" value="<?php echo field_value('dropoff-street_address'); ?>">
@@ -544,6 +540,15 @@ function option_selected($field, $value) {
             </form>
 
             <script>
+                function syncRiderNameField() {
+                    const nameField = document.getElementById('name');
+                    const riderIdField = document.getElementById('rider_id');
+                    if (!nameField || !riderIdField) {
+                        return;
+                    }
+                    nameField.readOnly = riderIdField.value.trim() !== '';
+                }
+
                 document.getElementById('search_button').addEventListener('click', function() {
                     const searchValue = document.getElementById('search_name').value.trim();
                     if (searchValue.length > 0) {
@@ -554,6 +559,7 @@ function option_selected($field, $value) {
                 function selectRider(name, id) {
                     document.getElementById('name').value = name;
                     document.getElementById('rider_id').value = id;
+                    syncRiderNameField();
                     const url = new URL(window.location.href);
                     url.searchParams.set('rider_id', id);
                     url.searchParams.set('rider_name', name);
@@ -612,6 +618,8 @@ function option_selected($field, $value) {
                     dropoffAddress.addEventListener('input', checkShowFavorite);
                     checkShowFavorite();
                 }
+
+                syncRiderNameField();
             </script>
 
             <br/>

@@ -142,10 +142,10 @@ if (date("H:i:s") > "18:19:59") {
             position: absolute;
             top: 20px;
             left: 3px;
+            margin-left: 0.65rem;
             font-size: 14px;
             font-weight: lighter;
             color: #fff;
-            background-color: #45892e;
             border-radius: 8px;
             width: 98%;
             height: 20%;
@@ -155,6 +155,7 @@ if (date("H:i:s") > "18:19:59") {
             position: absolute;
             top: 40px;
             left: 5px;
+            margin-left: 0.5rem;
             font-size: 22px;
             font-weight: bold;
             color: #fff;
@@ -178,7 +179,7 @@ if (date("H:i:s") > "18:19:59") {
             left: 10%;
             font-size: 14px;
             font-weight: 700;
-            color: #712977ff;
+            color: #45892e;
             max-width: 90%;
             margin-bottom: 80px;
         }

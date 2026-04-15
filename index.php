@@ -78,8 +78,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-          
+            text-align: center;       
             position: relative;
             background-color: #45892e;
             border-radius: 20px; /* Rounded corners */
@@ -113,25 +112,6 @@
             border-radius: 5px;
             border-bottom-right-radius: 50px;
             border: 1px solid #828282;
-        }
-
-        .small-text {
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #000;
-        }
-
-        .large-text {
-            position: absolute;
-            top: 40px;
-            left: 30px;
-            font-size: 22px;
-            font-weight: 700;
-            color: black;
-            max-width: 90%;
         }
 
         .large-text-sub {
@@ -476,6 +456,7 @@
       
         <div class="small-text">Manage riders here.</div>
         <div class="large-text">User Management</div>
+        <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
 <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
     <span class="button-text">Go</span>
     <div class="circle">&gt;</div>

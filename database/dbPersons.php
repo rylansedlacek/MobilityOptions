@@ -1261,14 +1261,11 @@ function find_user_names($name) {
         $con=connect();
 
         $query = 
-            "SELECT dbeventpersons.userID, COUNT(*) AS NoShowCount
-            FROM dbeventpersons, dbevents
-            WHERE 
-                dbeventpersons.eventID = dbevents.id
-                and dbevents.completed='Y' 
-                and dbeventpersons.attended=0
-            GROUP BY dbeventpersons.userID ORDER BY NoShowCount DESC;
-            ";
+            "SELECT dbpersons.id, COUNT(*) AS NoShowCount
+            FROM dbpersons
+            JOIN dbevents ON dbpersons.id = dbevents.rider_id
+            WHERE dbevents.trip_status = 'no_show'
+            GROUP BY dbpersons.id ORDER BY NoShowCount DESC;";
         
         $result = mysqli_query($connection, $query);
         if ($result) {

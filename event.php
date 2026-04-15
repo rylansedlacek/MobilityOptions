@@ -403,9 +403,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- end of Thomas's work -->
 
-                <a href="editEvent.php?id=<?= $id ?>" class="button edit">Edit Ride Request</a>
+                <a href="editCalendarEvent.php?id=<?= $id ?>" class="button edit">Edit Ride Request</a>
 
-                <a class='button add' href='scheduleTrip.php?id=<?= urlencode($id) ?>'>Schedule Ride Request</a>
+                <a class='button add' href='editCalendarEvent.php?id=<?= urlencode($id) ?>'>Schedule Ride Request</a>
 
                 <a href="calendar.php?month=<?= substr($event_info['startDate'], 0, 7) ?>" class="button calendar">Ride Calendar</a>
 

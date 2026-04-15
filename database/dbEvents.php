@@ -498,8 +498,8 @@ function fetch_events_in_date_range($start_date, $end_date)
     $start_date = mysqli_real_escape_string($connection, $start_date);
     $end_date = mysqli_real_escape_string($connection, $end_date);
     $query = "select * from dbevents
-              where startDate >= '$start_date' and endDate <= '$end_date'
-              order by startTime asc";
+              where DATE(startDate) >= '$start_date' and DATE(startDate) <= '$end_date'
+              order by DATE(startDate) asc, startTime asc";
     $result = mysqli_query($connection, $query);
     if (!$result) {
         mysqli_close($connection);
@@ -508,7 +508,13 @@ function fetch_events_in_date_range($start_date, $end_date)
     require_once('include/output.php');
     $events = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
-        $key = $result_row['startDate'];
+        // Normalize to YYYY-MM-DD so both DATE and DATETIME values map correctly.
+        $startDateRaw = (string)($result_row['startDate'] ?? '');
+        $timestamp = strtotime($startDateRaw);
+        if ($timestamp === false) {
+            continue;
+        }
+        $key = date('Y-m-d', $timestamp);
         if (isset($events[$key])) {
             $events[$key][] = hsc($result_row);
         } else {

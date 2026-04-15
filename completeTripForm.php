@@ -439,6 +439,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="Completed">Completed</option>
                     <option value="Rescheduled">Rescheduled</option>
                     <option value="Cancelled">Cancelled</option>
+                    <option value="No Show">No Show</option>
                 </select>
 
                 <div>

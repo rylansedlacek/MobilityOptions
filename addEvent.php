@@ -1,162 +1,167 @@
 <?php session_cache_expire(30);
-    session_start();
-    // Make session information accessible, allowing us to associate
-    // data with the logged-in user.
+session_start();
+// Make session information accessible, allowing us to associate
+// data with the logged-in user.
 
-    ini_set("display_errors",1);
-    error_reporting(E_ALL);
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 
-    $loggedIn = false;
-    $accessLevel = 0;
-    $userID = null;
-    if (isset($_SESSION['_id'])) {
-        $loggedIn = true;
-        // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
-        $accessLevel = $_SESSION['access_level'];
-        $userID = $_SESSION['_id'];
-    } 
-    // Require admin privileges
-    if ($accessLevel < 2) {
-        header('Location: login.php');
-        //echo 'bad access level';
+$loggedIn = false;
+$accessLevel = 0;
+$userID = null;
+if (isset($_SESSION['_id'])) {
+    $loggedIn = true;
+    // 0 = not logged in, 1 = standard user, 2 = manager (Admin), 3 super admin (TBI)
+    $accessLevel = $_SESSION['access_level'];
+    $userID = $_SESSION['_id'];
+}
+// Require admin privileges
+if ($accessLevel < 2) {
+    header('Location: login.php');
+    //echo 'bad access level';
+    die();
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require_once('include/input-validation.php');
+    require('database/dbEvents.php');
+    $args = sanitize($_POST, null);
+    $args['type'] = 'Normal'; // default to "Normal" type for now since we removed the form option 
+    $required = array(
+        //type needed? I deleted it, it was on the end behind "description". The form part for it is commented out as well - GC
+        "name",
+        "date",
+        "start-time",
+        "end-time",
+        "description",
+        "type"
+    );
+    if (!wereRequiredFieldsSubmitted($args, $required)) {
+        echo 'Missing required fields';
         die();
-    }
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        require_once('include/input-validation.php');
-        require('database/dbEvents.php');
-        $args = sanitize($_POST, null);
-        $args['type'] = 'Normal'; // default to "Normal" type for now since we removed the form option 
-        $required = array(
-            //type needed? I deleted it, it was on the end behind "description". The form part for it is commented out as well - GC
-            "name", "date", "start-time", "end-time", "description", "type"
-        );
-        if (!wereRequiredFieldsSubmitted($args, $required)) { 
-            echo 'Missing required fields';
-            die();
-        } else {
-           
-            $args['driver_id'] = null; // set driver_id to null - sprint 3
-            $args['vehicle_id'] = null; // set vehicle_id to null - sprint 3
-            
-            // rider name population - rs
-            if (!empty($args['rider_id'])) {
-                // search with rider_id
-                require_once('database/dbPersons.php');
-                $rider = retrieve_person($args['rider_id']);
+    } else {
 
-                if (!$rider) {
-                    ?>
-                    <script>
-                        alert('Rider Profile does not exist. Please search again.');
-                        history.back();
-                    </script>
-                    <?php
-                    die();
-                }
+        $args['driver_id'] = null; // set driver_id to null - sprint 3
+        $args['vehicle_id'] = null; // set vehicle_id to null - sprint 3
 
-            } elseif (!empty($args['name'])) {
-                // search with name value
-                require_once('database/dbPersons.php');
-                $riders = retrieve_persons_by_name($args['name']);
-                
-                if (empty($riders)) {
-                    ?>
-                    <script>
-                         alert('Rider Profile not found. Please try again.');
-                        history.back();
-                    </script>
-                    <?php
-                    die();
-                }
-                $args['rider_id'] = $riders[0]->get_id(); // set rider_id for use in dbevents.
+        // rider name population - rs
+        if (!empty($args['rider_id'])) {
+            // search with rider_id
+            require_once('database/dbPersons.php');
+            $rider = retrieve_person($args['rider_id']);
 
-            } else {
-                ?>
-                    <script>
-                         alert('No rider selected. Please search and select a rider.');
-                        history.back();
-                    </script>
-                <?php
-            }
-
-            // Ensure we have a Person object for the rider (used for sending notification emails)
-            if (empty($rider) && !empty($args['rider_id'])) {
-                require_once('database/dbPersons.php');
-                $rider = retrieve_person($args['rider_id']);
-            }
-            
-            if (validate24hTimeRange($args['start-time'], $args['end-time'])) {
-                $startTime = $args['start-time'];
-                $endTime = $args['end-time'];
-            } else {
-                $validated = validate12hTimeRangeAndConvertTo24h($args["start-time"], $args["end-time"]);
-                if (!$validated) {
-                    echo 'bad time range';
-                    die();
-                }
-                $startTime = $args['start-time'] = $validated[0];
-                $endTime = $args['end-time'] = $validated[1];
-            }
-            $date = $args['date'] = validateDate($args["date"]);
-            $args["training_level_required"] = $_POST['training_level_required'] ?? 'None';
-    
-            $args['startDate'] = $date;
-            $args['endDate']   = $date;   
-            $args['startTime'] = $startTime;
-            $args['endTime']   = $endTime;
-
-
-            //1. Start of use case #8 recurring, etc
-            $isRecurring = isset($_POST['recurring']) ? 1 : 0;
-            $recurrenceType = $isRecurring ? ($_POST['recurrence_type'] ?? '') : '';
-            $customDays = ($isRecurring && $recurrenceType === 'custom') ? (int)($_POST['custom_days'] ?? 0) : null;
-
-            
-            if ($isRecurring) {
-                if (!in_array($recurrenceType, ['daily','weekly','monthly','custom'], true)) {
-                    echo 'invalid recurrence type';
-                    die();
-                }
-                if ($recurrenceType === 'custom' && (!$customDays || $customDays < 1)) {
-                    echo 'invalid custom interval';
-                    die();
-                }
-                $args['is_recurring'] = 1;
-                $args['recurrence_type'] = $recurrenceType;                  // daily|weekly|monthly|custom
-                $args['recurrence_interval_days'] = ($recurrenceType === 'custom') ? $customDays : null;
-            } else {
-                $args['is_recurring'] = 0;
-                $args['recurrence_type'] = null;
-                $args['recurrence_interval_days'] = null;
-            }
-            //1. Start of use case #8 recurring, etc
-
-            // FIXED: Replaced the broken check "if (!$date > 11)"
-            if (!$startTime || !$endTime || !$date){
-                echo 'bad args';
+            if (!$rider) {
+?>
+                <script>
+                    alert('Rider Profile does not exist. Please search again.');
+                    history.back();
+                </script>
+            <?php
                 die();
             }
+        } elseif (!empty($args['name'])) {
+            // search with name value
+            require_once('database/dbPersons.php');
+            $riders = retrieve_persons_by_name($args['name']);
 
-            // combine address fields into single pickup and dropoff locations
-            $args['pickup_location'] = $args['pickup-street_address'] . ', ' . 
-                                       $args['pickup-city'] . ', ' . 
-                                       $args['pickup-state'] . ' ' . 
-                                       $args['pickup-zipcode'];
-            
-            $args['dropoff_location'] = $args['dropoff-street_address'] . ', ' . 
-                                        $args['dropoff-city'] . ', ' . 
-                                        $args['dropoff-state'] . ' ' . 
-                                        $args['dropoff-zipcode'];
-            $args['dropoff_contact'] = $args['dropoff-contact'];
-            $args['series_id'] = bin2hex(random_bytes(16)); // new new
-            $args['completed'] = 'N';
+            if (empty($riders)) {
+            ?>
+                <script>
+                    alert('Rider Profile not found. Please try again.');
+                    history.back();
+                </script>
+            <?php
+                die();
+            }
+            $args['rider_id'] = $riders[0]->get_id(); // set rider_id for use in dbevents.
+
+        } else {
+            ?>
+            <script>
+                alert('No rider selected. Please search and select a rider.');
+                history.back();
+            </script>
+<?php
+        }
+
+        // Ensure we have a Person object for the rider (used for sending notification emails)
+        if (empty($rider) && !empty($args['rider_id'])) {
+            require_once('database/dbPersons.php');
+            $rider = retrieve_person($args['rider_id']);
+        }
+
+        if (validate24hTimeRange($args['start-time'], $args['end-time'])) {
+            $startTime = $args['start-time'];
+            $endTime = $args['end-time'];
+        } else {
+            $validated = validate12hTimeRangeAndConvertTo24h($args["start-time"], $args["end-time"]);
+            if (!$validated) {
+                echo 'bad time range';
+                die();
+            }
+            $startTime = $args['start-time'] = $validated[0];
+            $endTime = $args['end-time'] = $validated[1];
+        }
+        $date = $args['date'] = validateDate($args["date"]);
+        $args["training_level_required"] = $_POST['training_level_required'] ?? 'None';
+
+        $args['startDate'] = $date;
+        $args['endDate']   = $date;
+        $args['startTime'] = $startTime;
+        $args['endTime']   = $endTime;
 
 
-            //my duplicate check - gc
-            function check_duplicate_trip($args) {
-                $con = connect(); 
+        //1. Start of use case #8 recurring, etc
+        $isRecurring = isset($_POST['recurring']) ? 1 : 0;
+        $recurrenceType = $isRecurring ? ($_POST['recurrence_type'] ?? '') : '';
+        $customDays = ($isRecurring && $recurrenceType === 'custom') ? (int)($_POST['custom_days'] ?? 0) : null;
 
-        $query = "SELECT * FROM dbevents 
+
+        if ($isRecurring) {
+            if (!in_array($recurrenceType, ['daily', 'weekly', 'monthly', 'custom'], true)) {
+                echo 'invalid recurrence type';
+                die();
+            }
+            if ($recurrenceType === 'custom' && (!$customDays || $customDays < 1)) {
+                echo 'invalid custom interval';
+                die();
+            }
+            $args['is_recurring'] = 1;
+            $args['recurrence_type'] = $recurrenceType;                  // daily|weekly|monthly|custom
+            $args['recurrence_interval_days'] = ($recurrenceType === 'custom') ? $customDays : null;
+        } else {
+            $args['is_recurring'] = 0;
+            $args['recurrence_type'] = null;
+            $args['recurrence_interval_days'] = null;
+        }
+        //1. Start of use case #8 recurring, etc
+
+        // FIXED: Replaced the broken check "if (!$date > 11)"
+        if (!$startTime || !$endTime || !$date) {
+            echo 'bad args';
+            die();
+        }
+
+        // combine address fields into single pickup and dropoff locations
+        $args['pickup_location'] = $args['pickup-street_address'] . ', ' .
+            $args['pickup-city'] . ', ' .
+            $args['pickup-state'] . ' ' .
+            $args['pickup-zipcode'];
+
+        $args['dropoff_location'] = $args['dropoff-street_address'] . ', ' .
+            $args['dropoff-city'] . ', ' .
+            $args['dropoff-state'] . ' ' .
+            $args['dropoff-zipcode'];
+        $args['dropoff_contact'] = $args['dropoff-contact'];
+        $args['series_id'] = bin2hex(random_bytes(16)); // new new
+        $args['completed'] = 'N';
+
+
+        //my duplicate check - gc
+        function check_duplicate_trip($args)
+        {
+            $con = connect();
+
+            $query = "SELECT * FROM dbevents 
               WHERE rider_id = ?
               AND startDate = ?
               AND startTime = ?
@@ -164,32 +169,35 @@
               AND dropoff_location = ?
               LIMIT 1";
 
-        $stmt = mysqli_prepare($con, $query);
-        mysqli_stmt_bind_param($stmt, "issss",
-            $args['rider_id'],
-            $args['startDate'],
-            $args['startTime'],
-            $args['pickup_location'],
-            $args['dropoff_location']
-        );
+            $stmt = mysqli_prepare($con, $query);
+            mysqli_stmt_bind_param(
+                $stmt,
+                "issss",
+                $args['rider_id'],
+                $args['startDate'],
+                $args['startTime'],
+                $args['pickup_location'],
+                $args['dropoff_location']
+            );
 
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
 
-    
-        return mysqli_num_rows($result) > 0;}
 
-            $duplicate = check_duplicate_trip($args);
+            return mysqli_num_rows($result) > 0;
+        }
 
-            if ($duplicate) {
-                header("Location: addEvent.php?error=duplicate");
-                exit();
-            }
+        $duplicate = check_duplicate_trip($args);
 
-            $id = create_event($args);
-            if (!$id) {
-                die();
-            } else {
+        if ($duplicate) {
+            header("Location: addEvent.php?error=duplicate");
+            exit();
+        }
+
+        $id = create_event($args);
+        if (!$id) {
+            die();
+        } else {
             //if the "Save as Favorite" button is checked then save the trip details to the favorites table for this rider (id by rider ID)
             if (!empty($_POST['favorite']) && $_POST['favorite'] == '1') {
                 require_once('database/dbEvents.php');
@@ -204,197 +212,205 @@
                 );
             }
 
-                // send rider confirmation email if we have a valid email address.
-                $riderEmail = '';
-                if (!empty($rider)) {
-                    $riderEmail = trim((string)$rider->get_email());
-                }
-
-                if ($riderEmail && filter_var($riderEmail, FILTER_VALIDATE_EMAIL)) {
-                    require_once('email.php'); 
-
-                    $subject = 'Ride Request Submitted';
-                    $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
-                        "Your ride request has been submitted with the following details:\n\n" .
-                        "Date: {$args['date']}\n" .
-                        "Time: " . date('g:i A', strtotime($args['start-time'])) . " - " . date('g:i A', strtotime($args['end-time'])) . "\n" .
-                        "Pickup: {$args['pickup_location']}\n" .
-                        "Dropoff: {$args['dropoff_location']}\n\n" .
-                        "Thank you,\n" .
-                        "Healthy Generations - Mobility Options";
-
-                    $sendResult = sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
-                }
-
-                $counts = [
-                    'daily'   => 30,  // next 30 days
-                    'weekly'  => 12,  // next 12 weeks
-                    'monthly' => 6,   // next 6 months
-                    'custom'  => 12,  // 12 custom intervals
-                ];
-                
-                $intervalMap = [
-                    'daily'   => 'P1D',
-                    'weekly'  => 'P1W',
-                    'monthly' => 'P1M',
-                ];
-                if ($recurrenceType === 'custom') {
-                    $customDays = max(1, $customDays);
-                    $intervalSpec = 'P' . $customDays . 'D';
-                } else {
-                    $intervalSpec = $intervalMap[$recurrenceType] ?? null;
-                }
-
-                if ($isRecurring && $intervalSpec && isset($counts[$recurrenceType])) {
-                    $current = new DateTime($args['startDate']);  
-                    $step    = new DateInterval($intervalSpec);
-                    $times   = $counts[$recurrenceType];
-
-                    for ($i = 0; $i < $times; $i++) {
-                        $current->add($step);
-                        $ymd = $current->format('Y-m-d');
-
-                        $dup = $args;
-             
-                        $dup['completed'] = 'N';
-                        $dup['startDate'] = $ymd;
-                        $dup['endDate']   = $ymd;
-                        $dup['date']      = $ymd;    
-
-                        create_event($dup);
-                    }
-                }
-                
-                header('Location: eventSuccess.php');
-                exit();
+            // send rider confirmation email if we have a valid email address.
+            $riderEmail = '';
+            if (!empty($rider)) {
+                $riderEmail = trim((string)$rider->get_email());
             }
+
+            if ($riderEmail && filter_var($riderEmail, FILTER_VALIDATE_EMAIL)) {
+                require_once('email.php');
+
+                $subject = 'Ride Request Submitted';
+                $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
+                    "Your ride request has been submitted with the following details:\n\n" .
+                    "Date: {$args['date']}\n" .
+                    "Time: " . date('g:i A', strtotime($args['start-time'])) . " - " . date('g:i A', strtotime($args['end-time'])) . "\n" .
+                    "Pickup: {$args['pickup_location']}\n" .
+                    "Dropoff: {$args['dropoff_location']}\n\n" .
+                    "Thank you,\n" .
+                    "Healthy Generations - Mobility Options";
+
+                $sendResult = sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
+            }
+
+            $counts = [
+                'daily'   => 30,  // next 30 days
+                'weekly'  => 12,  // next 12 weeks
+                'monthly' => 6,   // next 6 months
+                'custom'  => 12,  // 12 custom intervals
+            ];
+
+            $intervalMap = [
+                'daily'   => 'P1D',
+                'weekly'  => 'P1W',
+                'monthly' => 'P1M',
+            ];
+            if ($recurrenceType === 'custom') {
+                $customDays = max(1, $customDays);
+                $intervalSpec = 'P' . $customDays . 'D';
+            } else {
+                $intervalSpec = $intervalMap[$recurrenceType] ?? null;
+            }
+
+            if ($isRecurring && $intervalSpec && isset($counts[$recurrenceType])) {
+                $current = new DateTime($args['startDate']);
+                $step    = new DateInterval($intervalSpec);
+                $times   = $counts[$recurrenceType];
+
+                for ($i = 0; $i < $times; $i++) {
+                    $current->add($step);
+                    $ymd = $current->format('Y-m-d');
+
+                    $dup = $args;
+
+                    $dup['completed'] = 'N';
+                    $dup['startDate'] = $ymd;
+                    $dup['endDate']   = $ymd;
+                    $dup['date']      = $ymd;
+
+                    create_event($dup);
+                }
+            }
+
+            // header('Location: eventSuccess.php');
+            if (isset($_POST['scheduleTrip'])) {
+                header('Location: viewAllEvents.php');
+            } else {
+                header('Location: eventSuccess.php');
+            }
+            exit();
         }
     }
-    
-    $date = null;
-    if (isset($_GET['date'])) {
-        $date = $_GET['date'];
-        $datePattern = '/[0-9]{4}-[0-9]{2}-[0-9]{2}/';
-        $timeStamp = strtotime($date);
-        if (!preg_match($datePattern, $date) || !$timeStamp) {
-            header('Location: calendar.php');
-            die();
-        }
+}
+
+$date = null;
+if (isset($_GET['date'])) {
+    $date = $_GET['date'];
+    $datePattern = '/[0-9]{4}-[0-9]{2}-[0-9]{2}/';
+    $timeStamp = strtotime($date);
+    if (!preg_match($datePattern, $date) || !$timeStamp) {
+        header('Location: calendar.php');
+        die();
     }
+}
 
-    include_once('database/dbinfo.php'); 
-    $con=connect();  
+include_once('database/dbinfo.php');
+$con = connect();
 
-    
-    /*
+
+/*
         Searching Logic - rs
         - search results are stored for display
         - find_users is a dbpersons function which returns values for display.
         - the block is used below right at the top of the HTMl
     */
-    $search_results = [];    
+$search_results = [];
 
-    if (isset($_GET['search_name'])) {
-        require_once('include/input-validation.php');
-        require_once('database/dbPersons.php');
-        $namePass = trim($_GET['search_name']);
-        $search_results = find_users($namePass, '', '', '', null, null); // dbpersons name search
-    }
+if (isset($_GET['search_name'])) {
+    require_once('include/input-validation.php');
+    require_once('database/dbPersons.php');
+    $namePass = trim($_GET['search_name']);
+    $search_results = find_users($namePass, '', '', '', null, null); // dbpersons name search
+}
 
-    //if the rider_id is set from the search results or from the rider selection, then  pull riders favorite trips using addEvent func and save into favorite_trips
-    $favorite_trips = [];
-    if (!empty($_GET['rider_id'])) {
-        require_once('database/dbEvents.php'); 
-        $favorite_trips = getFavoriteTripsByRiderId($_GET['rider_id']);
-    }
-    
-?><!DOCTYPE html>
+//if the rider_id is set from the search results or from the rider selection, then  pull riders favorite trips using addEvent func and save into favorite_trips
+$favorite_trips = [];
+if (!empty($_GET['rider_id'])) {
+    require_once('database/dbEvents.php');
+    $favorite_trips = getFavoriteTripsByRiderId($_GET['rider_id']);
+}
+
+?>
+<!DOCTYPE html>
 <header class="hero-header">
     <div class="center-header">
         <h1>Ride Request</h1>
     </div>
 </header>
 <html>
-    <head>
-        <?php require_once('universal.inc') ?>
-        <title>Mobility Options | Ride Request</title>
-    </head>
-    <body>
-        <?php require_once('header.php') ?>
-        
-        <main class="date">
-            
-            <form id="new-event-form" method="POST">
-                
 
-                <div class="event-sect">
-                    <h2 class="mt-2">Rider Search</h2>
-                    <div id="rider-lookup" style="margin-bottom:12px;">
-                        <input type="text" id="search_name" placeholder="Type name and click Search" value="<?php echo isset($_GET['search_name']) ? htmlspecialchars($_GET['search_name']) : ''; ?>" style="width:100%; padding:6px;">
-                        <button type="button" id="search_button" style="background:#45892e;color:#fff;border:none;cursor:pointer;">Search</button>
-                    </div>
-                    <script>
-                        // passes the entered name value to the searching logic above. - rs
-                        document.getElementById('search_button').addEventListener('click', function() {
-                            const searchValue = document.getElementById('search_name').value.trim();
-                            if(searchValue.length > 0){
-                                window.location = 'addEvent.php?search_name=' + encodeURIComponent(searchValue);
-                            }
-                        });
-                    </script>
-                    <?php if (!empty($search_results)): ?>
-                        <h3 class="mt-2">Search Results</h3>
-                        <ul style="list-style:none; padding:0; margin-bottom:12px; max-height:150px; overflow:auto; border:2px solid #45892e; border-radius:4px;">
-                            <?php foreach ($search_results as $rider): ?>
-                                <li style="padding:6px; border-bottom:1px solid #eee; cursor:pointer;" onclick="selectRider('<?php echo $rider->get_first_name().' '.$rider->get_last_name(); ?>','<?php echo $rider->get_id(); ?>')">
-                                    <?php echo $rider->get_first_name().' '.$rider->get_last_name().' ('.$rider->get_id().')'; ?>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
+<head>
+    <?php require_once('universal.inc') ?>
+    <title>Mobility Options | Ride Request</title>
+</head>
 
-                            <!-- Gabe add the Favorite Table stuff here! - rs -->
-                            <!-- Added, this is the display of favorite trips (displayed if the variable set earlier is not empty)-->
-                    <?php if (!empty($favorite_trips)): ?>
-                        <h3 class="mt-2">Favorite Trips</h3>
-                        <ul style="list-style:none; padding:0; margin-bottom:12px; max-height:200px; overflow:auto; border:2px solid #45892e; border-radius:4px;">
-                            <?php foreach ($favorite_trips as $fav): ?>
-                                <!-- this json_encode is just a way to convert the PHP formatted data into a js friednly format-->
-                                <li onclick="applyFavorite(<?php echo htmlspecialchars(json_encode($fav), ENT_QUOTES); ?>)"
+<body>
+    <?php require_once('header.php') ?>
+
+    <main class="date">
+
+        <form id="new-event-form" method="POST">
+
+
+            <div class="event-sect">
+                <h2 class="mt-2">Rider Search</h2>
+                <div id="rider-lookup" style="margin-bottom:12px;">
+                    <input type="text" id="search_name" placeholder="Type name and click Search" value="<?php echo isset($_GET['search_name']) ? htmlspecialchars($_GET['search_name']) : ''; ?>" style="width:100%; padding:6px;">
+                    <button type="button" id="search_button" style="background:#45892e;color:#fff;border:none;cursor:pointer;">Search</button>
+                </div>
+                <script>
+                    // passes the entered name value to the searching logic above. - rs
+                    document.getElementById('search_button').addEventListener('click', function() {
+                        const searchValue = document.getElementById('search_name').value.trim();
+                        if (searchValue.length > 0) {
+                            window.location = 'addEvent.php?search_name=' + encodeURIComponent(searchValue);
+                        }
+                    });
+                </script>
+                <?php if (!empty($search_results)): ?>
+                    <h3 class="mt-2">Search Results</h3>
+                    <ul style="list-style:none; padding:0; margin-bottom:12px; max-height:150px; overflow:auto; border:2px solid #45892e; border-radius:4px;">
+                        <?php foreach ($search_results as $rider): ?>
+                            <li style="padding:6px; border-bottom:1px solid #eee; cursor:pointer;" onclick="selectRider('<?php echo $rider->get_first_name() . ' ' . $rider->get_last_name(); ?>','<?php echo $rider->get_id(); ?>')">
+                                <?php echo $rider->get_first_name() . ' ' . $rider->get_last_name() . ' (' . $rider->get_id() . ')'; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+
+                <!-- Gabe add the Favorite Table stuff here! - rs -->
+                <!-- Added, this is the display of favorite trips (displayed if the variable set earlier is not empty)-->
+                <?php if (!empty($favorite_trips)): ?>
+                    <h3 class="mt-2">Favorite Trips</h3>
+                    <ul style="list-style:none; padding:0; margin-bottom:12px; max-height:200px; overflow:auto; border:2px solid #45892e; border-radius:4px;">
+                        <?php foreach ($favorite_trips as $fav): ?>
+                            <!-- this json_encode is just a way to convert the PHP formatted data into a js friednly format-->
+                            <li onclick="applyFavorite(<?php echo htmlspecialchars(json_encode($fav), ENT_QUOTES); ?>)"
                                 style="padding:8px; border-bottom:1px solid #eee; cursor:pointer;"
                                 onmouseover="this.style.background='#f0f8ed'"
                                 onmouseout="this.style.background=''">
                                 <strong><?php echo htmlspecialchars($fav['label']); ?></strong><br>
                                 <small><?php echo htmlspecialchars($fav['pickup_location']); ?> --> <?php echo htmlspecialchars($fav['dropoff_location']); ?></small>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
-                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
 
-                 <div class="event-sect">
-                    <h2 class="mt-2">Rider Information</h2>
-                    <label for="name">* Rider Name </label>
-                    <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_GET['rider_name']) ? htmlspecialchars($_GET['rider_name']) : (isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''); ?>">
-                    <input type="hidden" id="rider_id" name="rider_id" value="<?php echo isset($_POST['rider_id']) ? $_POST['rider_id'] : (isset($_GET['rider_id']) ? ($_GET['rider_id']) : ''); ?>">
-                 </div>
+            <div class="event-sect">
+                <h2 class="mt-2">Rider Information</h2>
+                <label for="name">* Rider Name </label>
+                <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_GET['rider_name']) ? htmlspecialchars($_GET['rider_name']) : (isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''); ?>" <?php echo ((isset($_POST['rider_id']) && $_POST['rider_id'] !== '') || (isset($_GET['rider_id']) && $_GET['rider_id'] !== '')) ? 'readonly' : ''; ?>>
+                <input type="hidden" id="rider_id" name="rider_id" value="<?php echo isset($_POST['rider_id']) ? $_POST['rider_id'] : (isset($_GET['rider_id']) ? ($_GET['rider_id']) : ''); ?>">
+            </div>
 
-                <div class="event-sect">
+            <div class="event-sect">
                 <h2 class="mt-2">Pickup Information</h2>
                 <div class="event-datetime">
-                <div class="event-date">
-                    <label for="date">* Pickup Date </label>
-                    <input type="date" id="date" name="date" <?php if ($date) echo 'value="' . $date . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
+                    <div class="event-date">
+                        <label for="date">* Pickup Date </label>
+                        <input type="date" id="date" name="date" <?php if ($date) echo 'value="' . $date . '"'; ?> min="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+
+                    <div class="event-date">
+                        <label for="start-time">* Start Time </label>
+                        <input type="time" id="start-time" name="start-time" required>
+                    </div>
+
+
                 </div>
 
-                <div class="event-date">
-                    <label for="start-time">* Start Time </label>
-                    <input type="time" id="start-time" name="start-time" required>
-                </div>
-
-                
-            </div>
-                
 
                 <label for="pickup-street_address"><em>* </em>Street Address</label>
                 <input type="text" id="pickup-street_address" name="pickup-street_address" required placeholder="Enter street address">
@@ -461,21 +477,21 @@
                 <label for="pickup-zipcode"><em>* </em>Zip Code</label>
                 <input type="text" id="pickup-zipcode" name="pickup-zipcode" pattern="^\d{5}(-\d{4})?$" required placeholder="Ex: 12345 or 12345-6789">
 
-                </div> 
+            </div>
 
-                <div class="event-sect">
+            <div class="event-sect">
                 <h2 class="mt-2">Drop-Off Information</h2>
                 <div class="event-datetime">
-               
-                
 
-                <div class="event-date">
-                    <label for="end-time">* End Time </label>
-                    <input type="time" id="end-time" name="end-time" required>
+
+
+                    <div class="event-date">
+                        <label for="end-time">* End Time </label>
+                        <input type="time" id="end-time" name="end-time" required>
+                    </div>
                 </div>
-            </div>
                 <label for="dropoff-contact">* Drop Off Contact Information</label>
-                <input type="email" id="dropoff-contact" name="dropoff-contact" required>
+                <input type="text" id="dropoff-contact" name="dropoff-contact" required>
 
                 <label for="dropoff-street_address"><em>* </em>Street Address</label>
                 <input type="text" id="dropoff-street_address" name="dropoff-street_address" required placeholder="Enter street address">
@@ -544,9 +560,9 @@
 
 
 
-                </div> 
-                
-                 <div class="event-sect">
+            </div>
+
+            <div class="event-sect">
                 <label for="name">* Description </label>
                 <input type="text" id="description" name="description" required placeholder="Enter description (e.g. 'Ride to VA hospital')">
 
@@ -556,8 +572,7 @@
                     <option value="Normal">Normal</option>
                     <option value="Retreat">Retreat</option>
                 </select>
-                </div>
--->
+                </div>-->
                 <!--
                 <div class="event-sect">
                 <label for="name">* Event Visibility</label>
@@ -604,8 +619,7 @@
                     </select>
                     </div>
                 </div>
-                </div>
--->
+                </div>-->
                 <!--
                 <div class="event-sect">
                 <label for="name">Location </label>
@@ -615,170 +629,227 @@
                 <input type="number" id="capacity" name="capacity" required placeholder="Enter capacity (e.g. 1-99)">
                 </div> -->
 
-                
+
                 <!-- show favorite option only when a rider is selected and addresses are filled manually (so they cant add duplicats) -->
+                <!-- <?php if (!empty($_GET['rider_id'])): ?>
+                    <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;" id="favorite-fieldset">
+                        <legend>Save as Favorite Trip</legend>
+                        <label style="margin-top:12px; padding:12px; border:1px solid #e0e0e0; border-radius:8px;">
+                            <input type="checkbox" id="favorite" name="favorite" value="1">
+                            Save this trip as a favorite
+                        </label>
+                    </fieldset>
+                <?php endif; ?>
+                <input type="submit" value="Submit Ride Request" style="width:100%;"> -->
+            </div>
+
+            <div style="display:flex; gap:10px; margin-bottom: 20px">
             <?php if (!empty($_GET['rider_id'])): ?>
-            <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;" id="favorite-fieldset">
-                <legend>Save as Favorite Trip</legend>
-                <label style="margin-top:12px; padding:12px; border:1px solid #e0e0e0; border-radius:8px;">
-                    <input type="checkbox" id="favorite" name="favorite" value="1">
+                <label style="padding:10px; border:1px solid #e0e0e0; border-radius:8px;">
+                    <input type="checkbox" name="favorite" value="1" width="100">
                     Save this trip as a favorite
                 </label>
-            </fieldset>
             <?php endif; ?>
+            </div>
+ 
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+                <!-- <?php if (!empty($_GET['rider_id'])): ?>
+                    <fieldset style="display:flex; align-items:center; gap:12px; margin-bottom:8px;" id="favorite-fieldset">
+                        <legend>Save as Favorite Trip</legend>
+                        <label style="margin-top:12px; padding:12px; border:1px solid #e0e0e0; border-radius:8px;">
+                            <input type="checkbox" id="favorite" name="favorite" value="1">
+                            Save this trip as a favorite
+                        </label>
+                    </fieldset>
+                <?php endif; ?>
+                <input type="submit" value="Submit Ride Request" style="width:100%;"> -->
+                <button type="submit" style="width:100%;"> Submit Ride Request</button>
+                <button type="submit" name="scheduleTrip" value="1" style="width:100%;"> Submit Ride Request & Continue To Driver Selection</button>
+            </div>
 
-                <input type="submit" value="Submit Ride Request" style="width:100%;">
-                
-            </form>
-                <script>
-                    // Debug: log submit attempts and list invalid fields
-                    (function(){
-                        const form = document.getElementById('new-event-form');
-                        if(!form) return;
-                        form.addEventListener('submit', function(e){
-                            try{
-                                console.log('addEvent form submit event', e);
-                                const ok = form.checkValidity();
-                                console.log('form.checkValidity()', ok);
-                                if(!ok){
-                                    e.preventDefault();
-                                    const invalids = [];
-                                    form.querySelectorAll(':invalid').forEach(function(el){ invalids.push({name: el.name, type: el.type, value: el.value}); });
-                                    console.error('Form invalid fields:', invalids);
-                                    alert('Form validation failed for: ' + invalids.map(i=>i.name).join(', '));
-                                } else {
-                                    console.log('Form appears valid; letting submit proceed');
-                                }
-                            }catch(err){
-                                console.error('Error in submit debug handler', err);
-                            }
-                        }, false);
-                    })();
-                </script>
-                <!--
+            <div style="text-align:center;">
+                <a class="button cancel" href="eventManagement.php">Return to Ride Management </a>
+            </div>
+
+        </form>
+        <script>
+            // Debug: log submit attempts and list invalid fields
+            (function() {
+                const form = document.getElementById('new-event-form');
+                if (!form) return;
+                form.addEventListener('submit', function(e) {
+                    try {
+                        console.log('addEvent form submit event', e);
+                        const ok = form.checkValidity();
+                        console.log('form.checkValidity()', ok);
+                        if (!ok) {
+                            e.preventDefault();
+                            const invalids = [];
+                            form.querySelectorAll(':invalid').forEach(function(el) {
+                                invalids.push({
+                                    name: el.name,
+                                    type: el.type,
+                                    value: el.value
+                                });
+                            });
+                            console.error('Form invalid fields:', invalids);
+                            alert('Form validation failed for: ' + invalids.map(i => i.name).join(', '));
+                        } else {
+                            console.log('Form appears valid; letting submit proceed');
+                        }
+                    } catch (err) {
+                        console.error('Error in submit debug handler', err);
+                    }
+                }, false);
+            })();
+        </script>
+        <!--
                 <?php if ($date): ?>
                     <a class="button cancel" href="calendar.php?month=<?php echo substr($date, 0, 7) ?>" style="margin-top: -.5rem">Return to Calendar</a>
                 <?php else: ?>
                     <a class="button cancel" href="index.php" style="margin-top: -.5rem">Return to Dashboard</a>
                 <?php endif ?> -->
 
-                <script type="text/javascript">
-                    // populate the rider name and id when a search result is clicked
-                    function selectRider(name, id) {
-    document.getElementById('name').value = name;
-    document.getElementById('rider_id').value = id;
-    const url = new URL(window.location.href);
-    url.searchParams.set('rider_id', id); 
-    url.searchParams.set('rider_name', name);
-    url.searchParams.set('search_name', document.getElementById('search_name').value);
-    window.location = url.toString();
-}
-//this parses the info passed in from the db to be able to insert it automatically into the form when a favorite trip is clicked (when full)
-                    function applyFavorite(fav) {
-    function parseAddress(full) {
-        if (!full) return { street: '', city: '', state: 'VA', zip: '' };
-        const parts = full.split(',');
-        const street = parts[0] || '';
-        const city = parts[1] || '';
-        const stateZip = (parts[2] || '').trim().split(' ');
-        const state = stateZip[0] || 'VA';
-        const zip = stateZip[1] || '';
-        return { street, city, state, zip };
-    }
+        <script type="text/javascript">
+            function syncRiderNameField() {
+                const nameField = document.getElementById('name');
+                const riderIdField = document.getElementById('rider_id');
+                if (!nameField || !riderIdField) {
+                    return;
+                }
+                nameField.readOnly = riderIdField.value.trim() !== '';
+            }
 
-    const pickup  = parseAddress(fav.pickup_location);
-    const dropoff = parseAddress(fav.dropoff_location);
+            // populate the rider name and id when a search result is clicked
+            function selectRider(name, id) {
+                document.getElementById('name').value = name;
+                document.getElementById('rider_id').value = id;
+                syncRiderNameField();
+                const url = new URL(window.location.href);
+                url.searchParams.set('rider_id', id);
+                url.searchParams.set('rider_name', name);
+                url.searchParams.set('search_name', document.getElementById('search_name').value);
+                window.location = url.toString();
+            }
+            //this parses the info passed in from the db to be able to insert it automatically into the form when a favorite trip is clicked (when full)
+            function applyFavorite(fav) {
+                function parseAddress(full) {
+                    if (!full) return {
+                        street: '',
+                        city: '',
+                        state: 'VA',
+                        zip: ''
+                    };
+                    const parts = full.split(',');
+                    const street = parts[0] || '';
+                    const city = parts[1] || '';
+                    const stateZip = (parts[2] || '').trim().split(' ');
+                    const state = stateZip[0] || 'VA';
+                    const zip = stateZip[1] || '';
+                    return {
+                        street,
+                        city,
+                        state,
+                        zip
+                    };
+                }
 
-    document.getElementById('pickup-street_address').value = pickup.street;
-    document.getElementById('pickup-city').value = pickup.city;
-    document.getElementById('pickup-state').value = pickup.state;
-    document.getElementById('pickup-zipcode').value   = pickup.zip;
+                const pickup = parseAddress(fav.pickup_location);
+                const dropoff = parseAddress(fav.dropoff_location);
 
-    document.getElementById('dropoff-street_address').value = dropoff.street;
-    document.getElementById('dropoff-city').value = dropoff.city;
-    document.getElementById('dropoff-state').value   = dropoff.state;
-    document.getElementById('dropoff-zipcode').value = dropoff.zip;
+                document.getElementById('pickup-street_address').value = pickup.street;
+                document.getElementById('pickup-city').value = pickup.city;
+                document.getElementById('pickup-state').value = pickup.state;
+                document.getElementById('pickup-zipcode').value = pickup.zip;
 
-    if (fav.dropoff_contact) {
-        document.getElementById('dropoff-contact').value = fav.dropoff_contact;
-    }
-    if (fav.description) {
-        document.getElementById('description').value = fav.description;
-    }
-    //this scrolls to the next part the user needs to fill in after they select a favorite (which is the pickup date)
-    document.getElementById('date').scrollIntoView({ behavior: 'smooth' });
-}
+                document.getElementById('dropoff-street_address').value = dropoff.street;
+                document.getElementById('dropoff-city').value = dropoff.city;
+                document.getElementById('dropoff-state').value = dropoff.state;
+                document.getElementById('dropoff-zipcode').value = dropoff.zip;
 
-//show "save as favorite" only once pickup and dropoff addresses are entered manually (not when applying a favorite item) (uses my function below)
-document.getElementById('pickup-street_address').addEventListener('input', checkShowFavorite);
-document.getElementById('dropoff-street_address').addEventListener('input', checkShowFavorite);
+                if (fav.dropoff_contact) {
+                    document.getElementById('dropoff-contact').value = fav.dropoff_contact;
+                }
+                if (fav.description) {
+                    document.getElementById('description').value = fav.description;
+                }
+                //this scrolls to the next part the user needs to fill in after they select a favorite (which is the pickup date)
+                document.getElementById('date').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
 
-function checkShowFavorite() {
-    const fieldset = document.getElementById('favorite-fieldset');
-    if (!fieldset) return;
-    const pickupFilled  = document.getElementById('pickup-street_address').value.trim() !== '';
-    const dropoffFilled = document.getElementById('dropoff-street_address').value.trim() !== '';
-    //this checks if both values set above are true, if so display as flex, if not hide the option to save as favorite
-    fieldset.style.display = (pickupFilled && dropoffFilled) ? 'flex' : 'none';
-}
+            //show "save as favorite" only once pickup and dropoff addresses are entered manually (not when applying a favorite item) (uses my function below)
+            document.getElementById('pickup-street_address').addEventListener('input', checkShowFavorite);
+            document.getElementById('dropoff-street_address').addEventListener('input', checkShowFavorite);
 
-//this run on load in case fields are already filled (from applyFavorite)
-checkShowFavorite();
+            function checkShowFavorite() {
+                const fieldset = document.getElementById('favorite-fieldset');
+                if (!fieldset) return;
+                const pickupFilled = document.getElementById('pickup-street_address').value.trim() !== '';
+                const dropoffFilled = document.getElementById('dropoff-street_address').value.trim() !== '';
+                //this checks if both values set above are true, if so display as flex, if not hide the option to save as favorite
+                fieldset.style.display = (pickupFilled && dropoffFilled) ? 'flex' : 'none';
+            }
 
-                    $(document).ready(function(){
-                        var checkboxes = $('.checkboxes');
-                        checkboxes.change(function(){
-                            if($('.checkboxes:checked').length>0) {
-                                checkboxes.removeAttr('required');
-                            } else {
-                                checkboxes.attr('required', 'required');
-                            }
-                        });
-                    });
+            //this run on load in case fields are already filled (from applyFavorite)
+            syncRiderNameField();
+            checkShowFavorite();
 
-                    (function(){
-                        const recurring = document.getElementById('recurring');
-                        const options = document.getElementById('recurring-options');
-                        const recurrenceType = document.getElementById('recurrence_type');
-                        const customBlock = document.getElementById('custom-interval');
-                        const customDays = document.getElementById('custom_days');
+            $(document).ready(function() {
+                var checkboxes = $('.checkboxes');
+                checkboxes.change(function() {
+                    if ($('.checkboxes:checked').length > 0) {
+                        checkboxes.removeAttr('required');
+                    } else {
+                        checkboxes.attr('required', 'required');
+                    }
+                });
+            });
 
-                        function toggleOptions(){
-                            const on = recurring && recurring.checked;
-                            if (options) options.style.display = on ? 'block' : 'none';
-                            if (!on) {
-                                if (recurrenceType) recurrenceType.value = '';
-                                if (customBlock) customBlock.style.display = 'none';
-                                if (customDays) customDays.value = '';
-                            }
-                        }
-                        function toggleCustom(){
-                            if (!recurrenceType || !customBlock) return;
-                            customBlock.style.display = (recurrenceType.value === 'custom') ? 'block' : 'none';
-                            customBlock.style.display = (recurrenceType.value === 'custom') ? 'block' : 'none';
-                        }
+            (function() {
+                const recurring = document.getElementById('recurring');
+                const options = document.getElementById('recurring-options');
+                const recurrenceType = document.getElementById('recurrence_type');
+                const customBlock = document.getElementById('custom-interval');
+                const customDays = document.getElementById('custom_days');
 
-                        if (recurring) {
-                            recurring.addEventListener('change', toggleOptions);
-                            toggleOptions();
-                        }
-                        if (recurrenceType) {
-                            recurrenceType.addEventListener('change', toggleCustom);
-                            toggleCustom();
-                        }
-                    })();
-                </script>
-                <br/>
-                <br/>
-                <center><a class="button cancel" href="eventManagement.php">Return to Ride Management</a></center>
+                function toggleOptions() {
+                    const on = recurring && recurring.checked;
+                    if (options) options.style.display = on ? 'block' : 'none';
+                    if (!on) {
+                        if (recurrenceType) recurrenceType.value = '';
+                        if (customBlock) customBlock.style.display = 'none';
+                        if (customDays) customDays.value = '';
+                    }
+                }
 
-                <?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate'): ?>
-                <script>
-                    alert("This ride has already been requested.");
-                </script>
-                <?php endif; ?>
-                 
-        </main>
-        
-    </body>
+                function toggleCustom() {
+                    if (!recurrenceType || !customBlock) return;
+                    customBlock.style.display = (recurrenceType.value === 'custom') ? 'block' : 'none';
+                    customBlock.style.display = (recurrenceType.value === 'custom') ? 'block' : 'none';
+                }
+
+                if (recurring) {
+                    recurring.addEventListener('change', toggleOptions);
+                    toggleOptions();
+                }
+                if (recurrenceType) {
+                    recurrenceType.addEventListener('change', toggleCustom);
+                    toggleCustom();
+                }
+            })();
+        </script>
+        <br />
+        <br />
+
+        <?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate'): ?>
+            <script>
+                alert("This ride has already been requested.");
+            </script>
+        <?php endif; ?>
+    </main>
+
+</body>
+
 </html>

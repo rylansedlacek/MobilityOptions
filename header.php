@@ -586,8 +586,8 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .accessibility-modal {
-            background: #1f1f21;
-            color: white;
+            background: #fafafa;
+            color: black;
             max-width: 520px;
             width: 100%;
             border-radius: 12px;
@@ -600,6 +600,7 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .modal-header {
+            font-weight: 800;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -622,17 +623,20 @@ if (date("H:i:s") > "18:19:59") {
 
         .modal-close {
             background: transparent;
-            border: none;
-            color: white;
+            border: 1px;
+            border-color: black;
+            color: black;
             font-size: 30px;
             cursor: pointer;
         }
 
         .modal-desc {
-            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+            color: black;
         }
 
         .accessibility-row {
+            width: auto;
             display: flex;
             gap: 12px;
             align-items: center;
@@ -664,13 +668,13 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .accessibility-actions .save {
-            background: var(--wv-accent-color);
-            color: var(--wv-accent-foreground);
+            background: #5283c7;
+            color: #fafafa;
         }
 
         .accessibility-actions .reset {
-            background: transparent;
-            color: #fff;
+            background: #45892e;
+            color: #fafafa;
             border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
@@ -1156,8 +1160,8 @@ if (date("H:i:s") > "18:19:59") {
     <div class="accessibility-modal-backdrop" id="accessibilityBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="accessibility-modal" id="accessibilityModal">
             <div class="modal-header">
-                <h3>Accessibility Settings</h3>
-                <button id="accessibilityClose" class="modal-close" style="max-width: 22%;">&times;</button>
+                <h3 style="font-weight: bold;">Accessibility Settings</h3>
+                <button id="accessibilityClose" class="modal-close" style="max-width: 20%;">&times;</button>
             </div>
             <p class="modal-desc">Adjust font size, font style, and color scheme. Settings persist across pages and visits.</p>
 
@@ -1169,8 +1173,9 @@ if (date("H:i:s") > "18:19:59") {
                 </div>
             </div>
 
-            <div class="accessibility-row">
+            <div class="accessibility-row flex items-center gap-3">
                 <label for="acc-font-family">Font style</label>
+
                 <select id="acc-font-family">
                     <option value="nunito">Nunito (default)</option>
                     <option value="quicksand">Quicksand</option>

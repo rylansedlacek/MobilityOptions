@@ -107,7 +107,7 @@ if ($accessLevel < 2) {
                  <button onclick="window.location.href='completeTrips.php';">
                     <div class="button-left-gray"></div>
                     <div>Complete Trip</div>
-                    <img class="button-icon h-10 w-10 left-5" src="images/dispatchTripVehicleLogo.jpg" alt="Calendar Icon">
+                    <img class="button-icon h-10 w-10 left-5" src="images/completeTrip.png" alt="Calendar Icon">
                 </button>
 
                  <button onclick="window.location.href='cancelTrips.php';">

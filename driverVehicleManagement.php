@@ -123,7 +123,7 @@ require_once('header.php');
         <button onclick="window.location.href='manageDrivers.php';">
 	  <div class="button-left-gray"></div>
 	  <div>Manage Drivers</div>
-	  <img class="button-icon h-10 w-10 left-5" src="images/clipboard-regular.svg" alt="Person Icon">
+	  <img class="button-icon h-10 w-10 left-8" src="images/driverLogoTwo.png" alt="Person Icon">
         </button>
 
         <button onclick="window.location.href='addVehicles.php';">

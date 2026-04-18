@@ -135,7 +135,7 @@ require_once('header.php');
     <button onclick="window.location.href='noShows.php';">
 	  <div class="button-left-gray"></div>
 	  <div>View No Shows?</div>
-	  <img class="button-icon h-10 w-10 left-5" src="images/clipboard-regular.svg" alt="Person Icon">
+	  <img class="button-icon h-12 w-12 left-5" src="images/cancelRideLogo.png" alt="Person Icon">
     </button>
 
 

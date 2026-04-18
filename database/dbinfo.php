@@ -18,6 +18,10 @@ date_default_timezone_set('America/New_York');
  */
 date_default_timezone_set('America/New_York');
 
+if (file_exists(__DIR__ . '/config.local.php')) {
+    require_once __DIR__ . '/config.local.php';
+}
+
 function connect() {
     $host = "localhost"; 
     $database = "mobilitydb";

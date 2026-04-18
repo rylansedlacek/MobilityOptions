@@ -97,21 +97,10 @@
         }
 
         .content-box img {
-            width: 100%;
-            height: auto;
-            background: white;
-            border-radius: 5px;
-            border-bottom-right-radius: 50px;
-            border: 0.5px solid #828282;
-        }
-
-        .content-box-sub img {
-            width: 105%;
-            height: auto;
-            background: white;
-            border-radius: 5px;
-            border-bottom-right-radius: 50px;
-            border: 1px solid #828282;
+            width: 50%;
+            height: 35%;
+            background: transparent;
+            margin-top: 4rem;
         }
 
         .large-text-sub {
@@ -452,35 +441,22 @@
             <?php endif ?>
 
     <div class="full-width-bar">
-    <div class="content-box">
-      
-        <div class="small-text">Manage riders here.</div>
-        <div class="large-text">User Management</div>
-        <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
-<button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
-    <span class="button-text">Go</span>
-    <div class="circle">&gt;</div>
-</button>
-<!--
-        <div class="nav-buttons">
-            <button class="nav-button" onclick="window.location.href='personSearch.php'">
-                <span>Find</span>
-                <span class="arrow"><img src="images/person-search.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-            </button>
-            <button class="nav-button" onclick="window.location.href='VolunteerRegister.php'">
-                <span>Register</span>
-                <span class="arrow"><img src="images/add-person.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
+        <div class="content-box">
+            <div class="small-text">Manage riders here.</div>
+            <div class="large-text">User Management</div>
+            <img src="images/users-solid.svg" alt="User Management Icon">
+            <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
+                <span class="button-text">Go</span>
+                <div class="circle">&gt;</div>
             </button>
         </div>
--->
-    </div>
 
-    <div class="content-box">
-       
-        <div class="small-text">See current and future rides.</div>
-        <div class="large-text">Ride Requests & Scheduling</div>
-<button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
-    <span class="button-text"><?php 
+        <div class="content-box">
+            <div class="small-text">See current and future rides.</div>
+            <div class="large-text">Ride Requests & Scheduling</div>
+            <img src="images/ride-scheduling.png" alt="Ride Scheduling Icon">
+            <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
+                <span class="button-text"><?php 
                         require_once('database/dbEvents.php');
                         require_once('database/dbPersons.php');
                         require_once('database/dbApplications.php');
@@ -488,41 +464,43 @@
                         if (sizeof($pendingsignups) > 0) {
                             echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
                         }   
-                    ?> Go </span>
-    <div class="circle">&gt;</div>
-</button>
-    </div>
-
-    <div class="content-box">
-       
-        <div class="small-text">Dispatch today's trips.</div>
-        <div class="large-text">Dispatch & Complete Trips</div>
-<button class="circle-arrow-button" onclick="window.location.href='dispatchTrip.php'">
-    <span class="button-text">Go</span>
-    <div class="circle">&gt;</div>
-</button>
-    </div>
-
-    <div class="content-box">
-       
-        <div class="small-text">Manage Drivers and Vehicles Here.</div>
-        <div class="large-text">Driver & Vehicle Management</div>
-        <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
-            <span class="button-text"> Go</span>
+                    ?> Go 
+                </span>
             <div class="circle">&gt;</div>
-        </button>
+            </button>
+        </div>
+
+        <div class="content-box">
+            <div class="small-text">Dispatch today's trips.</div>
+            <div class="large-text">Dispatch & Complete Trips</div>
+            <img src="images/dispatch-trip.png" alt="Dispatch & Complete Trips Icon">
+            <button class="circle-arrow-button" onclick="window.location.href='dispatchTrip.php'">
+                <span class="button-text">Go</span>
+                <div class="circle">&gt;</div>
+            </button>
+        </div>
+
+    
+        <div class="content-box">   
+            <div class="small-text">Manage Drivers and Vehicles Here.</div>
+            <div class="large-text">Driver & Vehicle Management</div>
+            <img src="images/drivers-vehicles.png" alt="Driver & Vehicle Management Icon">
+            <img src="images/users-solid.svg">
+            <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
+                <span class="button-text"> Go</span>
+                <div class="circle">&gt;</div>
+            </button>
+        </div>
     </div>
-</div>
 
-<div style="margin-top: 50px; padding: 30px 20px;">
-    <h2><b>Additional Menus</b></h2>
-</div>
 
-<div class="full-width-bar-sub">
+    <div style="margin-top: 50px; padding: 30px 20px;">
+        <h2><b>Additional Menus</b></h2>
+    </div>
 
+    <div class="full-width-bar-sub">
     <?php
         require_once('database/dbMessages.php');
-
         // Ensure variable is always defined
         $unreadMessageCount = 0;
         $inboxIcon = 'inbox.svg';
@@ -539,13 +517,10 @@
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
         </div>
-        
         <div class="large-text-sub">Calendar</div>
         <div class="graph-text">See all upcoming trips.</div>
         <button class="arrow-button">→</button>
     </div>
-
-    
 
     
     <!-- Generate Report -->
@@ -553,27 +528,15 @@
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
-        
         <div class="large-text-sub">Generate Operational Report</div>
         <div class="graph-text">Operational Statistics - Report Generation.</div>
         <button class="arrow-button">→</button>
     </div>
 
-    <!-- <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
-        <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
-        </div>
-        
-        <div class="large-text-sub">Generate Ride Statistics Report</div>
-        <div class="graph-text">Rider Statistics - Report Generation.</div>
-        <button class="arrow-button">→</button>
-    </div> -->
-
     <div class="content-box-test" onclick="window.location.href='generateRidersReport.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
-        
         <div class="large-text-sub">Generate Rider Statistics Report</div>
         <div class="graph-text">Rider Statistics - Report Generation.</div>
         <button class="arrow-button">→</button>

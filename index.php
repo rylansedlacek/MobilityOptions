@@ -101,6 +101,8 @@
             height: auto;
             background: transparent;
             margin-top: 4rem;
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(
+50deg) brightness(118%) contrast(119%);
         }
 
         .large-text-sub {
@@ -108,7 +110,7 @@
             /*top: 120px;*/
             top: 60%;
             left: 10%;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             color: black;
             max-width: 90%;

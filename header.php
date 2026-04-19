@@ -148,9 +148,9 @@ if (date("H:i:s") > "18:19:59") {
             top: 40px;
             left: 5px;
             margin-left: 0.5rem;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
-            color: #fff;
+            color: #fff;s
             max-width: 90%;
         }
 

@@ -98,7 +98,7 @@
 
         .content-box img {
             width: 50%;
-            height: 35%;
+            height: 30%;
             background: transparent;
             margin-top: 4rem;
         }
@@ -485,7 +485,6 @@
             <div class="small-text">Manage Drivers and Vehicles Here.</div>
             <div class="large-text">Driver & Vehicle Management</div>
             <img src="images/drivers-vehicles.png" alt="Driver & Vehicle Management Icon">
-            <img src="images/users-solid.svg">
             <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
                 <span class="button-text"> Go</span>
                 <div class="circle">&gt;</div>

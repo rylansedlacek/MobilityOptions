@@ -122,14 +122,6 @@ if (date("H:i:s") > "18:19:59") {
             position: relative;
         }
 
-        .content-box img {
-            width: 100%;
-            height: auto;
-            background: white;
-            border-radius: 5px;
-            border-bottom-right-radius: 50px;
-            border: 0.5px solid #828282;
-        }
 
         .content-box-sub img {
             width: 105%;

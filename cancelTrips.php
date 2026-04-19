@@ -53,15 +53,22 @@ function send_trip_cancelled_email($event) {
     sendEmails([$riderEmail], 'Mobility Options', $subject, $body);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_trip_id'])) {
-    $eventID = (int) $_POST['cancel_trip_id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
+    $eventID = (int) $_POST['event_id'];
+    $action = $_POST['action_type'] ?? 'cancel';
     $eventToCancel = fetch_event_by_id($eventID);
 
-
-    if (cancel_trip($eventID)) {
-        send_trip_cancelled_email($eventToCancel);
-        header('Location: cancelTrips.php?status=success');
-        exit;
+    if ($action === 'no_show') {
+        if(mark_no_show($eventID)) {
+            header('Location: cancelTrips.php?status=noshow_success');
+            exit;
+        }
+    }  else {
+        if (cancel_trip($eventID)) {
+            send_trip_cancelled_email($eventToCancel);
+            header('Location: cancelTrips.php?status=success');
+            exit;
+        }
     }
 }
 
@@ -122,8 +129,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_trip_id'])) {
 
     <h1>Cancel Trip</h1>
     <main class="general">
-        <?php if (isset($_GET['status']) && $_GET['status'] === 'success'): ?>
-            <div id="trip-status-toast" class="happy-toast">Trip Cancelled!</div>
+        <?php if (isset($_GET['status'])): ?>
+            <div id="trip-status-toast" class="happy-toast">
+                <?php
+                    if($_GET['status'] === 'noshow_success') {
+                        echo 'Trip Marked as No-Show';
+                    } else {
+                        echo "Trip Cancelled";
+                    }
+                ?>
+            </div>
         <?php endif; ?>
         <?php
         //require_once('database/dbMessages.php');
@@ -199,12 +214,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_trip_id'])) {
                                     </tr>
                                     <div id="popup<?= $eventID ?>" class="popup" style="display:none;">
                                         <div class="popup-box">
-                                            <p>Are you sure you want to cancel this trip?</p>
+                                            <h3>Update Trip Status</h3>
+                                            <p>How would you like to cancel this trip?</p>
                                             <div class="popup-actions">
                                                 <form method="POST" style="margin: 0;">
-                                                    <input type="hidden" name="cancel_trip_id" value="<?= $eventID ?>">
-                                                    <button type="submit" class="button confirm">Confirm</button>
+                                                    <input type="hidden" name="event_id" value="<?= $eventID ?>">
+                                                    <input type="hidden" name="action_type" value="cancel">
+                                                    <button type="submit" class="button confirm">Cancel Trip</button>
                                                 </form>
+
+                                                <form method="POST" style="margin: 0;">
+                                                    <input type="hidden" name="event_id" value="<?= $eventID ?>">
+                                                    <input type="hidden" name="action_type" value="no_show">
+                                                    <button type="submit" class="button confirm">Mark As No-Show</button>
+                                                </form>
+
                                                 <a onclick="document.getElementById('popup<?= $eventID ?>').style.display='none';" class="button cancel">Go Back</a>
                                             </div>
                                         </div>

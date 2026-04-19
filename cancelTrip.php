@@ -11,17 +11,28 @@ if(!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 $eventID = (int)$_GET['id'];
+$action = $_GET['action'] ?? 'cancel';
 
 $event = fetch_event_by_id($eventID);
+
 if(!$event) {
     die("Trip not found.");
 }
 
-if(cancel_trip($eventID)) {
+if($action === 'no_show') {
+    if(mark_no_show($eventID)) {
+        header("Location: cancelTrips.php?status=noshow_success");
+        exit;
+    } else {
+        die("Failed to mark as no-show. Please try again.");
+    }
+} else {
+    if(cancel_trip($eventID)) {
     header("Location: cancelTrips.php?status=success");
     exit;
-}
+    }
 
-else {
-    die("Failed to cancel the trip. Please try again.");
+    else {
+        die("Failed to cancel the trip. Please try again.");
+    }
 }

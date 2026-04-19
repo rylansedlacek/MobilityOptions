@@ -176,7 +176,7 @@
         }
 
         .date-box {
-            background: #45892e;
+            background: #4f7dbe;
             padding: 10px 20px;
             margin-right: 1rem;
             border-radius: 50px;

@@ -283,7 +283,7 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .date-box {
-            background: #45892e;
+            background: #4f7dbe;
             padding: 10px 20px;
             margin-right: 1rem;
             border-radius: 50px;
@@ -292,6 +292,13 @@ if (date("H:i:s") > "18:19:59") {
             font-size: 20px;
             font-weight: 700;
             text-align: center;
+        }
+
+        .dropdown-label {
+            color: #4f7dbe;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .icon {
@@ -740,60 +747,42 @@ if (date("H:i:s") > "18:19:59") {
     //Log-in security
     //If they aren't logged in, display our log-in form.
     $showing_login = false;
-    if (!isset($_SESSION['logged_in'])) {
-        echo ('<div class="navbar">
+    if (!isset($_SESSION['logged_in'])) { ?>
+        <div class="navbar">
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="nav-links">
                 <div class="nav-item">
-                    <p style="color: #4f7dbe;">Quick Access</p>
+                    <span class="dropdown-label">Quick Actions</span>
                     <div class="dropdown">
-
-<a href="addEvent.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/plus-solid.svg">
-    <span>Schedule a Ride</span>
-  </div>
-</a>
-<a href="calendar.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/list-solid.svg">
-    <span>View Scheduled Rides</span>
-  </div>
-</a>
-<a href="editHours.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clock-regular.svg">
-    <span>Change Scheduled Ride Time</span>
-  </div>
-</a>
-<a href="viewPendingApps.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/users-solid.svg">
-    <span>Pending Applications</span>
-  </div>
-</a>
-<a href="adminViewingEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/list-solid.svg">
-    <span>Edit Ride Details</span>
-  </div>
-</a>
-
-
-                    </div>
+                    <?php
+                    $nav_items = [
+                        ['href' => 'adminViewingEvents.php','icon' => 'list-solid.svg',     'label' => 'View Ride Requests'],
+                        ['href' => 'viewAllEvents.php',     'icon' => 'clock-regular.svg',  'label' => 'Schedule Ride Requests'],
+                        ['href' => 'viewAllTrips.php',      'icon' => 'dispatch.svg',       'label' => 'Dispatch Trip'],
+                        ['href' => 'completeTrips.php',     'icon' => 'complete.svg',       'label' => 'Complete Trip'],
+                        ['href' => 'cancelTrips.php',       'icon' => 'cancel.svg',         'label' => 'Cancel Trip'],
+                    ];
+                    foreach ($nav_items as $item): ?>
+                        <a href="<?= $item['href'] ?>" class="nav-link">
+                            <div class="in-nav">
+                                <img src="images/<?= $item['icon'] ?>" alt="<?= $item['label'] ?>">
+                                <span><?= $item['label'] ?></span>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
         <!-- Center Section: Logo -->
-        <div class="center-section">>
+        <div class="center-section">
             <a href="index.php" class="logo-container">
                 <img src="images/healthyGenPageLogo.png" alt="Logo">
             </a>
         </div>
+
         <!-- Right Section: Date & Icon -->
         <div class="right-section">
-           
             <div class="nav-links">
                 <div class="nav-item">
                     <div class="icon">
@@ -806,8 +795,8 @@ if (date("H:i:s") > "18:19:59") {
                 </div>
             </div>
         </div>
-    </div>');
-    } else if ($_SESSION['logged_in']) {
+    </div>
+    <?php } else if ($_SESSION['logged_in']) {
 
         /*         * Set our permission array.
          * anything a guest can do, a volunteer and manager can also do

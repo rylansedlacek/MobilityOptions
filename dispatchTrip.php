@@ -37,8 +37,8 @@ if ($accessLevel < 2) {
     ?>
     <style>
         .date-box {
-            background: #C9AB81;
-            padding: 7px 30px;
+            background: #2B2B2E;
+            padding: 10px 30px;
             border-radius: 50px;
             box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
             color: white;

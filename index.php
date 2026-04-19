@@ -97,8 +97,8 @@
         }
 
         .content-box img {
-            width: 50%;
-            height: 30%;
+            width: 30%;
+            height: auto;
             background: transparent;
             margin-top: 4rem;
         }

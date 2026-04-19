@@ -146,8 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_trip_id'])) {
                             <th><b>Trip Date</b></th>
                             <th><b>Trip Time</b></th>
                             <th><b>Rider Name</b></th>
+                            <th><b>Trip Status</b></th>
                             <th><b>Cancel Trip</b></th>
-
                         </tr>
                     </thead>
                     <?php
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_trip_id'])) {
                     ?>
                     <tbody class="standout">
                         <?php foreach ($events as $event): ?>
-                            <?php if ($event->getTripStatus() === 'scheduled' && $event->getCompleted() === 'Y'): ?>
+                            <?php if ($event->getTripStatus() !== 'cancelled' && $event->getTripStatus() !== 'no_show' && $event->getTripStatus() !== 'completed'): ?>
                                 <?php
                                 $eventID = $event->getID();
                                 $eventDate = $event->getStartDate();
@@ -166,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_trip_id'])) {
                                 $driverDI = $event->getDriverId();
                                 $driverName = "";
                                 $riderName = $event->getName();
+                                $tripStatus = $event->getTripStatus();
                                 foreach ($drivers as $driver) {
                                     if ($driver['id'] ==  $driverDI) {
                                         $driverName = $driver['first_name'] . ' ' . $driver['last_name'];
@@ -189,6 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_trip_id'])) {
                                         <td><?= $eventDate ?></td>
                                         <td><?= $eventTime ?></td>
                                         <td><?= $riderName ?></td>
+                                        <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $tripStatus))) ?></td>
 
                                         <td>
                                             <a href="#" onclick="document.getElementById('popup<?= $eventID ?>').style.display='flex';" class="button confirm">

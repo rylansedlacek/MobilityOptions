@@ -114,6 +114,12 @@ require_once('header.php');
 	  <img class="button-icon left-4" src="images/new-event.svg" alt="Calendar Icon">
         </button>
 
+        <button onclick="window.location.href='cancelTrips.php';">
+    <div class="button-left-gray"></div>
+    <div>Cancel Requested Trip</div>
+    <img class="button-icon h-12 w-12 left-4" src="images/editTripDirectionLogo.avif" alt="Calendar Icon">
+        </button>
+
         <!--
         <button onclick="window.location.href='editHours.php';">
 	  <div class="button-left-gray"></div>

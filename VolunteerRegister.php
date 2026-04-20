@@ -27,6 +27,31 @@ require_once('header.php');
     .dropdown {
         padding-right: 50px;
     }
+
+    .success-toast {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 10px 16px;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: var(--button-padding);
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: var(--button-border-radius);
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
+
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 </head>
@@ -36,6 +61,7 @@ require_once('header.php');
     require_once('database/dbPersons.php');
 
     $showPopup = false;
+    $successMessage = '';
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //$ignoreList = array('password', 'password-reenter');
@@ -242,12 +268,12 @@ require_once('header.php');
         } else {
             // record the infomration into user_verified ids - linking to dbpersons
             add_user_verified_ids($id, 'eligibility', $eligibility_status);
-
-            echo '<script>document.location = "login.php?registerSuccess";</script>';
+            $successMessage = "<div class='success-toast'>Rider Created!</div>";
             $title = $id . " has been added as a rider";
             $body = "New rider profile has been created";
             system_message_all_admins($title, $body);
         }
+        require_once('registrationForm.php');
     } else {
         require_once('registrationForm.php');
     }

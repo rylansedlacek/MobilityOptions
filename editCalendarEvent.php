@@ -258,7 +258,7 @@ $customDaysValue = $_POST['custom_days'] ?? '';
 
            
 
-            <input type="submit" value="Save Ride Changes">
+                    <button type="submit" class="button" style="margin-top: .5rem">Save Ride Changes</button>
             <a class="button cancel" href="event.php?id=<?php echo urlencode((string) $eventID); ?>" style="margin-top: .5rem">Cancel</a>
             <a class="button" href="calendar.php?month=<?php echo urlencode($calendarMonth); ?>" style="margin-top: .5rem">Back to Calendar</a>
         </form>

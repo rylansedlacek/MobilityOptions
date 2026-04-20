@@ -102,6 +102,22 @@ require_once('header.php');
         .main-content-box table a.text-blue-700:visited {
             color: #C9AB81 !important;
         } */
+
+            .return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: 0.5rem 1.5rem;
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: 3rem;
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
+
     
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->

@@ -36,8 +36,8 @@ require_once('header.php');
 ?>
 <style>
         .date-box {
-            background: #C9AB81;
-            padding: 7px 30px;
+            background: #2B2B2E;
+            padding: 10px 30px;
             border-radius: 50px;
             box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
             color: white;
@@ -112,6 +112,12 @@ require_once('header.php');
 	  <div class="button-left-gray"></div>
 	  <div>Schedule Ride Requests</div>
 	  <img class="button-icon left-4" src="images/new-event.svg" alt="Calendar Icon">
+        </button>
+
+        <button onclick="window.location.href='cancelTrips.php';">
+    <div class="button-left-gray"></div>
+    <div>Cancel Requested Trip</div>
+    <img class="button-icon h-12 w-12 left-4" src="images/editTripDirectionLogo.avif" alt="Calendar Icon">
         </button>
 
         <!--

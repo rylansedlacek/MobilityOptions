@@ -1389,6 +1389,38 @@ function complete_trip($eventID, $mileage_start, $mileage_end)
     return $affected > 0;
 }
 
+function mark_no_show($eventID)
+{
+    $connection = connect();
+    if (!$connection) return false;
+
+    $eventID = (int) $eventID;
+    $status = 'no_show';
+
+    $query = "UPDATE dbevents SET trip_status = ? WHERE id = ?";
+    $stmt = mysqli_prepare($connection, $query);
+
+    if (!$stmt) {
+        mysqli_close($connection);
+        return false;
+    }
+
+    mysqli_stmt_bind_param($stmt, 'si', $status, $eventID);
+    $result = mysqli_stmt_execute($stmt);
+
+    if (!$result) {
+        mysqli_stmt_close($stmt);
+        mysqli_close($connection);
+        return false;
+    }
+
+    $affected = mysqli_affected_rows($connection);
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $affected > 0;
+}
+
 function getFavoriteTripsByRiderId($riderId) {
     $con = connect();
     $query = "SELECT * FROM dbFavoriteTrips WHERE user_id = ?";

@@ -22,24 +22,6 @@ require_once 'domain/Person.php';
 require_once 'database/dbEvents.php';
 require_once 'domain/Event.php';
 
-$no_shows = fetch_no_shows() ?? null;
-
-
-$all_riders = getall_persons();
-
-$no_shows_arr = fetch_no_shows() ?? [];
-$no_show_counts = [];
-foreach ($no_shows_arr as $row) {
-    $no_show_counts[$row[0]] = $row[1];
-}
-
-$no_show_riders = [];
-foreach (array_keys($no_show_counts) as $userID) {
-    $person = retrieve_person($userID);
-    if ($person) {
-        $no_show_riders[] = $person;
-    }
-}
 
 ?>
 
@@ -85,6 +67,22 @@ require_once('header.php');
             background-color: #4299e1;
             color: #ffffff;
         }
+
+        .return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: 0.5rem 1.5rem;
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: 3rem;
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
+
 
 
 

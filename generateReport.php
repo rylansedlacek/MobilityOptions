@@ -63,6 +63,24 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
         .report-actions {
             white-space: nowrap;
         }
+
+        .return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: var(--button-padding);
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: var(--button-border-radius);
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
+
+
+        
     </style>
 </head>
 <body>

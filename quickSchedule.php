@@ -536,7 +536,8 @@ function option_selected($field, $value) {
                     </fieldset>
                 <?php endif; ?>
 
-                <input type="submit" value="Request &amp; Schedule Ride" style="width:100%;">
+                <center><input type="submit" value="Request &amp; Schedule Ride" ></center> 
+                 <center><a class="button cancel" href="eventManagement.php">Return to Ride Management</a></center>
             </form>
 
             <script>
@@ -624,7 +625,6 @@ function option_selected($field, $value) {
 
             <br/>
             <br/>
-            <center><a class="button cancel" href="eventManagement.php">Return to Ride Management</a></center>
         </main>
     </body>
 </html>

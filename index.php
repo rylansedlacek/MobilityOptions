@@ -163,7 +163,7 @@
         .left-section .nav-links div {
             font-size: 24px;
             font-weight: 700;
-            color: black;
+            color: #fff;
             cursor: pointer;
         }
 

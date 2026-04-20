@@ -219,14 +219,6 @@ if (date("H:i:s") > "18:19:59") {
             gap: 20px;
         }
 
-        .nav-links div {
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-            cursor: pointer;
-            font-family: Georgia;
-        }
-
         /* Right Section: Date & Icon */
         .right-section {
             margin-left: auto;

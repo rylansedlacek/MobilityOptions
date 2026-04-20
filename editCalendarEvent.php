@@ -178,6 +178,7 @@ $vehicles = get_vehicles();
 $selectedDriver = trim((string) ($_POST['driver_id'] ?? ($event['driver_id'] ?? '')));
 $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
 $calendarMonth = substr((string) ($event['startDate'] ?? date('Y-m-d')), 0, 7);
+$calendarDate = (string) ($event['startDate'] ?? date('Y-m-d'));
 $isRecurringChecked = isset($_POST['recurring']) || !empty($event['series_id']);
 $recurrenceTypeValue = $_POST['recurrence_type'] ?? '';
 $customDaysValue = $_POST['custom_days'] ?? '';
@@ -260,7 +261,7 @@ $customDaysValue = $_POST['custom_days'] ?? '';
 
                     <button type="submit" class="button" style="margin-top: .5rem">Save Ride Changes</button>
             <a class="button cancel" href="event.php?id=<?php echo urlencode((string) $eventID); ?>" style="margin-top: .5rem">Cancel</a>
-            <a class="button" href="calendar.php?month=<?php echo urlencode($calendarMonth); ?>" style="margin-top: .5rem">Back to Calendar</a>
+            <a class="button" href="calendar-view_daily.php?month=<?php echo urlencode($calendarDate); ?>" style="margin-top: .5rem">Back to Calendar</a>
         </form>
     </main>
 </body>

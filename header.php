@@ -920,6 +920,7 @@ if (date("H:i:s") > "18:19:59") {
         $permission_array['generateridersreport.php'] = 2;
         $permission_array['completetrip.php'] = 2;
         $permission_array['quickschedule.php'] = 2;
+         $permission_array['calendar-view_daily.php'] = 2;
         // $permission_array['completetripform.php'] = 2;
 
         // LOWERCASE

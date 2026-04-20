@@ -22,24 +22,6 @@ require_once 'domain/Person.php';
 require_once 'database/dbEvents.php';
 require_once 'domain/Event.php';
 
-$no_shows = fetch_no_shows() ?? null;
-
-
-$all_riders = getall_persons();
-
-$no_shows_arr = fetch_no_shows() ?? [];
-$no_show_counts = [];
-foreach ($no_shows_arr as $row) {
-    $no_show_counts[$row[0]] = $row[1];
-}
-
-$no_show_riders = [];
-foreach (array_keys($no_show_counts) as $userID) {
-    $person = retrieve_person($userID);
-    if ($person) {
-        $no_show_riders[] = $person;
-    }
-}
 
 ?>
 

@@ -83,14 +83,15 @@ if ($accessLevel < 2) {
 
 <body>
     <!-- Larger Hero Section -->
-    <header class="top-bar"></header>
 
     <!-- Main Content -->
-    <main>
-        <div class="sections">
+   <main style="margin-top: 5px;">
+    <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
 
-            <!-- Buttons Section -->
-            <div class="button-section">
+      <h1 class="text-section" style="text-align: center; margin-bottom: 1.5rem;">Trip Management</h1>
+
+      <!-- Buttons Section -->
+      <div class="button-section" style="max-width: 1000px; width: 100%;">
 
                 <button onclick="window.location.href='viewAllTrips.php';">
                     <div class="button-left-gray"></div>
@@ -124,12 +125,7 @@ if ($accessLevel < 2) {
             </div>
 
             <!-- Text Section -->
-            <div class="text-section">
-                <h1>Trip Management</h1>
-                <div class="div-blue"></div>
-                <p>
-                    Dispatch trips, complete trips, and cancel trips here.
-                </p>
+           
             </div>
 
         </div>

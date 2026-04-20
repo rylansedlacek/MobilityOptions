@@ -495,7 +495,7 @@ main.calendar-view th {
     height: 20vh;
     width: 14.25%;
     border-radius:10px;
-    border: none var(--light-border);
+    border: 1px solid #000000;
     cursor: pointer;
 }
 

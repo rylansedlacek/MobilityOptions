@@ -139,9 +139,9 @@
             </h1>
 
             <div style="text-align: center; margin: 0.25rem 0 1rem 0; font-weight: 600;">
-                <span style="color: #2E7D32;">Green = scheduled</span>
+                <span style="color: #5d9322;">Scheduled</span>
                 <span style="margin: 0 0.75rem;">|</span>
-                <span style="color: #FBC02D;">Yellow = requested not yet scheduled</span>
+                <span style="color: #e6a432;">Requested not yet scheduled</span>
             </div>
 
             <!-- Add JS to show and hide the filter menu.-->

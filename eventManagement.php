@@ -80,15 +80,14 @@ require_once('header.php');
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 
 <body>
-  <!-- Larger Hero Section -->
-  <header class="top-bar"></header>
-
   <!-- Main Content -->
-  <main>
-    <div class="sections">
+   <main style="margin-top: 5px;">
+    <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+
+      <h1 class="text-section" style="text-align: center; margin-bottom: 1.5rem;">Ride Management</h1>
 
       <!-- Buttons Section -->
-      <div class="button-section">
+      <div class="button-section" style="max-width: 1000px; width: 100%;">
 
         <button onclick="window.location.href='addEvent.php';">
 	  <div class="button-left-gray"></div>
@@ -157,12 +156,7 @@ require_once('header.php');
      </div>
 
       <!-- Text Section -->
-      <div class="text-section">
-        <h1>Ride Management</h1>
-        <div class="div-blue"></div>
-        <p>
-         Welcome to the Ride managment Hub. Here you can create, quick schedule, edit, delete, and schedule pending ride requests for Riders.
-        </p>
+     
       </div>
 
     </div>

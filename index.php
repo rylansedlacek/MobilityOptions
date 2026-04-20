@@ -449,13 +449,23 @@
             <?php endif ?>
 
     <div class="full-width-bar">
-        <div class="content-box">
-            <div class="small-text">Manage riders here.</div>
-            <div class="large-text">User Management</div>
-            <img src="images/users-solid.svg" alt="User Management Icon">
-            <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
-                <span class="button-text">Go</span>
-                <div class="circle">&gt;</div>
+    <div class="content-box">
+      
+        <div class="small-text">Manage riders here.</div>
+        <div class="large-text">User Management</div>
+<button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
+    <span class="button-text">Go</span>
+    <div class="circle">&gt;</div>
+</button>
+<!--
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="window.location.href='personSearch.php'">
+                <span>Find</span>
+                <span class="arrow"><img src="images/person-search.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
+            </button>
+            <button class="nav-button" onclick="window.location.href='VolunteerRegister.php'">
+                <span>Register</span>
+                <span class="arrow"><img src="images/add-person.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
             </button>
         </div>
 
@@ -524,6 +534,7 @@
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
         </div>
+        <img class="background-image" src="images/month-view.png" alt="Calendar">
         <div class="large-text-sub">Calendar</div>
         <div class="graph-text">See all upcoming trips.</div>
         <button class="arrow-button">→</button>
@@ -535,6 +546,7 @@
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
+        <img class="background-image" src="images/content-box-image.jpg" alt="Generate Operational Report">
         <div class="large-text-sub">Generate Operational Report</div>
         <div class="graph-text">Operational Statistics - Report Generation.</div>
         <button class="arrow-button">→</button>
@@ -544,6 +556,7 @@
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
+        <img class="background-image" src="images/list-view.png" alt="Generate Rider Statistics Report">
         <div class="large-text-sub">Generate Rider Statistics Report</div>
         <div class="graph-text">Rider Statistics - Report Generation.</div>
         <button class="arrow-button">→</button>
@@ -679,7 +692,7 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
             </div>
-            <img class="background-image" src="images/blank-white-background.jpg" />
+            <img class="background-image" src="images/month-view.png" alt="Calendar" />
             <div class="large-text-sub">Calendar</div>
             <div class="graph-text">See upcoming events/trainings.</div>
             <button class="arrow-button">→</button>

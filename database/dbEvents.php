@@ -1392,6 +1392,9 @@ function complete_trip($eventID, $mileage_start, $mileage_end)
 function mark_no_show($eventID)
 {
     $connection = connect();
+
+
+
     if (!$connection) return false;
 
     $eventID = (int) $eventID;
@@ -1406,7 +1409,20 @@ function mark_no_show($eventID)
     }
 
     mysqli_stmt_bind_param($stmt, 'si', $status, $eventID);
-    $result = mysqli_stmt_execute($stmt);
+
+echo "status = " . $status . "<br>";
+echo "eventID = " . $eventID . "<br>";
+$result = mysqli_query($connection, "SELECT DATABASE() AS db");
+$row = mysqli_fetch_assoc($result);
+echo "Connected DB: " . $row['db'];
+
+$result = mysqli_stmt_execute($stmt);
+
+if (!$result) {
+    die("Execute failed: " . mysqli_stmt_error($stmt));
+}
+
+    //$result = mysqli_stmt_execute($stmt);
 
     if (!$result) {
         mysqli_stmt_close($stmt);

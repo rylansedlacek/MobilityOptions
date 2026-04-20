@@ -15,13 +15,15 @@ define('DB_NAME', 'mobilitydb');
 define('DB_USER', 'mobilitydb');
 define('DB_PASS', 'mobilitydb');
 
-function getDb(): PDO {
+function getDb(): PDO
+{
     static $pdo = null;
     if (!$pdo) {
         try {
             $pdo = new PDO(
                 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8',
-                DB_USER, DB_PASS,
+                DB_USER,
+                DB_PASS,
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
         } catch (PDOException $e) {
@@ -32,21 +34,40 @@ function getDb(): PDO {
     return $pdo;
 }
 //error catching and logging
-function logIt(string $msg): void {
-    file_put_contents(__DIR__ . '/inbox_errors.log',
-        '[' . date('Y-m-d H:i:s') . '] ' . $msg . PHP_EOL, FILE_APPEND);
+function logIt(string $msg): void
+{
+    file_put_contents(
+        __DIR__ . '/inbox_errors.log',
+        '[' . date('Y-m-d H:i:s') . '] ' . $msg . PHP_EOL,
+        FILE_APPEND
+    );
 }
 
-function doTripStatus($tripStatus, $completed) {
+function doTripStatus($tripStatus, $completed)
+{
     $status = strtolower((string)$tripStatus);
     $completedValue = strtoupper((string)$completed);
-    if ($status === 'in_progress') { return 'In Progress'; }
-    if ($status === 'scheduled') { return 'Scheduled'; }
-    if ($status === 'completed') { return 'Completed'; }
-    if ($status === 'cancelled' || $status === 'canceled') { return 'Cancelled'; }
-    if ($status === 'requested') { return 'Requested'; }
-    if ($completedValue === 'N') { return 'Requested';  }
-    if ($completedValue === 'Y') { return 'Scheduled'; }
+    if ($status === 'in_progress') {
+        return 'In Progress';
+    }
+    if ($status === 'scheduled') {
+        return 'Scheduled';
+    }
+    if ($status === 'completed') {
+        return 'Completed';
+    }
+    if ($status === 'cancelled' || $status === 'canceled') {
+        return 'Cancelled';
+    }
+    if ($status === 'requested') {
+        return 'Requested';
+    }
+    if ($completedValue === 'N') {
+        return 'Requested';
+    }
+    if ($completedValue === 'Y') {
+        return 'Scheduled';
+    }
 
     return 'Not Scheduled';
 }
@@ -80,36 +101,46 @@ foreach ($emails as $msgNum) {
 
     imap_setflag_full($inbox, (string)$msgNum, '\\Seen');
 
-    
-//fetch body, this handles plain text, HTML, and Outlook formatted emails
-$body = '';
-$rawBody = imap_fetchbody($inbox, $msgNum, '1');
 
-$decoded = base64_decode($rawBody, true);
-if ($decoded !== false && mb_detect_encoding($decoded, 'UTF-8', true)) {
-    $body = $decoded;
-} else {
-    $decoded = quoted_printable_decode($rawBody);
-    if (!empty($decoded)) {
+    //fetch body, this handles plain text, HTML, and Outlook formatted emails
+    $body = '';
+    $rawBody = imap_fetchbody($inbox, $msgNum, '1');
+
+    $decoded = base64_decode($rawBody, true);
+    if ($decoded !== false && mb_detect_encoding($decoded, 'UTF-8', true)) {
         $body = $decoded;
     } else {
-        $body = $rawBody;
+        $decoded = quoted_printable_decode($rawBody);
+        if (!empty($decoded)) {
+            $body = $decoded;
+        } else {
+            $body = $rawBody;
+        }
     }
-}
 
-if (empty(trim($body))) {
-    $body = imap_fetchbody($inbox, $msgNum, '');
-}
+    if (empty(trim($body))) {
+        $body = imap_fetchbody($inbox, $msgNum, '');
+    }
 
-$body = strip_tags($body);
+    $body = strip_tags($body);
 
-if (stripos($subject, 'status') === false && stripos($body, 'status') === false) {
-    echo "→ Skipped (no 'status' keyword in subject or body)<br><br>";
-    continue;
-}
-
-    $pdo  = getDb();
-    $stmt = $pdo->prepare("
+    if (
+        stripos($subject, 'status') === false &&
+        stripos($body, 'status') === false &&
+        stripos($subject, 'stop') === false &&
+        stripos($body, 'stop') === false &&
+        stripos($subject, 'start') === false &&
+        stripos($body, 'start') === false
+    ) {
+        echo "→ Skipped (no status/start/stop keyword in subject or body)<br><br>";
+        continue;
+    }
+    if (
+        stripos($subject, 'status') === true &&
+        stripos($body, 'status') === true
+    ) {
+        $pdo  = getDb();
+        $stmt = $pdo->prepare("
         SELECT
             p.first_name,
             p.last_name,
@@ -127,64 +158,187 @@ if (stripos($subject, 'status') === false && stripos($body, 'status') === false)
         ORDER BY e.startDate ASC, e.startTime ASC
         LIMIT 1
     ");
-    $stmt->execute([':email' => $fromEmail]);
-    $ride = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute([':email' => $fromEmail]);
+        $ride = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$ride) {
-        echo "→ No upcoming ride found for {$fromEmail}<br>";
-        sendEmailsDirect(
+        if (!$ride) {
+            echo "→ No upcoming ride found for {$fromEmail}<br>";
+            sendEmailsDirect(
+                [$fromEmail],
+                'Mobility Options',
+                'Your Ride Status',
+                "Hello,\n\n" .
+                    "We could not find an upcoming ride associated with this email address.\n\n" .
+                    "If you believe this is an error, please contact us directly.\n\n" .
+                    "Thank you,\n" .
+                    "Healthy Generations - Mobility Options"
+            );
+            logIt("No ride found for: {$fromEmail}");
+            continue;
+        }
+
+        //build the reply
+        $name      = trim($ride['first_name'] . ' ' . $ride['last_name']);
+        $date      = $ride['startDate'];
+        $startTime = date('g:i A', strtotime($ride['startTime']));
+        $endTime   = date('g:i A', strtotime($ride['endTime']));
+        $pickup    = $ride['pickup_location'];
+        $dropoff   = $ride['dropoff_location'];
+        $status    = doTripStatus($ride['trip_status'], $ride['completed']);
+        //? ucfirst(str_replace('_', ' ', $ride['trip_status'])) : 'Unknown';
+        //ucfirst(str_replace('_', ' ', $ride['trip_status']));
+
+        $body =
+            "Hello {$name},\n\n" .
+            "Here is your most current upcoming ride:\n\n" .
+            "Status: {$status}\n" .
+            "Date: {$date}\n" .
+            "Time: {$startTime} - {$endTime}\n" .
+            "Pickup: {$pickup}\n" .
+            "Dropoff: {$dropoff}\n\n" .
+            "If you have any questions, please contact us directly.\n\n" .
+            "Thank you,\n" .
+            "Healthy Generations - Mobility Options";
+
+        $result = sendEmailsDirect(
             [$fromEmail],
             'Mobility Options',
             'Your Ride Status',
-            "Hello,\n\n" .
-            "We could not find an upcoming ride associated with this email address.\n\n" .
-            "If you believe this is an error, please contact us directly.\n\n" .
-            "Thank you,\n" .
-            "Healthy Generations - Mobility Options"
+            $body
         );
-        logIt("No ride found for: {$fromEmail}");
-        continue;
+
+        if ($result['success']) {
+            echo "→ Status reply sent to: {$fromEmail}<br>";
+            logIt("Status reply sent to: {$fromEmail}");
+        } else {
+            echo "→ Failed to send reply to: {$fromEmail}<br>";
+            logIt("Failed reply to {$fromEmail}: " . json_encode($result['failed']));
+        }
+
+        echo "<br>";
     }
 
-    //build the reply
-    $name      = trim($ride['first_name'] . ' ' . $ride['last_name']);
-    $date      = $ride['startDate'];
-    $startTime = date('g:i A', strtotime($ride['startTime']));
-    $endTime   = date('g:i A', strtotime($ride['endTime']));
-    $pickup    = $ride['pickup_location'];
-    $dropoff   = $ride['dropoff_location'];
-    $status    = doTripStatus($ride['trip_status'], $ride['completed']);
-    //? ucfirst(str_replace('_', ' ', $ride['trip_status'])) : 'Unknown';
-    //ucfirst(str_replace('_', ' ', $ride['trip_status']));
+    else if (
+        stripos($subject, 'stop') !== false ||
+        stripos($body, 'stop') !== false
+    ) {
+        $pdo = getDb();
 
-    $body =
-        "Hello {$name},\n\n" .
-        "Here is your most current upcoming ride:\n\n" .
-        "Status: {$status}\n" .
-        "Date: {$date}\n" .
-        "Time: {$startTime} - {$endTime}\n" .
-        "Pickup: {$pickup}\n" .
-        "Dropoff: {$dropoff}\n\n" .
-        "If you have any questions, please contact us directly.\n\n" .
-        "Thank you,\n" .
-        "Healthy Generations - Mobility Options";
+        $stmt = $pdo->prepare("
+        SELECT id, first_name, last_name
+        FROM dbpersons
+        WHERE LOWER(email) = :email
+        LIMIT 1
+    ");
+        $stmt->execute([':email' => $fromEmail]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $result = sendEmailsDirect(
-        [$fromEmail],
-        'Mobility Options',
-        'Your Ride Status',
-        $body
-    );
+        if (!$user) {
+            continue;
+        }
 
-    if ($result['success']) {
-        echo "→ Status reply sent to: {$fromEmail}<br>";
-        logIt("Status reply sent to: {$fromEmail}");
-    } else {
-        echo "→ Failed to send reply to: {$fromEmail}<br>";
-        logIt("Failed reply to {$fromEmail}: " . json_encode($result['failed']));
+        $id = $user['id'];
+
+        // update notifications
+        $update = $pdo->prepare("
+        UPDATE dbpersons
+        SET Notifications = 0
+        WHERE id = :id
+    ");
+        $update->execute([':id' => $id]);
+
+
+        //build the reply
+        $name      = trim($ride['first_name'] . ' ' . $ride['last_name']);
+
+
+
+        $body =
+            "Hello {$name},\n\n" .
+            "Your notifications have been turned off. \n" .
+            "You can turn them back on by emailing the key word 'start' to this email address.\n" .
+            "If you have any questions, please contact us directly.\n\n" .
+            "Thank you,\n" .
+            "Healthy Generations - Mobility Options";
+
+        $result = sendEmailsDirect(
+            [$fromEmail],
+            'Mobility Options',
+            'Your Notification Status',
+            $body
+        );
+
+        if ($result['success']) {
+            echo "→ Status reply sent to: {$fromEmail}<br>";
+            logIt("Status reply sent to: {$fromEmail}");
+        } else {
+            echo "→ Failed to send reply to: {$fromEmail}<br>";
+            logIt("Failed reply to {$fromEmail}: " . json_encode($result['failed']));
+        }
+
+        echo "<br>";
     }
 
-    echo "<br>";
+
+
+    else if (
+        stripos($subject, 'start') !== false ||
+        stripos($body, 'start') !== false
+    ) {
+        $pdo = getDb();
+
+        $stmt = $pdo->prepare("
+        SELECT id, first_name, last_name
+        FROM dbpersons
+        WHERE LOWER(email) = :email
+        LIMIT 1
+    ");
+        $stmt->execute([':email' => $fromEmail]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            continue;
+        }
+
+        $id = $user['id'];
+
+        // update notifications
+        $update = $pdo->prepare("
+        UPDATE dbpersons
+        SET Notifications = 1
+        WHERE id = :id
+    ");
+        $update->execute([':id' => $id]);
+
+
+        //build the reply
+        $name      = trim($ride['first_name'] . ' ' . $ride['last_name']);
+
+        $body =
+            "Hello {$name},\n\n" .
+            "Your notifications have been turned on. \n" .
+            "You can turn them back off by emailing the key word 'stop' to this email address.\n" .
+            "If you have any questions, please contact us directly.\n\n" .
+            "Thank you,\n" .
+            "Healthy Generations - Mobility Options";
+
+        $result = sendEmailsDirect(
+            [$fromEmail],
+            'Mobility Options',
+            'Your Notification Status',
+            $body
+        );
+
+        if ($result['success']) {
+            echo "→ Status reply sent to: {$fromEmail}<br>";
+            logIt("Status reply sent to: {$fromEmail}");
+        } else {
+            echo "→ Failed to send reply to: {$fromEmail}<br>";
+            logIt("Failed reply to {$fromEmail}: " . json_encode($result['failed']));
+        }
+
+        echo "<br>";
+    }
 }
 
 imap_close($inbox);

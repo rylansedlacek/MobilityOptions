@@ -1,36 +1,58 @@
 <?php
+    session_start();
     require_once('include/input-validation.php');
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <?php require_once('database/dbMessages.php'); ?>
+    <?php require_once('universal.inc'); ?>
     <title>Mobility Options | Add Vehicle</title>
     <link href="css/base.css" rel="stylesheet">
-<!-- BANDAID FIX FOR HEADER BEING WEIRD -->
-<?php
-$tailwind_mode = true;
-require_once('header.php');
-?>
 <style>
-    .date-box {
-        background: #2B2B2E;
-        padding: 10px 30px;
-        border-radius: 50px;
-        box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
-        color: white;
-        font-size: 24px;
+    .page-hero {
+        max-width: 48rem;
+        margin: 1.5rem auto 1rem;
+        padding: 0 1rem;
+    }
+
+    .page-hero h1 {
+        color: var(--main-color);
+        font-size: 2rem;
         font-weight: 700;
+        letter-spacing: -0.02em;
         text-align: center;
     }
-    .dropdown {
-        padding-right: 50px;
+
+
+    .return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: var(--button-padding);
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: var(--button-border-radius);
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
+
+    .return-button:hover,
+    .return-button:visited,
+    .return-button:focus {
+        color: #ffffff !important;
+    }
+
+    .return-button:hover {
+        background-color: #963737;
     }
 </style>
-<!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 </head>
 <body class="relative">
+<?php require_once('header.php'); ?>
 <?php
     require_once('database/dbEvents.php');
 
@@ -68,12 +90,9 @@ require_once('header.php');
     }
 ?>
 
-<!-- Hero Section with Title -->
-<header class="hero-header">
-    <div class="center-header">
-        <h1>Add Vehicle</h1>
-    </div>
-</header>
+<section class="page-hero">
+    <h1>Add Vehicle</h1>
+</section>
 
 <main>
     <div class="main-content-box">
@@ -135,11 +154,13 @@ require_once('header.php');
             <div class="text-center mt-4">
                 <input type="submit" value="Add Vehicle">
             </div>
-        </form>
 
-          <div class="text-center mt-6">
+             <div class="text-center mt-4">
         <a href="driverVehicleManagement.php" class="return-button">Return to Driver &amp; Vehicle Management</a>
         </div>
+        </form>
+
+         
     </div>
 </main>
 

@@ -109,11 +109,13 @@ require_once('header.php');
   <header class="top-bar"></header>
 
   <!-- Main Content -->
-  <main style="margin-top: 100px;">
-    <div class="sections">
+  <main style="margin-top: 5px;">
+    <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+
+      <h1 class="text-section" style="text-align: center; margin-bottom: 1.5rem;">Rider Account Management</h1>
 
       <!-- Buttons Section -->
-      <div class="button-section">
+      <div class="button-section" style="max-width: 1000px; width: 100%;">
         <button onclick="window.location.href='VolunteerRegister.php';">
 	  <div class="button-left-gray"></div>
 	  <div>Register New Rider</div>
@@ -161,15 +163,6 @@ require_once('header.php');
         	<a href="index.php" class="return-button">Return to Dashboard</a>
 	</div>
 		
-     </div>
-
-      <!-- Text Section -->
-      <div class="text-section">
-        <h1>Rider Account Management</h1>
-        <div class="div-blue"></div>
-        <p>
-          Welcome to the rider management hub. From this menu, you will have access to operations such as creating, deleting, and searching riders. More features soon to be implemented.
-        </p>
       </div>
 
     </div>

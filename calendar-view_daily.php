@@ -42,12 +42,19 @@ $trips = fetch_events_on_date($dayStr, $loggedIn);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 0 1rem;
+    padding: 0.9rem 1rem;
+    margin: 0.25rem 0 1rem;
+    border: 2px solid #d0d0d0;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
 }
 
 .daily-view-header h2 {
     margin: 0;
-    font-size: 1.3rem;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #111;
 }
 
 .daily-view-nav {
@@ -79,11 +86,14 @@ $trips = fetch_events_on_date($dayStr, $loggedIn);
     text-decoration: none;
     color: #111;
     background: #fff;
-    transition: box-shadow .2s;
+    border: 1px solid #d7d7d7;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: box-shadow .2s, transform .2s;
 }
 
 .daily-trip-card:hover {
-    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    box-shadow: 0 7px 18px rgba(0,0,0,0.2);
+    transform: translateY(-1px);
 }
 
 .daily-trip-card-accent {
@@ -115,9 +125,13 @@ $trips = fetch_events_on_date($dayStr, $loggedIn);
 }
 
 .daily-no-trips {
-    color: #888;
+    color: #666;
     font-style: italic;
-    padding: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #d7d7d7;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 </style>
@@ -135,10 +149,10 @@ $trips = fetch_events_on_date($dayStr, $loggedIn);
     <p class="daily-no-trips">No trips scheduled on this day.</p>
 <?php else: ?>
     <?php foreach ($trips as $trip):
-        $color = '#FBC02D';
+        $color = '#e6a432';
         $badge = 'Requested';
         if (strtoupper(trim($trip['completed'])) === 'Y') {
-            $color = '#2E7D32';
+            $color = '#5d9322';
             $badge = 'Scheduled';
         }
 

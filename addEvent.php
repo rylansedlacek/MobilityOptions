@@ -216,9 +216,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $riderEmail = '';
             if (!empty($rider)) {
                 $riderEmail = trim((string)$rider->get_email());
+                $con = connect();
+                $stmt = mysqli_prepare($con, "SELECT Notifications FROM dbpersons WHERE id = ?");
+                mysqli_stmt_bind_param($stmt, "s", $args['rider_id']);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                $row = mysqli_fetch_assoc($result);
+
+                $riderNotif = (int)($row['Notifications'] ?? 0);
             }
 
-            if ($riderEmail && filter_var($riderEmail, FILTER_VALIDATE_EMAIL)) {
+
+
+            if ($riderEmail && filter_var($riderEmail, FILTER_VALIDATE_EMAIL) && (int)$riderNotif === 1) {
                 require_once('email.php');
 
                 $subject = 'Ride Request Submitted';
@@ -273,12 +283,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
 
-            // header('Location: eventSuccess.php');
-            if (isset($_POST['scheduleTrip'])) {
-                header('Location: viewAllEvents.php');
-            } else {
-                header('Location: eventSuccess.php');
-            }
+            header('Location: eventSuccess.php');
             exit();
         }
     }
@@ -391,7 +396,7 @@ if (!empty($_GET['rider_id'])) {
             <div class="event-sect">
                 <h2 class="mt-2">Rider Information</h2>
                 <label for="name">* Rider Name </label>
-                <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_GET['rider_name']) ? htmlspecialchars($_GET['rider_name']) : (isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''); ?>" <?php echo ((isset($_POST['rider_id']) && $_POST['rider_id'] !== '') || (isset($_GET['rider_id']) && $_GET['rider_id'] !== '')) ? 'readonly' : ''; ?>>
+                <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_GET['rider_name']) ? htmlspecialchars($_GET['rider_name']) : (isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''); ?>">
                 <input type="hidden" id="rider_id" name="rider_id" value="<?php echo isset($_POST['rider_id']) ? $_POST['rider_id'] : (isset($_GET['rider_id']) ? ($_GET['rider_id']) : ''); ?>">
             </div>
 
@@ -491,7 +496,7 @@ if (!empty($_GET['rider_id'])) {
                     </div>
                 </div>
                 <label for="dropoff-contact">* Drop Off Contact Information</label>
-                <input type="text" id="dropoff-contact" name="dropoff-contact" required>
+                <input type="email" id="dropoff-contact" name="dropoff-contact" required>
 
                 <label for="dropoff-street_address"><em>* </em>Street Address</label>
                 <input type="text" id="dropoff-street_address" name="dropoff-street_address" required placeholder="Enter street address">
@@ -572,7 +577,8 @@ if (!empty($_GET['rider_id'])) {
                     <option value="Normal">Normal</option>
                     <option value="Retreat">Retreat</option>
                 </select>
-                </div>-->
+                </div>
+-->
                 <!--
                 <div class="event-sect">
                 <label for="name">* Event Visibility</label>
@@ -619,7 +625,8 @@ if (!empty($_GET['rider_id'])) {
                     </select>
                     </div>
                 </div>
-                </div>-->
+                </div>
+-->
                 <!--
                 <div class="event-sect">
                 <label for="name">Location </label>
@@ -631,7 +638,7 @@ if (!empty($_GET['rider_id'])) {
 
 
                 <!-- show favorite option only when a rider is selected and addresses are filled manually (so they cant add duplicats) -->
-                <!-- <?php if (!empty($_GET['rider_id'])): ?>
+                <?php if (!empty($_GET['rider_id'])): ?>
                     <fieldset style="display:flex; align-items:center; gap:8px; margin-bottom:8px;" id="favorite-fieldset">
                         <legend>Save as Favorite Trip</legend>
                         <label style="margin-top:12px; padding:12px; border:1px solid #e0e0e0; border-radius:8px;">
@@ -640,36 +647,8 @@ if (!empty($_GET['rider_id'])) {
                         </label>
                     </fieldset>
                 <?php endif; ?>
-                <input type="submit" value="Submit Ride Request" style="width:100%;"> -->
-            </div>
 
-            <div style="display:flex; gap:10px; margin-bottom: 20px">
-            <?php if (!empty($_GET['rider_id'])): ?>
-                <label style="padding:10px; border:1px solid #e0e0e0; border-radius:8px;">
-                    <input type="checkbox" name="favorite" value="1" width="100">
-                    Save this trip as a favorite
-                </label>
-            <?php endif; ?>
-            </div>
- 
-            <div style="display:flex; gap:12px; align-items:flex-start;">
-                <!-- <?php if (!empty($_GET['rider_id'])): ?>
-                    <fieldset style="display:flex; align-items:center; gap:12px; margin-bottom:8px;" id="favorite-fieldset">
-                        <legend>Save as Favorite Trip</legend>
-                        <label style="margin-top:12px; padding:12px; border:1px solid #e0e0e0; border-radius:8px;">
-                            <input type="checkbox" id="favorite" name="favorite" value="1">
-                            Save this trip as a favorite
-                        </label>
-                    </fieldset>
-                <?php endif; ?>
-                <input type="submit" value="Submit Ride Request" style="width:100%;"> -->
-                <button type="submit" style="width:100%;"> Submit Ride Request</button>
-                <button type="submit" name="scheduleTrip" value="1" style="width:100%;"> Submit Ride Request & Continue To Driver Selection</button>
-            </div>
-
-            <div style="text-align:center;">
-                <a class="button cancel" href="eventManagement.php">Return to Ride Management </a>
-            </div>
+                <input type="submit" value="Submit Ride Request" style="width:100%;">
 
         </form>
         <script>
@@ -711,20 +690,10 @@ if (!empty($_GET['rider_id'])) {
                 <?php endif ?> -->
 
         <script type="text/javascript">
-            function syncRiderNameField() {
-                const nameField = document.getElementById('name');
-                const riderIdField = document.getElementById('rider_id');
-                if (!nameField || !riderIdField) {
-                    return;
-                }
-                nameField.readOnly = riderIdField.value.trim() !== '';
-            }
-
             // populate the rider name and id when a search result is clicked
             function selectRider(name, id) {
                 document.getElementById('name').value = name;
                 document.getElementById('rider_id').value = id;
-                syncRiderNameField();
                 const url = new URL(window.location.href);
                 url.searchParams.set('rider_id', id);
                 url.searchParams.set('rider_name', name);
@@ -793,7 +762,6 @@ if (!empty($_GET['rider_id'])) {
             }
 
             //this run on load in case fields are already filled (from applyFavorite)
-            syncRiderNameField();
             checkShowFavorite();
 
             $(document).ready(function() {
@@ -842,12 +810,14 @@ if (!empty($_GET['rider_id'])) {
         </script>
         <br />
         <br />
+        <center><a class="button cancel" href="eventManagement.php">Return to Ride Management</a></center>
 
         <?php if (isset($_GET['error']) && $_GET['error'] === 'duplicate'): ?>
             <script>
                 alert("This ride has already been requested.");
             </script>
         <?php endif; ?>
+
     </main>
 
 </body>

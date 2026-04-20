@@ -45,6 +45,7 @@ class Person {
 	private $branch;
 	private $archived;
 	private $emergency_contact_last_name;
+	private $Notifications;
 	private $access_level;
 
 	function __construct(
@@ -82,6 +83,7 @@ class Person {
 		$this->branch = $branch;
 		$this->archived = $archived;
 		$this->emergency_contact_last_name = $emergency_contact_last_name;
+		$this->Notifications = 1;
 
         #$this->access_level = ($id == 'vmsroot') ? 3 : 1;
 
@@ -147,6 +149,10 @@ class Person {
 
 	function get_email() {
 		return $this->email;
+	}
+
+	function get_notifications(){
+		return $this->Notifications;
 	}
 
 	function get_email_prefs() {

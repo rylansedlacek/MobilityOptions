@@ -68,6 +68,7 @@
 
 <main>
     <div class="main-content-box">
+        <?php if (!empty($successMessage)) echo $successMessage; ?>
         <form class="signup-form" method="post">
             <div class="text-center spacing-bottom">
                 <h2 class="mb-8">Registration Form</h2>

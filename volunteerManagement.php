@@ -97,6 +97,8 @@ require_once('header.php');
     background-color: transparent !important;
   }
 
+  
+
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 

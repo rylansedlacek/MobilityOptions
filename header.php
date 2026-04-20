@@ -31,7 +31,7 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         <?php endif; ?>body {
-            font-family: Nunito, Quicksand, sans-serif;
+            font-family: 'Georgia', serif;
             padding-top: 96px;
             font-size: 14pt;
         }
@@ -122,14 +122,6 @@ if (date("H:i:s") > "18:19:59") {
             position: relative;
         }
 
-        .content-box img {
-            width: 100%;
-            height: auto;
-            background: white;
-            border-radius: 5px;
-            border-bottom-right-radius: 50px;
-            border: 0.5px solid #828282;
-        }
 
         .content-box-sub img {
             width: 105%;
@@ -156,9 +148,9 @@ if (date("H:i:s") > "18:19:59") {
             top: 40px;
             left: 5px;
             margin-left: 0.5rem;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
-            color: #fff;
+            color: #fff;s
             max-width: 90%;
         }
 
@@ -227,14 +219,6 @@ if (date("H:i:s") > "18:19:59") {
             gap: 20px;
         }
 
-        .nav-links div {
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-            cursor: pointer;
-            font-family: Georgia;
-        }
-
         /* Right Section: Date & Icon */
         .right-section {
             margin-left: auto;
@@ -291,14 +275,22 @@ if (date("H:i:s") > "18:19:59") {
         }
 
         .date-box {
-            background: #2B2B2E;
-            padding: 10px 30px;
+            background: #4f7dbe;
+            padding: 10px 20px;
+            margin-right: 1rem;
             border-radius: 50px;
             box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
             color: white;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             text-align: center;
+        }
+
+        .dropdown-label {
+            color: #4f7dbe;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .icon {
@@ -327,7 +319,7 @@ if (date("H:i:s") > "18:19:59") {
             border: none;
             color: white;
             font-size: 20px;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Georgia', serif;
             font-weight: 600;
             border-radius: 20px;
             cursor: pointer;
@@ -747,41 +739,56 @@ if (date("H:i:s") > "18:19:59") {
     //Log-in security
     //If they aren't logged in, display our log-in form.
     $showing_login = false;
-    if (!isset($_SESSION['logged_in'])) {
-        echo ('<div class="navbar">
+    if (!isset($_SESSION['logged_in'])) { ?>
+        <div class="navbar">
         <!-- Left Section: Logo & Nav Links -->
-        <div class="right-section">
+        <div class="left-section">
             <div class="nav-links">
                 <div class="nav-item">
-                    <div class="icon">
-                        <img src="images/usaicon.png" alt="User Icon" class="icon-img in-nav-img">
-                        <div class="dropdown">
-                            <a href="signup.php" class="dropdown-link"><div>Create Account</div></a>
-                            <a href="login.php" class="dropdown-link"><div>Log in</div></a>
-                        </div>
-                    </div>
+                    <span class="dropdown-label">Quick Actions</span>
+                    <div class="dropdown">
+                    <?php
+                    $nav_items = [
+                        ['href' => 'adminViewingEvents.php','icon' => 'list-solid.svg',     'label' => 'View Ride Requests'],
+                        ['href' => 'viewAllEvents.php',     'icon' => 'clock-regular.svg',  'label' => 'Schedule Ride Requests'],
+                        ['href' => 'viewAllTrips.php',      'icon' => 'dispatch.svg',       'label' => 'Dispatch Trip'],
+                        ['href' => 'completeTrips.php',     'icon' => 'complete.svg',       'label' => 'Complete Trip'],
+                        ['href' => 'cancelTrips.php',       'icon' => 'cancel.svg',         'label' => 'Cancel Trip'],
+                    ];
+                    foreach ($nav_items as $item): ?>
+                        <a href="<?= $item['href'] ?>" class="nav-link">
+                            <div class="in-nav">
+                                <img src="images/<?= $item['icon'] ?>" alt="<?= $item['label'] ?>">
+                                <span><?= $item['label'] ?></span>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
                 </div>
             </div>
-            <div class="date-box"></div>
+        </div>
+        <!-- Center Section: Logo -->
+        <div class="center-section">
+            <a href="index.php" class="logo-container">
+                <img src="images/healthyGenPageLogo.png" alt="Logo">
+            </a>
         </div>
 
         <!-- Right Section: Date & Icon -->
         <div class="right-section">
-           
             <div class="nav-links">
                 <div class="nav-item">
                     <div class="icon">
                         <img src="images/usaicon.png" alt="User Icon" class="icon-img in-nav-img">
                         <div class="dropdown">
-                            <a href="signup.php" class="dropdown-link"><div>Create Account</div></a>
-                            <a href="login.php" class="dropdown-link"><div>Log in</div></a>
+                            <a href="changePassword.php" class="dropdown-link"><div>Change Password</div></a>
+                            <a href="logout.php" class="dropdown-link"><div>Log Out</div></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>');
-    } else if ($_SESSION['logged_in']) {
+    </div>
+    <?php } else if ($_SESSION['logged_in']) {
 
         /*         * Set our permission array.
          * anything a guest can do, a volunteer and manager can also do
@@ -945,50 +952,33 @@ if (date("H:i:s") > "18:19:59") {
         //they're logged in and session variables are set.
         //
         // SUPER ADMIN ONLY HEADER
-        if ($_SESSION['access_level'] >= 2) {
-            echo ('<div class="navbar">
+        if ($_SESSION['access_level'] >= 2) { ?>
+        <div class="navbar">
         <!-- Left Section: Logo & Nav Links -->
         <div class="left-section">
             <div class="nav-links">
                 <div class="nav-item">
-                    <p style="color: #4f7dbe;">Quick Access</p>
+                    <span class="dropdown-label">Quick Actions</span>
                     <div class="dropdown">
-
-<a href="addEvent.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/plus-solid.svg">
-    <span>Schedule a Ride</span>
-  </div>
-</a>
-<a href="calendar.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/list-solid.svg">
-    <span>View Scheduled Rides</span>
-  </div>
-</a>
-<a href="editHours.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clock-regular.svg">
-    <span>Change Scheduled Ride Time</span>
-  </div>
-</a>
-<a href="viewPendingApps.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/users-solid.svg">
-    <span>Pending Applications</span>
-  </div>
-</a>
-<a href="adminViewingEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/list-solid.svg">
-    <span>Edit Ride Details</span>
-  </div>
-</a>
-
-
-                    </div>
+                    <?php
+                    $nav_items = [
+                        ['href' => 'adminViewingEvents.php','icon' => 'list-solid.svg',     'label' => 'View Ride Requests'],
+                        ['href' => 'viewAllEvents.php',     'icon' => 'clock-regular.svg',  'label' => 'Schedule Ride Requests'],
+                        ['href' => 'viewAllTrips.php',      'icon' => 'dispatch.svg',       'label' => 'Dispatch Trip'],
+                        ['href' => 'completeTrips.php',     'icon' => 'complete.svg',       'label' => 'Complete Trip'],
+                        ['href' => 'cancelTrips.php',       'icon' => 'cancel.svg',         'label' => 'Cancel Trip'],
+                    ];
+                    foreach ($nav_items as $item): ?>
+                        <a href="<?= $item['href'] ?>" class="nav-link">
+                            <div class="in-nav">
+                                <img src="images/<?= $item['icon'] ?>" alt="<?= $item['label'] ?>">
+                                <span><?= $item['label'] ?></span>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
                 </div>
             </div>
+        </div>
         </div>
         <!-- Center Section: Logo -->
         <div class="center-section">
@@ -996,29 +986,9 @@ if (date("H:i:s") > "18:19:59") {
                 <img src="images/healthyGenPageLogo.png" alt="Logo">
             </a>
         </div>
+
         <!-- Right Section: Date & Icon -->
         <div class="right-section">
-<!--<a href="calendar.php">
-<div class="icon-butt">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="#C9AB81" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 4C3 3.44772 3.44772 3 4 3H6V2C6 1.44772 6.44772 1 7 1C7.55228 1 8 1.44772 8 2V3H16V2C16 1.44772 16.4477 1 17 1C17.5523 1 18 1.44772 18 2V3H20C20.5523 3 21 3.44772 21 4V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V4ZM5 5V20H19V5H5ZM7 10H9V12H7V10ZM11 10H13V12H11V10ZM15 10H17V12H15V10ZM7 14H9V16H7V14ZM11 14H13V16H11V14ZM15 14H17V16H15V14Z"/>
-        </svg>
-</div>
-</a>-->
-
- <div class="right-section">
-                <div class="nav-links">
-                    <div class="nav-item">
-                        <div class="icon">
-                            <div class="dropdown">
-                                <a href="changePassword.php" class="dropdown-link"><div>Change Password</div></a>
-                                <a href="logout.php" class="dropdown-link"><div>Log Out</div></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="date-box"></div>
-            </div>
             <div class="nav-links">
                 <div class="nav-item">
                     <div class="icon">
@@ -1031,73 +1001,59 @@ if (date("H:i:s") > "18:19:59") {
                 </div>
             </div>
         </div>
-           
-        </div>');
-        }
-
+    </div>
+    <?php }
         // VOLUNTEER ONLY HEADER
-        if ($_SESSION['access_level'] <= 1) {
-            echo ('<div class="navbar">
-        <!-- Left Section: Logo & Nav Links -->
-        <div class="left-section">
-            <div class="logo-container">
-                <a href="index.php"><img src="images/healthyGenPageLogo.png" alt="Logo"></a>
-            </div>
-            <div class="nav-links">
-                <div class="nav-item">Events
-                    <div class="dropdown">
-<a href="viewMyUpcomingEvents.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/list-solid.svg">
-    <span>My Upcoming</span>
-  </div>
-</a>
-<a href="calendar.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/new-event.svg">
-    <span>Sign-Up</span>
-  </div>
-</a>
-<a href="editHours.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/clock-regular.svg">
-    <span>Edit Hours</span>
-  </div>
-</a>
-                   </div>
-                </div>
-                <div class="nav-item">
-                    <div class="dropdown">
-<a href="volunteerViewGroup.php" style="text-decoration: none;">
-  <div class="in-nav">
-    <img src="images/group.svg">
-    <span>My Groups</span>
-  </div>
-</a>
-                    </div>
-               </div>
-            </div>
-        </div>
-
-        <!-- Right Section: Date & Icon -->
-        <div class="right-section">
-            <div class="nav-links">
-                <div class="nav-item" style="outline:none;">
-                    <div class="icon">
-                        <img src="images/usaicon.png" alt="User Icon">
+        if ($_SESSION['access_level'] <= 1) { ?>
+            <div class="navbar">
+            <!-- Left Section: Logo & Nav Links -->
+            <div class="left-section">
+                <div class="nav-links">
+                    <div class="nav-item">
+                        <span class="dropdown-label">Quick Actions</span>
                         <div class="dropdown">
-                            <a href="viewProfile.php" style="text-decoration: none;"><div>View Profile</div></a>
-                            <a href="editProfile.php" style="text-decoration: none;"><div>Edit Profile</div></a>
-                            <a href="changePassword.php" style="text-decoration: none;"><div>Change Password</div></a>
-                            <a href="logout.php" style="text-decoration: none;"><div>Log Out</div></a>
+                        <?php
+                        $nav_items = [
+                            ['href' => 'addEvent.php',          'icon' => 'plus-solid.svg',    'label' => 'Schedule a Ride'],
+                            ['href' => 'calendar.php',          'icon' => 'list-solid.svg',    'label' => 'View Scheduled Rides'],
+                            ['href' => 'editHours.php',         'icon' => 'clock-regular.svg', 'label' => 'Change Scheduled Ride Time'],
+                            ['href' => 'viewPendingApps.php',   'icon' => 'users-solid.svg',   'label' => 'Pending Applications'],
+                            ['href' => 'adminViewingEvents.php','icon' => 'list-solid.svg',    'label' => 'Edit Ride Details'],
+                        ];
+                        foreach ($nav_items as $item): ?>
+                            <a href="<?= $item['href'] ?>" class="nav-link">
+                                <div class="in-nav">
+                                    <img src="images/<?= $item['icon'] ?>" alt="<?= $item['label'] ?>">
+                                    <span><?= $item['label'] ?></span>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="date-box"></div>
+            <!-- Center Section: Logo -->
+            <div class="center-section">
+                <a href="index.php" class="logo-container">
+                    <img src="images/healthyGenPageLogo.png" alt="Logo">
+                </a>
+            </div>
+            <!-- Right Section: Date & Icon -->
+            <div class="right-section">
+                <div class="nav-links">
+                    <div class="nav-item">
+                        <div class="icon">
+                            <img src="images/usaicon.png" alt="User Icon" class="icon-img in-nav-img">
+                            <div class="dropdown">
+                                <a href="changePassword.php" class="dropdown-link"><div>Change Password</div></a>
+                                <a href="logout.php" class="dropdown-link"><div>Log Out</div></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>');
-        }
+    <?php }
     }
     ?>
     <script>

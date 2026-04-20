@@ -97,21 +97,12 @@
         }
 
         .content-box img {
-            width: 100%;
+            width: 30%;
             height: auto;
-            background: white;
-            border-radius: 5px;
-            border-bottom-right-radius: 50px;
-            border: 0.5px solid #828282;
-        }
-
-        .content-box-sub img {
-            width: 105%;
-            height: auto;
-            background: white;
-            border-radius: 5px;
-            border-bottom-right-radius: 50px;
-            border: 1px solid #828282;
+            background: transparent;
+            margin-top: 4rem;
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(
+50deg) brightness(118%) contrast(119%);
         }
 
         .large-text-sub {
@@ -119,7 +110,7 @@
             /*top: 120px;*/
             top: 60%;
             left: 10%;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             color: black;
             max-width: 90%;
@@ -169,10 +160,10 @@
             gap: 20px;
         }
 
-        .nav-links div {
+        .left-section .nav-links div {
             font-size: 24px;
             font-weight: 700;
-            color: black;
+            color: #fff;
             cursor: pointer;
         }
 
@@ -184,13 +175,19 @@
             gap: 20px;
         }
 
+        .right-section .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
         .date-box {
-            background: #2B2B2E;
-            padding: 10px 30px;
+            background: #4f7dbe;
+            padding: 10px 20px;
+            margin-right: 1rem;
             border-radius: 50px;
             box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
             color: white;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             text-align: center;
         }
@@ -471,15 +468,13 @@
                 <span class="arrow"><img src="images/add-person.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
             </button>
         </div>
--->
-    </div>
 
-    <div class="content-box">
-       
-        <div class="small-text">See current and future rides.</div>
-        <div class="large-text">Ride Requests & Scheduling</div>
-<button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
-    <span class="button-text"><?php 
+        <div class="content-box">
+            <div class="small-text">See current and future rides.</div>
+            <div class="large-text">Ride Requests & Scheduling</div>
+            <img src="images/ride-scheduling.png" alt="Ride Scheduling Icon">
+            <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
+                <span class="button-text"><?php 
                         require_once('database/dbEvents.php');
                         require_once('database/dbPersons.php');
                         require_once('database/dbApplications.php');
@@ -487,43 +482,42 @@
                         if (sizeof($pendingsignups) > 0) {
                             echo '<span class="colored-box">' . sizeof($pendingsignups) . '</span>';
                         }   
-                    ?> Go </span>
-    <div class="circle">&gt;</div>
-</button>
-    </div>
-
-    <div class="content-box">
-       
-        <div class="small-text">Dispatch today's trips.</div>
-        <div class="large-text">Dispatch & Complete Trips</div>
-<button class="circle-arrow-button" onclick="window.location.href='dispatchTrip.php'">
-    <span class="button-text">Go</span>
-    <div class="circle">&gt;</div>
-</button>
-    </div>
-
-    <div class="content-box">
-       
-        <div class="small-text">Manage Drivers and Vehicles Here.</div>
-        <div class="large-text">Driver & Vehicle Management</div>
-        <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
-            <span class="button-text"> Go</span>
+                    ?> Go 
+                </span>
             <div class="circle">&gt;</div>
-        </button>
+            </button>
+        </div>
+
+        <div class="content-box">
+            <div class="small-text">Dispatch today's trips.</div>
+            <div class="large-text">Dispatch & Complete Trips</div>
+            <img src="images/dispatch-trip.png" alt="Dispatch & Complete Trips Icon">
+            <button class="circle-arrow-button" onclick="window.location.href='dispatchTrip.php'">
+                <span class="button-text">Go</span>
+                <div class="circle">&gt;</div>
+            </button>
+        </div>
+
+    
+        <div class="content-box">   
+            <div class="small-text">Manage Drivers and Vehicles Here.</div>
+            <div class="large-text">Driver & Vehicle Management</div>
+            <img src="images/drivers-vehicles.png" alt="Driver & Vehicle Management Icon">
+            <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
+                <span class="button-text"> Go</span>
+                <div class="circle">&gt;</div>
+            </button>
+        </div>
     </div>
 
 
-</div>
+    <div style="margin-top: 50px; padding: 30px 20px;">
+        <h2><b>Additional Menus</b></h2>
+    </div>
 
-<div style="margin-top: 50px; padding: 30px 20px;">
-    <h2><b>Additional Menus</b></h2>
-</div>
-
-<div class="full-width-bar-sub">
-
+    <div class="full-width-bar-sub">
     <?php
         require_once('database/dbMessages.php');
-
         // Ensure variable is always defined
         $unreadMessageCount = 0;
         $inboxIcon = 'inbox.svg';
@@ -547,8 +541,6 @@
     </div>
 
     
-
-    
     <!-- Generate Report -->
     <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
@@ -559,16 +551,6 @@
         <div class="graph-text">Operational Statistics - Report Generation.</div>
         <button class="arrow-button">→</button>
     </div>
-
-    <!-- <div class="content-box-test" onclick="window.location.href='generateReport.php'" style="border-radius: 12px; padding: 20px;">
-        <div class="icon-overlay">
-            <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
-        </div>
-        
-        <div class="large-text-sub">Generate Ride Statistics Report</div>
-        <div class="graph-text">Rider Statistics - Report Generation.</div>
-        <button class="arrow-button">→</button>
-    </div> -->
 
     <div class="content-box-test" onclick="window.location.href='generateRidersReport.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">

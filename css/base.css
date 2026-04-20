@@ -99,7 +99,6 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     /* Global rules */
     font-size: 18px;
-    font-family: Montserrat;
     font-weight: 300;
 }
 
@@ -134,7 +133,6 @@ table, td, tr, th, form, fieldset, em, button, a {
 /* Page Sections */
 
 header {
-    position: sticky;
     top: 0;
     left: 0;
     z-index: 10;
@@ -143,7 +141,7 @@ header {
 body {
     background-color: #fff;
     color: var(--page-font-color);
-    font-family: Montserrat;
+    font-family: "Nunito", "Quicksand", sans-serif;
 }
 
 header > img {
@@ -220,7 +218,7 @@ a {
 }
 
 a:visited {
-    color: rgb(226, 226, 226);
+    color: #83ae08;
 }
 
 a:hover {

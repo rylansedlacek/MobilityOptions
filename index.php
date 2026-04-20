@@ -96,13 +96,22 @@
             border-radius: 20px; /* Rounded corners */
         }
 
-        .content-box img {
-            width: 30%;
-            height: auto;
+        .content-box img.content-box-icon {
+            width: 40px;
+            height: 40px;
+            max-width: 60px;
+            max-height: 60px;
+            min-width: 60px;
+            min-height: 60px;
             background: transparent;
-            margin-top: 4rem;
-            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(
-50deg) brightness(118%) contrast(119%);
+            border: none;
+            border-bottom-right-radius: 5px;
+            margin-top: 5.5rem;
+            border-radius: 5px;
+            object-fit: contain;
+            opacity: 0.9;
+            display: block;
+            flex-shrink: 0;
         }
 
         .large-text-sub {
@@ -160,10 +169,10 @@
             gap: 20px;
         }
 
-        .left-section .nav-links div {
+        .nav-links div {
             font-size: 24px;
             font-weight: 700;
-            color: #fff;
+            color: black;
             cursor: pointer;
         }
 
@@ -175,19 +184,13 @@
             gap: 20px;
         }
 
-        .right-section .nav-links {
-            display: flex;
-            align-items: center;
-        }
-
         .date-box {
-            background: #4f7dbe;
-            padding: 10px 20px;
-            margin-right: 1rem;
+            background: #C9AB81;
+            padding: 10px 30px;
             border-radius: 50px;
             box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25) inset;
             color: white;
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 700;
             text-align: center;
         }
@@ -297,7 +300,6 @@
 
         .social-icons a {
             color: white;
-            font-size: 20px;
             transition: color 0.3s ease;
         }
 
@@ -305,7 +307,6 @@
             color: #dcdcdc;
         }
 
-        /* Right Section */
         .footer-right {
             display: flex;
             gap: 50px;
@@ -449,30 +450,20 @@
             <?php endif ?>
 
     <div class="full-width-bar">
-    <div class="content-box">
-      
-        <div class="small-text">Manage riders here.</div>
-        <div class="large-text">User Management</div>
-<button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
-    <span class="button-text">Go</span>
-    <div class="circle">&gt;</div>
-</button>
-<!--
-        <div class="nav-buttons">
-            <button class="nav-button" onclick="window.location.href='personSearch.php'">
-                <span>Find</span>
-                <span class="arrow"><img src="images/person-search.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
-            </button>
-            <button class="nav-button" onclick="window.location.href='VolunteerRegister.php'">
-                <span>Register</span>
-                <span class="arrow"><img src="images/add-person.svg" style="width: 40px; border-radius:5px; border-bottom-right-radius: 20px;"></span>
+        <div class="content-box">
+            <div class="small-text">Manage riders here.</div>
+            <div class="large-text">User Management</div>
+            <img class="content-box-icon" src="images/users-solid.svg" alt="User Management Icon">
+            <button class="circle-arrow-button" onclick="window.location.href='volunteerManagement.php'">
+                <span class="button-text">Go</span>
+                <div class="circle">&gt;</div>
             </button>
         </div>
 
         <div class="content-box">
             <div class="small-text">See current and future rides.</div>
             <div class="large-text">Ride Requests & Scheduling</div>
-            <img src="images/ride-scheduling.png" alt="Ride Scheduling Icon">
+            <img class="content-box-icon" src="images/ride-scheduling.png" alt="Ride Scheduling Icon">
             <button class="circle-arrow-button" onclick="window.location.href='eventManagement.php'">
                 <span class="button-text"><?php 
                         require_once('database/dbEvents.php');
@@ -491,7 +482,7 @@
         <div class="content-box">
             <div class="small-text">Dispatch today's trips.</div>
             <div class="large-text">Dispatch & Complete Trips</div>
-            <img src="images/dispatch-trip.png" alt="Dispatch & Complete Trips Icon">
+            <img class="content-box-icon" src="images/dispatch-trip.png" alt="Dispatch & Complete Trips Icon">
             <button class="circle-arrow-button" onclick="window.location.href='dispatchTrip.php'">
                 <span class="button-text">Go</span>
                 <div class="circle">&gt;</div>
@@ -502,7 +493,7 @@
         <div class="content-box">   
             <div class="small-text">Manage Drivers and Vehicles Here.</div>
             <div class="large-text">Driver & Vehicle Management</div>
-            <img src="images/drivers-vehicles.png" alt="Driver & Vehicle Management Icon">
+            <img class="content-box-icon" src="images/drivers-vehicles.png" alt="Driver & Vehicle Management Icon">
             <button class="circle-arrow-button" onclick="window.location.href='driverVehicleManagement.php'">
                 <span class="button-text"> Go</span>
                 <div class="circle">&gt;</div>
@@ -534,7 +525,6 @@
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
         </div>
-        <img class="background-image" src="images/month-view.png" alt="Calendar">
         <div class="large-text-sub">Calendar</div>
         <div class="graph-text">See all upcoming trips.</div>
         <button class="arrow-button">→</button>
@@ -546,7 +536,6 @@
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
-        <img class="background-image" src="images/content-box-image.jpg" alt="Generate Operational Report">
         <div class="large-text-sub">Generate Operational Report</div>
         <div class="graph-text">Operational Statistics - Report Generation.</div>
         <button class="arrow-button">→</button>
@@ -556,7 +545,6 @@
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/create-report.svg" alt="Report Icon">
         </div>
-        <img class="background-image" src="images/list-view.png" alt="Generate Rider Statistics Report">
         <div class="large-text-sub">Generate Rider Statistics Report</div>
         <div class="graph-text">Rider Statistics - Report Generation.</div>
         <button class="arrow-button">→</button>
@@ -648,7 +636,7 @@
 
     <div class="full-width-bar">
     <div class="content-box">
-    <img src="images/VolM.png" />   
+    <img class="content-box-icon" src="images/VolM.png" />   
         <div class="small-text">Make a difference.</div>
         <div class="large-text">My Profile</div>
         <div class="nav-buttons">
@@ -665,7 +653,7 @@
     </div>
 
     <div class="content-box">
-        <img src="images/EvM.png" />
+        <img class="content-box-icon" src="images/EvM.png" />
         <div class="small-text">Let’s have some fun!</div>
         <div class="large-text">My Events</div>
         <div class="nav-buttons">
@@ -692,7 +680,7 @@
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
             </div>
-            <img class="background-image" src="images/month-view.png" alt="Calendar" />
+            <img class="background-image" src="images/blank-white-background.jpg" />
             <div class="large-text-sub">Calendar</div>
             <div class="graph-text">See upcoming events/trainings.</div>
             <button class="arrow-button">→</button>

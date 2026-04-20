@@ -119,6 +119,21 @@ function check_duplicate_trip_request($riderID, $startDate, $startTime, $pickupL
 
 // rylan
 function send_trip_scheduled_email($event, $driverID, $vehicleID) {
+
+    $con = connect();
+
+$stmt = mysqli_prepare($con, "SELECT Notifications FROM dbpersons WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "s", $event['rider_id']);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$row = mysqli_fetch_assoc($result);
+
+$riderNotif = (int)($row['Notifications'] ?? 0);
+
+if ($riderNotif !== 1) {
+    return; 
+}
+
     if (empty($event['rider_id'])) {
         return;
     }

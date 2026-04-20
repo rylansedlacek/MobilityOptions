@@ -24,20 +24,45 @@ $selectedVehicle = (int) ($_POST['vehicle_id'] ?? ($event['vehicle_id'] ?? 0));
 //include 'domain/Event.php';
 
 
-function format_time_12h($time) {
+function format_time_12h($time)
+{
     $dt = DateTime::createFromFormat('H:i', $time);
-    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    if ($dt instanceof DateTime) {
+        return $dt->format('g:i A');
+    }
     return $time;
 }
 
-function send_trip_cancelled_email($event) {
-    if (empty($event['rider_id'])) { return; }
+function send_trip_cancelled_email($event)
+{
+
+    $con = connect();
+
+    $stmt = mysqli_prepare($con, "SELECT Notifications FROM dbpersons WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "s", $event['rider_id']);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+
+    $riderNotif = (int)($row['Notifications'] ?? 0);
+
+    if ($riderNotif !== 1) {
+        return;
+    }
+
+    if (empty($event['rider_id'])) {
+        return;
+    }
 
     $rider = retrieve_person((string) $event['rider_id']);
-    if (!$rider) { return; }
+    if (!$rider) {
+        return;
+    }
 
     $riderEmail = trim((string) $rider->get_email());
-    if ($riderEmail === '') { return; }
+    if ($riderEmail === '') {
+        return;
+    }
 
     $subject = 'Trip Cancelled';
     $body = "Hello " . trim($rider->get_first_name() . ' ' . $rider->get_last_name()) . ",\n\n" .
@@ -59,11 +84,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
     $eventToCancel = fetch_event_by_id($eventID);
 
     if ($action === 'no_show') {
-        if(mark_no_show($eventID)) {
+        if (mark_no_show($eventID)) {
             header('Location: cancelTrips.php?status=noshow_success');
             exit;
         }
-    }  else {
+    } else {
         if (cancel_trip($eventID)) {
             send_trip_cancelled_email($eventToCancel);
             header('Location: cancelTrips.php?status=success');
@@ -132,11 +157,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
         <?php if (isset($_GET['status'])): ?>
             <div id="trip-status-toast" class="happy-toast">
                 <?php
-                    if($_GET['status'] === 'noshow_success') {
-                        echo 'Trip Marked as No-Show';
-                    } else {
-                        echo "Trip Cancelled";
-                    }
+                if ($_GET['status'] === 'noshow_success') {
+                    echo 'Trip Marked as No-Show';
+                } else {
+                    echo "Trip Cancelled";
+                }
                 ?>
             </div>
         <?php endif; ?>
@@ -245,7 +270,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
             <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
         <?php endif ?>
         <p class="no-events standout">
-        <a class="button return" href="dispatchTrip.php">Return to Trip Management</a>
+            <a class="button return" href="dispatchTrip.php">Return to Trip Management</a>
         </p>
     </main>
 </body>

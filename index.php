@@ -160,7 +160,7 @@
             gap: 20px;
         }
 
-        .nav-links div {
+        .left-section .nav-links div {
             font-size: 24px;
             font-weight: 700;
             color: black;
@@ -173,6 +173,11 @@
             display: flex;
             align-items: center;
             gap: 20px;
+        }
+
+        .right-section .nav-links {
+            display: flex;
+            align-items: center;
         }
 
         .date-box {

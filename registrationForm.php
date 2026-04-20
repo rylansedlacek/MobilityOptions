@@ -8,7 +8,7 @@
         <div class="left-section">
             <div class="nav-links">
                 <div class="nav-item">
-                    <p style="color: #4f7dbe;">Quick Access</p>
+                    <p style="color: #4f7dbe; font-family: Nunito, Quicksand, sans-serif; font-weight: 400;">Quick Access</p>
                     <div class="dropdown">
                         <a href="addEvent.php" style="text-decoration: none;">
   <div class="in-nav">

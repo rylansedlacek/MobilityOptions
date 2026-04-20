@@ -142,7 +142,7 @@ function time_label($eventInfo, $isScheduledRide) {
     padding: 0.2rem 0.5rem;
     font-size: 0.78rem;
     color: #fff;
-    background-color: #1f4ba3;
+    background-color: var(--accent-color);
     text-decoration: none;
     border-radius: 3px;
     margin-top: 1px;
@@ -151,7 +151,24 @@ function time_label($eventInfo, $isScheduledRide) {
 }
 
 .calendar-see-more:hover {
-    background-color: #4196ff;
+    filter: brightness(1.08);
+}
+
+.calendar-event {
+    display: block;
+    padding: 0.16rem 0.42rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+.calendar-day {
+    border: 1px solid #cccccc !important;
+}
+
+table#calendar {
+    border-spacing: 0.25px;
 }
 </style>
 
@@ -209,7 +226,7 @@ function time_label($eventInfo, $isScheduledRide) {
                                         $completedValue = strtoupper(trim((string)($info['completed'] ?? 'N')));
                                         $isScheduledRide = ($completedValue === 'Y');
                                         $eventLabel = time_label($info, $isScheduledRide);
-                                        $backgroundCol = $isScheduledRide ? '#2E7D32' : '#FBC02D';
+                                        $backgroundCol = $isScheduledRide ? '#5d9322' : '#e6a432';
                                         $popupId = 'trip-popup-' . $info['id'] . '-' . str_replace('-', '', $e); // this makes the url
                                         $rideSchedulerHref = 'editCalendarEvent.php?id=' . $info['id'];
 

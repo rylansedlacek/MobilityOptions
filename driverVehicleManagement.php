@@ -106,14 +106,16 @@ require_once('header.php');
 
   <!-- Larger Hero Section -->
   <!--<header class="hero-header"></header>-->
-  <header class="top-bar"></header>
+
 
   <!-- Main Content -->
-  <main style="margin-top: 100px;">
-    <div class="sections">
+  <main style="margin-top: 5px;">
+    <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+
+      <h1 class="text-section" style="text-align: center; margin-bottom: 1.5rem;">Driver & Vehicle Management</h1>
 
       <!-- Buttons Section -->
-      <div class="button-section">
+      <div class="button-section" style="max-width: 1000px; width: 100%;">
         <button onclick="window.location.href='addDrivers.php';">
 	  <div class="button-left-gray"></div>
 	  <div>Add Driver</div>
@@ -160,12 +162,7 @@ require_once('header.php');
      </div>
 
       <!-- Text Section -->
-      <div class="text-section">
-        <h1>Driver and Vehicle Management</h1>
-        <div class="div-blue"></div>
-        <p>
-          Welcome to the Driver and Vehicle management hub. Here you can add and manage Drivers and Vehicles in the system.
-        </p>
+     
       </div>
 
     </div>

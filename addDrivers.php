@@ -33,6 +33,31 @@
     .dropdown {
         padding-right: 50px;
     }
+
+    .return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: var(--button-padding);
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: var(--button-border-radius);
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
+
+    .return-button:hover,
+    .return-button:visited,
+    .return-button:focus {
+        color: #ffffff !important;
+    }
+
+    .return-button:hover {
+        background-color: #963737;
+    }
 </style>
 <!-- BANDAID END, REMOVE ONCE SOME GENIUS FIXES -->
 </head>
@@ -120,7 +145,7 @@
                 <input type="submit" value="Add Driver">
             </div>
 
-              <div class="text-center mt-6">
+              <div class="text-center mt-4">
         <a href="driverVehicleManagement.php" class="return-button">Return to Driver &amp; Vehicle Management</a>
         </div>
         </form>

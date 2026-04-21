@@ -39,7 +39,7 @@ require_once('header.php');
 
     .return-button {
         display: inline-block;
-        width: 94%;
+        width: 60%;
         color: #ffffff !important;
         background-color: #b44444;
         padding: var(--button-padding);

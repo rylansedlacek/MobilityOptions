@@ -145,6 +145,20 @@ function format_time_12h($time)
         font-size: larger;
 
     }
+    .return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: var(--button-padding);
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: var(--button-border-radius);
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
 </style>
 
 <head>
@@ -279,8 +293,8 @@ function format_time_12h($time)
             <p class="no-events standout"> There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
         <?php endif ?>
         <p class="no-events standout">
-            <a class="button return" href="dispatchTrip.php">Return to Trip Management</a>
-        </p>
+            <a class="return-button" href="dispatchTrip.php">Return to Trip Management</a>
+            </p>
     </main>
 </body>
 

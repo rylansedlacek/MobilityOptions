@@ -178,8 +178,8 @@ $vehicles = get_vehicles(); // get all vehicles for drop down
             <div style="margin-top:1rem; display:flex; gap:0.75rem;">
                 <button type="submit" name="assign" class="button add">Schedule Trip</button>
                 <button type="submit" name="dispatchTrip" value="1" class="button add">Schedule Trip & Go to Dispatch Trip Dashboard</button>
-                <a class="button" href="calendar.php">Calendar</a>
                 <a class="button cancel" href="viewAllEvents.php">Back to list</a>
+                <a class="button" href="calendar.php">Calendar</a>
             </div>
             <div style="margin-top:2rem; width:span; display:flex; gap:0.75rem;">
 

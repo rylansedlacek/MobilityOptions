@@ -771,7 +771,8 @@ function make_a_person($result_row) {
     @$result_row['affiliation'],
     @$result_row['branch'],
     @$result_row['archived'], 
-    @$result_row['emergency_contact_last_name']
+    @$result_row['emergency_contact_last_name'],
+    @$result_row['Notifications']
     #@$result_row['access_level']
 );
 
@@ -1827,6 +1828,14 @@ function delete_driver($id) {
     $stmt->close();
     $con->close();
     return $deleted;
+}
+
+function edit_notification($value, $id) {
+    $con=connect();
+    $query = 'UPDATE dbpersons SET Notifications = "' . $value . '" WHERE id = "' . $id . '"';
+    $result = mysqli_query($con,$query);
+    mysqli_close($con);
+    return $result;
 }
 
 

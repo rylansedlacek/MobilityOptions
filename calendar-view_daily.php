@@ -26,7 +26,13 @@ if (isset($_SESSION['_id'])) {
 }
 $trips = fetch_events_on_date($dayStr, $loggedIn);
 ?>
-<style>
+<!DOCTYPE html>
+<html>
+<head>
+    <?php require('universal.inc'); ?>
+    <?php require('header.php'); ?>
+    <title>Mobility Options | Daily Calendar</title>
+    <style>
 .daily-view-header,
 .daily-trip-list,
 .daily-trip-card,
@@ -41,18 +47,17 @@ $trips = fetch_events_on_date($dayStr, $loggedIn);
 .daily-view-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0.9rem 1rem;
-    margin: 0.25rem 0 1rem;
-    border: 2px solid #d0d0d0;
-    border-radius: 12px;
-    background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    margin: 0.25rem 0 1.5rem;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
 .daily-view-header h2 {
     margin: 0;
-    font-size: 1.45rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #111;
 }
@@ -70,6 +75,44 @@ $trips = fetch_events_on_date($dayStr, $loggedIn);
     border: 1px solid #ccc;
     color: #111;
     background: #f5f5f5;
+    transition: background-color .2s;
+}
+
+.daily-view-nav a:hover {
+    background: #e5e5e5;
+}
+
+.daily-view-nav-day-arrows {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.daily-view-nav-day-arrows a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #45892e 0%, #5d9322 100%);
+    color: white;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(69, 137, 46, 0.25);
+    border: none;
+}
+
+.daily-view-nav-day-arrows a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(69, 137, 46, 0.4);
+    background: linear-gradient(135deg, #5d9322 0%, #45892e 100%);
 }
 
 .daily-trip-list {
@@ -112,6 +155,11 @@ $trips = fetch_events_on_date($dayStr, $loggedIn);
 .daily-trip-card-title {
     font-weight: 600;
     font-size: 1rem;
+    color: #111;
+}
+
+.daily-trip-card-meta {
+    color: #111;
 }
 
 .daily-trip-card-badge {
@@ -135,13 +183,16 @@ $trips = fetch_events_on_date($dayStr, $loggedIn);
 }
 
 </style>
+</head>
+<body>
+<main style="max-width: 800px; margin: 0 auto; padding: 0 1rem;">
 
 <div class="daily-view-header">
-    <div class="daily-view-nav">
-        <a href="calendar.php?month=<?php echo $backMonth; ?>">&larr; Back to Calendar</a>
-        
+    <div class="daily-view-nav-day-arrows">
+        <a href="calendar-view_daily.php?month=<?php echo $prevDay; ?>">&larr;</a>
+        <h2><?php echo date('l, F j, Y', $dayEpoch); ?></h2>
+        <a href="calendar-view_daily.php?month=<?php echo $nextDay; ?>">&rarr;</a>
     </div>
-    <h2><?php echo date('l, F j, Y', $dayEpoch); ?></h2>
 </div>
 
 <div class="daily-trip-list">
@@ -183,3 +234,7 @@ $trips = fetch_events_on_date($dayStr, $loggedIn);
     <?php endforeach; ?>
 <?php endif; ?>
 </div>
+
+</main>
+</body>
+</html>

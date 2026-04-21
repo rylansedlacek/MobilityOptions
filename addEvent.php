@@ -408,7 +408,7 @@ if (!empty($_GET['rider_id'])) {
             <div class="event-sect">
                 <h2 class="mt-2">Rider Information</h2>
                 <label for="name">* Rider Name </label>
-                <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_GET['rider_name']) ? htmlspecialchars($_GET['rider_name']) : (isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''); ?>" <?php echo ((isset($_POST['rider_id']) && $_POST['rider_id'] !== '') || (isset($_GET['rider_id']) && $_GET['rider_id'] !== '')) ? 'readonly' : ''; ?>>
+                <input type="text" id="name" name="name" required placeholder="Enter name" value="<?php echo isset($_GET['rider_name']) ? htmlspecialchars($_GET['rider_name']) : (isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''); ?>">
                 <input type="hidden" id="rider_id" name="rider_id" value="<?php echo isset($_POST['rider_id']) ? $_POST['rider_id'] : (isset($_GET['rider_id']) ? ($_GET['rider_id']) : ''); ?>">
             </div>
 
@@ -508,7 +508,7 @@ if (!empty($_GET['rider_id'])) {
                     </div>
                 </div>
                 <label for="dropoff-contact">* Drop Off Contact Information</label>
-                <input type="text" id="dropoff-contact" name="dropoff-contact" required>
+                <input type="email" id="dropoff-contact" name="dropoff-contact" required>
 
                 <label for="dropoff-street_address"><em>* </em>Street Address</label>
                 <input type="text" id="dropoff-street_address" name="dropoff-street_address" required placeholder="Enter street address">
@@ -728,20 +728,10 @@ if (!empty($_GET['rider_id'])) {
                 <?php endif ?> -->
 
         <script type="text/javascript">
-            function syncRiderNameField() {
-                const nameField = document.getElementById('name');
-                const riderIdField = document.getElementById('rider_id');
-                if (!nameField || !riderIdField) {
-                    return;
-                }
-                nameField.readOnly = riderIdField.value.trim() !== '';
-            }
-
             // populate the rider name and id when a search result is clicked
             function selectRider(name, id) {
                 document.getElementById('name').value = name;
                 document.getElementById('rider_id').value = id;
-                syncRiderNameField();
                 const url = new URL(window.location.href);
                 url.searchParams.set('rider_id', id);
                 url.searchParams.set('rider_name', name);
@@ -810,7 +800,6 @@ if (!empty($_GET['rider_id'])) {
             }
 
             //this run on load in case fields are already filled (from applyFavorite)
-            syncRiderNameField();
             checkShowFavorite();
 
             $(document).ready(function() {

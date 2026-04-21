@@ -276,6 +276,7 @@ function option_selected($field, $value)
     <?php require_once('universal.inc') ?>
     <title>Mobility Options | Quick Schedule</title>
 </head>
+
 <style>
     .return-button {
         display: inline-block;

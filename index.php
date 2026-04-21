@@ -521,7 +521,7 @@
     ?>
 
     <!-- Calendar -->
-    <div class="content-box-test" onclick="window.location.href='calendar.php'" style="border-radius: 12px; padding: 20px;">
+    <div class="content-box-test" onclick="window.location.href='calendar-view_daily.php'" style="border-radius: 12px; padding: 20px;">
         <div class="icon-overlay">
             <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
         </div>
@@ -676,7 +676,7 @@
         <h2><b>Your Dashboard</h2>
     </div>
     <div class="full-width-bar-sub">
-        <div class="content-box-test" onclick="window.location.href='calendar.php'">
+        <div class="content-box-test" onclick="window.location.href='calendar-view_daily.php'">
             <div class="icon-overlay">
                 <img style="border-radius: 5px;" src="images/view-calendar.svg" alt="Calendar Icon">
             </div>

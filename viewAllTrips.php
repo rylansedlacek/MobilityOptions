@@ -19,19 +19,43 @@ include 'database/dbEvents.php';
 include 'database/dbPersons.php';
 require_once('email.php');
 
-function send_trip_dispatched_email($event) {
-    if (empty($event['rider_id'])) { return; }
+function send_trip_dispatched_email($event)
+{
+
+    $con = connect();
+
+    $stmt = mysqli_prepare($con, "SELECT Notifications FROM dbpersons WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "s", $event['rider_id']);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+
+    $riderNotif = (int)($row['Notifications'] ?? 0);
+
+    if ($riderNotif !== 1) {
+        return;
+    }
+
+    if (empty($event['rider_id'])) {
+        return;
+    }
 
     $rider = retrieve_person((string) $event['rider_id']);
-    if (!$rider) { return; }
+    if (!$rider) {
+        return;
+    }
 
     $riderEmail = trim((string) $rider->get_email());
-    if (!$riderEmail) { return; }
+    if (!$riderEmail) {
+        return;
+    }
 
     $driverName = 'Assigned Driver';
     if (!empty($event['driver_id'])) {
         $driver = retrieve_person((string) $event['driver_id']);
-        if ($driver) { $driverName = trim($driver->get_first_name() . ' ' . $driver->get_last_name()); }
+        if ($driver) {
+            $driverName = trim($driver->get_first_name() . ' ' . $driver->get_last_name());
+        }
     }
 
     $vehicleLabel = 'Vehicle';
@@ -72,9 +96,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     }
 }
 
-function format_time_12h($time) {
+function format_time_12h($time)
+{
     $dt = DateTime::createFromFormat('H:i', $time);
-    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    if ($dt instanceof DateTime) {
+        return $dt->format('g:i A');
+    }
     return $time;
 }
 
@@ -233,9 +260,9 @@ function format_time_12h($time) {
                                         <td><?= $eventDate ?></td>
                                         <td><?= $eventTime ?></td>
                                         <td><?= $alertFlag ?></td>
-                                        
 
-                                            <!-- <td>
+
+                                        <!-- <td>
                                             <a href="#" onclick="window.location.href = 'viewPassengers.php'" style.display='flex' ; style="color: black; text-decoration: underline;">
                                                 Passenger List </a>
                                         </td> -->

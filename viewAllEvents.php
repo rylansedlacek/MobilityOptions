@@ -67,6 +67,10 @@ function format_time_12h($time)
         //require_once('database/dbevents.php');
         //require_once('domain/Event.php');
         $events = get_pending_ride_requests();
+        $events = array_values(array_filter($events, function ($event) {
+            $status = strtolower((string) ($event->getTripStatus() ?? ''));
+            return $status !== 'in_progress';
+        }));
         if (sizeof($events)): ?>
             <div class="table-wrapper">
                 <label> Click "Schedule" to schedule ride request.</label>
@@ -94,6 +98,7 @@ function format_time_12h($time)
                             $startTime = format_time_12h($startTimeRaw);
                             $tripStatus = $event->getTripStatus() ?: 'N';
 
+                           
                             $isUnscheduled = ($tripStatus === 'N' || $tripStatus === 'requested');
                             $alertFlag = '';
                             if ($tripStatus == 'N') $tripStatus = "Not Scheduled";

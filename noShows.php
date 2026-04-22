@@ -22,8 +22,28 @@ require_once 'domain/Person.php';
 require_once 'database/dbEvents.php';
 require_once 'domain/Event.php';
 
+$no_show_riders = [];
+$no_show_counts = [];
+$error = '';
+
+try {
+    $no_show_counts = get_mark_no_show(); // returns [personID => count]
+
+    if (!empty($no_show_counts)) {
+        foreach ($no_show_counts as $personID => $count) {
+            $person = retrieve_person($personID); // or get_person($personID), depending on your project
+            if ($person) {
+                $no_show_riders[] = $person;
+            }
+        }
+    }
+} catch (Exception $e) {
+    $error = "Could not load no-show data.";
+}
+
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,6 +103,16 @@ require_once('header.php');
         cursor: pointer;
     }
 
+    .edit-link {
+    color: #3182ce;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.edit-link:hover {
+    color: #2b6cb0;
+}
+
 
 
 
@@ -123,7 +153,7 @@ require_once('header.php');
                                 <td><?= $userID ?></td>
                                 <td><?= ($name) ?></td>
                                 <td><?= ($no_sho) ?></td>
-                                <td><a href="<?= $profile_link ?>" class="button">Edit</a></td>
+                                <td><a href="<?= $profile_link ?>" class="edit-link">Edit</a>
                             </tr>
                         <?php endforeach; ?>
                     <?php else: ?>

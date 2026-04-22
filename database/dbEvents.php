@@ -1480,4 +1480,34 @@ function saveFavoriteTrip($userId, $label, $pickupLocation, $dropoffLocation, $d
 //     $riders = mysqli_fetch_all($result, MYSQLI_ASSOC);
 //     mysqli_close($connection);
 //     return $riders;
-// }
+// 
+
+function get_mark_no_show()
+{
+    $connection = connect();
+    if (!$connection) {
+        die("Database connection failed.");
+    }
+
+    $query = "
+        SELECT rider_id, COUNT(*) AS no_show_count
+        FROM dbevents
+        WHERE trip_status = 'no_show'
+        GROUP BY rider_id
+        ORDER BY no_show_count DESC
+    ";
+
+    $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+        die("Query failed: " . mysqli_error($connection));
+    }
+
+    $counts = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $counts[$row['rider_id']] = (int)$row['no_show_count'];
+    }
+
+    mysqli_close($connection);
+    return $counts;
+}

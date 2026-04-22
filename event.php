@@ -212,6 +212,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
+<style>
+    .return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: 0.5rem 1.5rem;
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: 3rem;
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
+</style>
+
 <body>
     <?php require_once('header.php') ?>
     <h1>Ride Request Details</h1>
@@ -317,7 +334,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <td class="label">Drop Off Contact Information</td>
                     <td>
-                        <?php echo wordwrap($dropoff_contact,50, "<br />\n"); ?>
+                        <?php echo wordwrap($dropoff_contact, 50, "<br />\n"); ?>
                     </td>
                 </tr>
 
@@ -413,7 +430,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <!-- <a href="deleteEvent.php?id<?= $id ?>"title="Delete Event" class="button signup">Delete Ride Request</a>  -->
                     <a href="deleteEvent.php?id=<?= $id ?>" title="Delete Event" class="button cancel"
                         onclick="return confirm('<?= htmlspecialchars($confirmText, ENT_QUOTES) ?>');">Delete Ride Request<br>
-                       
+
                     </a>
                 <?php endif; ?>
 

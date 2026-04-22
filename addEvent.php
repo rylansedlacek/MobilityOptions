@@ -680,8 +680,8 @@ if (!empty($_GET['rider_id'])) {
                     </fieldset>
                 <?php endif; ?>
                 <input type="submit" value="Submit Ride Request" style="width:100%;"> -->
-                <button type="submit" style="width:100%;"> Submit Ride Request</button>
-                <button type="submit" name="scheduleTrip" value="1" style="width:100%;"> Submit Ride Request & Continue To Driver Selection</button>
+                <button type="submit" style="width:100%; border-radius: var(--button-border-radius);"> Submit Ride Request</button>
+                <button type="submit" name="scheduleTrip" value="1" style="width:100%; border-radius: var(--button-border-radius);"> Submit Ride Request & Continue To Driver Selection</button>
             </div>
 
             <div style="text-align:center; margin-top: 20px;">

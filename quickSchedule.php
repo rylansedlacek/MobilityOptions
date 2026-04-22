@@ -276,7 +276,6 @@ function option_selected($field, $value)
     <?php require_once('universal.inc') ?>
     <title>Mobility Options | Quick Schedule</title>
 </head>
-
 <style>
     .return-button {
         display: inline-block;
@@ -559,7 +558,7 @@ function option_selected($field, $value)
             <?php endif; ?>
 
             <center><input type="submit" value="Request &amp; Schedule Ride"></center>
-            <center><a class="return-button" href="eventManagement.php">Return to Ride Management</a></center>
+            <center><a class="return-button" style="margin-top: 20px;" href="eventManagement.php">Return to Ride Management</a></center>
         </form>
 
         <script>

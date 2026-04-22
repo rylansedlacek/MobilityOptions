@@ -180,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
 
         if (sizeof(get_all_events()) && sizeof($drivers)): ?>
             <div class="table-wrapper">
-                <label> Select a driver below to cancel scheduled trip:<br></label>
+                <label> Select a Driver below to cancel scheduled trip:<br></label>
                 <table class="general">
                     <thead>
                         <tr>

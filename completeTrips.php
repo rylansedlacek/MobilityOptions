@@ -40,6 +40,23 @@ function format_time_12h($time) {
     <title>Mobility Options | Complete Trip</title>
 </head>
 
+<style>
+.return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: var(--button-padding);
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: var(--button-border-radius);
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
+</style>
+
 <body>
     <?php require_once('header.php') ?>
     <?php require_once('database/dbEvents.php'); ?>
@@ -133,7 +150,7 @@ function format_time_12h($time) {
             <p class="no-events standout">There are currently no dispatched trips to complete.<a class="button add" href="viewAllTrips.php">Dispatch a Trip</a> </p>
         <?php endif ?>
         <div class="text-center mt-6">
-        <a class="button return" href="dispatchTrip.php">Return to Trip Management</a>
+        <a class="return-button" href="dispatchTrip.php">Return to Trip Management</a>
         </div>
     </main>
 </body>

@@ -14,6 +14,7 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,7 +30,8 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
     $previousReports = get_all_reports();
     ?>
     <style>
-        body, main {
+        body,
+        main {
             background-color: #fafafa;
         }
 
@@ -65,24 +67,22 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
         }
 
         .return-button {
-        display: inline-block;
-        width: 94%;
-        color: #ffffff !important;
-        background-color: #b44444;
-        padding: var(--button-padding);
-        border: 3px solid rgba(255, 255, 255, 0.295);
-        border-radius: var(--button-border-radius);
-        font-weight: 500;
-        text-align: center;
-        text-decoration: none;
-        transition: background-color .3s;
-        cursor: pointer;
-    }
-
-
-        
+            display: inline-block;
+            width: 100%;
+            color: #ffffff !important;
+            background-color: #b44444;
+            padding: 0.5rem 1.5rem;
+            border: 3px solid rgba(255, 255, 255, 0.295);
+            border-radius: 3rem;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color .3s;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
     <header class="hero-header">
         <div class="center-header">
@@ -96,7 +96,7 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
                 <div style="margin-bottom: 1.5rem;">
                     <label style="font-weight: 600;">Report Contents</label>
                     <p class="sub-text" style="font-size: 16px; margin-top: 0.5rem; margin-bottom: 0.5rem;">
-                  Includes system totals for: trips, ride requests, scheduled rides, in-progress rides, completed rides, canceled rides, active drivers, and vehicles.
+                        Includes system totals for: trips, ride requests, scheduled rides, in-progress rides, completed rides, canceled rides, active drivers, and vehicles.
                     </p>
                 </div>
                 <!-- pass operations_snapshot to processReport so it knows to make our report -->
@@ -119,7 +119,7 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
                 </div>
             </form>
 
-        
+
         </div>
 
         <header class="hero-header">
@@ -130,8 +130,8 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
 
         <div class="main-content-box w-[80%] p-8">
             <?php
-                if (count($previousReports) > 0) {
-                    echo '
+            if (count($previousReports) > 0) {
+                echo '
                     <div class="overflow-x-auto">
                         <table>
                             <thead class="bg-blue-400">
@@ -147,8 +147,8 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
                             </thead>
                             <tbody>';
 
-                    foreach ($previousReports as $report) {
-                        echo '
+                foreach ($previousReports as $report) {
+                    echo '
                                 <tr>
                                     <td>' . (int)$report['report_id'] . '</td>
                                     <td>' . (string)$report['created_at'] . '</td>
@@ -171,15 +171,15 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
                                         </form>
                                     </td>
                                 </tr>';
-                    }
+                }
 
-                    echo '
+                echo '
                             </tbody>
                         </table>
                     </div>';
-                } else {
-                    echo '<div class="error-block">No previous reports found.</div>';
-                }
+            } else {
+                echo '<div class="error-block">No previous reports found.</div>';
+            }
             ?>
         </div>
 
@@ -193,7 +193,7 @@ if (!isset($_SESSION['access_level']) || $_SESSION['access_level'] < 2) {
 
     </main>
 
-    
-</body>
-</html>
 
+</body>
+
+</html>

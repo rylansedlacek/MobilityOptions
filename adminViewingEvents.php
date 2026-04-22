@@ -107,7 +107,7 @@ include 'database/dbEvents.php';
         <?php else: ?>
             <p class="no-events standout">There are currently no ride requests available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
         <?php endif ?>
-        <center><a class="return-button" href="eventManagement.php">Return to Ride Management</a></center>
+        <center><a class="return-button" style="display:block; width:fit-content; margin:0 auto;" href="eventManagement.php">Return to Ride Management</a></center>
     </main>
 </body>
 

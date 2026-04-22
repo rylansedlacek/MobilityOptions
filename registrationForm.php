@@ -98,7 +98,19 @@
                     <option value="denied">Denied</option>
                 </select>
 
-            
+                <label><em>* </em>Do you have any disabilities?</label>
+                <div class="radio-group">
+                    <div class="radio-element">
+                        <input type="radio" id="disYes" name="has_disability" value="yes" required>
+                        <label for="disYes">Yes</label>
+                    </div>
+                    <div class="radio-element">
+                        <input type="radio" id="disNo" name="has_disability" value="no">
+                        <label for="disNo">No</label>
+                    </div>
+                </div>
+
+
                 <div id="disabilityDetails" style="display:none; margin-top: 10px;">
                     <label for="disabilityType"><em>* </em>Disability type</label>
                     <select id="disabilityType" name="disability_type">
@@ -111,7 +123,7 @@
                     </select>
 
                     <label for="mobilityNeeds" style="display:block; margin-top:10px;">
-                        Mobility Needs or Accommodations
+                        Mobility needs / accommodations
                     </label>
                     <input
                         type="text"

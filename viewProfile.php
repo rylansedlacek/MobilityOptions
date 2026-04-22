@@ -135,14 +135,6 @@
       window.onload = () => showSection('personal');
   </script>
 
-  <style>
-    #mobilityNeeds {
-      border: 1px solid gray;
-      width: 100%;
-      height: 5rem;
-    }
-  </style>
-
 </head>
             <?php if ($id == 'vmsroot'): ?>
 		<div class="absolute left-[40%] top-[20%] bg-red-800 p-4 text-white rounded-xl text-xl">The root user does not have a profile.</div>
@@ -180,7 +172,7 @@
 	</div>
         <div class="space-y-2 divide-y divide-gray-300">
           <div class="flex justify-between py-2">
-            <span class="font-medium">Joined</span><span>Jan 2022</span> //hard coded, fix
+            <span class="font-medium">Joined</span><span>Jan 2022</span>
           </div>
           <!--<div class="flex justify-between py-2">
             <span class="font-medium">Branch</span><span><?php echo ucfirst($user->get_branch()) ?></span>
@@ -228,16 +220,6 @@
         <div>
           <span class="block text-sm font-medium text-[#1F1F21]">Address</span>
           <p class="text-gray-900 font-medium text-xl"><?php echo $user->get_street_address() . ', ' . $user->get_city() . ', ' . $user->get_state() . ' ' . $user->get_zip_code() ?></p>
-        </div>
-
-        <div>
-          <span class="block text-sm font-medium text-[#1F1F21]">Mobility Needs or Accommodations</span>
-          <input
-                type="text"
-                id="mobilityNeeds"
-                name="mobility_needs"
-                placeholder="e.g., wheelchair accessible vehicle, extra time, assistance…"
-                />
         </div>
       </div>
 

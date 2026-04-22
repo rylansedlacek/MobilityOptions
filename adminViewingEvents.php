@@ -29,6 +29,23 @@ include 'database/dbEvents.php';
     <title>Mobility Options | Ride Requests</title>
 </head>
 
+<style>
+    .return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: 0.5rem 1.5rem;
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: 3rem;
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
+</style>
+
 <body>
     <?php require_once('header.php') ?>
     <?php require_once('database/dbEvents.php'); ?>
@@ -48,7 +65,7 @@ include 'database/dbEvents.php';
                         <tr>
                             <th><b>Rider Name</b></th>
                             <th><b>Date Of Ride</b></th>
-                            
+
                             <th style="width:1px"></th>
                         </tr>
                     </thead>
@@ -90,7 +107,7 @@ include 'database/dbEvents.php';
         <?php else: ?>
             <p class="no-events standout">There are currently no ride requests available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
         <?php endif ?>
-         <center><a class="button cancel" href="eventManagement.php">Return to Ride Management</a></center>
+        <center><a class="return-button" style="display:block; width:fit-content; margin:0 auto;" href="eventManagement.php">Return to Ride Management</a></center>
     </main>
 </body>
 

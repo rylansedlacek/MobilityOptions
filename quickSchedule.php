@@ -276,7 +276,6 @@ function option_selected($field, $value)
     <?php require_once('universal.inc') ?>
     <title>Mobility Options | Quick Schedule</title>
 </head>
-
 <style>
     .return-button {
         display: inline-block;
@@ -558,12 +557,15 @@ function option_selected($field, $value)
                 </fieldset>
             <?php endif; ?>
 
-            <center><input type="submit" value="Request &amp; Schedule Ride"></center>
-            <center><a class="return-button" href="eventManagement.php">Return to Ride Management</a></center>
+            <div style="display:flex; justify-content:center; gap:20px; margin-top:20px;">
+                <input type="submit" style="display:block; width:fit-content; margin-top: 20px;" value="Request &amp; Schedule Ride">
+                <a class="return-button" style="display:block; width:fit-content; margin-top: 20px;" href="eventManagement.php">Return to Ride Management</a>
+            </div>
         </form>
 
         <script>
-            function syncRiderNameField() {return
+            function syncRiderNameField() {
+                return
                 const nameField = document.getElementById('name');
                 const riderIdField = document.getElementById('rider_id');
                 if (!nameField || !riderIdField) {

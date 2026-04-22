@@ -34,13 +34,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     }
 }
 
-function format_time_12h($time) {
+function format_time_12h($time)
+{
     $dt = DateTime::createFromFormat('H:i', $time);
-    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    if ($dt instanceof DateTime) {
+        return $dt->format('g:i A');
+    }
     return $time;
 }
 
-function format_trip_status_label($tripStatus) {
+function format_trip_status_label($tripStatus)
+{
     $status = strtolower(trim((string)$tripStatus));
 
     if ($status === 'in_progress') {
@@ -147,6 +151,21 @@ function format_trip_status_label($tripStatus) {
             padding-left: 0.5rem;
             padding-right: 0.5rem;
         }
+
+        .return-button {
+            display: inline-block;
+            width: 100%;
+            color: #ffffff !important;
+            background-color: #b44444;
+            padding: 0.5rem 1.5rem;
+            border: 3px solid rgba(255, 255, 255, 0.295);
+            border-radius: 3rem;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color .3s;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -164,7 +183,7 @@ function format_trip_status_label($tripStatus) {
                     <p class="sub-text" style="font-size: 16px; margin-top: 0.5rem; margin-bottom: 0.5rem;">
                         Select the format in which you would like to generate the rider report for all riders.
                     </p>
-                    
+
                 </div>
                 <!-- pass operations_snapshot to processReport so it knows to make our report -->
                 <input type="hidden" name="reportType" value="operations_snapshot">
@@ -307,7 +326,7 @@ function format_trip_status_label($tripStatus) {
             <?php endif ?>
         </div>
         <div class="text-center mt-6">
-            <a href="index.php" class="return-button">Return to Dashboard</a>
+            <a href="index.php" style="margin-bottom: 40px;" class="return-button">Return to Dashboard</a>
         </div>
     </main>
     <script>
@@ -318,12 +337,10 @@ function format_trip_status_label($tripStatus) {
             tableRows.forEach(row => {
                 const riderName = row.cells[0].textContent.toLowerCase();
 
-                if(riderName.includes(searchTerm)) {
+                if (riderName.includes(searchTerm)) {
                     row.style.display = "";
-                }
-
-                else {
-                row.style.display = "none";
+                } else {
+                    row.style.display = "none";
                 }
             });
         });

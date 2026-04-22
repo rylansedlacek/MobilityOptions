@@ -150,7 +150,7 @@ function format_time_12h($time) {
             <p class="no-events standout">There are currently no dispatched trips to complete.<a class="button add" href="viewAllTrips.php">Dispatch a Trip</a> </p>
         <?php endif ?>
         <div class="text-center mt-6">
-        <a class="return-button" href="dispatchTrip.php">Return to Trip Management</a>
+        <a class="return-button" style="display:block; width:fit-content; margin:0 auto;" href="dispatchTrip.php">Return to Trip Management</a>
         </div>
     </main>
 </body>

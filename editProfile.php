@@ -204,7 +204,7 @@
 <head>
     <?php require_once('universal.inc'); ?>
     <title>Mobility Options | Edit Profile</title>
-    <link src="css/base.css" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
 </head>
 <body>
     <?php

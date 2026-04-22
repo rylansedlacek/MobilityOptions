@@ -371,10 +371,10 @@ td.label {
 #complete-cancel {
     background-color: var(--cancel-button-background-color);
 }
-/* 
+
 #complete-cancel:hover {
     background-color: var(--accent-color);
-} */
+}
 
 #description-cell {
     white-space: normal;

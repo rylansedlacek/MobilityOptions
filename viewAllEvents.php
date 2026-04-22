@@ -18,9 +18,12 @@ if (isset($_SESSION['_id'])) {
 include 'database/dbEvents.php';
 //include 'domain/Event.php';
 
-function format_time_12h($time) {
+function format_time_12h($time)
+{
     $dt = DateTime::createFromFormat('H:i', $time);
-    if ($dt instanceof DateTime) {  return $dt->format('g:i A'); }
+    if ($dt instanceof DateTime) {
+        return $dt->format('g:i A');
+    }
     return $time;
 }
 
@@ -35,6 +38,23 @@ function format_time_12h($time) {
     <script src="js/messages.js"></script>
     <title>Mobility Options | View Rides</title>
 </head>
+
+<style>
+    .return-button {
+        display: inline-block;
+        width: 94%;
+        color: #ffffff !important;
+        background-color: #b44444;
+        padding: 0.5rem 1.5rem;
+        border: 3px solid rgba(255, 255, 255, 0.295);
+        border-radius: 3rem;
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color .3s;
+        cursor: pointer;
+    }
+</style>
 
 <body>
     <?php require_once('header.php') ?>
@@ -53,7 +73,7 @@ function format_time_12h($time) {
         }));
         if (sizeof($events)): ?>
             <div class="table-wrapper">
-                <label> Click Schedule to schedule request.</label>
+                <label> Click "Schedule" to schedule ride request.</label>
                 <table class="general">
                     <thead>
                         <tr>
@@ -81,7 +101,7 @@ function format_time_12h($time) {
                            
                             $isUnscheduled = ($tripStatus === 'N' || $tripStatus === 'requested');
                             $alertFlag = '';
-                             if ($tripStatus == 'N') $tripStatus = "Not Scheduled";
+                            if ($tripStatus == 'N') $tripStatus = "Not Scheduled";
 
                             $rideDateTime = strtotime(trim((string) $startDate . ' ' . (string) $startTimeRaw));
                             if ($isUnscheduled && $rideDateTime !== false) {
@@ -116,9 +136,10 @@ function format_time_12h($time) {
         <?php else: ?>
             <p class="no-events standout">There are currently no requests available to view.<a class="button add" href="addEvent.php">Create a New Event</a> </p>
         <?php endif ?>
-        <a class="button" href="viewAllTrips.php">Dispatch Trips</a>
-        <a class="button cancel" href="eventManagement.php">Return to Ride Management</a>
-        
+
+        <a class="button" style="display: inline-flex; height: 48px; align-items: center; justify-content: center;" href="viewAllTrips.php">Dispatch Trips</a>
+        <a class="return-button" href="eventManagement.php">Return to Ride Management</a>
+
     </main>
 </body>
 

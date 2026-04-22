@@ -135,14 +135,6 @@
       window.onload = () => showSection('personal');
   </script>
 
-  <style>
-    #mobilityNeeds {
-      border: 1px solid gray;
-      width: 100%;
-      height: 5rem;
-    }
-  </style>
-
 </head>
             <?php if ($id == 'vmsroot'): ?>
 		<div class="absolute left-[40%] top-[20%] bg-red-800 p-4 text-white rounded-xl text-xl">The root user does not have a profile.</div>
@@ -180,7 +172,7 @@
 	</div>
         <div class="space-y-2 divide-y divide-gray-300">
           <div class="flex justify-between py-2">
-            <span class="font-medium">Joined</span><span>Jan 2022</span> //hard coded, fix
+            <span class="font-medium">Joined</span><span>Jan 2022</span>
           </div>
           <!--<div class="flex justify-between py-2">
             <span class="font-medium">Branch</span><span><?php echo ucfirst($user->get_branch()) ?></span>
@@ -229,16 +221,6 @@
           <span class="block text-sm font-medium text-[#1F1F21]">Address</span>
           <p class="text-gray-900 font-medium text-xl"><?php echo $user->get_street_address() . ', ' . $user->get_city() . ', ' . $user->get_state() . ' ' . $user->get_zip_code() ?></p>
         </div>
-
-        <div>
-          <span class="block text-sm font-medium text-[#1F1F21]">Mobility Needs or Accommodations</span>
-          <input
-                type="text"
-                id="mobilityNeeds"
-                name="mobility_needs"
-                placeholder="e.g., wheelchair accessible vehicle, extra time, assistance…"
-                />
-        </div>
       </div>
 
       <!-- Contact Section -->
@@ -249,7 +231,7 @@
         </div>
         <div>
           <span class="block text-sm font-medium text-[#1F1F21]">Phone Number</span>
-          <p class="text-gray-900 font-medium text-xl"><a href="tel:<?php echo $user->get_phone1() ?>"><?php echo formatPhoneNumber($user->get_phone1()) ?></a> (<?php echo ucfirst($user->get_phone1type()) ?>)</p>
+          <p class="text-gray-900 font-medium text-xl"><a href="tel:<?php echo $user->get_phone1() ?>"><?php echo formatPhoneNumber($user->get_phone1()) ?></a> <?php if (!empty($user->get_phone1type())): ?> (<?php echo ucfirst($user->get_phone1type()) ?>) <?php endif; ?> </p>
         </div>
         <div>
           <span class="block text-sm font-medium text-[#1F1F21]">Emergency Contact Name</span>
@@ -270,7 +252,7 @@
         <div>
           <span class="block text-sm font-medium text-[#1F1F21]">Emergency Contact Phone Number</span>
           <?php if ($user->get_emergency_contact_phone()): ?>
-            <p class="text-gray-900 font-medium text-xl"><a href="tel:<?php echo $user->get_emergency_contact_phone() ?>"><?php echo formatPhoneNumber($user->get_emergency_contact_phone()) ?></a> (<?php echo ucfirst($user->get_emergency_contact_phone_type()) ?>)</p>
+            <p class="text-gray-900 font-medium text-xl"><a href="tel:<?php echo $user->get_emergency_contact_phone() ?>"> <?php echo formatPhoneNumber($user->get_emergency_contact_phone()) ?></a><?php if (!empty($user->get_emergency_contact_phone_type())): ?> (<?php echo ucfirst($user->get_emergency_contact_phone_type()) ?>) <?php endif; ?> </p>
           <?php else: ?>
             <p class="text-gray-900 font-medium text-xl">N/A</p>
           <?php endif ?>

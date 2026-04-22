@@ -292,8 +292,8 @@ function format_time_12h($time)
         <?php else: ?>
             <p class="no-events standout"> There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
         <?php endif ?>
-        <p class="no-events standout">
-            <a class="return-button" href="dispatchTrip.php">Return to Trip Management</a>
+        <p>
+            <a class="return-button" style="display:block; width:fit-content; margin:0 auto;" href="dispatchTrip.php">Return to Trip Management</a>
             </p>
     </main>
 </body>

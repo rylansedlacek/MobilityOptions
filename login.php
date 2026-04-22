@@ -54,12 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header('Location: index.php');
             }
 
-            //if ($changePassword) {
-            //    $_SESSION['access_level'] = 0;
-            //    $_SESSION['change-password'] = true;
-            //    header('Location: changePassword.php');
-            //    die();
-            //} 
             else {
                 header('Location: index.php');
                 die();
@@ -70,13 +64,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-//<p>Or <a href="register.php">register as a new volunteer</a>!</p>
-//Had this line under login button, took user to register page
+
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>

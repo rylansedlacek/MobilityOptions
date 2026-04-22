@@ -87,7 +87,7 @@ table, td, tr, th, form, fieldset, em, button, a {
 
     --button-font-color: rgb(255, 255, 255);
     --button-padding: 0.5rem 1.5rem;
-    --button-border-radius: 3rem;
+    --button-border-radius: 1rem;
 
     --standard-border: 1px solid #333333;
     --light-border: 1px solid var(--shadow-and-border-color);

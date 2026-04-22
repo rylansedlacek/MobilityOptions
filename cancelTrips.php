@@ -180,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
 
         if (sizeof(get_all_events()) && sizeof($drivers)): ?>
             <div class="table-wrapper">
-                <label> Select a driver below to cancel scheduled trip:<br></label>
+                <label> Select a Driver below to cancel scheduled trip:<br></label>
                 <table class="general">
                     <thead>
                         <tr>
@@ -201,15 +201,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
                     ?>
                     <tbody class="standout">
                         <?php foreach ($events as $event): ?>
-                            <?php if ($event->getTripStatus() !== 'cancelled' && $event->getTripStatus() !== 'no_show' && $event->getTripStatus() !== 'completed'): ?>
-                                <?php
-                                $eventID = $event->getID();
-                                $eventDate = $event->getStartDate();
-                                $eventTime = format_time_12h($event->getStartTime());
-                                $driverDI = $event->getDriverId();
-                                $driverName = "";
-                                $riderName = $event->getName();
-                                $tripStatus = $event->getTripStatus();
+                            <?php
+                            $eventID = $event->getID();
+                            $eventDate = $event->getStartDate();
+                            $eventTime = format_time_12h($event->getStartTime());
+                            $driverDI = $event->getDriverId();
+                            $driverName = ""; 
+                            $riderName = $event->getName();
+                            $tripStatus = $event->getTripStatus() ?? 'Requested';
                                 foreach ($drivers as $driver) {
                                     if ($driver['id'] ==  $driverDI) {
                                         $driverName = $driver['first_name'] . ' ' . $driver['last_name'];
@@ -228,8 +227,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
                                     </tr>
                                 <?php else: ?>
                                     <tr data-event-id="<?= $eventID ?>">
-                                        <td><?= $driverName ?></td>
-                                        <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
+                                        <td><?= $driverName ? : 'No Driver Assigned'  ?></td>
+                                        <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'No Vehicle Assigned' ?></td>
                                         <td><?= $eventDate ?></td>
                                         <td><?= $eventTime ?></td>
                                         <td><?= $riderName ?></td>
@@ -262,7 +261,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                            <?php endif; ?>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
@@ -272,8 +270,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
         <?php else: ?>
             <p class="no-events standout">There are currently no trips available to view.<a class="button add" href="addEvent.php">Create a New Trip</a> </p>
         <?php endif ?>
-        <p class="no-events standout">
-            <a class="return-button" href="dispatchTrip.php">Return to Trip Management</a>
+        <p>
+            <a class="return-button" style="display:block; width:fit-content; margin:0 auto;" href="dispatchTrip.php">Return to Trip Management</a>
         </p>
     </main>
 </body>

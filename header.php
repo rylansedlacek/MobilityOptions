@@ -285,8 +285,8 @@ if (date("H:i:s") > "18:19:59") {
 
         .nav-item:hover,
         .nav-item.active {
-            color: #f5ce7aff;
-            outline: 1px solid #f5d07aff;
+            color: #b9d533;
+            outline: 1px solid #b9d533;
             outline-offset: 7px;
         }
 

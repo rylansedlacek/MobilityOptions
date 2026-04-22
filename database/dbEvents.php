@@ -395,8 +395,9 @@ function make_an_event($result_row)
 
 function get_all_events() {
     $con = connect();
-    $query = "SELECT * FROM dbevents WHERE trip_status != 'cancelled'" .
-        " ORDER BY completed";
+    $query = "SELECT * FROM dbevents WHERE (completed = 'N' AND trip_status IS NULL)" .
+        " OR (completed = 'Y' AND trip_status IN('in_progress', 'scheduled'))" .
+        " ORDER BY startDate ASC, startTime ASC";
     $result = mysqli_query($con, $query);
     $theEvents = array();
     while ($result_row = mysqli_fetch_assoc($result)) {
@@ -1392,9 +1393,6 @@ function complete_trip($eventID, $mileage_start, $mileage_end)
 function mark_no_show($eventID)
 {
     $connection = connect();
-
-
-
     if (!$connection) return false;
 
     $eventID = (int) $eventID;
@@ -1409,12 +1407,6 @@ function mark_no_show($eventID)
     }
 
     mysqli_stmt_bind_param($stmt, 'si', $status, $eventID);
-
-echo "status = " . $status . "<br>";
-echo "eventID = " . $eventID . "<br>";
-$result = mysqli_query($connection, "SELECT DATABASE() AS db");
-$row = mysqli_fetch_assoc($result);
-echo "Connected DB: " . $row['db'];
 
 $result = mysqli_stmt_execute($stmt);
 

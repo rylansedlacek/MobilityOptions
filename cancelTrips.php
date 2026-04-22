@@ -201,15 +201,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
                     ?>
                     <tbody class="standout">
                         <?php foreach ($events as $event): ?>
-                            <?php if ($event->getTripStatus() !== 'cancelled' && $event->getTripStatus() !== 'no_show' && $event->getTripStatus() !== 'completed'): ?>
-                                <?php
-                                $eventID = $event->getID();
-                                $eventDate = $event->getStartDate();
-                                $eventTime = format_time_12h($event->getStartTime());
-                                $driverDI = $event->getDriverId();
-                                $driverName = "";
-                                $riderName = $event->getName();
-                                $tripStatus = $event->getTripStatus();
+                            <?php
+                            $eventID = $event->getID();
+                            $eventDate = $event->getStartDate();
+                            $eventTime = format_time_12h($event->getStartTime());
+                            $driverDI = $event->getDriverId();
+                            $driverName = ""; 
+                            $riderName = $event->getName();
+                            $tripStatus = $event->getTripStatus() ?? 'Requested';
                                 foreach ($drivers as $driver) {
                                     if ($driver['id'] ==  $driverDI) {
                                         $driverName = $driver['first_name'] . ' ' . $driver['last_name'];
@@ -228,8 +227,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
                                     </tr>
                                 <?php else: ?>
                                     <tr data-event-id="<?= $eventID ?>">
-                                        <td><?= $driverName ?></td>
-                                        <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'no vehicle' ?></td>
+                                        <td><?= $driverName ? : 'No Driver Assigned'  ?></td>
+                                        <td><?= $vehicle ? htmlspecialchars($vehicle['plate']) : 'No Vehicle Assigned' ?></td>
                                         <td><?= $eventDate ?></td>
                                         <td><?= $eventTime ?></td>
                                         <td><?= $riderName ?></td>
@@ -262,7 +261,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['event_id'])) {
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                            <?php endif; ?>
                         <?php endforeach; ?>
                     </tbody>
                 </table>

@@ -442,7 +442,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="No Show">No Show</option>
                 </select>
 
-                <div>
+                <div class="group-buttons">
                     <button type="submit" class="button add">Complete Trip</button>
                     <a href="completeTrips.php?id=<?= $id ?>" class="button cancel">Back</a>
                 </div>

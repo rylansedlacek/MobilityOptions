@@ -217,10 +217,6 @@ a {
     color: white;
 }
 
-a:visited {
-    color: #83ae08;
-}
-
 a:hover {
     color: hsl(from var(--accent-color) h s calc(l+.2));
 }
@@ -230,6 +226,10 @@ a:hover {
     font-weight: bolder;
     font-size: 1.5rem;
     padding-left: 1rem;
+}
+
+.group-buttons {
+    display: flex;
 }
 
 /* Header mobile rules */

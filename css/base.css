@@ -228,6 +228,10 @@ a:hover {
     padding-left: 1rem;
 }
 
+.group-buttons {
+    display: flex;
+}
+
 /* Header mobile rules */
 @media only screen and (max-width: 1079px) {
     nav {
